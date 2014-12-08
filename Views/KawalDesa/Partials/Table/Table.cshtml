@@ -1,0 +1,108 @@
+﻿<section>
+    <div class="row" ng-show="CRUDCtrl.showForm" data-block="form">
+        <article class="col-sm-6 sortable-grid ui-sortable">
+            <div class="jarviswidget jarviswidget-sortable" data-widget-editbutton="false" data-widget-custombutton="false" style="" role="widget">
+                <header role="heading" data-block="form-header"></header>
+
+                <!-- widget div-->
+                <div role="content">
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <div class="alert" data-block="form-alert"></div>
+                        <form class="smart-form" method="POST" novalidate="novalidate" data-block="form-content"></form>
+                    </div>  
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+        </article>
+    </div>
+
+    <div class="row">
+        <article class="col-sm-12 sortable-grid ui-sortable">
+            <div data-widget-editbutton="true" id="wid-id-1" class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" role="widget">
+                <header role="heading" data-block="header"></header>
+                <!-- widget div-->
+                <div role="content">
+
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <!--
+                    <div class="widget-body-toolbar" data-block="toolbar">
+                    </div>
+                    -->
+
+                    <!-- widget content -->
+                    <div class="widget-body no-padding" style="min-height: 20px;">
+                        <div id="dt_basic_wrapper" class="dataTables_wrapper form-inline no-footer">
+                            <!-- Data Table Toolbar -->
+                            <div class="dt-toolbar">
+                                <div class="col-sm-10">
+                                    <div id="dt_basic_filter" class="dataTables_filter">
+                                        <label>
+                                            <span class="input-group-addon" style="height:34px;"><i class="glyphicon glyphicon-search"></i></span>
+                                            <input type="search" class="form-control" aria-controls="dt_basic" ng-model="CRUDCtrl.keywords" ng-change="CRUDCtrl.search()"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div id="dt_basic_length" class="dataTables_length" style="margin-left:5px;">
+                                        <label>
+                                            <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="entitiesPerPage">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="dataTables_length" ng-show="indexCtrl.principal.isInAnyRole(['admin', 'clinicadmin'])">
+                                        <button class="btn btn-primary" ng-click="CRUDCtrl.toggleForm(!CRUDCtrl.showForm)">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Toolbar -->
+
+                            <div class="table-responsive" data-block="table">
+                                <table class="table table-bordered table-striped dataTable">
+                                    <thead data-block="table-header">
+                                    </thead>
+                                    <tbody>
+                                        <tr data-block="table-data"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Data Table Footer -->
+                            <div class="dt-toolbar-footer">
+                                <div class="col-sm-6 col-xs-12 hidden-xs">
+                                    <div class="dataTables_info" id="dt_basic_info" role="status" aria-live="polite">
+                                        Showing <span class="txt-color-darken" ng-cloak>{{totalEntities == 0 ? 0 : (page-1) * entitiesPerPage + 1}}</span> to <span class="txt-color-darken">{{(page * entitiesPerPage) > totalEntities ? totalEntities : (page * entitiesPerPage)}}</span> of <span class="text-primary">{{totalEntities}}</span> entries
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dt_basic_paginate" data-block="pagination-control">
+                                        <dir-pagination-controls on-page-change="CRUDCtrl.changePage(newPageNumber)"></dir-pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Data Table Footer -->
+                        </div>
+                        <!-- end data tables wrapper -->
+                    </div>
+                    <!-- end widget content -->
+                </div>
+                <!-- end widget div -->
+            </div>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+﻿<div id="extr-page">
+    <header id="header" style="height: 100px;">
+        <div id="logo-group">
+            <span id="logo" style="margin-top:12px;"><img src="~/Content/logo.png" alt="SIMA ONLINE" style="width:96px; height:76px;"/></span>
+        </div>
+    </header>
+
+    <div id="main" role="main">
+
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+                    <h1 class="txt-color-red login-header-big">SIMA ONLINE</h1>
+                    <div class="hero">
+
+                        <div class="pull-left login-desc-box-l">
+                            <h4 class="paragraph-header">Online workforce registry for SIMA</h4>
+                            <div class="login-app-icons">
+                            </div>
+                        </div>
+                    </div>                 
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                    <div class="well no-padding">                       
+                        <form method="POST" id="login-form" class="smart-form client-form" ng-submit="loginCtrl.login()">
+                            <header>
+                                Sign In
+                            </header>
+                            <div class="alert" ng-show="formMessage" ng-class="{'alert-success': formMessage.type === 'success', 'alert-danger': formMessage.type === 'error'}">
+                                <p>{{formMessage.message}}</p>
+                            </div>
+                            <fieldset>
+                                <section>
+                                    <label class="label">Username</label>
+                                    <label class="input" ng-class="{'state-error': formMessage.errors.UserName}">
+                                        <i class="icon-append fa fa-user"></i>
+                                        <input type="text" name="username" ng-model="model.UserName">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter username</b>
+                                    </label>
+                                    <div class="note note-error" ng-show="formMessage.errors.UserName">
+                                        <p ng-repeat="message in formMessage.errors.UserName">{{message}}</p>
+                                    </div>
+                                </section>
+                                <section>
+                                    <label class="label">Password</label>
+                                    <label class="input" ng-class="{'state-error': formMessage.errors.Password}">
+                                        <i class="icon-append fa fa-lock"></i>
+                                        <input type="password" name="password" ng-model="model.Password">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                                    </label>
+                                    <div class="note note-error" ng-show="formMessage.errors.Password">
+                                        <p ng-repeat="message in formMessage.errors.Password">{{message}}</p>
+                                    </div>
+                                </section>
+                            </fieldset>
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    Sign in
+                                </button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

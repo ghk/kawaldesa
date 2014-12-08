@@ -1,0 +1,435 @@
+﻿<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="EnvDTE" #><#+
+	DTE DTE { get { return (DTE)((IServiceProvider)this.Host).GetService(typeof(DTE)); } }
+	Project ActiveProject { get { return DTE.ActiveDocument.ProjectItem.ContainingProject; } }
+
+	IEnumerable<ProjectItem> EnumerateProjectItem(ProjectItem p)
+	{
+		yield return p;
+		Level++;
+		foreach (var sub in p.ProjectItems.Cast<ProjectItem>())
+			foreach (var sub2 in EnumerateProjectItem(sub))
+				yield return sub2;
+		Level--;
+	}
+	IEnumerable<ProjectItem> EnumerateProjectItem(Project p)
+	{
+		foreach (var sub in p.ProjectItems.Cast<ProjectItem>())
+			foreach (var sub2 in EnumerateProjectItem(sub))
+				yield return sub2;
+	}
+	// enumerate projects and code elements
+	IEnumerable<CodeElement> EnumerateCodeElement(CodeElement element)
+	{
+		yield return element;
+		Level++;
+		foreach (var sub in element.Children.Cast<CodeElement>()) {
+			foreach(var sub2 in EnumerateCodeElement(sub))
+				yield return sub2;
+		}
+		Level--;
+	}
+	IEnumerable<CodeElement> EnumerateCodeElement(CodeElements elements)
+	{
+		Level++;
+		foreach (var sub in elements.Cast<CodeElement>()) {
+			foreach(var sub2 in EnumerateCodeElement(sub))
+				yield return sub2;
+		}
+		Level--;
+	}
+	IEnumerable<CodeElement> EnumerateCodeElement(FileCodeModel code)
+	{
+		return EnumerateCodeElement(code.CodeElements);
+	}
+	IEnumerable<CodeElement> EnumerateCodeElement(ProjectItem p)
+	{
+		return EnumerateCodeElement(p.FileCodeModel.CodeElements);
+	}
+
+	// cache usefull TS data
+	void ParseProject()
+    {
+		if (_allClasses == null)
+        {
+			_allClasses = new List<CodeClass>();
+			_allEnums = new List<CodeEnum>();
+			var proj = ActiveProject;
+			foreach (var item in EnumerateProjectItem(proj)) 
+			{
+				var code = item.FileCodeModel;
+				if (code == null)
+  					continue;
+				foreach(var e in EnumerateCodeElement(code))
+				{
+					switch (e.Kind)
+					{
+						case vsCMElement.vsCMElementClass:
+							_allClasses.Add((CodeClass)e);
+							break;
+						case vsCMElement.vsCMElementEnum:
+							_allEnums.Add((CodeEnum)e);
+							break;
+					}
+				}
+			}
+        }
+    }
+	List<CodeClass> _allClasses;
+	List<CodeEnum> _allEnums;
+	List<CodeClass> AllClasses {
+		get {
+			ParseProject();
+			return _allClasses;
+        }
+    }
+	List<CodeEnum> AllEnums {
+		get {
+			ParseProject();
+			return _allEnums;
+        }
+    }
+
+	// convert strings to type name, param name, etc...
+	string GetTSName(CodeVariable p) { return p.Name; }
+	string GetTSName(CodeProperty p) { return GetTSName(p.Name); }
+	string GetTSName(string pName)
+	{
+		var result = pName;
+		if (result.StartsWith("@"))
+			result = result.Substring(1);
+		return result;
+	}
+
+	bool IsWebAPI(CodeClass _class)
+    {
+        foreach (var p in GetParents(_class))
+			if (p.Name == "ApiController")
+				return true;
+		return false;
+    }
+
+	bool IsModel(CodeClass _class)
+    {
+        foreach (var p in GetParents(_class))
+			 foreach (var i in GetParentInterfaces(p))
+				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold")
+					return true;
+		return false;
+    }
+
+	string GetModelIdType(CodeClass _class)
+    {
+        CodeInterface model = null;
+        foreach (var p in GetParents(_class))
+			foreach (var i in GetParentInterfaces(p))
+				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold") {
+					model = i;
+					break;
+				}
+        if(model == null)  
+            return null;
+        var cls = model.FullName.Split('<','>')[1];
+        if(cls == "System.Int64" || cls == "System.Int32")
+            return "number";
+        if(cls == "System.String")
+            return "string";
+        return cls;
+    }
+
+	bool IsControllerForModel(CodeClass _class, CodeClass _modelClass)
+    {
+        CodeClass controller = null;
+        foreach (var p in GetParents(_class))
+			if (p.Name == "ModelController" && p.Namespace.Name == "Scaffold"){
+                controller = p;
+                break;
+            }
+        if(controller == null)  
+            return false;
+        return controller.FullName.Split('<','>')[1].Split(',')[0].Trim() == _modelClass.FullName;
+    }
+
+	bool IsValidatorForModel(CodeClass _class, CodeClass _modelClass)
+	{
+		CodeClass validator = null;
+		foreach (var p in GetParents(_class))
+			if (p.Name == "AbstractValidator"){
+				validator = p;
+				break;
+            }
+		if(validator == null)
+			return false;
+		return validator.FullName.Split('<','>')[1].Split(',')[0].Trim() == _modelClass.FullName;
+    }
+
+	bool IsCrudController(CodeClass _class)
+    {
+        foreach (var p in GetParents(_class))
+			if (p.Name == "CRUDController" && p.Namespace.Name == "Scaffold")
+                return true;
+        return false;    
+    }
+
+	bool IsReadOnlyController(CodeClass _class)
+    {
+        foreach (var p in GetParents(_class))
+			if (p.Name == "ReadOnlyController" && p.Namespace.Name == "Scaffold")
+                return true;
+        return false;    
+    }
+
+	string GetTSDefault(CodeProperty p) { return GetTSDefault(GetTSType(p)); }
+	string GetTSDefault(CodeVariable p) { return GetTSDefault(GetTSType(p)); }
+	string GetTSDefault(string type) 
+	{
+		switch (type)
+		{
+			case "number": return "0";
+			default: return "null";
+		}
+	}
+	string GetTSType(CodeProperty p) { return GetTSType(p.Type.AsString); }
+	string GetTSType(CodeParameter p) { return GetTSType(p.Type.AsString); }
+	string GetTSType(CodeFunction p) { return GetTSType(p.Type.AsString); }
+	string GetTSType(CodeVariable p) { return GetTSType(p.Type.AsString); }
+	string GetTSType(string type)
+	{
+		type = SimplifyType(type);
+		switch(type)
+		{
+			case "void": return "void";
+			case "long":
+			case "int":
+			case "short":
+			case "decimal":
+			case "float":
+			case "double":
+            {
+                return "number";
+            }
+			case "bool": 
+            {
+                return "boolean";
+            }
+			case "string": 
+            {
+                return "string";
+            }
+			default: 
+                if (EnumerateModels("App.Models").Select(x => x.FullName).Contains(type))
+                    return "App.Models.I" + ShortName(type);
+                if (EnumerateTSEnum().Select(x => x.FullName).Contains(type))
+                    return "App.Models."+ShortName(type);
+				var a = GetListType(type);
+				if (a != null)
+                {
+                    return string.Format("Array<{0}>", GetTSType(a));
+                }
+				break;
+		}
+		return string.Format("/** {0} **/ any", type);
+	}
+	string ShortName(string type)
+    {
+ 		int di = type.LastIndexOf('.');
+		if (di > -1)
+			type = type.Substring(di + 1);
+		return type;
+   }
+	string SimplifyType(string type)
+    {
+ 		if (type.EndsWith("?"))
+			type = type.Substring(0, type.Length - 1);
+
+		//Regex regtypenull = new Regex("Nullable\\<(?<inner>(.)+)\\>", RegexOptions.Compiled);
+		//var m = regtypenull.Match(type);
+		//if (m.Success)
+		//	type = m.Groups["inner"].Value;
+
+		return type;
+   }
+	string GetListType(string type)
+    {
+		if (type == "System.Collections.IEnumerable")
+			return "any";
+
+		if (type.StartsWith("System.Collections.Generic.IEnumerable<"))
+        {
+			int l = "System.Collections.Generic.IEnumerable<".Length;
+			return type.Substring(l, type.Length - l - 1);
+        }
+
+		if (type.StartsWith("System.Collections.Generic.List<"))
+        {
+			int l = "System.Collections.Generic.List<".Length;
+			return type.Substring(l, type.Length - l - 1);
+        }
+
+		if (type.StartsWith("System.Collections.Generic.IList<"))
+        {
+			int l = "System.Collections.Generic.IList<".Length;
+			return type.Substring(l, type.Length - l - 1);
+        }
+
+		return null;
+    }
+
+	IEnumerable<CodeClass> GetParents(CodeClass cs)
+    {
+        foreach (var item in cs.Bases.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementClass).Cast<CodeClass>())
+        {
+			yield return item;
+			foreach (var sup in GetParents(item))
+				yield return sup;
+        }
+    }
+
+	IEnumerable<CodeInterface> GetParentInterfaces(CodeClass cs)
+    {
+        foreach (var item in cs.ImplementedInterfaces.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementInterface).Cast<CodeInterface>())
+        {
+			yield return item;
+        }
+    }
+
+	// enumerate classes, enums, members with ToTSAttribute in ActiveProject
+	IEnumerable<CodeClass> EnumerateTSClass(string kind)
+	{
+		foreach (var _class in AllClasses
+								.Where(x => x.Kind == vsCMElement.vsCMElementClass)
+								.Where(x => IsTSFlag((CodeElement)x, ca => ca.Value.EndsWith(kind)))
+				) 
+			yield return _class;
+	}
+	
+	IEnumerable<CodeClass> EnumerateModels(string _namespace)
+	{
+		foreach (var _class in AllClasses
+								.Where(c => IsModel(c) && c.Namespace.Name == _namespace)
+				) 
+			yield return _class;
+	}
+	
+	IEnumerable<CodeClass> EnumerateControllers(CodeClass codeClass)
+	{
+		foreach (var _class in AllClasses
+								.Where(c => IsControllerForModel(c, codeClass))
+				) 
+			yield return _class;
+	}
+	
+	IEnumerable<CodeEnum> EnumerateTSEnum()
+	{
+		foreach (var _class in AllEnums
+								.Where(x => x.Kind == vsCMElement.vsCMElementEnum)
+								.Where(x => IsTSFlag((CodeElement)x, yield => true))
+				) 
+			yield return _class;
+	}
+	
+	IEnumerable<CodeElement> EnumerateTSMembers(CodeClass _class)
+	{
+		foreach (var member in _class.Children.Cast<CodeElement>()) 
+        {
+			if (HasAttribute(member, xa => xa.FullName.EndsWith("ToTSAttribute") && xa.Value.EndsWith("TSFlag.Ignore")))
+				continue;
+			switch(member.Kind) 
+            {
+				case vsCMElement.vsCMElementFunction:
+					var f = (CodeFunction)member;
+					if (f.IsShared || (f.Access & vsCMAccess.vsCMAccessPublic) == 0)
+						continue;
+					break;
+				case vsCMElement.vsCMElementProperty:
+					var p = (CodeProperty)member;
+					if ((p.Access & vsCMAccess.vsCMAccessPublic) == 0)
+						continue;
+					break;
+				case vsCMElement.vsCMElementVariable:
+					var c = (CodeVariable)member;
+					if ((c.Access & vsCMAccess.vsCMAccessPublic) == 0)
+						continue;
+					break;
+				default:
+					continue;
+            }
+			yield return member;
+        }
+	}
+	
+	IEnumerable<CodeElement> EnumerateAllTSMembers(CodeClass _class)
+    {
+        IEnumerable<CodeElement> members = null;
+        try 
+        {
+            members = EnumerateTSMembers(_class).ToList();
+        } catch(Exception e)
+        {
+        }
+        foreach (var member in  members)
+        {
+            yield return member;
+        }
+        foreach (var p in GetParents(_class).ToList())
+        {
+            members = null;
+            try 
+            {
+                members = EnumerateTSMembers(p).ToList();
+            } catch(Exception e)
+            {
+            }
+            if(members != null)
+            {
+                foreach (var member in  members)
+                {
+                        yield return member;
+                }
+            }
+        }
+    }
+
+	IEnumerable<CodeClass> EnumerateFluentValidators(CodeClass codeClass)
+	{
+		foreach (var _class in AllClasses
+								.Where(c => IsValidatorForModel(c, codeClass))
+				) 
+		yield return _class;
+    }
+
+	bool IsTSFlag(CodeElement e, Predicate<CodeAttribute> extra) { return HasAttribute(e, xa => xa.FullName.EndsWith("ToTSAttribute") && (extra == null || extra(xa))); }
+    bool HasAttribute(CodeElement e, Predicate<CodeAttribute> _check) { return GetAttribute(e, _check) != null; }
+    CodeAttribute GetAttribute(CodeElement e, Predicate<CodeAttribute> _check)
+    {
+		return (
+			from x in e.Children.Cast<CodeElement>()
+			where x.Kind == vsCMElement.vsCMElementAttribute
+			let xa = (CodeAttribute)x
+			where _check(xa)
+			select xa
+		).FirstOrDefault();
+    }
+
+	// utility on CodeElement
+	string GetText(CodeElement e)
+	{
+		var edit = e.StartPoint.CreateEditPoint();
+		return edit.GetText(e.EndPoint);
+	}
+
+
+	// miscellaneous utility
+	int Level = 0;
+	void Indent() { Indent(Level); }
+	void Indent(int lvl)
+	{
+		for(int i=0; i<lvl; i++)
+			Write("    ");
+	}
+#>

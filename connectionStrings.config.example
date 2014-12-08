@@ -1,0 +1,4 @@
+﻿<?xml version="1.0"?>
+<connectionStrings>
+  <add name="DefaultConnection" connectionString="Server=localhost; Database=tannas; Uid=root; Pwd=root;" providerName="MySql.Data.MySqlClient" /> 
+</connectionStrings>

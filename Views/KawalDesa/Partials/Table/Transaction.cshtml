@@ -1,0 +1,112 @@
+﻿<section id="widget-grid" data-extend-template="/partials/table/Table">
+    <header role="heading" data-block="form-header">
+        <h2>Workforce form</h2>
+    </header>
+
+    <form class="smart-form" method="POST" novalidate="novalidate" ng-submit="CRUDCtrl.save()" data-block="form-content">
+        <fieldset>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.Name}">
+                    <i class="icon-append fa fa-user"></i>
+                    <input type="text" name="name" placeholder="Name" ng-model="model.Name" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.Name">
+                    <p ng-repeat="message in formMessage.errors.Name">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.RegistrationID}">
+                    <i class="icon-append fa fa-building"></i>
+                    <input type="text" name="registrationID" placeholder="Registration ID" ng-model="model.RegistrationID" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.RegistrationID">
+                    <p ng-repeat="message in formMessage.errors.RegistrationID">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.ExaminationDate}">
+                    <i class="icon-append fa fa-calendar"></i>
+                    <input type="text" datepicker-popup="dd MMMM yyyy" is-open="CRUDCtrl.openExamDatePicker"
+                           ng-model="model.ExaminationDate" max-date="CRUDCtrl.maxDate" ng-click="CRUDCtrl.open($event, 1)" placeholder="Examination Date" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.ExaminationDate">
+                    <p ng-repeat="message in formMessage.errors.ExaminationDate">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.BirthDate}">
+                    <i class="icon-append fa fa-calendar"></i>
+                    <input type="text" datepicker-popup="dd MMMM yyyy" is-open="CRUDCtrl.openBirthDatePicker"
+                           ng-model="model.BirthDate" max-date="CRUDCtrl.maxDate" ng-click="CRUDCtrl.open($event, 2)" placeholder="Birth Date" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.BirthDate">
+                    <p ng-repeat="message in formMessage.errors.BirthDate">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="select" ng-class="{'state-error': formMessage.errors.ClinicID}">
+                    <select ng-model="model.ClinicID">
+                        <option value="" style="display:none;">Select Medical</option>
+                        <option ng-repeat="clinic in CRUDCtrl.clinics" value="{{clinic.ID}}">{{clinic.Name}}</option>
+                    </select>
+                    <i></i>
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.ClinicID">
+                    <p ng-repeat="message in formMessage.errors.ClinicID">{{message}}</p>
+                </div>
+            </section>            
+        </fieldset>
+        <footer>
+            <button type="button" class="btn btn-primary" ng-click="CRUDCtrl.toggleForm()">Cancel</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </footer>
+    </form>
+
+    <div class="alert" ng-show="formMessage" ng-class="{'alert-success': formMessage.type === 'success', 'alert-danger': formMessage.type === 'error'}" data-block="form-alert">
+        <p>{{formMessage.message}}</p>
+    </div>
+
+    <header role="heading" data-block="header">
+        <div class="widget-toolbar">
+            <i>Showing {{entities.length}} Workforces</i>
+        </div>
+    </header>
+
+    <div class="table-responsive" data-block="table">
+        <table class="table table-bordered table-striped dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Registration ID</th>
+                    <th>Examination Date</th>
+                    <th>Birth Date</th>
+                    <th>Clinic</th>
+                    <th>Portrait</th>
+                    <th ng-show="indexCtrl.principal.isInAnyRole(['admin', 'clinicadmin'])">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="entity in entities | itemsPerPage: entitiesPerPage" total-items="totalEntities" data-block="table-data">
+                    <td>{{entity.ID}}</td>
+                    <td>{{entity.Name}}</td>
+                    <td>{{entity.RegistrationID}}</td>
+                    <td>{{entity.ExaminationDate | date:'dd MMMM yyyy'}}</td>
+                    <td>{{entity.BirthDate | date:'dd MMMM yyyy'}}</td>
+                    <td>{{CRUDCtrl.clinicNames[entity.ClinicID]}}</td>
+                    <td>
+                        <img ng-cloak ng-if="entity.BlobID" ng-src="\api\LombokUpload\GetPicture\{{entity.BlobID}}" width="93" height="104" />
+                        <img ng-cloak ng-if="!entity.BlobID" ng-src="\Content\blank.png" width="93" height="104" />
+                    </td>
+                    <td ng-show="indexCtrl.principal.isInAnyRole(['admin', 'clinicadmin'])">
+                        <button type="button" class="btn btn-primary" ng-click="CRUDCtrl.edit(entity)">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</section>
+

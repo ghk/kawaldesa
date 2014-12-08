@@ -1,0 +1,93 @@
+﻿<section id="widget-grid" data-extend-template="/partials/table/Table">
+    <header role="heading" data-block="form-header">
+        <h2>Clinic form</h2>
+    </header>
+
+    <form class="smart-form" method="POST" novalidate="novalidate" ng-submit="CRUDCtrl.save()" data-block="form-content">
+        <fieldset>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.Name}">
+                    <i class="icon-append fa fa-user"></i>
+                    <input type="text" name="name" placeholder="Name" ng-model="model.Name" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.Name">
+                    <p ng-repeat="message in formMessage.errors.Name">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="textarea" ng-class="{'state-error': formMessage.errors.Address}">
+                    <i class="icon-append fa fa-building"></i>
+                    <textarea rows="4" name="address" placeholder="Address" ng-model="model.Address"></textarea>
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.Address">
+                    <p ng-repeat="message in formMessage.errors.Address">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.PhoneNumber}">
+                    <i class="icon-append fa fa-phone"></i>
+                    <input type="text" name="phone" placeholder="Phone Number" ng-model="model.PhoneNumber" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.PhoneNumber">
+                    <p ng-repeat="message in formMessage.errors.PhoneNumber">{{message}}</p>
+                </div>
+            </section>
+            <section>
+                <label class="input" ng-class="{'state-error': formMessage.errors.Email}">
+                    <i class="icon-append fa fa-envelope-o"></i>
+                    <input type="email" name="email" placeholder="Email" ng-model="model.Email" />
+                </label>
+                <div class="note note-error" ng-show="formMessage.errors.Email">
+                    <p ng-repeat="message in formMessage.errors.Email">{{message}}</p>
+                </div>
+            </section>
+        </fieldset>
+        <footer>
+            <button type="button" class="btn btn-primary" ng-click="CRUDCtrl.toggleForm()">Cancel</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </footer>
+    </form>
+    
+    <div class="alert" ng-show="formMessage" ng-class="{'alert-success': formMessage.type === 'success', 'alert-danger': formMessage.type === 'error'}" data-block="form-alert">
+         <p>{{formMessage.message}}</p>
+    </div>
+
+    <header role="heading" data-block="header">
+        <div class="widget-toolbar">
+            <i>Showing {{entities.length}} Clinics</i>
+        </div>
+    </header>
+
+    <div class="table-responsive" data-block="table">
+        <table class="table table-bordered table-striped dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Credit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="entity in entities | itemsPerPage: CRUDCtrl.entitiesPerPage" total-items="totalEntities" data-block="table-data">
+                    <td>{{entity.ID}}</td>
+                    <td>{{entity.Name}}</td>
+                    <td>{{entity.Address}}</td>
+                    <td>{{entity.PhoneNumber}}</td>
+                    <td>{{entity.Email}}</td>
+                    <td><p ng-repeat="credit in entity.Credits">{{CRUDCtrl.creditTypes[credit.Type] + " : " + credit.Value}}</p></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" ng-click="CRUDCtrl.edit(entity)">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</section>
+
