@@ -23,11 +23,13 @@
 					<span class="icon-bar"></span>
 				</button>
 				<ul class="nav navbar-nav">
-					<li><a href="" style="padding-left: 20px;">Kawal Desa</a></li>
+					<li><a href="national.html" style="padding-left: 20px;">Kawal Desa</a></li>
 					<li><div class="gt">→</div></li>
-					<li><a href="">DKI Jakarta</a></li>
+					<li><a href="national.html">Nasional</a></li>
 					<li><div class="gt">→</div></li>
-					<li><a href="">Jakarta Timur</a></li>
+					<li><a href="provinsi.html">DKI Jakarta</a></li>
+					<li><div class="gt">→</div></li>
+					<li><a href="kabupaten.html">Jakarta Timur</a></li>
 				</ul>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
@@ -35,49 +37,6 @@
 			</ul>
 		  </div>
 		</header>
-		
-		<div class="content-header">
-			Penerimaan Daerah
-			<div class="insert">
-				<a href="#" data-toggle="modal" data-target="#myModal">tambah</a>
-			</div>
-		</div>
-		
-		<div class="table-responsive">
-            <table class="table table-condensed table-responsive table-bordered">
-				<thead>
-					<tr>
-						<th></th>
-						<th class="money">Anggaran</th>
-						<th class="money">Diterima</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><a href="">DAU (Dana Alokasi Khusus)</a></td>
-						<td class="money">223.000.000.120</td>
-						<td class="money">223.000.000.120</td>
-					</tr>
-					<tr>
-						<td><a href="">DBH</a></td>
-						<td class="money">223.000.000.120</td>
-						<td class="money">223.000.000.120</td>
-					</tr>
-                    <tr>
-						<td>DAU + DBH</td>
-						<td class="money">718.000.120.000</td>
-						<td class="money">150.000.120.000</td>
-					</tr>
-					<tr class="success">
-						<td>ADD (10% DAU+DBH)</td>
-						<td class="money">718.000.120.000</td>
-						<td class="money">150.000.120.000</td>
-					</tr>
-				</tbody>
-				<tfoot>
-				</tfoot>
-			</table>
-		</div>
 		
 		<div class="content-header">
 			Transfer Ke Desa
@@ -91,20 +50,20 @@
 				<thead>
 					<tr>
 						<th rowspan="2" style="vertical-align: middle;">Desa</th>
-						<th colspan="3" style="text-align: center;">APBN</th>
-						<th colspan="3" style="text-align: center;">ADD (10% DAU+DBH)</th>
-						<th colspan="3" style="text-align: center;">Total Dana Desa</th>
+						<th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
+						<th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>
+						<th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
 					</tr>
 					<tr>
 						<th class="money">Anggaran</th>
 						<th class="money" >Tertransfer</th>
-						<th class="money">Terterima</th>
+						<th class="money">Diterima</th>
 						<th class="money">Anggaran</th>
 						<th class="money" >Tertransfer</th>
-						<th class="money">Terterima</th>
+						<th class="money">Diterima</th>
 						<th class="money">Anggaran</th>
 						<th class="money" >Tertransfer</th>
-						<th class="money">Terterima</th>
+						<th class="money">Diterima</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -234,6 +193,57 @@
 				</tfoot>
 			</table>
 		</div>
+
+		<div class="content-header">
+			Penerimaan Daerah
+			<div class="insert">
+				<a href="#" data-toggle="modal" data-target="#myModal">tambah</a>
+			</div>
+		</div>
+		
+		<div class="table-responsive">
+            <table class="table table-condensed table-responsive table-bordered">
+				<thead>
+					<tr>
+						<th></th>
+						<th class="money">Anggaran</th>
+						<th class="money">Diterima</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a href="">DAU (Dana Alokasi Umum)</a>
+                            <p class="subtext">
+Dana yang bersumber dari pendapatan APBN yang dialokasikan kepada setiap Daerah Otonom (provinsi/kabupaten/kota) di Indonesia setiap tahunnya sebagai dana pembangunan
+                            </p>
+                        </td>
+						<td class="money">223.000.000.120</td>
+						<td class="money">223.000.000.120</td>
+					</tr>
+					<tr>
+						<td>
+                            <a href="">DBH (Dana Bagi Hasil)</a>
+                            <p class="subtext">
+Dana yang bersumber dari pendapatan APBN yang dialokasikan kepada Daerah berdasarkan angka persentase tertentu untuk mendanai kebutuhan Daerah dalam rangka pelaksanaan Desentralisasi
+                            </p>
+                        </td>
+						<td class="money">223.000.000.120</td>
+						<td class="money">223.000.000.120</td>
+					</tr>
+						<td>
+                            <a href="">ADD (Alokasi Dana Desa = 10% (DAU + DBH))</a>
+                            <p class="subtext">
+Alokasi dana desa yang merupakan bagian yang dialokasikan untuk desa dari dana perimbangan yang diterima kabupaten/kota
+                            </p>
+						<td class="money">718.000.120.000</td>
+						<td class="money">150.000.120.000</td>
+					</tr>
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+		</div>
+		
 		
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -118,3 +118,6 @@ table.table-bordered > thead > tr > th:last-child{
 .table > tbody > tr.detail > td .info{
 	padding-left: 15px;
 }
+p.subtext {
+    max-width: 700px;
+}
