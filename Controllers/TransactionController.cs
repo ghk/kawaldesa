@@ -8,6 +8,8 @@ namespace App.Controllers
 {
     public class TransactionController: BaseController<Transaction, long>
     {
-        public TransactionController(DB dbContext) : base(dbContext) { }
+        public TransactionController(DB dbContext) : base(dbContext) {
+            Include(t => t.Source, t => t.Destination);            
+        }
     }
 }

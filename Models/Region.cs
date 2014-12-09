@@ -17,6 +17,8 @@ namespace App.Models
         [ForeignKey("Parent")]
         public long? ParentID { get; set; }
         public virtual Region Parent { get; set; }
+        
+        [ForeignKey("ParentID")]
         public virtual IEnumerable<Region> Children { get; set; }
     }
 
