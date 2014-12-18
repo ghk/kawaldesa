@@ -66,6 +66,7 @@ var KawalDesa;
 
                 Models.Region.Get(parentID).done(function (region) {
                     scope.$apply(function () {
+                        scope.region = region;
                         var regionTree = [];
                         var cur = region;
                         while (cur) {

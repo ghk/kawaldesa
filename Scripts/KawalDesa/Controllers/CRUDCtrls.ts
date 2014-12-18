@@ -64,6 +64,7 @@ module KawalDesa.Controllers {
 
             Models.Region.Get(parentID).done(region => {
                 scope.$apply(() => {
+                    scope.region = region;
                     var regionTree = [];
                     var cur : Models.IRegion = region;
                     while (cur) {
