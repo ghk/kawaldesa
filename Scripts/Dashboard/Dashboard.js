@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../Models.ts"/>
-var Lombok;
-(function (Lombok) {
-    Lombok.lombok = angular.module('lombok', [
+var KawalDesa;
+(function (KawalDesa) {
+    KawalDesa.dashboard = angular.module('dashboard', [
         'ui.router',
         'scaffold',
         'angular-blocks',
@@ -11,7 +11,7 @@ var Lombok;
         'angular-loading-bar'
     ]);
 
-    Lombok.lombok.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    KawalDesa.dashboard.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         var baseUrl = "/";
 
         //$urlRouterProvider.otherwise(baseUrl);
@@ -26,52 +26,45 @@ var Lombok;
                     }
                 ]
             }
+        }).state('dashboard', {
+            parent: 'site',
+            url: '/dashboard/',
+            data: {
+                roles: ['admin']
+            },
+            templateUrl: baseUrl + 'partials/Index',
+            controller: 'IndexCtrl as indexCtrl'
         }).state('login', {
             parent: 'site',
-            url: '/login',
+            url: '/dashboard/login',
             data: {
                 roles: []
             },
             templateUrl: baseUrl + 'partials/Login',
             controller: 'LoginCtrl as loginCtrl'
-        }).state('dashboard', {
-            parent: 'site',
-            url: baseUrl,
-            data: {
-                roles: ['viewer', 'clinicviewer', 'clinicadmin', 'admin']
-            },
-            templateUrl: baseUrl + 'partials/Index',
-            controller: 'IndexCtrl as indexCtrl'
-        }).state('dashboard.workforce', {
-            url: 'workforce',
-            data: {
-                roles: ['viewer', 'clinicviewer', 'clinicadmin', 'admin']
-            },
-            templateUrl: baseUrl + 'partials/table/Workforce',
-            controller: 'WorkforceCtrl as CRUDCtrl'
-        }).state('dashboard.clinic', {
-            url: 'clinic',
+        }).state('dashboard.region', {
+            url: '/region',
             data: {
                 roles: ['admin']
             },
-            templateUrl: baseUrl + 'partials/table/Clinic',
-            controller: 'ClinicCtrl as CRUDCtrl'
-        }).state('dashboard.credit', {
-            url: 'credit',
+            templateUrl: baseUrl + 'partials/table/Region',
+            controller: 'RegionCtrl as CRUDCtrl'
+        }).state('dashboard.transaction', {
+            url: '/transaction',
             data: {
                 roles: ['admin']
             },
-            templateUrl: baseUrl + 'partials/table/Credit',
-            controller: 'CreditCtrl as CRUDCtrl'
+            templateUrl: baseUrl + 'partials/table/Transaction',
+            controller: 'TransactionCtrl as CRUDCtrl'
         }).state('dashboard.user', {
-            url: 'user',
+            url: '/user',
             data: {
                 roles: ['admin']
             },
             templateUrl: baseUrl + 'partials/table/User',
             controller: 'UserCtrl as CRUDCtrl'
         }).state('accessdenied', {
-            url: 'denied',
+            url: '/denied',
             data: {
                 roles: []
             },
@@ -80,5 +73,5 @@ var Lombok;
 
         $locationProvider.html5Mode(true);
     });
-})(Lombok || (Lombok = {}));
-//# sourceMappingURL=Lombok.js.map
+})(KawalDesa || (KawalDesa = {}));
+//# sourceMappingURL=Dashboard.js.map

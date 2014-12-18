@@ -12,6 +12,16 @@ namespace App.Configs
 
             // CSS Bundles
 
+            bundles.Add(new StyleBundle("~/css/index")
+                .Include("~/Content/style.css"));
+
+            bundles.Add(new ScriptBundle("~/js/index")
+                .Include("~/Scaffold/Scripts/angular.js")
+                .Include("~/Scripts/Models.js")
+                .Include("~/Scripts/KawalDesa/KawalDesa.js")
+                .Include("~/Scripts/KawalDesa/Controllers/*.js")
+                );
+
             bundles.Add(new StyleBundle("~/css/app")
                 .Include("~/Content/app/app.css")
                 .Include("~/Content/loading-bar.min.css")
@@ -45,22 +55,18 @@ namespace App.Configs
             bundles.Add(new ScriptBundle("~/js/base")
                 .Include("~/Scripts/Models.js"));
 
-            bundles.Add(new ScriptBundle("~/js/kawaldesa")
-                .Include("~/Scripts/KawalDesa/KawalDesa.js")
-                .Include("~/Scripts/KawalDesa/Services/Principal.js")
-                .Include("~/Scripts/KawalDesa/Services/Authorization.js")                                
-                .Include("~/Scripts/KawalDesa/Models/*.js")
-                .Include("~/Scripts/KawalDesa/Controllers/*.js")
-                .Include("~/Scripts/KawalDesa/Directives/*.js")
-                .Include("~/Scripts/KawalDesa/Services/Run.js"));
+            bundles.Add(new ScriptBundle("~/js/dashboard")
+                .Include("~/Scripts/dashboard/Dashboard.js")
+                .Include("~/Scripts/dashboard/Services/Principal.js")
+                .Include("~/Scripts/dashboard/Services/Authorization.js")
+                .Include("~/Scripts/dashboard/Models/*.js")
+                .Include("~/Scripts/dashboard/Controllers/*.js")
+                .Include("~/Scripts/dashboard/Directives/*.js")
+                .Include("~/Scripts/dashboard/Services/Run.js"));
 
             bundles.Add(new ScriptBundle("~/js/scaffold/smartadmin")
                 .Include("~/Scaffold/Scripts/Scaffold/Demo/Smartadmin/*.js"));
 
-            foreach (var bundle in bundles)
-            {
-                bundle.Transforms.Clear();
-            }
         }
     }
 }

@@ -4,7 +4,7 @@ module KawalDesa {
 
     //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
 
-    kawaldesa.run(['$rootScope', '$state', '$stateParams', 'authorization', 'principal',
+    dashboard.run(['$rootScope', '$state', '$stateParams', 'authorization', 'principal',
         function ($rootScope, $state, $stateParams, authorization, principal) {
             $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
                 // track the state the user wants to go to; authorization service needs this

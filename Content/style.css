@@ -4,7 +4,7 @@ html {
     margin: 0;
 }
 td, th {
-	font-size: 14px;
+	font-size: 12px;
 }
 body {
     font-family: "Lato",sans-serif !important;
@@ -120,4 +120,8 @@ table.table-bordered > thead > tr > th:last-child{
 }
 p.subtext {
     max-width: 700px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+padding: 3px;
 }

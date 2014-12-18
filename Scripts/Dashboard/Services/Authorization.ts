@@ -4,7 +4,7 @@ module KawalDesa {
 
     //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
 
-    kawaldesa.factory('authorization', ['$rootScope', '$state', 'principal',
+    dashboard.factory('authorization', ['$rootScope', '$state', 'principal',
         function ($rootScope, $state, principal) {
             return {
                 authorize: function () {

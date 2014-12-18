@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../typings/underscore/underscore.d.ts"/>
 /// <reference path="../../Models.ts"/>
-/// <reference path="../KawalDesa.ts"/>
+/// <reference path="../Dashboard.ts"/>
 
 module KawalDesa.Controllers {
     import Models = App.Models;
@@ -59,5 +59,5 @@ module KawalDesa.Controllers {
         }
     }
 
-    kawaldesa.controller("LoginCtrl", ["$scope", "$state", "principal", LoginCtrl]);
+    dashboard.controller("LoginCtrl", ["$scope", "$state", "principal", LoginCtrl]);
 }

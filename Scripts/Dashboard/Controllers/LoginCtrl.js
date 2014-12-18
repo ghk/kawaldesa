@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../typings/underscore/underscore.d.ts"/>
 /// <reference path="../../Models.ts"/>
-/// <reference path="../KawalDesa.ts"/>
+/// <reference path="../Dashboard.ts"/>
 var KawalDesa;
 (function (KawalDesa) {
     (function (Controllers) {
@@ -62,7 +62,7 @@ var KawalDesa;
             return LoginCtrl;
         })();
 
-        KawalDesa.kawaldesa.controller("LoginCtrl", ["$scope", "$state", "principal", LoginCtrl]);
+        KawalDesa.dashboard.controller("LoginCtrl", ["$scope", "$state", "principal", LoginCtrl]);
     })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
     var Controllers = KawalDesa.Controllers;
 })(KawalDesa || (KawalDesa = {}));

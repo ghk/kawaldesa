@@ -42,19 +42,16 @@ namespace App.Controllers
             base.Delete(id);
         }
 
-        [KawalDesaAuthorize(Roles = Role.ADMIN)]
         public override TModel Get(TId id)
         {
             return base.Get(id);
         }
 
-        [KawalDesaAuthorize(Roles = Role.ADMIN)]
         public override long GetCount()
         {
             return base.GetCount();
         }
 
-        [KawalDesaAuthorize(Roles=Role.ADMIN)]
         public override IQueryable<TModel> GetAll()
         {
             return base.GetAll();

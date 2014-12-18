@@ -2,7 +2,7 @@
 var KawalDesa;
 (function (KawalDesa) {
     //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
-    KawalDesa.kawaldesa.factory('authorization', [
+    KawalDesa.dashboard.factory('authorization', [
         '$rootScope', '$state', 'principal',
         function ($rootScope, $state, principal) {
             return {

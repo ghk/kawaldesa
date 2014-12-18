@@ -1,51 +1,140 @@
-﻿<!DOCTYPE html>
-<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
+﻿<html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kawal Desa</title>
-    <meta name="description" content="@PageData[" description"]">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
 
-    <!-- #CSS Links -->    
-    @Styles.Render("~/css/libraries")
-    @Styles.Render("~/css/smartadmin")
-    @Styles.Render("~/css/app")
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' />
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    @Styles.Render("~/css/index")
 
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/js/index")
+
 </head>
+<body ng-app="kawaldesa" ng-controller="RecapitulationCtrl as recapitulationCtrl">
+    <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav">
+                    <li><a href="" style="padding-left: 20px;">Kawal Desa</a></li>
+                    <li><div class="gt">→</div></li>
+                    <li><a href="">Nasional</a></li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a style="padding-right: 20px;" href="/dashboard/login">Login</a></li>
+            </ul>
+        </div>
+    </header>
 
-<!-- #BODY -->
-<!-- Possible Classes
 
-    * 'smart-skin-{SKIN#}'
-    * 'smart-rtl'         - Switch theme mode to RTL (will be avilable from version SmartAdmin 1.5)
-    * 'menu-on-top'       - Switch to top navigation (no DOM change required)
-    * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
-    * 'fixed-header'      - Fixes the header
-    * 'fixed-navigation'  - Fixes the main menu
-    * 'fixed-ribbon'      - Fixes breadcrumb
-    * 'fixed-footer'      - Fixes footer
-    * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
--->
-<body class="desktop-detected smart-style-0">
+    <div class="content-header">
+        Transfer ke Desa
+    </div>
 
-    <ui-view></ui-view>
-    <!-- END SHORTCUT AREA -->
-    <!--================================================== -->
-    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-    <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-    <!-- #PLUGINS -->
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    @Scripts.Render("~/js/libraries")
-    @Scripts.Render("~/js/scaffold")
-    @Scripts.Render("~/js/scaffold/smartadmin")
-    @Scripts.Render("~/js/base")
-    @Scripts.Render("~/js/kawaldesa")
+    <div class="table-responsive">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle;">Daerah</th>
+                    <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
+                    <th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
+                    <th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>
+                </tr>
+                <tr>
+                    <th class="money">Anggaran</th>
+                    <th class="money">Tertransfer</th>
+                    <th class="money">Diterima</th>
+                    <th class="money">Anggaran</th>
+                    <th class="money">Tertransfer</th>
+                    <th class="money">Diterima</th>
+                    <th class="money">Anggaran</th>
+                    <th class="money">Tertransfer</th>
+                    <th class="money">Diterima</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in entities">
+                    <td><a href="#" ng-click="recapitulationCtrl.setParentID(entity.RegionID)">{{entity.RegionName}}</a></td>
+                    <td class="money"> {{entity.BudgettedTotal | currency:"":0}}</td>
+                    <td class="money"> {{entity.TransferredTotal | currency:"":0}} </td>
+                    <td class="money"> {{entity.AcknowledgedTotal | currency:"":0}} </td>
+
+                    <td class="money"> {{entity.BudgetedAPBN | currency:"":0}} </td>
+                    <td class="money"> {{entity.TransferredAPBN | currency:"":0}} </td>
+                    <td class="money"> {{entity.AcknowledgedAPBN | currency:"":0}} </td>
+
+                    <td class="money"> {{entity.BudgetedADD | currency:"":0}} </td>
+                    <td class="money"> {{entity.TransferredADD | currency:"":0}} </td>
+                    <td class="money"> {{entity.AcknowledgedADD | currency:"":0}} </td>
+                </tr>
+            </tbody>
+            <tfoot ng-show="entities.length > 0">
+                <tr class="success">
+                    <td><a href="">Total</a></td>
+                    <td class="money"> {{total.BudgettedTotal | currency:"":0}} </td>
+                    <td class="money"> {{total.TransferredTotal | currency:"":0}} </td>
+                    <td class="money"> {{total.AcknowledgedTotal | currency:"":0}} </td>
+
+                    <td class="money"> {{total.BudgetedAPBN | currency:"":0}} </td>
+                    <td class="money"> {{total.TransferredAPBN | currency:"":0}} </td>
+                    <td class="money"> {{total.AcknowledgedAPBN | currency:"":0}} </td>
+
+                    <td class="money"> {{total.BudgetedADD | currency:"":0}} </td>
+                    <td class="money"> {{total.TransferredADD | currency:"":0}} </td>
+                    <td class="money"> {{total.AcknowledgedADD | currency:"":0}} </td>
+                </tr>
+            </tfoot>
+            <tfoot ng-show="entities.length == 0">
+                <tr>
+                    <td colspan="10" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Tambah Penyaluran</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Jumlah</label>
+                            <input type="number" class="form-control" placeholder="Masukkan jumlah">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal</label>
+                            <input type="date" class="form-control" placeholder="Masukkan tanggal">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Lampiran bukti transfer</label>
+                            <input type="file" id="exampleInputFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

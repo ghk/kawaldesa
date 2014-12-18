@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="dashboard" data-framework="angularjs">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Kawal Desa</title>
+    <meta name="description" content="@PageData[" description"]">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- #CSS Links -->    
+    @Styles.Render("~/css/smartadmin")
+    @Styles.Render("~/css/app")
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+</head>
+
+<!-- #BODY -->
+<!-- Possible Classes
+
+    * 'smart-skin-{SKIN#}'
+    * 'smart-rtl'         - Switch theme mode to RTL (will be avilable from version SmartAdmin 1.5)
+    * 'menu-on-top'       - Switch to top navigation (no DOM change required)
+    * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
+    * 'fixed-header'      - Fixes the header
+    * 'fixed-navigation'  - Fixes the main menu
+    * 'fixed-ribbon'      - Fixes breadcrumb
+    * 'fixed-footer'      - Fixes footer
+    * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
+-->
+<body class="desktop-detected smart-style-2">
+
+    <ui-view></ui-view>
+    <!-- END SHORTCUT AREA -->
+    <!--================================================== -->
+    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
+    <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
+    <!-- #PLUGINS -->
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+    @Scripts.Render("~/js/libraries")
+    @Scripts.Render("~/js/scaffold")
+    @Scripts.Render("~/js/scaffold/smartadmin")
+    @Scripts.Render("~/js/base")
+    @Scripts.Render("~/js/dashboard")
+</body>
+</html>

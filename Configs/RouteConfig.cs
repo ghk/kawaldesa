@@ -19,16 +19,24 @@ namespace App.Configs
                 url: "scaffold/smartadmin/{*fileName}",
                 defaults: new { controller = "SmartAdmin", action = "Index", fileName = UrlParameter.Optional }
             );            
+
             routes.MapRoute(
-                name: "Kawal Desa Partials",
-                url: "partials/{*fileName}",
-                defaults: new { controller = "KawalDesa", action = "Partials", fileName = UrlParameter.Optional }
+               name: "Dashboard Partials",
+               url: "partials/{*fileName}",
+               defaults: new { controller = "Dashboard", action = "Partials", fileName = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Dashboard Default",
+                url: "dashboard/{type}/{id}",
+                defaults: new { controller = "Dashboard", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{type}/{id}",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
-        }
+}
     }
 }

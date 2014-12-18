@@ -2,7 +2,7 @@
 var KawalDesa;
 (function (KawalDesa) {
     //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
-    KawalDesa.kawaldesa.run([
+    KawalDesa.dashboard.run([
         '$rootScope', '$state', '$stateParams', 'authorization', 'principal',
         function ($rootScope, $state, $stateParams, authorization, principal) {
             $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
