@@ -27,9 +27,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav">
-                    <li><a href="" style="padding-left: 20px;">Kawal Desa</a></li>
-                    <li><div class="gt">→</div></li>
-                    <li><a href="">Nasional</a></li>
+                    <li><a href="#" ng-click="recapitulationCtrl.setParentID(0, $event)" style=" padding-left 20px;">Kawal Desa</a></li>
+
+                    <li ng-repeat-start="region in regionTree">
+                        <div class="gt">→</div>
+                    </li>
+                    <li ng-repeat-end>
+                        <a href="#" ng-click="recapitulationCtrl.setParentID(region.ID, $event)">
+                            {{region.Name}}
+                        </a>
+                    </li>
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
@@ -47,7 +54,7 @@
         <table class="table table-condensed table-responsive table-bordered">
             <thead>
                 <tr>
-                    <th rowspan="2" style="vertical-align: middle;">Daerah</th>
+                    <th rowspan="2" style="vertical-align: middle;">{{childName}}</th>
                     <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
                     <th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
                     <th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>

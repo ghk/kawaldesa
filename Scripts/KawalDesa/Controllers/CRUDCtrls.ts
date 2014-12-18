@@ -6,6 +6,14 @@
 module KawalDesa.Controllers {
     import Models = App.Models;
 
+    var CHILD_NAMES = [
+        "Daerah",
+        "Provinsi",
+        "Kabupaten / Kota",
+        "Kecamatan",
+        "Desa"
+    ];
+
 
     class RecapitulationCtrl {
 
@@ -38,6 +46,8 @@ module KawalDesa.Controllers {
 
         getRecapitulations(parentID: number) {
             this.$scope.entities = [];
+            this.$scope.regionTree = [];
+            this.$scope.childName = CHILD_NAMES[0];
             
             var ctrl = this;
             var scope = this.$scope;
@@ -49,6 +59,20 @@ module KawalDesa.Controllers {
                 scope.$apply(() => {
                     scope.entities = recapitulations.filter(r => r.RegionID != parentID);
                     scope.total = recapitulations.filter(r => r.RegionID == parentID)[0];
+                });
+            });
+
+            Models.Region.Get(parentID).done(region => {
+                scope.$apply(() => {
+                    var regionTree = [];
+                    var cur : Models.IRegion = region;
+                    while (cur) {
+                        regionTree.push(cur);
+                        cur = cur.Parent;
+                    }
+                    scope.regionTree = regionTree.reverse();
+                    if (regionTree.length < CHILD_NAMES.length)
+                        scope.childName = CHILD_NAMES[regionTree.length];
                 });
             });
         }

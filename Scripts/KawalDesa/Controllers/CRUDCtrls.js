@@ -7,6 +7,14 @@ var KawalDesa;
     (function (Controllers) {
         var Models = App.Models;
 
+        var CHILD_NAMES = [
+            "Daerah",
+            "Provinsi",
+            "Kabupaten / Kota",
+            "Kecamatan",
+            "Desa"
+        ];
+
         var RecapitulationCtrl = (function () {
             function RecapitulationCtrl($scope, $location) {
                 this.$scope = $scope;
@@ -36,6 +44,8 @@ var KawalDesa;
 
             RecapitulationCtrl.prototype.getRecapitulations = function (parentID) {
                 this.$scope.entities = [];
+                this.$scope.regionTree = [];
+                this.$scope.childName = CHILD_NAMES[0];
 
                 var ctrl = this;
                 var scope = this.$scope;
@@ -51,6 +61,20 @@ var KawalDesa;
                         scope.total = recapitulations.filter(function (r) {
                             return r.RegionID == parentID;
                         })[0];
+                    });
+                });
+
+                Models.Region.Get(parentID).done(function (region) {
+                    scope.$apply(function () {
+                        var regionTree = [];
+                        var cur = region;
+                        while (cur) {
+                            regionTree.push(cur);
+                            cur = cur.Parent;
+                        }
+                        scope.regionTree = regionTree.reverse();
+                        if (regionTree.length < CHILD_NAMES.length)
+                            scope.childName = CHILD_NAMES[regionTree.length];
                     });
                 });
             };

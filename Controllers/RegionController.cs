@@ -9,7 +9,8 @@ namespace App.Controllers
     public class RegionController : BaseController<Region, long>
     {
         public RegionController(DB dbContext) : base(dbContext) {
-            Include(r => r.Parent); 
+            Include(r => r.Parent);
+            SingleInclude(r => r.Parent.Parent, r => r.Parent.Parent.Parent, r => r.Parent.Parent.Parent.Parent);
         }
 
         protected override void PrePersist(Region model)

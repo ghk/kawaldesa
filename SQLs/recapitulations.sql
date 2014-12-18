@@ -18,6 +18,7 @@
 			OR (r."Type" = 1 AND prov."ID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID") 
 			OR (r."Type" = 3 AND kec."ID" = r."ID")
+			OR (r."Type" = 4 AND desa."ID" = r."ID")
 		)
 	), 0) as "BudgetedAPBN",
 	COALESCE((
@@ -33,6 +34,7 @@
 			OR (r."Type" = 1 AND prov."ID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID") 
 			OR (r."Type" = 3 AND kec."ID" = r."ID")
+			OR (r."Type" = 4 AND desa."ID" = r."ID")
 		)
 	), 0) as "TransferredAPBN",
 	COALESCE((
@@ -49,6 +51,7 @@
 			OR (r."Type" = 1 AND prov."ID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID") 
 			OR (r."Type" = 3 AND kec."ID" = r."ID")
+			OR (r."Type" = 4 AND desa."ID" = r."ID")
 		)
 	), 0) as "AcknowledgedAPBN",
 	COALESCE((
@@ -76,6 +79,7 @@
 			OR (r."Type" = 1 AND prov."ID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID") 
 			OR (r."Type" = 3 AND kec."ID" = r."ID")
+			OR (r."Type" = 4 AND desa."ID" = r."ID")
 		)
 	), 0) as "TransferredADD",
 	COALESCE((
@@ -91,6 +95,7 @@
 			OR (r."Type" = 1 AND prov."ID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID") 
 			OR (r."Type" = 3 AND kec."ID" = r."ID")
+			OR (r."Type" = 4 AND desa."ID" = r."ID")
 		)
 	), 0) as "AcknowledgedADD"
-    FROM dbo."Regions" r, dbo."APBNs" apbn where r."Type" in (0, 1, 2, 3);
+    FROM dbo."Regions" r, dbo."APBNs" apbn;

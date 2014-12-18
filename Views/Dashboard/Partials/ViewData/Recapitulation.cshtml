@@ -8,10 +8,10 @@
         </button>
         <ul class="nav navbar-nav">
             <li><a href="" style="padding-left: 20px;">Kawal Desa</a></li>
-            <li>
+            <li ng-repeat-start="region in regionTree">
                 <div class="gt">→</div>
             </li>
-            <li><a href="">Nasional</a></li>
+            <li ng-repeat-end><a href="#" ng-click="recapitulation">Nasional</a></li>
         </ul>
     </div>
     <ul class="nav navbar-nav navbar-right">
