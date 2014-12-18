@@ -1,5 +1,4 @@
-﻿
-<div class="container-fluid">
+﻿<div class="container-fluid">
     <div class="navbar-header">
         <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
             <span class="sr-only">Toggle navigation</span>
@@ -12,9 +11,9 @@
             <li><div class="gt">→</div></li>
             <li><a ui-sref="index">Nasional</a></li>
             <li><div class="gt">→</div></li>
-            <li><a ui-sref="province">DKI Jakarta</a></li>
+            <li><a ui-sref="province({ProvinceID: currentRegion.Parent.ID })">{{currentRegion.Parent.Name}}</a></li>
             <li><div class="gt">→</div></li>
-            <li><a href="kabupaten.html">Jakarta Timur</a></li>
+            <li><a href="">{{currentRegion.Name}}</a></li>
         </ul>
     </div>
     <ul class="nav navbar-nav navbar-right">
@@ -34,9 +33,9 @@
         <thead>
             <tr>
                 <th rowspan="2" style="vertical-align: middle;">Desa</th>
+                <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
                 <th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
                 <th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>
-                <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
             </tr>
             <tr>
                 <th class="money">Anggaran</th>
@@ -52,8 +51,8 @@
         </thead>
         <tbody>
             <tr>
-            <tr ng-repeat="entity in entities | filter: {ParentID: ID}: true">
-                <td><a ui-sref="">{{entity.Name}}</a></td>
+            <tr ng-repeat="entity in entities | filter: {fkParentID: IdDistrict}: true">
+                <td><a href="">{{entity.Name}}</a></td>
                 <td class="money">223.000.120</td>
                 <td class="money">814.900.120</td>
                 <td class="money">150.000.120</td>
@@ -173,7 +172,7 @@
                     <td class="money">291.850.200</td>
                     <td class="money">412.223.401</td>
                     <td class="money">150.000.120</td>
-                </tr*@>
+                </tr>*@
         </tbody>
         <tfoot>
             <tr class="success">

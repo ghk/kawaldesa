@@ -21,8 +21,15 @@ namespace App.Controllers
         protected override IQueryable<Region> ApplyQuery(IQueryable<Region> query)
         {
             var keywords = GetQueryString<string>("Keywords");
+            var type = GetQueryString<int?>("Type");
+            var parentID = GetQueryString<long?>("ParentID");
+
             if (!string.IsNullOrWhiteSpace(keywords))
                 query = query.Where(r => r.Name.ToLower().Contains(keywords.ToLower()));
+            if (type != null)
+                query = query.Where(r => r.Type == (RegionType)type);
+            if (parentID != null)
+                query = query.Where(r => r.Parent.ID == parentID);
             return query;
         }
 

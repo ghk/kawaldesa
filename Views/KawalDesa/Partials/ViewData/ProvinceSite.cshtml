@@ -11,7 +11,7 @@
                 <li><div class="gt">→</div></li>
                 <li><a ui-sref="index">Nasional</a></li>
                 <li><div class="gt">→</div></li>
-                <li><a href="">Provinsi Aceh</a></li>
+                <li><a href="">{{currentRegion.Name}}</a></li>
             </ul>
         </div>
         <ul class="nav navbar-nav navbar-right">
@@ -30,9 +30,9 @@
             <thead>
                 <tr>
                     <th rowspan="2" style="vertical-align: middle;">Daerah</th>
+                    <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
                     <th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
                     <th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>
-                    <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
                 </tr>
                 <tr>
                     <th class="money">Anggaran</th>
@@ -47,8 +47,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="entity in entities | filter: {ParentID: ID}: true">
-                    <td><a ui-sref="district({ID:{{entity.ID}}})">{{entity.Name}}</a></td>
+                <tr ng-repeat="entity in entities">
+                    <td><a ui-sref="district({ProvinceID: entity.ID})">{{entity.Name}}</a></td>
                     <td class="money"> 0 </td>
                     <td class="money"> 0 </td>
                     <td class="money"> 0 </td>

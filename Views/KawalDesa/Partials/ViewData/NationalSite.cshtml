@@ -31,9 +31,9 @@
         <thead>
             <tr>
                 <th rowspan="2" style="vertical-align: middle;">Daerah</th>
+                <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
                 <th colspan="3" style="text-align: center;">APBN (Pusat → Desa)</th>
                 <th colspan="3" style="text-align: center;">ADD (Kabupaten → Desa)</th>
-                <th colspan="3" style="text-align: center;">Dana Desa (APBN + ADD)</th>
             </tr>
             <tr>
                 <th class="money">Anggaran</th>
@@ -48,8 +48,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entity in entities | filter: {Type: 2}">
-                <td><a ui-sref="province({ID:{{entity.ID}} })">{{entity.Name}}</a></td>
+            <tr ng-repeat="entity in entities">
+                <td><a ui-sref="province({ProvinceID: entity.ID })">{{entity.Name}}</a></td>
                 <td class="money"> 0 </td>
                 <td class="money"> 0 </td>
                 <td class="money"> 0 </td>

@@ -116,10 +116,14 @@ var KawalDesa;
 
             CRUDCtrl.prototype.generateQuery = function (sortField, sortOrder, pageBegin, pageLength, keywords) {
                 var result = {};
-                result["SortField"] = sortField;
-                result["SortOrder"] = sortOrder;
-                result["PageBegin"] = pageBegin;
-                result["PageLength"] = pageLength;
+                if (sortField)
+                    result["SortField"] = sortField;
+                if (sortOrder)
+                    result["SortOrder"] = sortOrder;
+                if (pageBegin)
+                    result["PageBegin"] = pageBegin;
+                if (pageLength)
+                    result["PageLength"] = pageLength;
                 if (keywords)
                     result["Keywords"] = keywords;
                 return result;
@@ -146,8 +150,6 @@ var KawalDesa;
                 this.type = Models.Region;
                 this.SortField = "DateCreated";
                 this.SortOrder = "DESC";
-
-                //this.getRegions();
                 this.getRegionsType();
             }
             RegionCtrl.prototype.save = function () {
@@ -155,16 +157,6 @@ var KawalDesa;
                 _super.prototype.save.call(this);
             };
 
-            //getRegions() {
-            //    var scope = this.$scope;
-            //    var ctrl = this;
-            //    App.Models.Region.GetAll().done(regions => {
-            //        scope.$apply(() => {
-            //            ctrl.regions = regions;
-            //            ctrl.regionName = _.reduce(regions, function (o, v: any) { o[v.ID] = v.Name; return o }, {});
-            //        });
-            //    });
-            //}
             RegionCtrl.prototype.getRegion = function (query) {
                 return App.Models.Region.GetAll({
                     Keywords: query,
@@ -181,7 +173,6 @@ var KawalDesa;
                 }).done(function (regionTypeName) {
                     scope.$apply(function () {
                         ctrl.regionTypeName = regionTypeName;
-                        //ctrl.regionTypeName = _.reduce(regionTypeName, function (o, v: any) { o[v.Value] = v.Text; console.log(o); return o }, {});
                     });
                 });
             };
@@ -246,31 +237,61 @@ var KawalDesa;
             return UserCtrl;
         })(CRUDCtrl);
 
-        var NationalRegionCtrl = (function (_super) {
-            __extends(NationalRegionCtrl, _super);
-            function NationalRegionCtrl($scope, cfpLoadingBar, $stateParams) {
-                _super.call(this, $scope, cfpLoadingBar);
+        var NationalRegionCtrl = (function () {
+            function NationalRegionCtrl($scope, cfpLoadingBar, $state, $stateParams) {
                 this.$scope = $scope;
                 this.cfpLoadingBar = cfpLoadingBar;
+                this.$state = $state;
                 this.$stateParams = $stateParams;
-                this.type = Models.Region;
-                this.roles = [];
-                this.roleNames = ["admin"];
-                this.IDField = 'Id';
-
                 var ctrl = this;
-                $scope.entitiesPerPage = 34;
-                ctrl.query = ctrl.generateQuery(ctrl.sortField, ctrl.sortOrder, ctrl.$scope.page, ctrl.$scope.entitiesPerPage, ctrl.keywords);
-                ctrl.fetch(ctrl.query);
-                $scope.ID = $stateParams.ID;
+
+                $scope.currentRegion = {};
+                $scope.entities = [];
+                $scope.page = 1;
+                $scope.entitiesPerPage = 10;
+                $scope.pagination = { current: 1 };
+
+                if ($state.current.name === "index") {
+                    this.getRegions(1, null);
+                } else if ($state.current.name === "province" || $state.current.name === "district") {
+                    if (!$stateParams.ProvinceID)
+                        return;
+
+                    var provinceID = $stateParams.ProvinceID;
+                    var scope = this.$scope;
+                    Models.Region.Get(provinceID).done(function (region) {
+                        scope.$apply(function () {
+                            scope.currentRegion = region;
+                        });
+                    });
+
+                    if ($state.current.name === "province")
+                        this.getRegions(2, provinceID);
+                    else
+                        this.getRegions(3, provinceID);
+                }
             }
+            NationalRegionCtrl.prototype.getRegions = function (type, parentID) {
+                var ctrl = this;
+                var scope = this.$scope;
+                var query = {
+                    "SortOrder": "ASC",
+                    "Type": type,
+                    "ParentID": parentID
+                };
+                Models.Region.GetAll(query).done(function (regions) {
+                    scope.$apply(function () {
+                        scope.entities = regions;
+                    });
+                });
+            };
             return NationalRegionCtrl;
-        })(CRUDCtrl);
+        })();
 
         KawalDesa.kawaldesa.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);
         KawalDesa.kawaldesa.controller("TransactionCtrl", ["$scope", "cfpLoadingBar", TransactionCtrl]);
         KawalDesa.kawaldesa.controller("UserCtrl", ["$scope", "cfpLoadingBar", UserCtrl]);
-        KawalDesa.kawaldesa.controller("NationalRegionCtrl", ["$scope", "cfpLoadingBar", '$stateParams', NationalRegionCtrl]);
+        KawalDesa.kawaldesa.controller("NationalRegionCtrl", ["$scope", "cfpLoadingBar", "$state", "$stateParams", NationalRegionCtrl]);
     })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
     var Controllers = KawalDesa.Controllers;
 })(KawalDesa || (KawalDesa = {}));
