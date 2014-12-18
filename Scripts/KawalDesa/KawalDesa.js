@@ -28,7 +28,16 @@ var KawalDesa;
             }
         }).state('index', {
             url: '/',
-            templateUrl: baseUrl + 'partials/Home'
+            templateUrl: baseUrl + 'partials/ViewData/NationalSite',
+            controller: 'NationalRegionCtrl as CRUDCtrl'
+        }).state('province', {
+            url: '/province/:ID',
+            templateUrl: baseUrl + 'partials/ViewData/ProvinceSite',
+            controller: 'NationalRegionCtrl as CRUDCtrl'
+        }).state('district', {
+            url: '/district/:ID',
+            templateUrl: baseUrl + 'partials/ViewData/DistrictSite',
+            controller: 'NationalRegionCtrl as CRUDCtrl'
         }).state('login', {
             parent: 'site',
             url: '/login',

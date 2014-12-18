@@ -146,9 +146,44 @@ var KawalDesa;
                 this.type = Models.Region;
                 this.SortField = "DateCreated";
                 this.SortOrder = "DESC";
+
+                //this.getRegions();
+                this.getRegionsType();
             }
             RegionCtrl.prototype.save = function () {
+                this.$scope.model.ParentID = this.$scope.model.Parent.ID;
                 _super.prototype.save.call(this);
+            };
+
+            //getRegions() {
+            //    var scope = this.$scope;
+            //    var ctrl = this;
+            //    App.Models.Region.GetAll().done(regions => {
+            //        scope.$apply(() => {
+            //            ctrl.regions = regions;
+            //            ctrl.regionName = _.reduce(regions, function (o, v: any) { o[v.ID] = v.Name; return o }, {});
+            //        });
+            //    });
+            //}
+            RegionCtrl.prototype.getRegion = function (query) {
+                return App.Models.Region.GetAll({
+                    Keywords: query,
+                    SortOrder: 'ASC'
+                });
+            };
+
+            RegionCtrl.prototype.getRegionsType = function () {
+                var scope = this.$scope;
+                var ctrl = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/Enum/GetRegionType"
+                }).done(function (regionTypeName) {
+                    scope.$apply(function () {
+                        ctrl.regionTypeName = regionTypeName;
+                        //ctrl.regionTypeName = _.reduce(regionTypeName, function (o, v: any) { o[v.Value] = v.Text; console.log(o); return o }, {});
+                    });
+                });
             };
             return RegionCtrl;
         })(CRUDCtrl);
@@ -161,6 +196,24 @@ var KawalDesa;
                 this.cfpLoadingBar = cfpLoadingBar;
                 this.type = Models.Transaction;
             }
+            TransactionCtrl.prototype.save = function () {
+                this.$scope.model.SourceID = this.$scope.model.Source.ID;
+                this.$scope.model.DestinationID = this.$scope.model.Destination.ID;
+                _super.prototype.save.call(this);
+            };
+
+            TransactionCtrl.prototype.getRegion = function (query) {
+                return App.Models.Region.GetAll({
+                    Keywords: query,
+                    SortOrder: 'ASC'
+                });
+            };
+
+            TransactionCtrl.prototype.open = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                this.openExamDatePicker = true;
+            };
             return TransactionCtrl;
         })(CRUDCtrl);
 
@@ -193,9 +246,31 @@ var KawalDesa;
             return UserCtrl;
         })(CRUDCtrl);
 
+        var NationalRegionCtrl = (function (_super) {
+            __extends(NationalRegionCtrl, _super);
+            function NationalRegionCtrl($scope, cfpLoadingBar, $stateParams) {
+                _super.call(this, $scope, cfpLoadingBar);
+                this.$scope = $scope;
+                this.cfpLoadingBar = cfpLoadingBar;
+                this.$stateParams = $stateParams;
+                this.type = Models.Region;
+                this.roles = [];
+                this.roleNames = ["admin"];
+                this.IDField = 'Id';
+
+                var ctrl = this;
+                $scope.entitiesPerPage = 34;
+                ctrl.query = ctrl.generateQuery(ctrl.sortField, ctrl.sortOrder, ctrl.$scope.page, ctrl.$scope.entitiesPerPage, ctrl.keywords);
+                ctrl.fetch(ctrl.query);
+                $scope.ID = $stateParams.ID;
+            }
+            return NationalRegionCtrl;
+        })(CRUDCtrl);
+
         KawalDesa.kawaldesa.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);
         KawalDesa.kawaldesa.controller("TransactionCtrl", ["$scope", "cfpLoadingBar", TransactionCtrl]);
         KawalDesa.kawaldesa.controller("UserCtrl", ["$scope", "cfpLoadingBar", UserCtrl]);
+        KawalDesa.kawaldesa.controller("NationalRegionCtrl", ["$scope", "cfpLoadingBar", '$stateParams', NationalRegionCtrl]);
     })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
     var Controllers = KawalDesa.Controllers;
 })(KawalDesa || (KawalDesa = {}));

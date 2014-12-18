@@ -3,22 +3,17 @@
     <div id="logo-group">
 
         <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo" style="font-size:22px; margin-top:10px; margin-left:33px;">SIMA ONLINE</span>
+        <span id="logo" style="font-size:22px; margin-top:10px; margin-left:33px;">KAWAL DESA</span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <div id="ribbon" style="background-color: transparent;">
-
-        <span class="btn-header">
-            <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-bar-chart-o"></i></a> </span>
-        </span>
-
         <span style="text-transform: uppercase; font-size: 1.2em; margin-left: 0.5em;">
         </span>
     </div>
 
     <!-- #TOGGLE LAYOUT BUTTONS -->
     <!-- pulled right: nav area -->
-    <div class="pull-right" ng-controller="LoginCtrl as loginCtrl">
+    <div class="pull-right">
 
         <!-- collapse menu button -->
         <div id="hide-menu" class="btn-header pull-right">
@@ -27,10 +22,10 @@
         <!-- end collapse menu -->
         <!-- #MOBILE -->
         <!-- Top menu profile link : this shows only when top menu is active -->
-        <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+        @*<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
             <li class="">
                 <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
-                    <!--<img src="Dashboard_files/sunny.png" alt="John Doe" class="online">-->
+                    <img src="Dashboard_files/sunny.png" alt="John Doe" class="online">
                 </a>
                 <ul class="dropdown-menu pull-right">
                     <li>
@@ -54,10 +49,10 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul>*@
 
         <!-- logout button -->
-        <div id="logout" class="btn-header transparent pull-right">
+        <div id="logout" class="btn-header transparent pull-right" ng-controller="LoginCtrl as loginCtrl">
             <span> <a href="javascript:void(0)" title="Sign Out" data-action="userLogout" ng-click="loginCtrl.logout()" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
         </div>
         <!-- end logout button -->
@@ -96,17 +91,16 @@
         Please note that these links work a bit different than
         traditional href="" links. See documentation for details.
         -->
-
         <ul>
             <li>
                 <a ui-sref="dashboard.region">
-                    <i class="fa fa-lg fa-fw fa-user"></i>
+                    <i class="fa fa-lg fa-fw fa-globe"></i>
                     <span class="menu-item">Region</span>
                 </a>
             </li>
             <li ng-show="principal.isInRole('admin')">
                 <a ui-sref="dashboard.transaction">
-                    <i class="fa fa-lg fa-fw fa-hospital-o"></i>
+                    <i class="fa fa-lg fa-fw fa-money"></i>
                     <span class="menu-item">Transaction</span>
                 </a>
             </li>

@@ -20,7 +20,7 @@
      * Config
      */
     var moduleName = 'angularUtils.directives.dirPagination';
-    var templatePath = 'partials/Template/dirPagination.tpl';
+    var templatePath = '/partials/Template/dirPagination.tpl';
 
     /**
      * Module

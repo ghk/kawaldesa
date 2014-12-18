@@ -29,6 +29,47 @@ var Scaffold;
 var App;
 (function (App) {
     (function (Models) {
+        var APBD = (function () {
+            function APBD(data) {
+                this.ID = data ? data.ID : null;
+                this.DAU = data ? data.DAU : null;
+                this.DBH = data ? data.DBH : null;
+                this.IsCommited = data ? data.IsCommited : null;
+                this.fkAPBNID = data ? data.fkAPBNID : null;
+                this.APBN = data ? data.APBN : null;
+                this.fkRegionID = data ? data.fkRegionID : null;
+                this.Region = data ? data.Region : null;
+                this.fkAPBDFileID = data ? data.fkAPBDFileID : null;
+                this.APBDFile = data ? data.APBDFile : null;
+            }
+            APBD.ajaxSettings = new Scaffold.AjaxSettings();
+            return APBD;
+        })();
+        Models.APBD = APBD;
+
+        var APBDFile = (function () {
+            function APBDFile(data) {
+                this.ID = data ? data.ID : null;
+                this.FileName = data ? data.FileName : null;
+                this.IsCommited = data ? data.IsCommited : null;
+                this.APBDs = data ? data.APBDs : null;
+            }
+            APBDFile.ajaxSettings = new Scaffold.AjaxSettings();
+            return APBDFile;
+        })();
+        Models.APBDFile = APBDFile;
+
+        var APBN = (function () {
+            function APBN(data) {
+                this.ID = data ? data.ID : null;
+                this.DanaPerDesa = data ? data.DanaPerDesa : null;
+                this.Year = data ? data.Year : null;
+            }
+            APBN.ajaxSettings = new Scaffold.AjaxSettings();
+            return APBN;
+        })();
+        Models.APBN = APBN;
+
         var Blob = (function () {
             function Blob(data) {
                 this.ID = data ? data.ID : null;
@@ -42,14 +83,68 @@ var App;
         })();
         Models.Blob = Blob;
 
+        var Recapitulation = (function () {
+            function Recapitulation(data) {
+                this.ID = data ? data.ID : null;
+                this.RegionID = data ? data.RegionID : null;
+                this.APBNID = data ? data.APBNID : null;
+                this.APBNYear = data ? data.APBNYear : null;
+                this.ParentRegionID = data ? data.ParentRegionID : null;
+                this.RegionName = data ? data.RegionName : null;
+                this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
+                this.TransferredAPBN = data ? data.TransferredAPBN : null;
+                this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
+                this.BudgetedADD = data ? data.BudgetedADD : null;
+                this.TransferredADD = data ? data.TransferredADD : null;
+                this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+                this.BudgettedTotal = data ? data.BudgettedTotal : null;
+                this.TransferredTotal = data ? data.TransferredTotal : null;
+                this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+            }
+            /* App.Controllers.RecapitulationController */
+            Recapitulation.GetAll = function (query) {
+                var res = $.ajax(Recapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Recapitulation/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new Recapitulation(model);
+                    });
+                });
+                return res;
+            };
+
+            Recapitulation.Get = function (id) {
+                var res = $.ajax(Recapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Recapitulation/Get/' + id
+                })).then(function (model) {
+                    return new Recapitulation(model);
+                });
+                return res;
+            };
+
+            Recapitulation.Count = function (query) {
+                var res = $.ajax(Recapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Recapitulation/GetCount',
+                    data: query
+                }));
+                return res;
+            };
+            Recapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return Recapitulation;
+        })();
+        Models.Recapitulation = Recapitulation;
+
         var Region = (function () {
             function Region(data) {
                 this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
-                this.ParentID = data ? data.ParentID : null;
+                this.fkParentID = data ? data.fkParentID : null;
                 this.Parent = data ? data.Parent : null;
-                this.Children = data ? data.Children : null;
             }
             /* App.Controllers.RegionController */
             Region.GetAll = function (query) {
@@ -125,12 +220,21 @@ var App;
                 this.ID = data ? data.ID : null;
                 this.Amount = data ? data.Amount : null;
                 this.Date = data ? data.Date : null;
-                this.ProofID = data ? data.ProofID : null;
-                this.SourceID = data ? data.SourceID : null;
-                this.DestinationID = data ? data.DestinationID : null;
+                this.IsCommited = data ? data.IsCommited : null;
+                this.fkProofID = data ? data.fkProofID : null;
                 this.Proof = data ? data.Proof : null;
+                this.fkAPBNID = data ? data.fkAPBNID : null;
+                this.APBN = data ? data.APBN : null;
+                this.fkSourceID = data ? data.fkSourceID : null;
                 this.Source = data ? data.Source : null;
+                this.fkDestinationID = data ? data.fkDestinationID : null;
                 this.Destination = data ? data.Destination : null;
+                this.fkActorID = data ? data.fkActorID : null;
+                this.Actor = data ? data.Actor : null;
+                this.fkCreatedByID = data ? data.fkCreatedByID : null;
+                this.CreatedBy = data ? data.CreatedBy : null;
+                this.fkTransactionFileID = data ? data.fkTransactionFileID : null;
+                this.TransactionFile = data ? data.TransactionFile : null;
             }
             /* App.Controllers.TransactionController */
             Transaction.GetAll = function (query) {
@@ -200,6 +304,18 @@ var App;
             return Transaction;
         })();
         Models.Transaction = Transaction;
+
+        var TransactionFile = (function () {
+            function TransactionFile(data) {
+                this.ID = data ? data.ID : null;
+                this.FileName = data ? data.FileName : null;
+                this.IsCommited = data ? data.IsCommited : null;
+                this.Transactions = data ? data.Transactions : null;
+            }
+            TransactionFile.ajaxSettings = new Scaffold.AjaxSettings();
+            return TransactionFile;
+        })();
+        Models.TransactionFile = TransactionFile;
     })(App.Models || (App.Models = {}));
     var Models = App.Models;
 })(App || (App = {}));

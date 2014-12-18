@@ -41,7 +41,21 @@ module KawalDesa.Controllers {
         logout() {            
             Models.User.Logout();
             this.principal.authenticate(null);
-            this.$state.go('dashboard');
+            this.$state.go('index');
+        }
+
+        launchIntoFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+
+            console.log(element);
         }
     }
 

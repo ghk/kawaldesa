@@ -7,11 +7,33 @@ namespace App.Controllers
     public class EnumController : ApiController
     {
         [System.Web.Http.HttpGet]
-        public IEnumerable<NumericValueSelectListItem> GetCreditType()
+        public IEnumerable<NumericValueSelectListItem> GetRegionType()
         {
             List<NumericValueSelectListItem> result = new List<NumericValueSelectListItem>();
+            result.Add(new NumericValueSelectListItem()
+            {
+                Text = RegionType.DESA.ToString(),
+                Value = (int)RegionType.DESA
+            });
 
-            return result;            
+            result.Add(new NumericValueSelectListItem()
+            {
+                Text = RegionType.KABUPATEN.ToString(),
+                Value = (int)RegionType.KABUPATEN
+            });
+
+            result.Add(new NumericValueSelectListItem()
+            {
+                Text = RegionType.PROPINSI.ToString(),
+                Value = (int)RegionType.PROPINSI
+            });
+
+            result.Add(new NumericValueSelectListItem()
+            {
+                Text = RegionType.NASIONAL.ToString(),
+                Value = (int)RegionType.NASIONAL
+            });
+            return result;              
         }
     }
 

@@ -43,7 +43,21 @@ var KawalDesa;
             LoginCtrl.prototype.logout = function () {
                 Models.User.Logout();
                 this.principal.authenticate(null);
-                this.$state.go('dashboard');
+                this.$state.go('index');
+            };
+
+            LoginCtrl.prototype.launchIntoFullscreen = function (element) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+
+                console.log(element);
             };
             return LoginCtrl;
         })();

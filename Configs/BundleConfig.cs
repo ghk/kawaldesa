@@ -14,7 +14,8 @@ namespace App.Configs
 
             bundles.Add(new StyleBundle("~/css/app")
                 .Include("~/Content/app/app.css")
-                .Include("~/Content/loading-bar.min.css"));
+                .Include("~/Content/loading-bar.min.css")
+                .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/smartadmin")
                 .Include("~/Scaffold/Content/smartadmin/smartadmin-production.css")
@@ -35,7 +36,8 @@ namespace App.Configs
                 .Include("~/Scripts/loading-bar.min.js")
                 .Include("~/Scripts/libraries/dirPagination.js")
                 .Include("~/Scripts/libraries/underscore.js")
-                .Include("~/Scripts/Utils/*.js"));
+                .Include("~/Scripts/Utils/*.js")
+                .Include("~/Scaffold/Scripts//Scaffold/Smartadmin/app.min.js"));
 
             bundles.Add(new ScriptBundle("~/js/scaffold")
                 .Include("~/Scaffold/Scripts/Scaffold/Scaffold.js"));

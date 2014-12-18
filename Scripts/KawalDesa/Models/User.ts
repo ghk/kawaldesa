@@ -105,6 +105,5 @@ module App.Models {
             }));
             return res;
         }
-
     }
 }
