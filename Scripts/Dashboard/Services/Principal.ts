@@ -4,8 +4,17 @@ module KawalDesa {
 
     //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
 
+    export interface IPrincipal {
+        isIdentityResolved() : boolean;
+        isAuthenticated() : boolean;
+        isInRole(role: string) : boolean;
+        isInAnyRole(roles: string[]) : boolean;
+        authenticate(any) : void;
+        identity(force?: boolean): any;
+    }
+
     dashboard.factory('principal', ['$q', '$http', '$timeout',
-        function ($q, $http, $timeout) {
+        function ($q, $http, $timeout) : IPrincipal{
             var _identity = undefined,
                 _authenticated = false;
 

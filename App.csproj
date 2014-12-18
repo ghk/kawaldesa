@@ -208,9 +208,12 @@
     <Compile Include="Configs\FilterConfig.cs" />
     <Compile Include="Configs\RouteConfig.cs" />
     <Compile Include="Configs\WebApiConfig.cs" />
+    <Compile Include="Controllers\TransactionFileController.cs" />
+    <Compile Include="Controllers\APBDFileController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\RecapitulationController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
+    <Compile Include="Controllers\APBNController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />

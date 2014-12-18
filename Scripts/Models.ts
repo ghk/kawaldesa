@@ -79,6 +79,10 @@ module App.Models {
         FileName: string;
         IsCommited: boolean;
         APBDs: Array<App.Models.IAPBD>;
+        DateCreated: /** System.DateTime **/ any;
+        APBDCount: number;
+        TotalDAU: number;
+        TotalDBH: number;
     }
 
     export class APBDFile {
@@ -87,13 +91,83 @@ module App.Models {
         FileName: string;
         IsCommited: boolean;
         APBDs: Array<App.Models.IAPBD>;
+        DateCreated: /** System.DateTime **/ any;
+        APBDCount: number;
+        TotalDAU: number;
+        TotalDBH: number;
         constructor(data?: IAPBDFile) {
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsCommited = data ? data.IsCommited : null;
             this.APBDs = data ? data.APBDs : null;
+            this.DateCreated = data ? data.DateCreated : null;
+            this.APBDCount = data ? data.APBDCount : null;
+            this.TotalDAU = data ? data.TotalDAU : null;
+            this.TotalDBH = data ? data.TotalDBH : null;
         }
 
+        /* App.Controllers.APBDFileController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<APBDFile>> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDFile/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new APBDFile(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<APBDFile> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDFile/Get/'+id,
+            })).then((model) => new APBDFile(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDFile/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        Save(): JQueryPromise<void> {
+            var isNew = this.ID == null;
+            var model = this;
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: isNew ? 'POST' : 'PUT',
+                url: '/api/APBDFile/'+(isNew ? 'Post' : 'Put'),
+                data: JSON.stringify(this)
+            })).then((id) => {
+                if(isNew){
+                    this.ID = id;
+                }
+            });
+            return res;
+        }
+
+        Delete(): JQueryPromise<void> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'DELETE',
+                url: '/api/APBDFile/Delete/'+this.ID,
+            }));
+            return res;
+        }
+
+        static Delete(id: number): JQueryPromise<void> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDFile/Delete/'+id,
+            }));
+            return res;
+        }
+                
     }
 
     export interface IAPBN {
@@ -113,6 +187,68 @@ module App.Models {
             this.Year = data ? data.Year : null;
         }
 
+        /* App.Controllers.APBNController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<APBN>> {
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBN/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new APBN(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<APBN> {
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBN/Get/'+id,
+            })).then((model) => new APBN(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBN/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        Save(): JQueryPromise<void> {
+            var isNew = this.ID == null;
+            var model = this;
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: isNew ? 'POST' : 'PUT',
+                url: '/api/APBN/'+(isNew ? 'Post' : 'Put'),
+                data: JSON.stringify(this)
+            })).then((id) => {
+                if(isNew){
+                    this.ID = id;
+                }
+            });
+            return res;
+        }
+
+        Delete(): JQueryPromise<void> {
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: 'DELETE',
+                url: '/api/APBN/Delete/'+this.ID,
+            }));
+            return res;
+        }
+
+        static Delete(id: number): JQueryPromise<void> {
+            var res = $.ajax(APBN.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBN/Delete/'+id,
+            }));
+            return res;
+        }
+                
     }
 
     export interface IBlob {
@@ -444,6 +580,10 @@ module App.Models {
         FileName: string;
         IsCommited: boolean;
         Transactions: Array<App.Models.ITransaction>;
+        DateCreated: /** System.DateTime **/ any;
+        TransactionCount: number;
+        DesaCount: number;
+        TotalAmount: number;
     }
 
     export class TransactionFile {
@@ -452,13 +592,83 @@ module App.Models {
         FileName: string;
         IsCommited: boolean;
         Transactions: Array<App.Models.ITransaction>;
+        DateCreated: /** System.DateTime **/ any;
+        TransactionCount: number;
+        DesaCount: number;
+        TotalAmount: number;
         constructor(data?: ITransactionFile) {
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsCommited = data ? data.IsCommited : null;
             this.Transactions = data ? data.Transactions : null;
+            this.DateCreated = data ? data.DateCreated : null;
+            this.TransactionCount = data ? data.TransactionCount : null;
+            this.DesaCount = data ? data.DesaCount : null;
+            this.TotalAmount = data ? data.TotalAmount : null;
         }
 
+        /* App.Controllers.TransactionFileController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<TransactionFile>> {
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/TransactionFile/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new TransactionFile(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<TransactionFile> {
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/TransactionFile/Get/'+id,
+            })).then((model) => new TransactionFile(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/TransactionFile/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        Save(): JQueryPromise<void> {
+            var isNew = this.ID == null;
+            var model = this;
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: isNew ? 'POST' : 'PUT',
+                url: '/api/TransactionFile/'+(isNew ? 'Post' : 'Put'),
+                data: JSON.stringify(this)
+            })).then((id) => {
+                if(isNew){
+                    this.ID = id;
+                }
+            });
+            return res;
+        }
+
+        Delete(): JQueryPromise<void> {
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: 'DELETE',
+                url: '/api/TransactionFile/Delete/'+this.ID,
+            }));
+            return res;
+        }
+
+        static Delete(id: number): JQueryPromise<void> {
+            var res = $.ajax(TransactionFile.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/TransactionFile/Delete/'+id,
+            }));
+            return res;
+        }
+                
     }
 
 }

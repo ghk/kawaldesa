@@ -12,5 +12,34 @@ namespace App.Models
         public String FileName { get; set; }
         public bool IsCommited { get; set; }
         public virtual List<APBD> APBDs { get; set; }
+
+        public override DateTime DateCreated { get; set; }
+        
+        [NotMapped]
+        public int APBDCount 
+        {
+            get
+            {
+                return new DB().APBDs.Count(e => e.fkAPBDFileID == ID && e.DAU > 0 && e.DBH > 0);
+            }
+        }
+
+        [NotMapped]
+        public decimal TotalDAU
+        {
+            get
+            {
+                return new DB().APBDs.Where(e => e.fkAPBDFileID == ID).Sum(e => e.DAU);
+            }
+        }
+
+        [NotMapped]
+        public decimal TotalDBH
+        {
+            get
+            {
+                return new DB().APBDs.Where(e => e.fkAPBDFileID == ID).Sum(e => e.DBH);
+            }
+        }
     }
 }

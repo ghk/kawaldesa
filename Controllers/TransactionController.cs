@@ -18,5 +18,6 @@ namespace App.Controllers
             model.Destination = null;
             base.PrePersist(model);
         }
+
     }
 }

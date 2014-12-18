@@ -1,7 +1,8 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 var KawalDesa;
 (function (KawalDesa) {
-    //Source: http://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
+    
+
     KawalDesa.dashboard.factory('principal', [
         '$q', '$http', '$timeout',
         function ($q, $http, $timeout) {
