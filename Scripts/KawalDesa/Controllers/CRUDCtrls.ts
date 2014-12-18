@@ -245,68 +245,33 @@ module KawalDesa.Controllers {
             $scope.pagination = { current: 1 };
 
             if ($state.current.name === "index") {
-                this.getRegions(1, null);
+                this.getRegions(0);
             }
-            else if ($state.current.name === "province" || $state.current.name === "district") {
-                if (!$stateParams.ProvinceID)
+            else {
+                if (!$stateParams.RegionID)
                     return;
 
-                var provinceID = $stateParams.ProvinceID;                
+                var regionID = $stateParams.RegionID;                
                 var scope = this.$scope;
-                Models.Region.Get(provinceID).done((region) => {
-                    scope.$apply(() => {
-                        scope.currentRegion = region;
-                    });
-                });
-
-                if ($state.current.name === "province") 
-                    this.getRegions(2, provinceID);
-                else
-                    this.getRegions(3, provinceID);
+                this.getRegions(regionID);
             }
         }
 
-        getRegions(type: number, parentID: number) {
+        getRegions(parentID: number) {
             var ctrl = this;
             var scope = this.$scope;
             var query = {
                 "SortOrder": "ASC",
-                "Type": type,
                 "ParentID": parentID
             }
-            Models.Region.GetAll(query).done((regions) => {
+            Models.Recapitulation.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
-                    scope.entities = regions;
+                    scope.entities = recapitulations.filter(r => r.RegionID != parentID);
+                    scope.total = recapitulations.filter(r => r.RegionID == parentID)[0];
                 });
             });
         }
 
-        /*
-        getProvinceRegion() {
-            var ctrl = this;
-            var scope = this.$scope;
-            $.ajax({
-                type: 'GET',
-                url: '/api/Region/Get/' + scope.IdProvince
-            }).done(region => {
-                    scope.$apply(() => {
-                        ctrl.ProvinceParent = region;
-                    });
-                });
-        }
-
-        getDistrictRegion() {
-            var ctrl = this;
-            var scope = this.$scope;
-            $.ajax({
-                type: 'GET',
-                url: '/api/Region/Get/' + scope.IdDistrict
-            }).done(region => {
-                    scope.$apply(() => {
-                        ctrl.DistrictParent = region;
-                    });
-                });
-        }*/
     }
 
     kawaldesa.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);

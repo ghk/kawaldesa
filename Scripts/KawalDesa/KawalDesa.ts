@@ -34,14 +34,9 @@ module KawalDesa {
                 templateUrl: baseUrl + 'partials/ViewData/NationalSite',
                 controller: 'NationalRegionCtrl as CRUDCtrl'
             })
-            .state('province', {
-                url: '/province/:ProvinceID',
-                templateUrl: baseUrl + 'partials/ViewData/ProvinceSite',
-                controller: 'NationalRegionCtrl as CRUDCtrl'
-            })
-            .state('district', {
-                url: '/district/:ProvinceID',
-                templateUrl: baseUrl + 'partials/ViewData/DistrictSite',
+            .state('region', {
+                url: '/r/:RegionID',
+                templateUrl: baseUrl + 'partials/ViewData/NationalSite',
                 controller: 'NationalRegionCtrl as CRUDCtrl'
             })
             .state('login', {

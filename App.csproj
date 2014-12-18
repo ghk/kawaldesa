@@ -284,8 +284,6 @@
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\KawalDesa\Partials\Home.cshtml" />
     <Content Include="Views\KawalDesa\Partials\ViewData\NationalSite.cshtml" />
-    <Content Include="Views\KawalDesa\Partials\ViewData\ProvinceSite.cshtml" />
-    <Content Include="Views\KawalDesa\Partials\ViewData\DistrictSite.cshtml" />
     <None Include="Views\KawalDesa\Partials\Template\dirPagination.tpl.cshtml" />
     <Content Include="Scripts\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

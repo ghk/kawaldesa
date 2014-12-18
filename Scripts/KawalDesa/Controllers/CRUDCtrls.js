@@ -252,36 +252,31 @@ var KawalDesa;
                 $scope.pagination = { current: 1 };
 
                 if ($state.current.name === "index") {
-                    this.getRegions(1, null);
-                } else if ($state.current.name === "province" || $state.current.name === "district") {
-                    if (!$stateParams.ProvinceID)
+                    this.getRegions(0);
+                } else {
+                    if (!$stateParams.RegionID)
                         return;
 
-                    var provinceID = $stateParams.ProvinceID;
+                    var regionID = $stateParams.RegionID;
                     var scope = this.$scope;
-                    Models.Region.Get(provinceID).done(function (region) {
-                        scope.$apply(function () {
-                            scope.currentRegion = region;
-                        });
-                    });
-
-                    if ($state.current.name === "province")
-                        this.getRegions(2, provinceID);
-                    else
-                        this.getRegions(3, provinceID);
+                    this.getRegions(regionID);
                 }
             }
-            NationalRegionCtrl.prototype.getRegions = function (type, parentID) {
+            NationalRegionCtrl.prototype.getRegions = function (parentID) {
                 var ctrl = this;
                 var scope = this.$scope;
                 var query = {
                     "SortOrder": "ASC",
-                    "Type": type,
                     "ParentID": parentID
                 };
-                Models.Region.GetAll(query).done(function (regions) {
+                Models.Recapitulation.GetAll(query).done(function (recapitulations) {
                     scope.$apply(function () {
-                        scope.entities = regions;
+                        scope.entities = recapitulations.filter(function (r) {
+                            return r.RegionID != parentID;
+                        });
+                        scope.total = recapitulations.filter(function (r) {
+                            return r.RegionID == parentID;
+                        })[0];
                     });
                 });
             };

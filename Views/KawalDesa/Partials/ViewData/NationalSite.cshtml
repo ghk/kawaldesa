@@ -49,30 +49,34 @@
         </thead>
         <tbody>
             <tr ng-repeat="entity in entities">
-                <td><a ui-sref="province({ProvinceID: entity.ID })">{{entity.Name}}</a></td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
+                <td><a ui-sref="region({RegionID: entity.RegionID })">{{entity.RegionName}}</a></td>
+                <td class="money"> {{entity.BudgettedTotal | currency:"":0}}</td>
+                <td class="money"> {{entity.TransferredTotal | currency:"":0}} </td>
+                <td class="money"> {{entity.AcknowledgedTotal | currency:"":0}} </td>
+
+                <td class="money"> {{entity.BudgettedAPBN | currency:"":0}} </td>
+                <td class="money"> {{entity.TransferredAPBN | currency:"":0}} </td>
+                <td class="money"> {{entity.AcknowledgedAPBN | currency:"":0}} </td>
+
+                <td class="money"> {{entity.BudgettedADD | currency:"":0}} </td>
+                <td class="money"> {{entity.TransferredADD | currency:"":0}} </td>
+                <td class="money"> {{entity.AcknowledgedADD | currency:"":0}} </td>
             </tr>
         </tbody>
         <tfoot>
             <tr class="success">
                 <td><a href="">Total</a></td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
-                <td class="money"> 0 </td>
+                <td class="money"> {{total.BudgettedTotal | currency:"":0}} </td>
+                <td class="money"> {{total.TransferredTotal | currency:"":0}} </td>
+                <td class="money"> {{total.AcknowledgedTotal | currency:"":0}} </td>
+
+                <td class="money"> {{total.BudgettedAPBN | currency:"":0}} </td>
+                <td class="money"> {{total.TransferredAPBN | currency:"":0}} </td>
+                <td class="money"> {{total.AcknowledgedAPBN | currency:"":0}} </td>
+
+                <td class="money"> {{total.BudgettedADD | currency:"":0}} </td>
+                <td class="money"> {{total.TransferredADD | currency:"":0}} </td>
+                <td class="money"> {{total.AcknowledgedADD | currency:"":0}} </td>
             </tr>
         </tfoot>
     </table>
