@@ -28,8 +28,10 @@ var KawalDesa;
                 this.getRecapitulations(regionID);
             };
 
-            RecapitulationCtrl.prototype.setParentID = function (parentID) {
+            RecapitulationCtrl.prototype.setParentID = function (parentID, ev) {
                 this.$location.path("/r/" + parentID);
+                this.$location.replace();
+                ev.preventDefault();
             };
 
             RecapitulationCtrl.prototype.getRecapitulations = function (parentID) {

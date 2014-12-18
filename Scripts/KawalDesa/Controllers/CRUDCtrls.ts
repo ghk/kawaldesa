@@ -30,8 +30,10 @@ module KawalDesa.Controllers {
             this.getRecapitulations(regionID);
         }
 
-        setParentID(parentID: number) {
+        setParentID(parentID: number, ev) {
             this.$location.path("/r/" + parentID);
+            this.$location.replace();
+            ev.preventDefault();
         }
 
         getRecapitulations(parentID: number) {

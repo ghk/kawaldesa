@@ -66,7 +66,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="entity in entities">
-                    <td><a href="#" ng-click="recapitulationCtrl.setParentID(entity.RegionID)">{{entity.RegionName}}</a></td>
+                    <td><a href="#" ng-click="recapitulationCtrl.setParentID(entity.RegionID, $event)">{{entity.RegionName}}</a></td>
                     <td class="money"> {{entity.BudgettedTotal | currency:"":0}}</td>
                     <td class="money"> {{entity.TransferredTotal | currency:"":0}} </td>
                     <td class="money"> {{entity.AcknowledgedTotal | currency:"":0}} </td>
