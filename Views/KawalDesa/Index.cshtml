@@ -79,33 +79,33 @@
                         </a>
                         <span ng-show="region.Type == 3">{{entity.RegionName}}</span>
                     </td>
-                    <td class="money"> {{entity.BudgettedTotal | currency:"":0}}</td>
-                    <td class="money"> {{entity.TransferredTotal | currency:"":0}} </td>
-                    <td class="money"> {{entity.AcknowledgedTotal | currency:"":0}} </td>
+                    <td class="money"> {{entity.BudgettedTotal | number:0}}</td>
+                    <td class="money"> {{entity.TransferredTotal | number:0}} </td>
+                    <td class="money"> {{entity.AcknowledgedTotal | number:0}} </td>
 
-                    <td class="money"> {{entity.BudgetedAPBN | currency:"":0}} </td>
-                    <td class="money"> {{entity.TransferredAPBN | currency:"":0}} </td>
-                    <td class="money"> {{entity.AcknowledgedAPBN | currency:"":0}} </td>
+                    <td class="money"> {{entity.BudgetedAPBN | number:0}} </td>
+                    <td class="money"> {{entity.TransferredAPBN | number:0}} </td>
+                    <td class="money"> {{entity.AcknowledgedAPBN | number:0}} </td>
 
-                    <td class="money"> {{entity.BudgetedADD | currency:"":0}} </td>
-                    <td class="money"> {{entity.TransferredADD | currency:"":0}} </td>
-                    <td class="money"> {{entity.AcknowledgedADD | currency:"":0}} </td>
+                    <td class="money"> {{entity.BudgetedADD | number:0}} </td>
+                    <td class="money"> {{entity.TransferredADD | number:0}} </td>
+                    <td class="money"> {{entity.AcknowledgedADD | number:0}} </td>
                 </tr>
             </tbody>
             <tfoot ng-show="entities.length > 0">
                 <tr class="success">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgettedTotal | currency:"":0}} </td>
-                    <td class="money"> {{total.TransferredTotal | currency:"":0}} </td>
-                    <td class="money"> {{total.AcknowledgedTotal | currency:"":0}} </td>
+                    <td class="money"> {{total.BudgettedTotal | number:0}} </td>
+                    <td class="money"> {{total.TransferredTotal | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedTotal | number:0}} </td>
 
-                    <td class="money"> {{total.BudgetedAPBN | currency:"":0}} </td>
-                    <td class="money"> {{total.TransferredAPBN | currency:"":0}} </td>
-                    <td class="money"> {{total.AcknowledgedAPBN | currency:"":0}} </td>
+                    <td class="money"> {{total.BudgetedAPBN | number:0}} </td>
+                    <td class="money"> {{total.TransferredAPBN | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedAPBN | number:0}} </td>
 
-                    <td class="money"> {{total.BudgetedADD | currency:"":0}} </td>
-                    <td class="money"> {{total.TransferredADD | currency:"":0}} </td>
-                    <td class="money"> {{total.AcknowledgedADD | currency:"":0}} </td>
+                    <td class="money"> {{total.BudgetedADD | number:0}} </td>
+                    <td class="money"> {{total.TransferredADD | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedADD | number:0}} </td>
                 </tr>
             </tfoot>
             <tfoot ng-show="entities.length == 0">
