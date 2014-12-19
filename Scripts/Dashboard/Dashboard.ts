@@ -12,6 +12,10 @@ module KawalDesa {
         'angular-loading-bar'
     ]);
 
+    dashboard.run(['$location', '$rootElement', function ($location, $rootElement) {
+        $rootElement.off('click');
+    }]);
+
     dashboard.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         var baseUrl = "/";
 

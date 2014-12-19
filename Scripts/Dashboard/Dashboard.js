@@ -11,6 +11,11 @@ var KawalDesa;
         'angular-loading-bar'
     ]);
 
+    KawalDesa.dashboard.run([
+        '$location', '$rootElement', function ($location, $rootElement) {
+            $rootElement.off('click');
+        }]);
+
     KawalDesa.dashboard.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         var baseUrl = "/";
 

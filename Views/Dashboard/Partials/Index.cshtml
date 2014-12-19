@@ -35,8 +35,8 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr class="success">
-                <td colspan="2"><button class="success" ng-click="indexCtrl.saveAPBNs()">Simpan APBN</button></td>
+            <tr class="">
+                <td colspan="2"><button class="btn btn-primary" ng-click="indexCtrl.saveAPBNs()">Simpan APBN</button></td>
             </tr>
         </tfoot>
     </table>
@@ -72,9 +72,9 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr class="success">
-                <td colspan="6"><button class="success" ng-click="indexCtrl.uploadAPBDFile()">Unggah File DAU & DBH Baru</button></td>
-                <td><a href="#">Unduh File Contoh</a></td>
+            <tr class="">
+                <td colspan="6"><a class="btn btn-primary" href="#" data-toggle="modal" data-target="#apbdModal">Unggah File DAU & DBH Baru</a></td>
+                <td><a href="~/Content/APBD.xlsx">Unduh File Contoh</a></td>
             </tr>
         </tfoot>
     </table>
@@ -109,8 +109,8 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr class="success">
-                <td colspan="6"><button class="success" ng-click="indexCtrl.uploadAPBNTransactionFile()">Unggah File Penyaluran Dana Desa Dari APBN</button></td>
+            <tr class="">
+                <td colspan="6"><a class="btn btn-primary" ng-click="indexCtrl.uploadAPBNTransactionFile()">Unggah File Penyaluran Dana Desa Dari APBN</a></td>
                 <td><a href="#">Unduh File Contoh</a></td>
             </tr>
         </tfoot>
@@ -146,8 +146,8 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr class="success">
-                <td colspan="6"><button class="success" ng-click="indexCtrl.uploadADDTransactionFile()">Unggah File Penyaluran Dana Desa Dari ADD</button></td>
+            <tr class="">
+                <td colspan="6"><a class="btn btn-primary" ng-click="indexCtrl.uploadADDTransactionFile()">Unggah File Penyaluran Dana Desa Dari ADD</a></td>
                 <td ><a href="#">Unduh File Contoh</a></td>
             </tr>
         </tfoot>
@@ -177,11 +177,36 @@
             </tr>
         </tbody>
         <tfoot>
-            <tr class="success">
-                <td colspan="4"><button class="success" ng-click="indexCtrl.insertTransaction()">Masukan Transaksi Baru</button></td>
+            <tr class="">
+                <td colspan="4"><a class="btn btn-primary" ng-click="indexCtrl.insertTransaction()">Masukan Transaksi Baru</a></td>
             </tr>
         </tfoot>
     </table>
 </div>
 
+<div class="modal fade" id="apbdModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Unggah File DAU&DBH</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>File DAU & DBH</label>
+                        <input type="file" class="form-control" placeholder="Pilih File">
+                    </div>
+                    <p>
+                        <a href="~/Content/APBD.xlsx">Unduh File Contoh</a>
+                    </p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
 
