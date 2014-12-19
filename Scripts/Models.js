@@ -54,6 +54,8 @@ var App;
                 this.IsActivated = data ? data.IsActivated : null;
                 this.APBDs = data ? data.APBDs : null;
                 this.DateCreated = data ? data.DateCreated : null;
+                this.fkFileID = data ? data.fkFileID : null;
+                this.File = data ? data.File : null;
                 this.APBDCount = data ? data.APBDCount : null;
                 this.TotalDAU = data ? data.TotalDAU : null;
                 this.TotalDBH = data ? data.TotalDBH : null;
@@ -119,6 +121,14 @@ var App;
                 var res = $.ajax(APBDFile.ajaxSettings.build({
                     type: 'GET',
                     url: '/api/APBDFile/Delete/' + id
+                }));
+                return res;
+            };
+
+            APBDFile.PostFile = function () {
+                var res = $.ajax(APBDFile.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/APBDFile/PostFile'
                 }));
                 return res;
             };
@@ -207,8 +217,9 @@ var App;
                 this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
-                this.Path = data ? data.Path : null;
                 this.Size = data ? data.Size : null;
+                this.UploadID = data ? data.UploadID : null;
+                this.UploadFolder = data ? data.UploadFolder : null;
             }
             Blob.ajaxSettings = new Scaffold.AjaxSettings();
             return Blob;
@@ -444,6 +455,8 @@ var App;
                 this.IsActivated = data ? data.IsActivated : null;
                 this.Transactions = data ? data.Transactions : null;
                 this.DateCreated = data ? data.DateCreated : null;
+                this.fkFileID = data ? data.fkFileID : null;
+                this.File = data ? data.File : null;
                 this.TransactionCount = data ? data.TransactionCount : null;
                 this.DesaCount = data ? data.DesaCount : null;
                 this.TotalAmount = data ? data.TotalAmount : null;

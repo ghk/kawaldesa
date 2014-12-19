@@ -80,6 +80,8 @@ module App.Models {
         IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
         DateCreated: /** System.DateTime **/ any;
+        fkFileID: number;
+        File: App.Models.IBlob;
         APBDCount: number;
         TotalDAU: number;
         TotalDBH: number;
@@ -92,6 +94,8 @@ module App.Models {
         IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
         DateCreated: /** System.DateTime **/ any;
+        fkFileID: number;
+        File: App.Models.IBlob;
         APBDCount: number;
         TotalDAU: number;
         TotalDBH: number;
@@ -101,6 +105,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.APBDs = data ? data.APBDs : null;
             this.DateCreated = data ? data.DateCreated : null;
+            this.fkFileID = data ? data.fkFileID : null;
+            this.File = data ? data.File : null;
             this.APBDCount = data ? data.APBDCount : null;
             this.TotalDAU = data ? data.TotalDAU : null;
             this.TotalDBH = data ? data.TotalDBH : null;
@@ -168,6 +174,14 @@ module App.Models {
             return res;
         }
                 
+        static PostFile(): JQueryPromise</** System.Threading.Tasks.Task<Scaffold.UploadResult<App.Models.Blob>> **/ any> {
+            var res = $.ajax(APBDFile.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/APBDFile/PostFile',
+            }));
+            return res;
+        }
+
     }
 
     export interface IAPBN {
@@ -255,8 +269,9 @@ module App.Models {
         ID: number;
         Name: string;
         Type: string;
-        Path: string;
         Size: number;
+        UploadID: string;
+        UploadFolder: string;
     }
 
     export class Blob {
@@ -264,14 +279,16 @@ module App.Models {
         ID: number;
         Name: string;
         Type: string;
-        Path: string;
         Size: number;
+        UploadID: string;
+        UploadFolder: string;
         constructor(data?: IBlob) {
             this.ID = data ? data.ID : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
-            this.Path = data ? data.Path : null;
             this.Size = data ? data.Size : null;
+            this.UploadID = data ? data.UploadID : null;
+            this.UploadFolder = data ? data.UploadFolder : null;
         }
 
     }
@@ -581,6 +598,8 @@ module App.Models {
         IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
         DateCreated: /** System.DateTime **/ any;
+        fkFileID: number;
+        File: App.Models.IBlob;
         TransactionCount: number;
         DesaCount: number;
         TotalAmount: number;
@@ -593,6 +612,8 @@ module App.Models {
         IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
         DateCreated: /** System.DateTime **/ any;
+        fkFileID: number;
+        File: App.Models.IBlob;
         TransactionCount: number;
         DesaCount: number;
         TotalAmount: number;
@@ -602,6 +623,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.Transactions = data ? data.Transactions : null;
             this.DateCreated = data ? data.DateCreated : null;
+            this.fkFileID = data ? data.fkFileID : null;
+            this.File = data ? data.File : null;
             this.TransactionCount = data ? data.TransactionCount : null;
             this.DesaCount = data ? data.DesaCount : null;
             this.TotalAmount = data ? data.TotalAmount : null;

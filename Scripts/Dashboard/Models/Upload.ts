@@ -7,8 +7,8 @@ module App.Models {
         static UploadFile(file, result, upload): any {
             var res = upload.upload({
                 type: 'POST',
-                url: '/api/KawalDesaUpload/PostFile',
-                data: result,
+                url: '/api/APBDFile/PostFile',
+                data: {"anu": "lalala", "lalala": 11, "caca":true},
                 file: file
             });
             return res;

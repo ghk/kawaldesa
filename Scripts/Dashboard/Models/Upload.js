@@ -8,8 +8,8 @@ var App;
             APBNFileUpload.UploadFile = function (file, result, upload) {
                 var res = upload.upload({
                     type: 'POST',
-                    url: '/api/KawalDesaUpload/PostFile',
-                    data: result,
+                    url: '/api/APBDFile/PostFile',
+                    data: { "anu": "lalala", "lalala": 11, "caca": true },
                     file: file
                 });
                 return res;
