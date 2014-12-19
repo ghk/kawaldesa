@@ -11,7 +11,7 @@ namespace App.Models
         public override long ID { get; set; }
         public decimal DAU { get; set; }
         public decimal DBH { get; set; }
-        public bool IsCommited { get; set; }
+        public bool IsActivated { get; set; }
         
         [ForeignKey("APBN")]
         public long fkAPBNID { get; set; }

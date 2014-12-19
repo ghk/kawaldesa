@@ -5,14 +5,16 @@
 
 module KawalDesa.Controllers {
     import Models = App.Models;
+    import APBNFileUpload = App.Models.APBNFileUpload;
 
     function safeApply(scope, fn) {
         (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
     }
 
     class IndexCtrl {
-        constructor(public $scope, public principal: IPrincipal) {
+        constructor(public $scope, public $upload, public principal: IPrincipal) {
             $scope.principal = principal;
+            
             principal.identity().then(function (identity) {
                  $scope.user = new Models.User(identity.user);
             });
@@ -34,8 +36,39 @@ module KawalDesa.Controllers {
                     });
                 });
             }
-            
+        }
+
+        uploadFile() {
+            if (!this.$scope.file || this.$scope.file[0] == null)
+                return;
+
+            var file = this.$scope.file[0];
+            var ctrl = this;
+            var res = null;
+
+            APBNFileUpload.UploadFile(file, res, ctrl.$upload).success(function (data, status, headers, config) {
+                ctrl.processFile(data);
+            });;
+        }
+
+        processFile(data) {
+            var isValidFileLocation = (data != null && data[0].Path != "" && data[0].Name != "");
+            var ctrl = this;
+            var scope = this.$scope;
+
+            if (!isValidFileLocation) return;
+            var fileLocation = data[0].Path.concat("\\", data[0].Name);
+
+            /*
+            APBNFileUpload.ParseAPBNFileFile(fileLocation)
+                .done(result => {
+                    scope.$apply(() => {
+                        var total = result.length;
+                        var message = "Data kuesioner sebanyak: " + total + " berhasil diproses";
+                    });
+                });
+            */
         }
     }
-    dashboard.controller("IndexCtrl", ["$scope", "principal", IndexCtrl]);
+    dashboard.controller("IndexCtrl", ["$scope", "$upload", "principal", IndexCtrl]);
 }

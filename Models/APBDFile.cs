@@ -10,10 +10,14 @@ namespace App.Models
     {
         public override long ID { get; set; }
         public String FileName { get; set; }
-        public bool IsCommited { get; set; }
+        public bool IsActivated { get; set; }
         public virtual List<APBD> APBDs { get; set; }
 
         public override DateTime DateCreated { get; set; }
+
+        [ForeignKey("File")]
+        public long fkFileID { get; set; }
+        public virtual Blob File { get; set; }
         
         [NotMapped]
         public int APBDCount 

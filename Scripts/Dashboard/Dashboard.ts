@@ -9,7 +9,8 @@ module KawalDesa {
         'angular-blocks',
         'angularUtils.directives.dirPagination',
         'ui.bootstrap',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'angularFileUpload'
     ]);
 
     dashboard.run(['$location', '$rootElement', function ($location, $rootElement) {

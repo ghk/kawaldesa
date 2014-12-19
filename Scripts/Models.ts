@@ -38,7 +38,7 @@ module App.Models {
         ID: number;
         DAU: number;
         DBH: number;
-        IsCommited: boolean;
+        IsActivated: boolean;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkRegionID: number;
@@ -52,7 +52,7 @@ module App.Models {
         ID: number;
         DAU: number;
         DBH: number;
-        IsCommited: boolean;
+        IsActivated: boolean;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkRegionID: number;
@@ -63,7 +63,7 @@ module App.Models {
             this.ID = data ? data.ID : null;
             this.DAU = data ? data.DAU : null;
             this.DBH = data ? data.DBH : null;
-            this.IsCommited = data ? data.IsCommited : null;
+            this.IsActivated = data ? data.IsActivated : null;
             this.fkAPBNID = data ? data.fkAPBNID : null;
             this.APBN = data ? data.APBN : null;
             this.fkRegionID = data ? data.fkRegionID : null;
@@ -77,7 +77,7 @@ module App.Models {
     export interface IAPBDFile {
         ID: number;
         FileName: string;
-        IsCommited: boolean;
+        IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
         DateCreated: /** System.DateTime **/ any;
         APBDCount: number;
@@ -89,7 +89,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         FileName: string;
-        IsCommited: boolean;
+        IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
         DateCreated: /** System.DateTime **/ any;
         APBDCount: number;
@@ -98,7 +98,7 @@ module App.Models {
         constructor(data?: IAPBDFile) {
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
-            this.IsCommited = data ? data.IsCommited : null;
+            this.IsActivated = data ? data.IsActivated : null;
             this.APBDs = data ? data.APBDs : null;
             this.DateCreated = data ? data.DateCreated : null;
             this.APBDCount = data ? data.APBDCount : null;
@@ -453,7 +453,7 @@ module App.Models {
         ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
-        IsCommited: boolean;
+        IsActivated: boolean;
         fkProofID: number;
         Proof: App.Models.IBlob;
         fkAPBNID: number;
@@ -475,7 +475,7 @@ module App.Models {
         ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
-        IsCommited: boolean;
+        IsActivated: boolean;
         fkProofID: number;
         Proof: App.Models.IBlob;
         fkAPBNID: number;
@@ -494,7 +494,7 @@ module App.Models {
             this.ID = data ? data.ID : null;
             this.Amount = data ? data.Amount : null;
             this.Date = data ? data.Date : null;
-            this.IsCommited = data ? data.IsCommited : null;
+            this.IsActivated = data ? data.IsActivated : null;
             this.fkProofID = data ? data.fkProofID : null;
             this.Proof = data ? data.Proof : null;
             this.fkAPBNID = data ? data.fkAPBNID : null;
@@ -578,7 +578,7 @@ module App.Models {
     export interface ITransactionFile {
         ID: number;
         FileName: string;
-        IsCommited: boolean;
+        IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
         DateCreated: /** System.DateTime **/ any;
         TransactionCount: number;
@@ -590,7 +590,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         FileName: string;
-        IsCommited: boolean;
+        IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
         DateCreated: /** System.DateTime **/ any;
         TransactionCount: number;
@@ -599,7 +599,7 @@ module App.Models {
         constructor(data?: ITransactionFile) {
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
-            this.IsCommited = data ? data.IsCommited : null;
+            this.IsActivated = data ? data.IsActivated : null;
             this.Transactions = data ? data.Transactions : null;
             this.DateCreated = data ? data.DateCreated : null;
             this.TransactionCount = data ? data.TransactionCount : null;

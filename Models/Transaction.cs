@@ -14,7 +14,7 @@ namespace App.Models
         
         public DateTime Date { get; set; }
         
-        public bool IsCommited { get; set; }
+        public bool IsActivated { get; set; }
 
         [ForeignKey("Proof")]
         public long? fkProofID { get; set; }

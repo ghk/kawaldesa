@@ -9,12 +9,15 @@ using System.Web;
 using System.Net;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Web.Http;
+using OfficeOpenXml;
 
 namespace App.Controllers
 {
     public class KawalDesaUploadController: UploadController
     {
         private DbContext dbContext;
+        private List<APBDFile> APBDFileDataCollection;
 
         public KawalDesaUploadController() : this(new DB()) { }
         public KawalDesaUploadController(DbContext dbContext): base("KawalDesa")
@@ -69,5 +72,42 @@ namespace App.Controllers
             }
         }
 
+        [HttpGet]
+        public List<APBDFile> ParseAPBNFileFile([FromUri] string fileLocation)
+        {
+            if (string.IsNullOrWhiteSpace(fileLocation)) return new List<APBDFile>();
+            byte[] fileBytes = File.ReadAllBytes(fileLocation);
+            MemoryStream ms = new MemoryStream(fileBytes);
+            this.APBDFileDataCollection = new List<APBDFile>();
+            int startDataRow = 6;
+            int startDataColumn = 9;
+            string indicatorNumberAddress = "C";
+
+            using (ExcelPackage package = new ExcelPackage(ms))
+            {
+                ExcelWorkbook workBook = package.Workbook;
+                if (workBook == null) return new List<APBDFile>();
+                foreach (ExcelWorksheet worksheet in workBook.Worksheets)
+                {
+                    if (worksheet.Name == "REKAP") continue;
+                    ParseWorksheet(worksheet, indicatorNumberAddress, startDataRow, startDataColumn);
+                }
+            }
+
+            return this.APBDFileDataCollection;
+        }
+
+        private void ParseWorksheet(ExcelWorksheet currentWorksheet, string indicatorNumberAddress, int startDataRow, int startDataColumn)
+        {
+            var start = currentWorksheet.Dimension.Start;
+            var end = currentWorksheet.Dimension.End;
+
+            for (int i = startDataRow; i < end.Row; i++)
+            {
+                string indicatorNumber = currentWorksheet.Cells[indicatorNumberAddress + i.ToString()].Text;
+                if (string.IsNullOrEmpty(indicatorNumber)) continue;
+                //GetQuestionnaireAnswerData(currentWorksheet, indicatorNumber, i, startDataColumn, end.Column);
+            }
+        }
     }
 }

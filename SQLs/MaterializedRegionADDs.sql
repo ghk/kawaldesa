@@ -9,7 +9,7 @@ select
 		select 0.1 * (sum(apbd."DAU") + sum(apbd."DBH"))
 		from dbo."APBDs" apbd 
 		inner join dbo."MaterializedRegions" kab on apbd."fkRegionID" = kab."ID"
-		where  apbd."IsCommited" AND apbd."fkAPBNID" = apbn."ID" AND
+		where  apbd."IsActivated" AND apbd."fkAPBNID" = apbn."ID" AND
 			((r."Type" = 0 AND kab."ParentParentID" = r."ID") 
 			OR (r."Type" = 1 AND kab."ParentID" = r."ID") 
 			OR (r."Type" = 2 AND kab."ID" = r."ID"))
@@ -26,7 +26,7 @@ select
 		from dbo."APBDs" apbd 
 			
 		inner join dbo."MaterializedRegionDesaCounts" kab on apbd."fkRegionID" = kab."ID" 
-		where  apbd."IsCommited" AND apbd."fkAPBNID" = apbn."ID" AND (
+		where  apbd."IsActivated" AND apbd."fkAPBNID" = apbn."ID" AND (
 			(apbd."fkRegionID" = mr."ParentID" AND r."Type" = 3) 
 			OR  (apbd."fkRegionID" = mr."ParentParentID" AND r."Type" = 4) 
 		)

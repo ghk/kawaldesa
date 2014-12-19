@@ -65,6 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>packages\EPPlus.4.0.1.1\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\FluentValidation.5.4.0.0\lib\Net40\FluentValidation.dll</HintPath>
@@ -269,6 +272,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-ui-router.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
@@ -355,6 +359,7 @@
     <TypeScriptCompile Include="Scripts\Dashboard\Controllers\IndexCtrl.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Dashboard.ts" />
+    <TypeScriptCompile Include="Scripts\Dashboard\Models\Upload.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Models\User.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Services\Authorization.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Services\Principal.ts" />

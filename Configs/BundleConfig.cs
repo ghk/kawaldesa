@@ -47,6 +47,7 @@ namespace App.Configs
                 .Include("~/Scripts/libraries/dirPagination.js")
                 .Include("~/Scripts/libraries/underscore.js")
                 .Include("~/Scripts/Utils/*.js")
+                .Include("~/Scripts/angular-file-upload.min.js")  
                 .Include("~/Scaffold/Scripts//Scaffold/Smartadmin/app.min.js"));
 
             bundles.Add(new ScriptBundle("~/js/scaffold")
