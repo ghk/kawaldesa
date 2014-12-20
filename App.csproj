@@ -1075,8 +1075,6 @@
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Index.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Login.cshtml" />
     <Content Include="Scripts\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.ts</LastGenOutput>
@@ -1376,13 +1374,10 @@
     <TypeScriptCompile Include="Scaffold\Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Controllers\CRUDCtrls.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Controllers\IndexCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Dashboard.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Models\Upload.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Models\User.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Services\Authorization.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Services\Principal.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Services\Run.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\CRUDCtrls.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\Models.ts">

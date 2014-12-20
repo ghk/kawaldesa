@@ -6,7 +6,7 @@ Currently build with C# WebAPI, Typescript and angularjs, come contribute!
 Requirements:
 
 - Visual Studio 2013
-- PostgreSQL > 9.3
+- PostgreSQL > 9.3 (Requires materialized views)
 - WebEssentials for Visual Studio (not mandatory, for nicer typescript)
 - Our ASP Scaffold's at http://www.github.com/microvac/asp-scaffold
 

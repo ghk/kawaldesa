@@ -10,8 +10,7 @@ var KawalDesa;
         }]);
 
     KawalDesa.kawaldesa.config([
-        '$locationProvider',
-        function ($locationProvider) {
+        '$locationProvider', function ($locationProvider) {
             $locationProvider.html5Mode(true);
         }]);
 })(KawalDesa || (KawalDesa = {}));

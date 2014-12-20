@@ -6,12 +6,11 @@ module KawalDesa {
     export var kawaldesa = angular.module('kawaldesa', [
     ]);
 
-    kawaldesa.run(['$location', '$rootElement', function ($location, $rootElement) {
+    kawaldesa.run(['$location','$rootElement', function ($location, $rootElement) {
         $rootElement.off('click');
     }]);
 
-    kawaldesa.config(['$locationProvider',
-    function ($locationProvider) {
+    kawaldesa.config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true);
     }]);
 }

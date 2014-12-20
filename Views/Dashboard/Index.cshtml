@@ -3,42 +3,281 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kawal Desa</title>
     <meta name="description" content="@PageData[" description"]">
     <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- #CSS Links -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' />
-    @Styles.Render("~/css/dashboard")
+    @Styles.Render("~/css/index")
 
 
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    @Scripts.Render("~/js/base")
     @Scripts.Render("~/js/dashboard")
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
 </head>
 
-<!-- #BODY -->
-<!-- Possible Classes
+<body ng-controller="IndexCtrl as indexCtrl">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <ul class="nav navbar-nav">
+                <li><a href="/" style="padding-left: 20px;">Kawal Desa</a></li>
+                <li><a href="/" style="padding-left: 20px;">Penyaluran</a></li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Dashboard ({{user.UserName}})</a></li>
+        </ul>
+    </div>
 
-    * 'smart-skin-{SKIN#}'
-    * 'smart-rtl'         - Switch theme mode to RTL (will be avilable from version SmartAdmin 1.5)
-    * 'menu-on-top'       - Switch to top navigation (no DOM change required)
-    * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
-    * 'fixed-header'      - Fixes the header
-    * 'fixed-navigation'  - Fixes the main menu
-    * 'fixed-ribbon'      - Fixes breadcrumb
-    * 'fixed-footer'      - Fixes footer
-    * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
--->
-<body>
+    <div class="content-header" ng-if="principal.isInRole('admin')">
+        Dana Per Desa Di APBN
+    </div>
+
+    <div class="table-responsive" ng-if="principal.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th class="money">Tahun</th>
+                    <th class="money">Dana Per Desa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apbn in apbns">
+                    <td>{{apbn.Year}}</td>
+                    <td class="money"><input type="number" ng-model="apbn.DanaPerDesa"></input></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="2"><button class="btn btn-primary btn-xs" ng-click="indexCtrl.saveAPBNs()">Simpan APBN</button></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <div class="content-header" ng-if="principal.isInRole('admin')">
+        Unggah DAU & DBH Kabupaten/Kota
+    </div>
+
+    <div class="table-responsive" ng-if="principal.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah APBD</th>
+                    <th class="money">Total DAU</th>
+                    <th class="money">Total DBH</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apbdFile in apbdFiles">
+                    <td>{{apbdFile.FileName}}</td>
+                    <td class="money"> {{apbdFile.APBDCount}} </td>
+                    <td class="money"> {{apbdFile.TotalDAU | currency:"":0}} </td>
+                    <td class="money"> {{apbdFile.TotalDBH | currency:"":0}} </td>
+                    <td> {{apbdFile.DateCreated}} </td>
+                    <td> {{apbdFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#apbdModal">Unggah File DAU & DBH Baru</a></td>
+                    <td><a href="~/Content/APBD.xlsx">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="principal.isInRole('admin')">
+        Unggah Penyaluran Dana Desa Dari APBN
+    </div>
+
+    <div class="table-responsive" ng-if="principal.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah Transfer</th>
+                    <th class="money">Jumlah Desa</th>
+                    <th class="money">Total Nilai Transfer</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transactionFile in transactionFiles">
+                    <td>{{transactionFile.FileName}}</td>
+                    <td class="money"> {{transactionFile.TransactionCount}} </td>
+                    <td class="money"> {{transactionFile.DesaCount}} </td>
+                    <td class="money"> {{transactionFile.TotalAmount | currency:"":0}} </td>
+                    <td> {{transactionFile.DateCreated}} </td>
+                    <td> {{transactionFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" ng-click="indexCtrl.uploadAPBNTransactionFile()">Unggah File Penyaluran Dana Desa Dari APBN</a></td>
+                    <td><a href="#">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="principal.isInRole('admin')">
+        Unggah Penyaluran Dana Desa Dari ADD
+    </div>
+
+    <div class="table-responsive" ng-if="principal.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah Transfer</th>
+                    <th class="money">Jumlah Desa</th>
+                    <th class="money">Total Nilai Transfer</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transactionFile in transactionFiles">
+                    <td>{{transactionFile.FileName}}</td>
+                    <td class="money"> {{transactionFile.TransactionCount}} </td>
+                    <td class="money"> {{transactionFile.DesaCount}} </td>
+                    <td class="money"> {{transactionFile.TotalAmount | currency:"":0}} </td>
+                    <td> {{transactionFile.DateCreated}} </td>
+                    <td> {{transactionFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" ng-click="indexCtrl.uploadADDTransactionFile()">Unggah File Penyaluran Dana Desa Dari ADD</a></td>
+                    <td><a href="#">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="principal.isInRole('admin')">
+        Penerimaan Dana Desa
+    </div>
+
+    <div class="table-responsive" ng-if="principal.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Sumber</th>
+                    <th class="money">Nilai Transfer</th>
+                    <th>Bukti Penerimaan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transaction in transactions">
+                    <td>{{transaction.DateCreated}}</td>
+                    <td> {{transaction.fkSourceID == 0 ? "APBN" : "ADD"}} </td>
+                    <td class="money"> {{transaction.Amount | currency:"":0}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="4"><a class="btn btn-primary btn-xs" ng-click="indexCtrl.insertTransaction()">Masukan Transaksi Baru</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="modal fade" id="apbdModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Unggah File DAU&DBH</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>File DAU & DBH</label>
+                            <input type="file" class="form-control" ng-file-select ng-model="file" placeholder="Pilih File">
+                        </div>
+                        <p>
+                            <a href="~/Content/APBD.xlsx">Unduh File Contoh</a>
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="indexCtrl.uploadFile()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal show" show id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" ng-if="!principal.isAuthenticated()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="login-form" class="smart-form client-form" ng-submit="indexCtrl.login()">
+                        <div class="alert" ng-show="formMessage" ng-class="{'alert-success': formMessage.type === 'success', 'alert-danger': formMessage.type === 'error'}">
+                            <p>{{formMessage.message}}</p>
+                        </div>
+                        <fieldset>
+                            <section>
+                                <label class="label">Username</label>
+                                <label class="input" ng-class="{'state-error': formMessage.errors.UserName}">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="text" name="username" ng-model="model.UserName">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter username</b>
+                                </label>
+                                <div class="note note-error" ng-show="formMessage.errors.UserName">
+                                    <p ng-repeat="message in formMessage.errors.UserName">{{message}}</p>
+                                </div>
+                            </section>
+                            <section>
+                                <label class="label">Password</label>
+                                <label class="input" ng-class="{'state-error': formMessage.errors.Password}">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="password" ng-model="model.Password">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                                </label>
+                                <div class="note note-error" ng-show="formMessage.errors.Password">
+                                    <p ng-repeat="message in formMessage.errors.Password">{{message}}</p>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>

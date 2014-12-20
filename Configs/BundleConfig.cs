@@ -32,7 +32,7 @@ namespace App.Configs
                 .Include("~/Scripts/dashboard/Services/Authorization.js")
                 .Include("~/Scripts/dashboard/Models/*.js")
                 .Include("~/Scripts/dashboard/Controllers/*.js")
-                .Include("~/Scripts/dashboard/Services/Run.js"));
+                );
 
         }
     }

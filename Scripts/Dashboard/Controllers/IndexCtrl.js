@@ -17,7 +17,19 @@ var KawalDesa;
                 this.$scope = $scope;
                 this.$upload = $upload;
                 this.principal = principal;
+                var ctrl = this;
                 $scope.principal = principal;
+                $scope.model = {};
+                principal.identity().then(function (identity) {
+                    if (identity != null) {
+                    }
+                    if (principal.isAuthenticated())
+                        ctrl.loadThings();
+                });
+            }
+            IndexCtrl.prototype.loadThings = function () {
+                var $scope = this.$scope;
+                var principal = this.principal;
 
                 principal.identity().then(function (identity) {
                     $scope.user = new Models.User(identity.user);
@@ -40,7 +52,8 @@ var KawalDesa;
                         });
                     });
                 }
-            }
+            };
+
             IndexCtrl.prototype.uploadFile = function () {
                 if (!this.$scope.file || this.$scope.file[0] == null)
                     return;
@@ -50,32 +63,44 @@ var KawalDesa;
                 var res = null;
 
                 APBNFileUpload.UploadFile(file, res, ctrl.$upload).success(function (data, status, headers, config) {
-                    ctrl.processFile(data);
+                    var modal = $("#apbnFileModal");
+                    modal.modal("hide");
                 });
                 ;
             };
 
-            IndexCtrl.prototype.processFile = function (data) {
-                var isValidFileLocation = (data != null && data[0].Path != "" && data[0].Name != "");
+            IndexCtrl.prototype.login = function () {
                 var ctrl = this;
+                var principal = this.principal;
                 var scope = this.$scope;
+                var model = new Models.User(this.$scope.model);
 
-                if (!isValidFileLocation)
-                    return;
-                var fileLocation = data[0].Path.concat("\\", data[0].Name);
-                /*
-                APBNFileUpload.ParseAPBNFileFile(fileLocation)
-                .done(result => {
-                scope.$apply(() => {
-                var total = result.length;
-                var message = "Data kuesioner sebanyak: " + total + " berhasil diproses";
+                model.Login().done(function (data) {
+                    principal.authenticate({
+                        name: data.UserName,
+                        roles: data.Roles
+                    });
+                    ctrl.loadThings();
+                }).fail(function (response) {
+                    var resp = response;
+                    scope.formMessage = {
+                        type: "error",
+                        message: resp.responseJSON.Message,
+                        errors: resp.responseJSON.ModelState
+                    };
+                }).always(function () {
+                    scope.$apply();
                 });
-                });
-                */
             };
+
+            IndexCtrl.prototype.logout = function () {
+                Models.User.Logout();
+                this.principal.authenticate(null);
+            };
+            IndexCtrl.$inject = ["$scope", "$upload", "principal"];
             return IndexCtrl;
         })();
-        KawalDesa.dashboard.controller("IndexCtrl", ["$scope", "$upload", "principal", IndexCtrl]);
+        KawalDesa.dashboard.controller("IndexCtrl", IndexCtrl);
     })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
     var Controllers = KawalDesa.Controllers;
 })(KawalDesa || (KawalDesa = {}));

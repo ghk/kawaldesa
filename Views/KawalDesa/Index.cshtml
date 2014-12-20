@@ -1,6 +1,7 @@
-﻿<html>
+﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
 <head>
     <title>Kawal Desa</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -10,10 +11,11 @@
 
 
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    @Scripts.Render("~/js/base")
     @Scripts.Render("~/js/index")
 
 </head>
-<body ng-app="kawaldesa" ng-controller="RecapitulationCtrl as recapitulationCtrl">
+<body ng-controller="RecapitulationCtrl as recapitulationCtrl">
     <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -136,9 +138,8 @@
                     <td class="money"> {{entity.TransferredADD | number:0}} </td>
                     <td class="money"> {{entity.AcknowledgedADD | number:0}} </td>
                 </tr>
-
-
             </tbody>
+
             <tfoot ng-show="entities.length > 0">
                 <tr class="success">
                     <td><a href="">Total</a></td>
@@ -155,11 +156,13 @@
                     <td class="money"> {{total.AcknowledgedADD | number:0}} </td>
                 </tr>
             </tfoot>
+
             <tfoot ng-show="entities.length == 0">
                 <tr>
                     <td colspan="10" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
                 </tr>
             </tfoot>
+
         </table>
     </div>
 
