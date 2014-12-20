@@ -41,12 +41,11 @@ module KawalDesa.Controllers {
         }
 
         activate(regionType, entityID, ev) {
-            var ctrl = this;
-            
             ev.preventDefault();
+            var ctrl = this;
+
             if (regionType < 3) {
                 this.$location.path("/r/" + entityID);
-                this.$location.replace();
             }
             else {
                 this.expandedStates[entityID] = !this.expandedStates[entityID];

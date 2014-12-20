@@ -38,12 +38,11 @@ var KawalDesa;
             };
 
             RecapitulationCtrl.prototype.activate = function (regionType, entityID, ev) {
+                ev.preventDefault();
                 var ctrl = this;
 
-                ev.preventDefault();
                 if (regionType < 3) {
                     this.$location.path("/r/" + entityID);
-                    this.$location.replace();
                 } else {
                     this.expandedStates[entityID] = !this.expandedStates[entityID];
                     if (this.expandedStates[entityID]) {

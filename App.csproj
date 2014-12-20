@@ -1354,8 +1354,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Dashboard\Directives\" />
-    <Folder Include="Scripts\KawalDesa\Directives\" />
     <Folder Include="Scripts\KawalDesa\Services\" />
   </ItemGroup>
   <ItemGroup>
