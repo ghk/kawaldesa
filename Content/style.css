@@ -88,8 +88,13 @@ table.table-bordered > thead > tr > th:last-child{
 	border: 0;
 	border-bottom: 1px solid #ddd;
 }
-.table > tbody > tr.detail-padding > td:first-child ,
-.table > tbody > tr.detail-padding > td:last-child {
+.table.table-bordered thead tr:last-child th {
+    border-bottom: 1px solid #ddd;
+}
+.table.table-bordered thead tr:first-child th:first-child {
+    border-bottom: 1px solid #ddd;
+}
+.table > tbody > tr.detail-padding > td:first-child {
 	border-bottom: 0;
 }
 .table > tbody > tr.detail-sum > td {
@@ -98,8 +103,7 @@ table.table-bordered > thead > tr > th:last-child{
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #888;
 }
-.table > tbody > tr.detail-sum > td:first-child, 
-.table > tbody > tr.detail-sum > td:last-child {
+.table > tbody > tr.detail-sum > td:first-child{
 	border-bottom: 0;
 }
 .table > tbody > tr.detail > td {
@@ -107,16 +111,20 @@ table.table-bordered > thead > tr > th:last-child{
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 }
-.table > tbody > tr.detail > td:first-child ,
-.table > tbody > tr.detail > td:last-child {
+.table > tbody > tr.detail > td:first-child{
 	border-bottom: 0;
+}
+
+.table > tbody > tr.detail > td:last-child {
 	border-left: 1px solid #ddd;
 }
 .table > tbody > tr > td .info{
-	float: left; 
+	display: left; 
 }
 .table > tbody > tr.detail > td .info{
-	padding-left: 15px;
+    display: block; 
+    text-align: left;
+    float: none;
 }
 p.subtext {
     max-width: 700px;

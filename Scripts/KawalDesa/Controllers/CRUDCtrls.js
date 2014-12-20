@@ -19,6 +19,8 @@ var KawalDesa;
             function RecapitulationCtrl($scope, $location) {
                 this.$scope = $scope;
                 this.$location = $location;
+                this.expandedStates = {};
+                this.transactions = {};
                 var ctrl = this;
 
                 var regionID = parseInt(this.$location.path().replace("/r/", ""));
@@ -36,16 +38,35 @@ var KawalDesa;
                 this.getRecapitulations(regionID);
             };
 
-            RecapitulationCtrl.prototype.setParentID = function (parentID, ev) {
-                this.$location.path("/r/" + parentID);
-                this.$location.replace();
+            RecapitulationCtrl.prototype.activate = function (regionType, entityID, ev) {
+                var ctrl = this;
+
                 ev.preventDefault();
+                if (regionType < 3) {
+                    this.$location.path("/r/" + entityID);
+                    this.$location.replace();
+                } else {
+                    this.expandedStates[entityID] = !this.expandedStates[entityID];
+                    if (this.expandedStates[entityID]) {
+                        Models.Transaction.GetTransactionDetails(entityID).done(function (details) {
+                            ctrl.$scope.$apply(function () {
+                                ctrl.transactions[entityID] = details;
+                            });
+                        });
+                    }
+                }
+            };
+
+            RecapitulationCtrl.prototype.isExpanded = function (entity) {
+                return this.expandedStates[entity.RegionID];
             };
 
             RecapitulationCtrl.prototype.getRecapitulations = function (parentID) {
                 this.$scope.entities = [];
                 this.$scope.regionTree = [];
                 this.$scope.childName = CHILD_NAMES[0];
+                this.expandedStates = {};
+                this.transactions = {};
 
                 var ctrl = this;
                 var scope = this.$scope;

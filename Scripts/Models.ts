@@ -590,6 +590,14 @@ module App.Models {
             return res;
         }
                 
+        static GetTransactionDetails(regionID: number): JQueryPromise<Array</** App.Controllers.RegionTransactionRow **/ any>> {
+            var res = $.ajax(Transaction.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Transaction/GetTransactionDetails?regionID='+regionID+'',
+            }));
+            return res;
+        }
+
     }
 
     export interface ITransactionFile {

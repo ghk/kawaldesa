@@ -19,6 +19,9 @@ module KawalDesa.Controllers {
 
         static $inject = ["$scope", "$location"];
 
+        expandedStates = {};
+        transactions = {};
+
         constructor(public $scope, public $location) {
             var ctrl = this;
 
@@ -38,16 +41,36 @@ module KawalDesa.Controllers {
             this.getRecapitulations(regionID);
         }
 
-        setParentID(parentID: number, ev) {
-            this.$location.path("/r/" + parentID);
-            this.$location.replace();
+        activate(regionType, entityID, ev) {
+            var ctrl = this;
+            
             ev.preventDefault();
+            if (regionType < 3) {
+                this.$location.path("/r/" + entityID);
+                this.$location.replace();
+            }
+            else {
+                this.expandedStates[entityID] = !this.expandedStates[entityID];
+                if (this.expandedStates[entityID]) {
+                    Models.Transaction.GetTransactionDetails(entityID).done(details => {
+                        ctrl.$scope.$apply(() => {
+                            ctrl.transactions[entityID] = details;
+                        });
+                    });
+                }
+            }
+        }
+
+        isExpanded(entity) {
+            return this.expandedStates[entity.RegionID];
         }
 
         getRecapitulations(parentID: number) {
             this.$scope.entities = [];
             this.$scope.regionTree = [];
             this.$scope.childName = CHILD_NAMES[0];
+            this.expandedStates = {};
+            this.transactions = {};
             
             var ctrl = this;
             var scope = this.$scope;

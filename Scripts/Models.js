@@ -443,6 +443,14 @@ var App;
                 }));
                 return res;
             };
+
+            Transaction.GetTransactionDetails = function (regionID) {
+                var res = $.ajax(Transaction.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Transaction/GetTransactionDetails?regionID=' + regionID + ''
+                }));
+                return res;
+            };
             Transaction.ajaxSettings = new Scaffold.AjaxSettings();
             return Transaction;
         })();
