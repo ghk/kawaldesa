@@ -17,7 +17,7 @@ module KawalDesa {
         $rootElement.off('click');
     }]);
 
-    dashboard.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    dashboard.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
         var baseUrl = "/";
 
         //$urlRouterProvider.otherwise(baseUrl);
@@ -85,6 +85,6 @@ module KawalDesa {
             });
 
         $locationProvider.html5Mode(true);
-    });
+    }]);
 
 }
