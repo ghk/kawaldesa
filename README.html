@@ -1,13 +1,34 @@
 <h1>Kawal Desa</h1>
 
+<p>Currently build with C#, come contribute!</p>
+
 <h2>Installation</h2>
 
-<p>Visual Studio 2013
-WebEssentials</p>
+<p>Requirements:</p>
+
+<ul>
+<li>Visual Studio 2013</li>
+<li>PostgreSQL > 9.3</li>
+<li>WebEssentials (for nicer typescript)</li>
+<li>Our ASP Scaffold's at http://www.github.com/microvac/asp-scaffold</li>
+</ul>
+
+<p>Installation:</p>
+
+<ul>
+<li>symlink asp-scaffold's Scaffold folder to Scaffold directory right under this root directory (for excample in windows <code>mklink /j Scaffold ..\asp-scaffold\Scaffold</code>)</li>
+<li>Open the project in VS, build so it download the nuget dependencies</li>
+<li>Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it</li>
+<li>Open nuget package manager, run <code>update-database</code></li>
+<li>Delete Recapitulations table on the database, load the regions.sql, then all the materialized views on it</li>
+<li>Run!</li>
+</ul>
 
 <h2>Roles</h2>
 
-<p>admin: Set APBN (APBN), Upload APBD (Unggah DAU &amp; DBH Daerah), User Management (Daftar Pengguna)
-pusat: Upload APBN Transactions (Unggah Penyaluran Dana Desa Dari APBN)
-daerah: Upload ADD Transactions (Unggah Penyaluran Dana Desa Dari ADD)
-desa: Input Transaction (Input Penyaluran Dana Desa)</p>
+<ul>
+<li><strong>admin</strong>: Set APBN (APBN), Upload APBD (Unggah DAU &amp; DBH Daerah), User Management (Daftar Pengguna)</li>
+<li><strong>pusat</strong>: Upload APBN Transactions (Unggah Penyaluran Dana Desa Dari APBN)</li>
+<li><strong>daerah</strong>: Upload ADD Transactions (Unggah Penyaluran Dana Desa Dari ADD)</li>
+<li><strong>desa</strong>: Input Transaction (Input Penyaluran Dana Desa)</li>
+</ul>
