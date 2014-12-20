@@ -312,50 +312,5 @@
         </div>
     </div>
 
-    <div class="modal show" show id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" ng-if="!principal.isAuthenticated()">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Login</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" id="login-form" class="smart-form client-form" ng-submit="indexCtrl.login()">
-                        <div class="alert" ng-show="formMessage" ng-class="{'alert-success': formMessage.type === 'success', 'alert-danger': formMessage.type === 'error'}">
-                            <p>{{formMessage.message}}</p>
-                        </div>
-                        <fieldset>
-                            <section>
-                                <label class="label">Username</label>
-                                <label class="input" ng-class="{'state-error': formMessage.errors.UserName}">
-                                    <i class="icon-append fa fa-user"></i>
-                                    <input type="text" name="username" ng-model="model.UserName">
-                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter username</b>
-                                </label>
-                                <div class="note note-error" ng-show="formMessage.errors.UserName">
-                                    <p ng-repeat="message in formMessage.errors.UserName">{{message}}</p>
-                                </div>
-                            </section>
-                            <section>
-                                <label class="label">Password</label>
-                                <label class="input" ng-class="{'state-error': formMessage.errors.Password}">
-                                    <i class="icon-append fa fa-lock"></i>
-                                    <input type="password" name="password" ng-model="model.Password">
-                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
-                                </label>
-                                <div class="note note-error" ng-show="formMessage.errors.Password">
-                                    <p ng-repeat="message in formMessage.errors.Password">{{message}}</p>
-                                </div>
-                            </section>
-                        </fieldset>
-                        <div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </body>
 </html>

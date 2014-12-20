@@ -22,10 +22,7 @@ module KawalDesa.Controllers {
             $scope.principal = principal;
             $scope.model = {};
             principal.identity().then(function (identity) {
-                if (identity != null) {
-                }
-                if(principal.isAuthenticated())
-                    ctrl.loadThings();
+                ctrl.loadThings();
             });
         }
 
@@ -70,34 +67,6 @@ module KawalDesa.Controllers {
             });;
         }
 
-        login() {
-            var ctrl = this;
-            var principal = this.principal;
-            var scope = this.$scope;
-            var model = new Models.User(this.$scope.model);
-
-            model.Login().done(data => {
-                principal.authenticate({
-                    name: data.UserName,
-                    roles: data.Roles
-                });
-                ctrl.loadThings();
-            }).fail(response => {
-                    var resp: any = response;
-                    scope.formMessage = {
-                        type: "error",
-                        message: resp.responseJSON.Message,
-                        errors: resp.responseJSON.ModelState
-                    }
-            }).always(() => {
-                scope.$apply();    
-            }); 
-        }
-
-        logout() {            
-            Models.User.Logout();
-            this.principal.authenticate(null);
-        }
     }
     dashboard.controller("IndexCtrl",  IndexCtrl);
 }

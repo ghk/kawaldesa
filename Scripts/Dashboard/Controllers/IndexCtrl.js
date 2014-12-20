@@ -21,10 +21,7 @@ var KawalDesa;
                 $scope.principal = principal;
                 $scope.model = {};
                 principal.identity().then(function (identity) {
-                    if (identity != null) {
-                    }
-                    if (principal.isAuthenticated())
-                        ctrl.loadThings();
+                    ctrl.loadThings();
                 });
             }
             IndexCtrl.prototype.loadThings = function () {
@@ -67,35 +64,6 @@ var KawalDesa;
                     modal.modal("hide");
                 });
                 ;
-            };
-
-            IndexCtrl.prototype.login = function () {
-                var ctrl = this;
-                var principal = this.principal;
-                var scope = this.$scope;
-                var model = new Models.User(this.$scope.model);
-
-                model.Login().done(function (data) {
-                    principal.authenticate({
-                        name: data.UserName,
-                        roles: data.Roles
-                    });
-                    ctrl.loadThings();
-                }).fail(function (response) {
-                    var resp = response;
-                    scope.formMessage = {
-                        type: "error",
-                        message: resp.responseJSON.Message,
-                        errors: resp.responseJSON.ModelState
-                    };
-                }).always(function () {
-                    scope.$apply();
-                });
-            };
-
-            IndexCtrl.prototype.logout = function () {
-                Models.User.Logout();
-                this.principal.authenticate(null);
             };
             IndexCtrl.$inject = ["$scope", "$upload", "principal"];
             return IndexCtrl;
