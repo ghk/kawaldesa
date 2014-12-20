@@ -214,7 +214,6 @@
     <Compile Include="Controllers\BlobController.cs" />
     <Compile Include="Controllers\TransactionFileController.cs" />
     <Compile Include="Controllers\APBDFileController.cs" />
-    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\RecapitulationController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\APBNController.cs" />
@@ -1074,7 +1073,7 @@
     <Content Include="log4net.config" />
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\KawalDesa\Dashboard.cshtml" />
     <Content Include="Scripts\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.ts</LastGenOutput>

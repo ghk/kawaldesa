@@ -44,14 +44,17 @@ namespace App.Migrations
             string name = "admin";
             string password = "123456";
 
-            //Create Role Admin if it does not exist
-            if (!RoleManager.RoleExists(Role.ADMIN))
+            var roleNames = new string[]{
+                Role.ADMIN, Role.VIEWER,
+                Role.VOLUNTEER, Role.VOLUNTEER_APBN, Role.VOLUNTEER_ADD, Role.VOLUNTEER_DESA
+            };
+
+            foreach(var roleName in roleNames)
             {
-                var roleresult = RoleManager.Create(new IdentityRole(Role.ADMIN));
-            }
-            if (!RoleManager.RoleExists(Role.VIEWER))
-            {
-                var roleresult = RoleManager.Create(new IdentityRole(Role.VIEWER));
+                if (!RoleManager.RoleExists(roleName))
+                {
+                    var roleresult = RoleManager.Create(new IdentityRole(roleName));
+                }
             }
 
             //Create User=Admin with password=123456
@@ -74,8 +77,6 @@ namespace App.Migrations
             {
                 var result2 = UserManager.AddToRole(viewer.Id, Role.VIEWER);
             }
-
-            //LoadRegions(context);
 
             base.Seed(context);
         }

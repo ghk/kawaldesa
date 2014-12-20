@@ -52,7 +52,7 @@ namespace App.Controllers
                 {
                     var session = HttpContext.Current.Session;
                     if (session != null)
-                        session["username"] = user.UserName;
+                        session["userid"] = user.Id;
                     
                     var roles = UserManager.GetRoles(user.Id);
                     UserViewModel userViewModel = new UserViewModel() { UserName = user.UserName, Roles = roles.ToList()};

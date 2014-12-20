@@ -54,7 +54,7 @@ namespace App
 
         protected void Application_PostAuthorizeRequest()
         {
-            if (IsWebApiRequest() && !IsEmissRequest())
+            if (!IsEmissRequest())
             {
                 HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
             }

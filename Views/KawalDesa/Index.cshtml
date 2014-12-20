@@ -1,5 +1,6 @@
 ﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
 <head>
+    <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
     <title>Kawal Desa</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
@@ -39,7 +40,21 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a style="padding-right: 20px;" href="/dashboard/">Login</a></li>
+                @{ if (ViewData["User.Name"] != null)
+                 {
+                    <li>
+                        <a style="padding-right: 20px;" href="/dashboard">
+                            <img src='http://graph.facebook.com/v2.2/@ViewData["User.FacebookID"]/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
+                            @ViewData["User.Name"]
+                        </a>
+                    </li>
+                 }
+                 else
+                 {
+                    <li><a style="padding-right: 20px;" href="/login">Login</a></li>
+                 } }
+
+
             </ul>
         </div>
     </header>

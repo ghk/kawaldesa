@@ -56,11 +56,11 @@ namespace App.Security
                     }     
                 }
             }             
-            else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session["username"]))
+            else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session["userid"]))
             {
                 var session = HttpContext.Current.Session;                
                 var userManager = new UserManager<User>(new UserStore<User>(new DB()));
-                var user = userManager.FindByName((string)session["username"]);
+                var user = userManager.FindById((string)session["userid"]);
                 if (user != null)
                 {
                     var identity = new KawalDesaIdentity(user, "Session");

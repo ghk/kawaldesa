@@ -19,6 +19,8 @@ namespace App.Models
             this.SecretKey = CryptographyHelper.GenerateSecretKey();
         }
         public string SecretKey { get; set; }
+        public string Name { get; set; }
+        public string FacebookID { get; set; }
     }
 
     public class UserViewModel
@@ -48,6 +50,10 @@ namespace App.Models
     public static class Role {
         public const string ADMIN = "admin";
         public const string VIEWER = "viewer";
+        public const string VOLUNTEER = "volunteer";
+        public const string VOLUNTEER_APBN = "volunteer_apbn";
+        public const string VOLUNTEER_ADD = "volunteer_add";
+        public const string VOLUNTEER_DESA = "volunteer_desa";
     }
 
 }
