@@ -7,7 +7,7 @@ Requirements:
 
 - Visual Studio 2013
 - PostgreSQL > 9.3
-- WebEssentials (for nicer typescript)
+- WebEssentials for Visual Studio (not mandatory, for nicer typescript)
 - Our ASP Scaffold's at http://www.github.com/microvac/asp-scaffold
 
 Installation:
