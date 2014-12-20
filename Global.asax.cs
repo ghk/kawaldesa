@@ -32,8 +32,8 @@ namespace App
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
             AutoMapperConfig.RegisterMappings();            
+
             FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
             log4net.Config.XmlConfigurator.Configure(new FileInfo(System.Configuration.ConfigurationManager.AppSettings["log4net.Config"]));
