@@ -17,7 +17,7 @@ Installation:
 - Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it
 - Open nuget package manager, run `update-database`
 - Delete Recapitulations table on the database, load the regions.sql, then all the materialized views on it
-- Run!
+- Run App projects!
 
 ## Roles
 
