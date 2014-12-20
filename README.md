@@ -1,5 +1,5 @@
 # Kawal Desa
-Currently build with C#, come contribute!
+Currently build with C# WebAPI, Typescript and angularjs, come contribute!
 
 ## Installation
 
