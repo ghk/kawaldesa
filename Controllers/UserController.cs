@@ -143,18 +143,6 @@ namespace App.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles=Role.ADMIN)]
-        public IEnumerable<StringValueSelectListItem> GetAllRoles()
-        {
-            List<IdentityRole> roles = dbContext.Set<IdentityRole>().ToList();
-            List<StringValueSelectListItem> result = new List<StringValueSelectListItem>();
-            foreach(var role in roles){
-                result.Add(new StringValueSelectListItem() { Text = role.Name, Value = role.Id });
-            }
-            return result;
-        }
-
-        [HttpGet]
         [Authorize(Roles = Role.ADMIN)]
         public long GetCount()
         {

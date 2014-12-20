@@ -12,7 +12,6 @@ namespace App.Controllers
         public RecapitulationController(DB dbContext)
             : base(dbContext)
         {
-            //Include(r => r.Parent);            
         }
 
         protected override IQueryable<Recapitulation> ApplyQuery(IQueryable<Recapitulation> query)

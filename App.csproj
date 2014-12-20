@@ -221,7 +221,6 @@
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Scaffold\SmartAdminController.cs" />
     <Compile Include="Controllers\KawalDesaController.cs" />
     <Compile Include="Controllers\Validators\Validators.cs" />
     <Compile Include="Global.asax.cs">
@@ -261,7 +260,6 @@
     <Content Include="Content\app\variables.css">
       <DependentUpon>variables.less</DependentUpon>
     </Content>
-    <Compile Include="Controllers\EnumController.cs" />
     <Content Include="Content\app\variables.min.css">
       <DependentUpon>variables.css</DependentUpon>
     </Content>
