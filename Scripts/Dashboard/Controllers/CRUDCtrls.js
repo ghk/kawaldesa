@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
-/// <reference path="../../typings/underscore/underscore.d.ts"/>
 /// <reference path="../../Models.ts"/>
 /// <reference path="../Dashboard.ts"/>
 var __extends = this.__extends || function (d, b) {
@@ -227,7 +226,7 @@ var KawalDesa;
                     url: '/api/User/GetAllRoles'
                 }).done(function (roles) {
                     scope.$apply(function () {
-                        ctrl.roles = _.reduce(roles, function (o, v) {
+                        ctrl.roles = roles.reduce(function (o, v) {
                             o[v.Value] = v.Text;
                             return o;
                         }, {});

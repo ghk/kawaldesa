@@ -196,7 +196,7 @@ namespace App.Controllers
         [Authorize]
         public virtual UserViewModel Get()
         {
-            LombokIdentity identity = (LombokIdentity)User.Identity;
+            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
             var view = AutoMapper.Mapper.Map<User, UserViewModel>(identity.User);
             view.Roles = UserManager.GetRoles(identity.User.Id).ToList();
             return view;

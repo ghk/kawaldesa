@@ -247,9 +247,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationHandler.cs" />
     <Compile Include="Security\CryptographyHelper.cs" />
-    <Compile Include="Security\LombokAuthorizeAttribute.cs" />
-    <Compile Include="Security\LombokIdentity.cs" />
-    <Compile Include="Utils\PredicateBuilder.cs" />
+    <Compile Include="Security\KawalDesaAuthorizeAttribute.cs" />
+    <Compile Include="Security\KawalDesaIdentity.cs" />
     <Content Include="Content\app\app.min.css">
       <DependentUpon>app.css</DependentUpon>
     </Content>
@@ -269,6 +268,11 @@
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\loading-bar.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Design\kabupaten.html" />
+    <Content Include="Design\national.html" />
+    <Content Include="Design\provinsi.html" />
+    <Content Include="Design\style.css" />
+    <Content Include="Design\table.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
@@ -1077,15 +1081,7 @@
     <Content Include="Scaffold\Scripts\Scaffold\Smartadmin\app.min.js" />
     <Content Include="Scaffold\Scripts\Scaffold\Smartadmin\Bootstrap.js" />
     <Content Include="Scripts\angular-file-upload.min.js" />
-    <Content Include="Scripts\angular-ui-router.js" />
-    <Content Include="Scripts\angular-ui-router.min.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
-    <Content Include="Scripts\libraries\angular-blocks.min.js" />
-    <Content Include="Scripts\libraries\dirPagination.js" />
-    <Compile Include="Security\EmissHeaders.cs" />
+    <Compile Include="Security\KawalDesaHeaders.cs" />
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Views\KawalDesa\Index.cshtml" />
@@ -1095,17 +1091,8 @@
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Partials\AccessDenied.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Forbidden.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Home.cshtml" />
     <Content Include="Views\Dashboard\Partials\Index.cshtml" />
     <Content Include="Views\Dashboard\Partials\Login.cshtml" />
-    <Content Include="Views\Dashboard\Partials\NotFound.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Table\Region.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Table\Table.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Table\Transaction.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Table\User.cshtml" />
-    <Content Include="Views\Dashboard\Partials\Template\dirPagination.tpl.cshtml" />
     <Content Include="Scripts\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.ts</LastGenOutput>
@@ -1371,9 +1358,6 @@
     <Content Include="Scaffold\Scripts\Scaffold\Scaffold.js.map" />
     <Content Include="Scaffold\Scripts\version.json" />
     <None Include="Scripts\T4Utils.t4" />
-    <Content Include="Scripts\libraries\underscore.js" />
-    <Content Include="Scripts\libraries\underscore.min.js" />
-    <Content Include="Scripts\libraries\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\app\app.css">
@@ -1384,13 +1368,6 @@
     <Content Include="Content\app\app.css.map">
       <DependentUpon>app.css</DependentUpon>
     </Content>
-    <Content Include="Scripts\testing\config\testacular-unit-tests.conf.js" />
-    <Content Include="Scripts\testing\jasmine\jasmine-html.js" />
-    <Content Include="Scripts\testing\jasmine\jasmine.css" />
-    <Content Include="Scripts\testing\jasmine\jasmine.js" />
-    <Content Include="Scripts\testing\unit-tests\basicSpec.js" />
-    <Content Include="Scripts\testing\unit-tests\controllersSpec.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1409,7 +1386,6 @@
     <Folder Include="Scripts\Dashboard\Directives\" />
     <Folder Include="Scripts\KawalDesa\Directives\" />
     <Folder Include="Scripts\KawalDesa\Services\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1445,9 +1421,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
-    <TypeScriptCompile Include="Scripts\Utils\Arrays.ts" />
-    <TypeScriptCompile Include="Scripts\Utils\Seriously.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Scaffold\Scaffold.csproj">

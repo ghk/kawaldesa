@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
-/// <reference path="../../typings/underscore/underscore.d.ts"/>
 /// <reference path="../../Models.ts"/>
 /// <reference path="../Dashboard.ts"/>
 
@@ -227,7 +226,7 @@ module KawalDesa.Controllers {
                 url: '/api/User/GetAllRoles'
             }).done(roles => {
                     scope.$apply(() => {
-                        ctrl.roles = _.reduce(roles, function (o, v: any) { o[v.Value] = v.Text; return o }, {});
+                        ctrl.roles = roles.reduce(function (o, v: any) { o[v.Value] = v.Text; return o }, {});
                     });
                 });
         }

@@ -3,11 +3,11 @@ using System.Security.Principal;
 
 namespace App.Security
 {
-    public class LombokIdentity : GenericIdentity
+    public class KawalDesaIdentity : GenericIdentity
     {
         public User User { get; set; }
         
-        public LombokIdentity(User user, string type): base(user.UserName, type) 
+        public KawalDesaIdentity(User user, string type): base(user.UserName, type) 
         {
             User = user;
         }

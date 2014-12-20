@@ -67,7 +67,7 @@ namespace App
 
         private bool IsEmissRequest()
         {
-            return HttpContext.Current.Request.Headers.AllKeys.Contains(EmissHeaders.X_EMISS_USERNAME);
+            return HttpContext.Current.Request.Headers.AllKeys.Contains(KawalDesaHeaders.X_KD_USERID);
         }
 
 

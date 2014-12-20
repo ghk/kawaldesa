@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
-/// <reference path="../../typings/underscore/underscore.d.ts"/>
 /// <reference path="../../Models.ts"/>
 /// <reference path="../KawalDesa.ts"/>
 

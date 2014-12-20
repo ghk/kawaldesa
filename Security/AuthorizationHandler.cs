@@ -20,7 +20,7 @@ namespace App.Security
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             IEnumerable<string> userNameHeaderValues = null;
-            if (request.Headers.TryGetValues(EmissHeaders.X_EMISS_USERNAME, out userNameHeaderValues))
+            if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_USERID, out userNameHeaderValues))
             {
                 if (!IsValidEmissRequest(request))
                 {
@@ -29,7 +29,7 @@ namespace App.Security
                 }
 
                 IEnumerable<String> expireHeaderValues = null;
-                if (request.Headers.TryGetValues(EmissHeaders.X_EMISS_EXPIRES, out expireHeaderValues))
+                if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_EXPIRES, out expireHeaderValues))
                 {
                     if (IsExpiredRequest(expireHeaderValues.FirstOrDefault()))
                     {
@@ -44,9 +44,9 @@ namespace App.Security
                 if (user != null) 
                 {
                     string signature = CryptographyHelper.Sign(request, user.SecretKey);
-                    if (signature.Equals(request.Headers.GetValues(EmissHeaders.X_EMISS_SIGNATURE).FirstOrDefault()))
+                    if (signature.Equals(request.Headers.GetValues(KawalDesaHeaders.X_KD_SIGNATURE).FirstOrDefault()))
                     {
-                        var identity = new LombokIdentity(user, "Emiss");
+                        var identity = new KawalDesaIdentity(user, "Emiss");
                         var principal = new GenericPrincipal(identity, userManager.GetRoles(user.Id).ToArray());
                         Thread.CurrentPrincipal = principal;
                         if (HttpContext.Current != null)
@@ -63,7 +63,7 @@ namespace App.Security
                 var user = userManager.FindByName((string)session["username"]);
                 if (user != null)
                 {
-                    var identity = new LombokIdentity(user, "Session");
+                    var identity = new KawalDesaIdentity(user, "Session");
                     var principal = new GenericPrincipal(identity, userManager.GetRoles(user.Id).ToArray());
                     Thread.CurrentPrincipal = principal;
                     if (HttpContext.Current != null)
@@ -79,9 +79,9 @@ namespace App.Security
         private bool IsValidEmissRequest(HttpRequestMessage request)
         {
             IEnumerable<string> headerValues = null;
-            if (request.Headers.TryGetValues(EmissHeaders.X_EMISS_EXPIRES, out headerValues) &&
-                request.Headers.TryGetValues(EmissHeaders.X_EMISS_SIGNATURE, out headerValues) &&
-                request.Headers.TryGetValues(EmissHeaders.X_EMISS_USERNAME, out headerValues))
+            if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_EXPIRES, out headerValues) &&
+                request.Headers.TryGetValues(KawalDesaHeaders.X_KD_SIGNATURE, out headerValues) &&
+                request.Headers.TryGetValues(KawalDesaHeaders.X_KD_USERID, out headerValues))
                 return true;
 
             return false;

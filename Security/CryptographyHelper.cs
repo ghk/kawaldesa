@@ -35,7 +35,7 @@ namespace App.Security
         {
             String message = "";
             message += request.Method + "\n";
-            message += request.Headers.GetValues(EmissHeaders.X_EMISS_EXPIRES).FirstOrDefault() + "\n";
+            message += request.Headers.GetValues(KawalDesaHeaders.X_KD_EXPIRES).FirstOrDefault() + "\n";
             if (IsMethodNeedsContent(request.Method))
             {
                 message += Convert.ToBase64String(request.Content.Headers.ContentMD5) +"\n";
