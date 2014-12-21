@@ -17,11 +17,13 @@ var KawalDesa;
                 this.$scope = $scope;
                 this.$upload = $upload;
                 this.principal = principal;
+                this.roles = {};
                 var ctrl = this;
                 $scope.principal = principal;
                 $scope.model = {};
                 principal.identity().then(function (identity) {
                     ctrl.loadThings();
+                    ctrl.loadRoles();
                 });
             }
             IndexCtrl.prototype.loadThings = function () {
@@ -49,6 +51,31 @@ var KawalDesa;
                         });
                     });
                 }
+            };
+
+            IndexCtrl.prototype.loadRoles = function () {
+                var ctrl = this;
+                Models.User.GetCurrentUser().done(function (user) {
+                    ctrl.$scope.$apply(function () {
+                        ctrl.roles = {};
+                        for (var i = 0; i < user.Roles.length; i++) {
+                            ctrl.roles[user.Roles[i]] = true;
+                        }
+                    });
+                });
+            };
+
+            IndexCtrl.prototype.saveRoles = function () {
+                var ctrl = this;
+                var selectedRoles = [];
+                for (var key in this.roles) {
+                    if (this.roles[key]) {
+                        selectedRoles.push(key);
+                    }
+                }
+                Models.User.UpdateVolunteerRoles(selectedRoles).done(function () {
+                    ctrl.loadRoles();
+                });
             };
 
             IndexCtrl.prototype.uploadFile = function () {

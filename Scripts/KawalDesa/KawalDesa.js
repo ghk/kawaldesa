@@ -2,7 +2,9 @@
 /// <reference path="../Models.ts"/>
 var KawalDesa;
 (function (KawalDesa) {
-    KawalDesa.kawaldesa = angular.module('kawaldesa', []);
+    KawalDesa.kawaldesa = angular.module('kawaldesa', [
+        'angularFileUpload'
+    ]);
 
     KawalDesa.kawaldesa.run([
         '$location', '$rootElement', function ($location, $rootElement) {

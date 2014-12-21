@@ -8,6 +8,7 @@ using System.Web;
 using App.Security;
 using Scaffold;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace App.Controllers
 {
@@ -18,13 +19,13 @@ namespace App.Controllers
         }
 
         [KawalDesaAuthorize(Roles=Role.VOLUNTEER)]
-        public async void AddTransaction()
+        public async Task AddTransaction()
         {
             var res = await uploader.PostFile<Blob>(Request);
             Blob blob = res.Files.ToList()[0];
 
             var principal = HttpContext.Current.User;
-            var user = KawalDesaController.GetCurrentUser();
+            var user = (principal.Identity as KawalDesaIdentity).User;
 
             dbContext.Set<Blob>().Add(blob);
             dbContext.SaveChanges();
@@ -46,17 +47,17 @@ namespace App.Controllers
                 throw new ApplicationException("Amount must > 0");
 
             string roleRequired = null;
-            if(actor.Type == RegionType.DESA)
+            if(actor.Type == RegionType.NASIONAL || actor.Type == RegionType.KABUPATEN)
             {
                 if (source.Type == RegionType.NASIONAL && destination.Type == RegionType.DESA)
                     roleRequired = Role.VOLUNTEER_APBN;
                 if (source.Type == RegionType.KABUPATEN && destination.Type == RegionType.DESA)
                     roleRequired = Role.VOLUNTEER_ADD;
             }
-            else if(actor.Type == RegionType.NASIONAL || actor.Type == RegionType.NASIONAL)
+            else if(actor.Type == RegionType.DESA)
             {
                 if ((source.Type == RegionType.KABUPATEN || source.Type == RegionType.NASIONAL) && destination.Type == RegionType.DESA)
-                    roleRequired = Role.VOLUNTEER_ADD;
+                    roleRequired = Role.VOLUNTEER_DESA;
             }
             if (roleRequired == null)
                 throw new ApplicationException(String.Format("No role matched for transaction: {0}, {1}, {2}", 

@@ -16,6 +16,7 @@ namespace App.Configs
 
             bundles.Add(new ScriptBundle("~/js/base")
                 .Include("~/Scaffold/Scripts/angular.js")
+                .Include("~/Scripts/angular-file-upload.min.js")
                 .Include("~/Scripts/Models.js"));
 
             bundles.Add(new ScriptBundle("~/js/index")
@@ -25,7 +26,6 @@ namespace App.Configs
 
             bundles.Add(new ScriptBundle("~/js/dashboard")
                 .Include("~/Scripts/loading-bar.min.js")
-                .Include("~/Scripts/angular-file-upload.min.js")
                 .Include("~/Scripts/Models.js")
                 .Include("~/Scripts/dashboard/Dashboard.js")
                 .Include("~/Scripts/dashboard/Services/Principal.js")

@@ -74,6 +74,52 @@ module App.Models {
 
     }
 
+    export interface IAPBDesAccount {
+        ID: number;
+        AccountNo: string;
+        AccountName: string;
+        Amount: number;
+        RealizationAmount: number;
+        IsActivated: boolean;
+        fkParentAccountID: number;
+        ParentAccount: App.Models.IAPBDesAccount;
+        fkAPBNID: number;
+        APBN: App.Models.IAPBN;
+        fkRegionID: number;
+        Region: App.Models.IRegion;
+    }
+
+    export class APBDesAccount {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        AccountNo: string;
+        AccountName: string;
+        Amount: number;
+        RealizationAmount: number;
+        IsActivated: boolean;
+        fkParentAccountID: number;
+        ParentAccount: App.Models.IAPBDesAccount;
+        fkAPBNID: number;
+        APBN: App.Models.IAPBN;
+        fkRegionID: number;
+        Region: App.Models.IRegion;
+        constructor(data?: IAPBDesAccount) {
+            this.ID = data ? data.ID : null;
+            this.AccountNo = data ? data.AccountNo : null;
+            this.AccountName = data ? data.AccountName : null;
+            this.Amount = data ? data.Amount : null;
+            this.RealizationAmount = data ? data.RealizationAmount : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkParentAccountID = data ? data.fkParentAccountID : null;
+            this.ParentAccount = data ? data.ParentAccount : null;
+            this.fkAPBNID = data ? data.fkAPBNID : null;
+            this.APBN = data ? data.APBN : null;
+            this.fkRegionID = data ? data.fkRegionID : null;
+            this.Region = data ? data.Region : null;
+        }
+
+    }
+
     export interface IAPBDFile {
         ID: number;
         FileName: string;
@@ -508,6 +554,7 @@ module App.Models {
         ID: number;
         Name: string;
         Type: /** App.Models.RegionType **/ any;
+        UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
     }
@@ -517,12 +564,14 @@ module App.Models {
         ID: number;
         Name: string;
         Type: /** App.Models.RegionType **/ any;
+        UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
         constructor(data?: IRegion) {
             this.ID = data ? data.ID : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
+            this.UrlKey = data ? data.UrlKey : null;
             this.fkParentID = data ? data.fkParentID : null;
             this.Parent = data ? data.Parent : null;
         }

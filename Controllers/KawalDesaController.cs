@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using App.Security;
+using System.Web.Script.Serialization;
 
 namespace App.Controllers
 {
@@ -30,6 +31,7 @@ namespace App.Controllers
             {
                 ViewData["User.Name"] = user.Name;
                 ViewData["User.FacebookID"] = user.FacebookID;
+                ViewData["User.Roles"] = new JavaScriptSerializer().Serialize(GetCurrentRolesFromSession());
             }
             return View();
         }
@@ -160,6 +162,17 @@ namespace App.Controllers
             using(var db = new DB())
             {
                 return db.Users.FirstOrDefault(u => u.Id == userId);
+            }
+        }
+        public IList<String> GetCurrentRolesFromSession()
+        {
+            string userId = Session[USERID_KEY] as string;
+            if (userId == null)
+                return null;
+            using(var db = new DB())
+            {
+                var userManager = new UserManager<User>(new UserStore<User>(db));
+                return userManager.GetRoles(userId);
             }
         }
         public static User GetCurrentUser()

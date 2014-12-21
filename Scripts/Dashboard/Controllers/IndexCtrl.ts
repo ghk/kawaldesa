@@ -17,12 +17,15 @@ module KawalDesa.Controllers {
 
         static $inject = ["$scope", "$upload", "principal"];
 
+        roles = {};
+
         constructor(public $scope, public $upload, public principal: IPrincipal) {
             var ctrl = this;
             $scope.principal = principal;
             $scope.model = {};
             principal.identity().then(function (identity) {
                 ctrl.loadThings();
+                ctrl.loadRoles();
             });
         }
 
@@ -51,6 +54,31 @@ module KawalDesa.Controllers {
                     });
                 });
             }
+        }
+
+        loadRoles() {
+            var ctrl = this;
+            Models.User.GetCurrentUser().done((user) => {
+                ctrl.$scope.$apply(() => {
+                    ctrl.roles = {};
+                    for (var i = 0; i < user.Roles.length; i++) {
+                        ctrl.roles[user.Roles[i]] = true;
+                    }
+                });
+            });
+        }
+
+        saveRoles() {
+            var ctrl = this;
+            var selectedRoles = [];
+            for (var key in this.roles) {
+                if (this.roles[key]) {
+                    selectedRoles.push(key);
+                }
+            }
+            Models.User.UpdateVolunteerRoles(selectedRoles).done(() => {
+                ctrl.loadRoles();
+            });
         }
 
         uploadFile() {

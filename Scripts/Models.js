@@ -47,6 +47,26 @@ var App;
         })();
         Models.APBD = APBD;
 
+        var APBDesAccount = (function () {
+            function APBDesAccount(data) {
+                this.ID = data ? data.ID : null;
+                this.AccountNo = data ? data.AccountNo : null;
+                this.AccountName = data ? data.AccountName : null;
+                this.Amount = data ? data.Amount : null;
+                this.RealizationAmount = data ? data.RealizationAmount : null;
+                this.IsActivated = data ? data.IsActivated : null;
+                this.fkParentAccountID = data ? data.fkParentAccountID : null;
+                this.ParentAccount = data ? data.ParentAccount : null;
+                this.fkAPBNID = data ? data.fkAPBNID : null;
+                this.APBN = data ? data.APBN : null;
+                this.fkRegionID = data ? data.fkRegionID : null;
+                this.Region = data ? data.Region : null;
+            }
+            APBDesAccount.ajaxSettings = new Scaffold.AjaxSettings();
+            return APBDesAccount;
+        })();
+        Models.APBDesAccount = APBDesAccount;
+
         var APBDFile = (function () {
             function APBDFile(data) {
                 this.ID = data ? data.ID : null;
@@ -381,6 +401,7 @@ var App;
                 this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
+                this.UrlKey = data ? data.UrlKey : null;
                 this.fkParentID = data ? data.fkParentID : null;
                 this.Parent = data ? data.Parent : null;
             }

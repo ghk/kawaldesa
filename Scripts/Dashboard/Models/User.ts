@@ -98,6 +98,27 @@ module App.Models {
             return res;
         }
 
+        static GetCurrentUser(): JQueryPromise<User> {
+            var model = this;
+            var res = $.ajax(User.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/User/GetCurrentUser',
+                data: JSON.stringify(this)
+            }));
+            return res;
+        }
+
+        static UpdateVolunteerRoles(roleNames): JQueryPromise<void> {
+            var model = this;
+            var res = $.ajax(User.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/User/UpdateVolunteerRoles',
+                data: JSON.stringify(roleNames)
+            }));
+            return res;
+        }
+
+
         static Logout(): JQueryPromise<void> {
             var res = $.ajax(User.ajaxSettings.build({
                 type: 'GET',

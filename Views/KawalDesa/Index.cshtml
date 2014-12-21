@@ -1,6 +1,11 @@
 ﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
 <head>
+    <!-- facebook hash remover -->
     <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
+    @{ if (ViewData["User.Name"] != null)
+     {
+        <script type="text/javascript">window.CurrentUserRoles = @Html.Raw(ViewData["User.Roles"]);</script>
+     }}
     <title>Kawal Desa</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
@@ -98,6 +103,93 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                </tr>
+                <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity)
+                    && recapitulationCtrl.isFormExpanded(entity)
+                    && recapitulationCtrl.hasAnyVolunteerRoles()">
+                    <td></td>
+                    <td colspan="9">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" role="form" ng-submit="recapitulationCtrl.saveForm(entity)">
+                                <h5 style="text-align: center; width: 100%">
+                                    Tambah Laporan
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkActorID == entity.RegionID ? 'Terima Transfer' : 'Transfer'}}
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'APBN' : 'ADD'}}
+                                    (
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'Pusat' : regionTree[2].Name}}
+                                    -> Desa {{entity.RegionName}})
+                                </h5>
+                                <div class="form-group input-sm">
+                                    <label for="date" class="col-sm-2 control-label">Tanggal</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].Date"
+                                               class="form-control" id="date" placeholder="dd-mm-yyyy">
+                                    </div>
+                                </div>
+                                <div class="form-group input-sm">
+                                    <label for="amount" class="col-sm-2 control-label">Jumlah</label>
+                                    <div class="col-sm-10">
+                                        <input type="number"
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].Amount"
+                                               class="form-control" id="amount" placeholder="Jumlah Transfer">
+                                    </div>
+                                </div>
+                                <div class="form-group input-sm">
+                                    <label for="proof" class="col-sm-2 control-label">Lampiran</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" ng-file-select
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].File"
+                                               id="proof" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="width: 100%; text-align: center;">
+                                        <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
+                                        <button class="btn btn-xs btn-danger" ng-click="recapitulationCtrl.setFormExpanded(entity, false)">Batal</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity) 
+                    && !recapitulationCtrl.isFormExpanded(entity)
+                    && recapitulationCtrl.hasAnyVolunteerRoles()">
+                    <td></td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td></td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs" 
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [0, entity.RegionID, 0])"
+                                ng-if="recapitulationCtrl.isInRole('volunteer_apbn')">Tambah</button>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs" 
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [0, entity.RegionID, entity.RegionID])"
+                                ng-if="recapitulationCtrl.isInRole('volunteer_desa')">Tambah</button>
+                    </td>
+
+                    <td></td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, regionTree[2].ID])"
+                                ng-if="recapitulationCtrl.isInRole('volunteer_add')">
+                            Tambah
+                        </button>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, entity.RegionID])"
+                                ng-if="recapitulationCtrl.isInRole('volunteer_desa')">
+                            Tambah
+                        </button>
+                    </td>
                 </tr>
                 <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity)" ng-repeat="transaction in recapitulationCtrl.transactions[entity.RegionID]">
                     <td></td>

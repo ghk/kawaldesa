@@ -4,6 +4,7 @@
 module KawalDesa {
 
     export var kawaldesa = angular.module('kawaldesa', [
+        'angularFileUpload'
     ]);
 
     kawaldesa.run(['$location','$rootElement', function ($location, $rootElement) {

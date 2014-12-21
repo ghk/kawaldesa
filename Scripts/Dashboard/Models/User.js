@@ -84,6 +84,26 @@ var App;
                 return res;
             };
 
+            User.GetCurrentUser = function () {
+                var model = this;
+                var res = $.ajax(User.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/User/GetCurrentUser',
+                    data: JSON.stringify(this)
+                }));
+                return res;
+            };
+
+            User.UpdateVolunteerRoles = function (roleNames) {
+                var model = this;
+                var res = $.ajax(User.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/User/UpdateVolunteerRoles',
+                    data: JSON.stringify(roleNames)
+                }));
+                return res;
+            };
+
             User.Logout = function () {
                 var res = $.ajax(User.ajaxSettings.build({
                     type: 'GET',

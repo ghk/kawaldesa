@@ -38,13 +38,14 @@ namespace App.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public HttpResponseMessage Login(LoginViewModel model)
+        public UserViewModel Login(LoginViewModel model)
         {
             ModelState.Clear();
             Validate(model);
 
             if (!ModelState.IsValid)
-                return ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                throw new HttpResponseException(
+                    ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
             else
             {
                 var user = UserManager.Find(model.UserName, model.Password);
@@ -55,14 +56,33 @@ namespace App.Controllers
                         session["userid"] = user.Id;
                     
                     var roles = UserManager.GetRoles(user.Id);
-                    UserViewModel userViewModel = new UserViewModel() { UserName = user.UserName, Roles = roles.ToList()};
-                    return Request.CreateResponse(HttpStatusCode.OK, userViewModel);
+                    UserViewModel userViewModel = new UserViewModel() 
+                    { 
+                        UserName = user.UserName, 
+                        Roles = roles.ToList()
+                    };
+                    return userViewModel;
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Please enter the correct username/password");
+                    throw new HttpResponseException(
+                        Request.CreateErrorResponse(HttpStatusCode.NotFound, "Please enter the correct username/password"));
                 }
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public UserViewModel GetCurrentUser()
+        {
+            var user = KawalDesaController.GetCurrentUser();
+            var roles = UserManager.GetRoles(user.Id);
+            UserViewModel userViewModel = new UserViewModel() 
+            { 
+                UserName = user.UserName, 
+                Roles = roles.ToList()
+            };
+            return userViewModel;
         }
 
         [HttpGet]
@@ -214,19 +234,24 @@ namespace App.Controllers
 
             var principal = HttpContext.Current.User;
             var user = KawalDesaController.GetCurrentUser();
+            var roles = UserManager.GetRoles(user.Id);
 
             foreach(string roleName in allowedRoles)
             {
                 bool willBeAssigned = roleNames.Contains(roleName);
                 bool isCurrentlyAssigned = principal.IsInRole(roleName);
+                bool isCurrentlyAssigned2 = UserManager.IsInRole(user.Id, roleName);
+                IdentityResult res = null;
                 if(willBeAssigned != isCurrentlyAssigned)
                 {
                     if (willBeAssigned)
-                        UserManager.RemoveFromRole(user.Id, roleName);
+                        res = UserManager.AddToRole(user.Id, roleName);
                     else
-                        UserManager.AddToRole(user.Id, roleName);
+                        res = UserManager.RemoveFromRoles(user.Id, new string[]{roleName});
                 }
+                Console.WriteLine(res);
             }
+            dbContext.SaveChanges();
         }
     }
 

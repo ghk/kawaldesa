@@ -15,10 +15,12 @@ var KawalDesa;
         ];
 
         var RecapitulationCtrl = (function () {
-            function RecapitulationCtrl($scope, $location) {
+            function RecapitulationCtrl($scope, $upload, $location) {
                 this.$scope = $scope;
+                this.$upload = $upload;
                 this.$location = $location;
                 this.expandedStates = {};
+                this.formTransactions = {};
                 this.transactions = {};
                 var ctrl = this;
 
@@ -27,14 +29,13 @@ var KawalDesa;
                 $scope.$on('$locationChangeSuccess', function () {
                     ctrl.changeRecapitulations();
                 });
-                ctrl.changeRecapitulations();
             }
             RecapitulationCtrl.prototype.changeRecapitulations = function () {
                 var regionID = parseInt(this.$location.path().replace("/r/", ""));
                 if (isNaN(regionID))
                     regionID = 0;
 
-                this.getRecapitulations(regionID);
+                this.loadRegion(regionID);
             };
 
             RecapitulationCtrl.prototype.activate = function (regionType, entityID, ev) {
@@ -45,13 +46,7 @@ var KawalDesa;
                     this.$location.path("/r/" + entityID);
                 } else {
                     this.expandedStates[entityID] = !this.expandedStates[entityID];
-                    if (this.expandedStates[entityID]) {
-                        Models.Transaction.GetTransactionDetails(entityID).done(function (details) {
-                            ctrl.$scope.$apply(function () {
-                                ctrl.transactions[entityID] = details;
-                            });
-                        });
-                    }
+                    this.loadTransactions(entityID);
                 }
             };
 
@@ -59,29 +54,58 @@ var KawalDesa;
                 return this.expandedStates[entity.RegionID];
             };
 
-            RecapitulationCtrl.prototype.getRecapitulations = function (parentID) {
+            RecapitulationCtrl.prototype.setFormExpanded = function (entity, state) {
+                if (state) {
+                    this.formTransactions[entity.RegionID] = {
+                        fkSourceID: state[0],
+                        fkDestinationID: state[1],
+                        fkActorID: state[2]
+                    };
+                } else {
+                    delete this.formTransactions[entity.RegionID];
+                }
+            };
+
+            RecapitulationCtrl.prototype.isFormExpanded = function (entity) {
+                return this.formTransactions[entity.RegionID];
+            };
+
+            RecapitulationCtrl.prototype.saveForm = function (entity) {
+                var ctrl = this;
+                this.$upload.upload({
+                    type: 'POST',
+                    url: '/api/Transaction/AddTransaction',
+                    data: this.formTransactions[entity.RegionID],
+                    file: this.formTransactions[entity.RegionID].File
+                }).success(function () {
+                    ctrl.setFormExpanded(entity, null);
+                    ctrl.getRecapitulations(entity.ParentRegionID);
+                    ctrl.loadTransactions(entity.RegionID);
+                });
+            };
+
+            RecapitulationCtrl.prototype.hasAnyVolunteerRoles = function () {
+                return window.CurrentUserRoles.some(function (r) {
+                    return r.indexOf("volunteer_") != -1;
+                });
+            };
+
+            RecapitulationCtrl.prototype.isInRole = function (roleName) {
+                if (!window.CurrentUserRoles) {
+                    return false;
+                }
+                return window.CurrentUserRoles.some(function (r) {
+                    return roleName == r;
+                });
+            };
+
+            RecapitulationCtrl.prototype.loadRegion = function (parentID) {
                 this.$scope.entities = [];
                 this.$scope.regionTree = [];
                 this.$scope.childName = CHILD_NAMES[0];
-                this.expandedStates = {};
-                this.transactions = {};
 
                 var ctrl = this;
                 var scope = this.$scope;
-                var query = {
-                    "SortOrder": "ASC",
-                    "ParentID": parentID
-                };
-                Models.Recapitulation.GetAll(query).done(function (recapitulations) {
-                    scope.$apply(function () {
-                        scope.entities = recapitulations.filter(function (r) {
-                            return r.RegionID != parentID;
-                        });
-                        scope.total = recapitulations.filter(function (r) {
-                            return r.RegionID == parentID;
-                        })[0];
-                    });
-                });
 
                 Models.Region.Get(parentID).done(function (region) {
                     scope.$apply(function () {
@@ -95,10 +119,48 @@ var KawalDesa;
                         scope.regionTree = regionTree.reverse();
                         if (regionTree.length < CHILD_NAMES.length)
                             scope.childName = CHILD_NAMES[regionTree.length];
+                        ctrl.expandedStates = {};
+                        ctrl.formTransactions = {};
+                        ctrl.transactions = {};
+                        ctrl.getRecapitulations(parentID);
                     });
                 });
             };
-            RecapitulationCtrl.$inject = ["$scope", "$location"];
+
+            RecapitulationCtrl.prototype.getRecapitulations = function (parentID) {
+                var ctrl = this;
+                var scope = this.$scope;
+                var query = {
+                    "SortOrder": "ASC",
+                    "ParentID": parentID
+                };
+                var type = Models.Recapitulation;
+                if (window.CurrentUserRoles) {
+                    type = Models.LiveRecapitulation;
+                }
+                type.GetAll(query).done(function (recapitulations) {
+                    scope.$apply(function () {
+                        scope.entities = recapitulations.filter(function (r) {
+                            return r.RegionID != parentID;
+                        });
+                        scope.total = recapitulations.filter(function (r) {
+                            return r.RegionID == parentID;
+                        })[0];
+                    });
+                });
+            };
+
+            RecapitulationCtrl.prototype.loadTransactions = function (entityID) {
+                var ctrl = this;
+                if (this.expandedStates[entityID]) {
+                    Models.Transaction.GetTransactionDetails(entityID).done(function (details) {
+                        ctrl.$scope.$apply(function () {
+                            ctrl.transactions[entityID] = details;
+                        });
+                    });
+                }
+            };
+            RecapitulationCtrl.$inject = ["$scope", "$upload", "$location"];
             return RecapitulationCtrl;
         })();
 
