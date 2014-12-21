@@ -14,6 +14,9 @@ namespace App.Models
         public override long ID { get; set; }
         public string Name { get; set; }
         public RegionType Type { get; set; }
+
+        [Index(IsUnique=true)]
+        public String UrlKey { get; set; }
         
         [ForeignKey("Parent")]
         public long? fkParentID { get; set; }

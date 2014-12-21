@@ -231,6 +231,7 @@
       <DependentUpon>201412180225179_Views.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\APBDesAccount.cs" />
     <Compile Include="Models\APBD.cs" />
     <Compile Include="Models\APBDFile.cs" />
     <Compile Include="Models\APBN.cs" />

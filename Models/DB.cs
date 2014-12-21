@@ -21,6 +21,7 @@ namespace App.Models
         public virtual IDbSet<Region> Regions { get; set; }
         public virtual IDbSet<Recapitulation> Recapitulations { get; set; }
         public virtual IDbSet<LiveRecapitulation> LiveRecapitulations { get; set; }
+        public virtual IDbSet<APBDesAccount> APBDesAccounts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);
