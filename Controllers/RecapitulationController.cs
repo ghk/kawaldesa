@@ -17,8 +17,9 @@ namespace App.Controllers
         protected override IQueryable<Recapitulation> ApplyQuery(IQueryable<Recapitulation> query)
         {
             var parentID = GetQueryString<long?>("ParentID");
-            if (parentID.HasValue)
-                query = query.Where(t => t.ParentRegionID == parentID.Value || t.RegionID == parentID.Value);
+            if (!parentID.HasValue)
+                throw new ApplicationException("Query must have parent ID");
+            query = query.Where(t => t.ParentRegionID == parentID.Value || t.RegionID == parentID.Value);
             return query;
         }
     }

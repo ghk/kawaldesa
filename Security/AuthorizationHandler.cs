@@ -1,4 +1,5 @@
-﻿using App.Models;
+﻿using App.Controllers;
+using App.Models;
 using App.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -56,11 +57,11 @@ namespace App.Security
                     }     
                 }
             }             
-            else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session["userid"]))
+            else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session[KawalDesaController.USERID_KEY]))
             {
                 var session = HttpContext.Current.Session;                
                 var userManager = new UserManager<User>(new UserStore<User>(new DB()));
-                var user = userManager.FindById((string)session["userid"]);
+                var user = userManager.FindById((string)session[KawalDesaController.USERID_KEY]);
                 if (user != null)
                 {
                     var identity = new KawalDesaIdentity(user, "Session");

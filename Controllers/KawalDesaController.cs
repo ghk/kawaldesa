@@ -18,11 +18,14 @@ namespace App.Controllers
     public class KawalDesaController : Controller
     {
         private static ILog logger = LogManager.GetLogger(typeof(KawalDesaController));
+        public static string USERID_KEY = "userid";
+        private readonly string FacebookClientID = "1512932775635958";
+        private readonly string FacebookClientSecret = "d8fd9e1d1f785a04975af1555ba5417c";
 
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var user = GetCurrentUser();
+            var user = GetCurrentUserFromSession();
             if(user != null)
             {
                 ViewData["User.Name"] = user.Name;
@@ -34,7 +37,7 @@ namespace App.Controllers
         [KawalDesaAuthorize]
         public ActionResult Dashboard()
         {
-            var user = GetCurrentUser();
+            var user = GetCurrentUserFromSession();
             if(user == null)
             {
                 return new RedirectResult("/login");
@@ -43,9 +46,6 @@ namespace App.Controllers
             ViewData["User.FacebookID"] = user.FacebookID;
             return View();
         }
-
-        private readonly string FacebookClientID = "1512932775635958";
-        private readonly string FacebookClientSecret = "d8fd9e1d1f785a04975af1555ba5417c";
 
         private string GetRedirectHost()
         {
@@ -67,7 +67,7 @@ namespace App.Controllers
             if (referrer != null)
                 Session["LoginRedirect"] = referrer;
 
-            if(GetCurrentUser() != null)
+            if(GetCurrentUserFromSession() != null)
             {
                 if (referrer != null)
                     return new RedirectResult(referrer);
@@ -140,7 +140,7 @@ namespace App.Controllers
                         userManager.AddToRole(user.Id, Role.VOLUNTEER);
                         db.SaveChanges();
                     }
-                    Session["userid"] = user.Id;
+                    Session[USERID_KEY] = user.Id;
                 }
             }
 
@@ -152,15 +152,33 @@ namespace App.Controllers
             return new RedirectResult(loginRedirect);
         }
 
-        public User GetCurrentUser()
+        public User GetCurrentUserFromSession()
         {
-            string userId = Session["userid"] as string;
+            string userId = Session[USERID_KEY] as string;
             if (userId == null)
                 return null;
             using(var db = new DB())
             {
                 return db.Users.FirstOrDefault(u => u.Id == userId);
             }
+        }
+        public static User GetCurrentUser()
+        {
+            var principal = System.Web.HttpContext.Current.User;
+            if (principal == null)
+                return null;
+            var identity = principal.Identity as KawalDesaIdentity;
+            if (identity == null)
+                return null;
+
+            return identity.User;
+        }
+        public static bool IsInRole(String roleName)
+        {
+            var principal = System.Web.HttpContext.Current.User;
+            if (principal == null)
+                return false;
+            return principal.IsInRole(roleName);
         }
     }
 }

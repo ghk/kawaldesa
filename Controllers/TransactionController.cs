@@ -5,12 +5,81 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Linq;
 using System.Web;
+using App.Security;
+using Scaffold;
+using System.Globalization;
 
 namespace App.Controllers
 {
     public class TransactionController: BaseController<Transaction, long>
     {
+        private Uploader uploader = new Uploader("Proof");
         public TransactionController(DB dbContext) : base(dbContext) {
+        }
+
+        [KawalDesaAuthorize(Roles=Role.VOLUNTEER)]
+        public async void AddTransaction()
+        {
+            var res = await uploader.PostFile<Blob>(Request);
+            Blob blob = res.Files.ToList()[0];
+
+            var principal = HttpContext.Current.User;
+            var user = KawalDesaController.GetCurrentUser();
+
+            dbContext.Set<Blob>().Add(blob);
+            dbContext.SaveChanges();
+
+            var sourceID = long.Parse(res.Forms["fkSourceID"]);
+            var destID = long.Parse(res.Forms["fkDestinationID"]);
+            var actorID = long.Parse(res.Forms["fkActorID"]);
+            var amount = decimal.Parse(res.Forms["Amount"]);
+            var date = DateTime.ParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            if(actorID != sourceID && actorID != destID)
+                throw new ApplicationException("actor id must matched source id or dest id");
+
+            var actor = dbContext.Set<Region>().FirstOrDefault(r => r.ID == actorID);
+            var source = dbContext.Set<Region>().FirstOrDefault(r => r.ID == sourceID);
+            var destination = dbContext.Set<Region>().FirstOrDefault(r => r.ID == destID);
+
+            if (amount <= 0)
+                throw new ApplicationException("Amount must > 0");
+
+            string roleRequired = null;
+            if(actor.Type == RegionType.DESA)
+            {
+                if (source.Type == RegionType.NASIONAL && destination.Type == RegionType.DESA)
+                    roleRequired = Role.VOLUNTEER_APBN;
+                if (source.Type == RegionType.KABUPATEN && destination.Type == RegionType.DESA)
+                    roleRequired = Role.VOLUNTEER_ADD;
+            }
+            else if(actor.Type == RegionType.NASIONAL || actor.Type == RegionType.NASIONAL)
+            {
+                if ((source.Type == RegionType.KABUPATEN || source.Type == RegionType.NASIONAL) && destination.Type == RegionType.DESA)
+                    roleRequired = Role.VOLUNTEER_ADD;
+            }
+            if (roleRequired == null)
+                throw new ApplicationException(String.Format("No role matched for transaction: {0}, {1}, {2}", 
+                    actor.Type, source.Type, destination.Type));
+
+            if (!principal.IsInRole(roleRequired))
+                throw new ApplicationException("Principal is not in role");
+
+            var transaction = new Transaction
+            {
+                fkAPBNID = 1,
+                fkProofID = blob.ID,
+                fkSourceID = sourceID,
+                fkDestinationID = destID,
+                fkActorID = actorID,
+                fkCreatedByID = user.Id,
+                Amount = amount,
+                Date = date,
+                IsActivated = true
+            };
+
+            dbSet.Add(transaction);
+            dbContext.SaveChanges();
         }
 
         public List<RegionTransactionRow> GetTransactionDetails(long regionID)
@@ -83,7 +152,7 @@ namespace App.Controllers
         {
             if(transferred != null)
             {
-                TransferredDate = transferred.Date.ToShortDateString();
+                TransferredDate = transferred.Date.ToString("dd-MM-yyyy");
                 TransferredAmount = transferred.Amount;
                 if(transferred.Proof != null)
                     TransferredProofID = transferred.Proof.UploadID;
@@ -91,7 +160,7 @@ namespace App.Controllers
             if(acknowledged != null)
             {
 
-                AcknowledgedDate = acknowledged.Date.ToShortDateString();
+                AcknowledgedDate = acknowledged.Date.ToString("dd-MM-yyyy");
                 AcknowledgedAmount = acknowledged.Amount;
                 if (acknowledged.Proof != null)
                     AcknowledgedProofID = acknowledged.Proof.UploadID;
