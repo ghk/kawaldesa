@@ -321,6 +321,61 @@ var App;
         })();
         Models.Recapitulation = Recapitulation;
 
+        var LiveRecapitulation = (function () {
+            function LiveRecapitulation(data) {
+                this.ID = data ? data.ID : null;
+                this.RegionID = data ? data.RegionID : null;
+                this.APBNID = data ? data.APBNID : null;
+                this.APBNYear = data ? data.APBNYear : null;
+                this.ParentRegionID = data ? data.ParentRegionID : null;
+                this.RegionName = data ? data.RegionName : null;
+                this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
+                this.TransferredAPBN = data ? data.TransferredAPBN : null;
+                this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
+                this.BudgetedADD = data ? data.BudgetedADD : null;
+                this.TransferredADD = data ? data.TransferredADD : null;
+                this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+                this.BudgettedTotal = data ? data.BudgettedTotal : null;
+                this.TransferredTotal = data ? data.TransferredTotal : null;
+                this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+            }
+            /* App.Controllers.LiveRecapitulationController */
+            LiveRecapitulation.GetAll = function (query) {
+                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/LiveRecapitulation/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new LiveRecapitulation(model);
+                    });
+                });
+                return res;
+            };
+
+            LiveRecapitulation.Get = function (id) {
+                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/LiveRecapitulation/Get/' + id
+                })).then(function (model) {
+                    return new LiveRecapitulation(model);
+                });
+                return res;
+            };
+
+            LiveRecapitulation.Count = function (query) {
+                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/LiveRecapitulation/GetCount',
+                    data: query
+                }));
+                return res;
+            };
+            LiveRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return LiveRecapitulation;
+        })();
+        Models.LiveRecapitulation = LiveRecapitulation;
+
         var Region = (function () {
             function Region(data) {
                 this.ID = data ? data.ID : null;
