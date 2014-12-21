@@ -221,6 +221,46 @@ var App;
                 this.UploadID = data ? data.UploadID : null;
                 this.UploadFolder = data ? data.UploadFolder : null;
             }
+            /* App.Controllers.BlobController */
+            Blob.GetAll = function (query) {
+                var res = $.ajax(Blob.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Blob/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new Blob(model);
+                    });
+                });
+                return res;
+            };
+
+            Blob.Get = function (id) {
+                var res = $.ajax(Blob.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Blob/Get/' + id
+                })).then(function (model) {
+                    return new Blob(model);
+                });
+                return res;
+            };
+
+            Blob.Count = function (query) {
+                var res = $.ajax(Blob.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Blob/GetCount',
+                    data: query
+                }));
+                return res;
+            };
+
+            Blob.Download = function (blobID) {
+                var res = $.ajax(Blob.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Blob/Download?blobID=' + blobID + ''
+                }));
+                return res;
+            };
             Blob.ajaxSettings = new Scaffold.AjaxSettings();
             return Blob;
         })();
@@ -440,6 +480,14 @@ var App;
                 var res = $.ajax(Transaction.ajaxSettings.build({
                     type: 'GET',
                     url: '/api/Transaction/Delete/' + id
+                }));
+                return res;
+            };
+
+            Transaction.AddTransaction = function () {
+                var res = $.ajax(Transaction.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Transaction/AddTransaction'
                 }));
                 return res;
             };

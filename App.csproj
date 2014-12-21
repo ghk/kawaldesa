@@ -212,6 +212,7 @@
     <Compile Include="Configs\RouteConfig.cs" />
     <Compile Include="Configs\WebApiConfig.cs" />
     <Compile Include="Controllers\BlobController.cs" />
+    <Compile Include="Controllers\LiveRecapitulationController.cs" />
     <Compile Include="Controllers\TransactionFileController.cs" />
     <Compile Include="Controllers\APBDFileController.cs" />
     <Compile Include="Controllers\RecapitulationController.cs" />

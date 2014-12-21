@@ -206,6 +206,28 @@ namespace App.Controllers
             return result;
         }
    
+        [HttpPost]
+        [Authorize(Roles=Role.VOLUNTEER)]
+        public virtual void UpdateVolunteerRoles(List<String> roleNames)
+        {
+            var allowedRoles = new String[]{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA};
+
+            var principal = HttpContext.Current.User;
+            var user = KawalDesaController.GetCurrentUser();
+
+            foreach(string roleName in allowedRoles)
+            {
+                bool willBeAssigned = roleNames.Contains(roleName);
+                bool isCurrentlyAssigned = principal.IsInRole(roleName);
+                if(willBeAssigned != isCurrentlyAssigned)
+                {
+                    if (willBeAssigned)
+                        UserManager.RemoveFromRole(user.Id, roleName);
+                    else
+                        UserManager.AddToRole(user.Id, roleName);
+                }
+            }
+        }
     }
 
 }

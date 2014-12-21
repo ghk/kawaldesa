@@ -291,6 +291,45 @@ module App.Models {
             this.UploadFolder = data ? data.UploadFolder : null;
         }
 
+        /* App.Controllers.BlobController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<Blob>> {
+            var res = $.ajax(Blob.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Blob/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new Blob(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<Blob> {
+            var res = $.ajax(Blob.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Blob/Get/'+id,
+            })).then((model) => new Blob(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(Blob.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Blob/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        static Download(blobID: number): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+            var res = $.ajax(Blob.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Blob/Download?blobID='+blobID+'',
+            }));
+            return res;
+        }
+
     }
 
     export interface IRecapitulation {
@@ -371,6 +410,92 @@ module App.Models {
             var res = $.ajax(Recapitulation.ajaxSettings.build({
                 type: 'GET',
                 url: '/api/Recapitulation/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+    }
+
+    export interface ILiveRecapitulation {
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgetedAPBN: number;
+        TransferredAPBN: number;
+        AcknowledgedAPBN: number;
+        BudgetedADD: number;
+        TransferredADD: number;
+        AcknowledgedADD: number;
+        BudgettedTotal: number;
+        TransferredTotal: number;
+        AcknowledgedTotal: number;
+    }
+
+    export class LiveRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgetedAPBN: number;
+        TransferredAPBN: number;
+        AcknowledgedAPBN: number;
+        BudgetedADD: number;
+        TransferredADD: number;
+        AcknowledgedADD: number;
+        BudgettedTotal: number;
+        TransferredTotal: number;
+        AcknowledgedTotal: number;
+        constructor(data?: ILiveRecapitulation) {
+            this.ID = data ? data.ID : null;
+            this.RegionID = data ? data.RegionID : null;
+            this.APBNID = data ? data.APBNID : null;
+            this.APBNYear = data ? data.APBNYear : null;
+            this.ParentRegionID = data ? data.ParentRegionID : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
+            this.TransferredAPBN = data ? data.TransferredAPBN : null;
+            this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
+            this.BudgetedADD = data ? data.BudgetedADD : null;
+            this.TransferredADD = data ? data.TransferredADD : null;
+            this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+            this.BudgettedTotal = data ? data.BudgettedTotal : null;
+            this.TransferredTotal = data ? data.TransferredTotal : null;
+            this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+        }
+
+        /* App.Controllers.LiveRecapitulationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<LiveRecapitulation>> {
+            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/LiveRecapitulation/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new LiveRecapitulation(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<LiveRecapitulation> {
+            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/LiveRecapitulation/Get/'+id,
+            })).then((model) => new LiveRecapitulation(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/LiveRecapitulation/GetCount',
 				data: query,
             }));
             return res;
@@ -590,6 +715,14 @@ module App.Models {
             return res;
         }
                 
+        static AddTransaction(): JQueryPromise<void> {
+            var res = $.ajax(Transaction.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Transaction/AddTransaction',
+            }));
+            return res;
+        }
+
         static GetTransactionDetails(regionID: number): JQueryPromise<Array</** App.Controllers.RegionTransactionRow **/ any>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
                 type: 'GET',

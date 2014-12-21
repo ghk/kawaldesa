@@ -1,6 +1,4 @@
-﻿DROP MATERIALIZED VIEW dbo."Recapitulations";
-
-CREATE MATERIALIZED VIEW dbo."Recapitulations" AS
+﻿CREATE OR REPLACE VIEW dbo."LiveRecapitulations" AS
         SELECT
 	apbn."ID" * 100000 + r."ID" as "ID",
 	r."ID" as "RegionID",
@@ -60,8 +58,3 @@ CREATE MATERIALIZED VIEW dbo."Recapitulations" AS
 		)
 	), 0) as "AcknowledgedADD"
     FROM dbo."Regions" r, dbo."APBNs" apbn;
-
-CREATE UNIQUE INDEX "Recapitulations_IDX_ID"
-  ON dbo."Recapitulations" ("ID"); 
-CREATE INDEX "Recapitulations_IDX_ParentRegionID"
-  ON dbo."Recapitulations" ("ParentRegionID");
