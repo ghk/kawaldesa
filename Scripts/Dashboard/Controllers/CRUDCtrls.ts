@@ -233,7 +233,7 @@ module KawalDesa.Controllers {
     }
 
 
-    dashboard.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);
-    dashboard.controller("TransactionCtrl", ["$scope", "cfpLoadingBar", TransactionCtrl]);
-    dashboard.controller("UserCtrl", ["$scope", "cfpLoadingBar", UserCtrl]);
+    //dashboard.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);
+    //dashboard.controller("TransactionCtrl", ["$scope", "cfpLoadingBar", TransactionCtrl]);
+    //dashboard.controller("UserCtrl", ["$scope", "cfpLoadingBar", UserCtrl]);
 }

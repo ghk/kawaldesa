@@ -235,10 +235,6 @@ var KawalDesa;
             };
             return UserCtrl;
         })(CRUDCtrl);
-
-        KawalDesa.dashboard.controller("RegionCtrl", ["$scope", "cfpLoadingBar", RegionCtrl]);
-        KawalDesa.dashboard.controller("TransactionCtrl", ["$scope", "cfpLoadingBar", TransactionCtrl]);
-        KawalDesa.dashboard.controller("UserCtrl", ["$scope", "cfpLoadingBar", UserCtrl]);
     })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
     var Controllers = KawalDesa.Controllers;
 })(KawalDesa || (KawalDesa = {}));

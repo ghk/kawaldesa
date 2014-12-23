@@ -5,7 +5,6 @@ module KawalDesa {
 
     export var dashboard = angular.module('dashboard', [
         'angular-loading-bar',
-        'angularFileUpload'
     ]);
 
     dashboard.run(['$location','$rootElement', function ($location, $rootElement) {

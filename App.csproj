@@ -212,10 +212,9 @@
     <Compile Include="Configs\RouteConfig.cs" />
     <Compile Include="Configs\WebApiConfig.cs" />
     <Compile Include="Controllers\BlobController.cs" />
-    <Compile Include="Controllers\LiveRecapitulationController.cs" />
     <Compile Include="Controllers\TransactionFileController.cs" />
     <Compile Include="Controllers\APBDFileController.cs" />
-    <Compile Include="Controllers\RecapitulationController.cs" />
+    <Compile Include="Controllers\TransferRecapitulationController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\APBNController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
@@ -231,19 +230,27 @@
       <DependentUpon>201412180225179_Views.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\APBDes.cs" />
+    <Compile Include="Models\AccountRealization.cs" />
     <Compile Include="Models\APBDesAccount.cs" />
     <Compile Include="Models\APBD.cs" />
     <Compile Include="Models\APBDFile.cs" />
+    <Compile Include="Models\AccountRecapitulation.cs" />
+    <Compile Include="Models\RealizationSector.cs" />
+    <Compile Include="Models\UserScope.cs" />
     <Compile Include="Models\APBN.cs" />
-    <Compile Include="Models\HampirBaseEntity.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Blob.cs" />
+    <Compile Include="Models\AccountType.cs" />
+    <Compile Include="Models\ExpenseGroup.cs" />
+    <Compile Include="Models\ExpenseType.cs" />
+    <Compile Include="Models\RegionType.cs" />
     <Compile Include="Models\DB.cs" />
     <Compile Include="Models\Identities.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionFile.cs" />
-    <Compile Include="Models\Recapitulation.cs" />
+    <Compile Include="Models\TransferRecapitulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationHandler.cs" />
     <Compile Include="Security\CryptographyHelper.cs" />
@@ -1046,6 +1053,7 @@
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="appSettings.config" />
     <None Include="Scaffold\Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.min.js" />
@@ -1337,6 +1345,7 @@
     <Content Include="Scaffold\Scripts\Scaffold\Scaffold.js.map" />
     <Content Include="Scaffold\Scripts\version.json" />
     <None Include="Scripts\T4Utils.t4" />
+    <Content Include="Views\KawalDesa\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

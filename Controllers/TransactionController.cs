@@ -69,7 +69,7 @@ namespace App.Controllers
             var transaction = new Transaction
             {
                 fkAPBNID = 1,
-                fkProofID = blob.ID,
+                fkSourceFileID = blob.ID,
                 fkSourceID = sourceID,
                 fkDestinationID = destID,
                 fkActorID = actorID,
@@ -85,7 +85,7 @@ namespace App.Controllers
 
         public List<RegionTransactionRow> GetTransactionDetails(long regionID)
         {
-            var transactions = dbSet.Include(t => t.Proof)
+            var transactions = dbSet.Include(t => t.SourceFile)
                 .Where(t => t.fkDestinationID == regionID && t.IsActivated).ToList();
 
             Func<IEnumerable<Transaction>, List<TransactionDetail>> GetDetails = (tr) =>
@@ -155,16 +155,16 @@ namespace App.Controllers
             {
                 TransferredDate = transferred.Date.ToString("dd-MM-yyyy");
                 TransferredAmount = transferred.Amount;
-                if(transferred.Proof != null)
-                    TransferredProofID = transferred.Proof.UploadID;
+                if(transferred.SourceFile != null)
+                    TransferredProofID = transferred.SourceFile.UploadID;
             }
             if(acknowledged != null)
             {
 
                 AcknowledgedDate = acknowledged.Date.ToString("dd-MM-yyyy");
                 AcknowledgedAmount = acknowledged.Amount;
-                if (acknowledged.Proof != null)
-                    AcknowledgedProofID = acknowledged.Proof.UploadID;
+                if (acknowledged.SourceFile != null)
+                    AcknowledgedProofID = acknowledged.SourceFile.UploadID;
             }
         }
     }

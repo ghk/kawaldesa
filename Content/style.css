@@ -16,9 +16,30 @@ body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .
     font-weight: bold;
     text-rendering: optimizelegibility;
 }
-header .nav.navbar-nav > li > a:first-child{
+
+header {
+    box-shadow: -2px 0px 3px 0px rgba(0,0,0,0.5)
+}
+
+header .nav.navbar-nav > li:first-child > a{
     margin-left: -15px;
 }
+
+header .nav.navbar-nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+header .nav.navbar-nav > li.active > a {
+    padding-top: 11px;
+    border-top: 4px solid #337ab7;
+}
+
+header .nav.navbar-nav > li > a:hover {
+    padding-top: 11px;
+    border-top: 4px solid #337ab7;
+}
+
 header .nav.navbar-nav > li > div.gt{
     color: #337ab7;
     font-size: 20px;

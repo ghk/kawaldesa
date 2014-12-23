@@ -1,14 +1,21 @@
 # Kawal Desa
+Source code untuk kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
+Semua kontribusi sangatlah dibutuhkan. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
+
+Hak Cipta Kontributor & Relawan kawaldesa.org, source code berlisensi AGPL
+
+## Code Overview
+
 Currently build with C# WebAPI, Typescript and angularjs, come contribute!
 
 ## Installation
 
 Requirements:
 
-- Visual Studio 2013
+- Visual Studio 2013 (Download the community edition, it's free for this kind of project!)
 - PostgreSQL > 9.3 (Requires materialized views)
-- WebEssentials for Visual Studio (not mandatory, for nicer typescript)
-- Our ASP Scaffold's at http://www.github.com/microvac/asp-scaffold
+- WebEssentials for Visual Studio (not mandatory, but it leads to nicer typescript development)
+- Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold
 
 Installation:
 
@@ -25,3 +32,8 @@ Installation:
 - **pusat**: Upload APBN Transactions (Unggah Penyaluran Dana Desa Dari APBN)
 - **daerah**: Upload ADD Transactions (Unggah Penyaluran Dana Desa Dari ADD)
 - **desa**: Input Transaction (Input Penyaluran Dana Desa)
+
+## Current Contributors
+Gozali Kumara (ghk@microvac.co.id)
+Vidyapati (vidyapati@microvac.co.id)
+Muhammad Reza (m.reza@microvac.co.id)

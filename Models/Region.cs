@@ -14,6 +14,7 @@ namespace App.Models
         public override long ID { get; set; }
         public string Name { get; set; }
         public RegionType Type { get; set; }
+        public bool IsKelurahan { get; set; }
 
         [Index(IsUnique=true)]
         public String UrlKey { get; set; }
@@ -24,11 +25,4 @@ namespace App.Models
 
     }
 
-    public enum RegionType{
-        NASIONAL = 0,
-        PROPINSI,
-        KABUPATEN,
-        KECAMATAN,
-        DESA
-    }
 }

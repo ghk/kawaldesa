@@ -15,17 +15,14 @@ namespace App.Models
         
         [ForeignKey("APBN")]
         public long fkAPBNID { get; set; }
-
         public virtual APBN APBN { get; set; }
 
         [ForeignKey("Region")]
         public long fkRegionID { get; set; }
-
         public virtual Region Region { get; set; }
         
         [ForeignKey("APBDFile")]
         public long fkAPBDFileID { get; set; }
-
         public virtual APBDFile APBDFile { get; set; }
 
     }

@@ -21,6 +21,7 @@ namespace App.Models
         public string SecretKey { get; set; }
         public string Name { get; set; }
         public string FacebookID { get; set; }
+        public bool FacebookIsVerified { get; set; }
     }
 
     public class UserViewModel
@@ -54,6 +55,8 @@ namespace App.Models
         public const string VOLUNTEER_APBN = "volunteer_apbn";
         public const string VOLUNTEER_ADD = "volunteer_add";
         public const string VOLUNTEER_DESA = "volunteer_desa";
+        public const string VOLUNTEER_ACCOUNT = "volunteer_account";
+        public const string VOLUNTEER_REALIZATION = "volunteer_realization";
     }
 
 }

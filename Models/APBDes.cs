@@ -6,27 +6,23 @@ using System.Web;
 
 namespace App.Models
 {
-    public class APBDesAccount : BaseEntity
+    public class APBDes : BaseEntity
     {
         public override long ID { get; set; }
-        public String AccountNo { get; set; }
-        public String AccountName { get; set; }
-        public decimal? Amount { get; set; }
-        public decimal? RealizationAmount { get; set; }
         public bool IsActivated { get; set; }
-        [ForeignKey("ParentAccount")]
-        public long? fkParentAccountID { get; set; }
+        public string SourceURL { get; set; }
 
-        public virtual APBDesAccount ParentAccount { get; set; }
+        [ForeignKey("SourceFile")]
+        public long? fkSourceFileID { get; set; }
+        public virtual Blob SourceFile { get; set; }
         
         [ForeignKey("APBN")]
         public long fkAPBNID { get; set; }
-
         public virtual APBN APBN { get; set; }
 
         [ForeignKey("Region")]
         public long fkRegionID { get; set; }
-
         public virtual Region Region { get; set; }
+        
     }
 }
