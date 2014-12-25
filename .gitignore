@@ -1,7 +1,7 @@
 # user defined ignore
 connectionStrings.config
 /Content/uploads/
-/App_Data/logs/
+/App_Data/
 
 # Created by http://www.gitignore.io
 # Scaffold Content
