@@ -50,7 +50,6 @@ namespace App.Models
 
     public static class Role {
         public const string ADMIN = "admin";
-        public const string VIEWER = "viewer";
         public const string VOLUNTEER = "volunteer";
         public const string VOLUNTEER_APBN = "volunteer_apbn";
         public const string VOLUNTEER_ADD = "volunteer_add";

@@ -106,7 +106,7 @@ namespace App.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             else
             {
-                List<string> roles = new List<string>(){ Role.ADMIN, Role.VIEWER };
+                List<string> roles = new List<string>(){ Role.ADMIN };
 
                 var user = new User();
                 user.UserName = model.UserName;
@@ -138,7 +138,7 @@ namespace App.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             else
             {
-                List<string> roles = new List<string>() { Role.ADMIN, Role.VIEWER };
+                List<string> roles = new List<string>() { Role.ADMIN };
 
                 var user = UserManager.FindById(model.Id);
                 if (user == null)

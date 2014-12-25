@@ -1,6 +1,4 @@
-﻿DROP MATERIALIZED VIEW dbo."RegionADDs";
-
-CREATE MATERIALIZED VIEW dbo."RegionADDs" AS
+﻿CREATE MATERIALIZED VIEW dbo."RegionADDs" AS
 
 select 
 	r."ID" as "ID",
@@ -25,7 +23,7 @@ select
 		select (0.1 * apbd."DAU" + apbd."DBH") * dc."DesaCount" / kab."DesaCount"
 		from dbo."APBDs" apbd 
 			
-		inner join dbo."RegionParents" kab on apbd."fkRegionID" = kab."ID" 
+		inner join dbo."RegionDesaCounts" kab on apbd."fkRegionID" = kab."ID" 
 		where  apbd."IsActivated" AND apbd."fkAPBNID" = apbn."ID" AND (
 			(apbd."fkRegionID" = mr."ParentID" AND r."Type" = 3) 
 			OR  (apbd."fkRegionID" = mr."ParentParentID" AND r."Type" = 4) 

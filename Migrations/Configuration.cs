@@ -45,8 +45,9 @@ namespace App.Migrations
             string password = "123456";
 
             var roleNames = new string[]{
-                Role.ADMIN, Role.VIEWER,
-                Role.VOLUNTEER, Role.VOLUNTEER_APBN, Role.VOLUNTEER_ADD, Role.VOLUNTEER_DESA
+                Role.ADMIN,
+                Role.VOLUNTEER, Role.VOLUNTEER_APBN, Role.VOLUNTEER_ADD, Role.VOLUNTEER_DESA, 
+                Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION
             };
 
             foreach(var roleName in roleNames)
@@ -69,13 +70,13 @@ namespace App.Migrations
                 var result = UserManager.AddToRole(user.Id, Role.ADMIN);
             }
 
-            var viewer = new User();
-            viewer.UserName = "viewer";
-            var viewerresult = UserManager.Create(viewer, "123456");
+            var volunteer = new User();
+            volunteer.UserName = "volunteer";
+            var viewerresult = UserManager.Create(volunteer, "123456");
 
             if (viewerresult.Succeeded)
             {
-                var result2 = UserManager.AddToRole(viewer.Id, Role.VIEWER);
+                var result2 = UserManager.AddToRole(volunteer.Id, Role.VOLUNTEER);
             }
 
             base.Seed(context);

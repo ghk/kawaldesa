@@ -227,9 +227,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412180225179_Views.cs" />
-    <Compile Include="Migrations\201412180225179_Views.Designer.cs">
-      <DependentUpon>201412180225179_Views.cs</DependentUpon>
+    <Compile Include="Migrations\201412251251475_Views.cs" />
+    <Compile Include="Migrations\201412251251475_Views.Designer.cs">
+      <DependentUpon>201412251251475_Views.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APBDes.cs" />
@@ -1075,12 +1075,13 @@
     <Compile Include="Security\KawalDesaHeaders.cs" />
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
+    <Content Include="SQLs\FrozenTransactions.sql" />
     <Content Include="SQLs\InsertRegions.sql" />
-    <Content Include="SQLs\Recapitulations.sql" />
+    <Content Include="SQLs\TransferRecapitulations.sql" />
     <Content Include="SQLs\RegionADDs.sql" />
     <Content Include="SQLs\RegionDesaCounts.sql" />
     <Content Include="SQLs\RegionParents.sql" />
-    <Content Include="SQLs\FrozenRecapitulations.sql" />
+    <Content Include="SQLs\FrozenTransferRecapitulations.sql" />
     <Content Include="SQLs\SetRegionUrlKeys.sql" />
     <Content Include="Views\KawalDesa\Index.cshtml" />
     <Content Include="Content\APBD.xlsx" />
@@ -1408,8 +1409,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412180225179_Views.resx">
-      <DependentUpon>201412180225179_Views.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412251251475_Views.resx">
+      <DependentUpon>201412251251475_Views.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -59,7 +59,7 @@ namespace App.Controllers.Validators
 
         public bool BeValidRoles(List<string> roles)
         {
-            List<string> validRoles = new List<string>() { Role.ADMIN,Role.VIEWER };
+            List<string> validRoles = new List<string>() { Role.ADMIN };
             foreach (string role in roles)
             {
                 if (!validRoles.Contains(role))

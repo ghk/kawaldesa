@@ -14,16 +14,20 @@ namespace App.Models
         public virtual IDbSet<Blob> Blobs { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserScope> UserScopes { get; set; }
+        public virtual IDbSet<Region> Regions { get; set; }
         public virtual IDbSet<APBN> APBNs { get; set; }
         public virtual IDbSet<APBD> APBDs { get; set; }
         public virtual IDbSet<APBDFile> APBDFiles { get; set; }
-        public virtual IDbSet<Region> Regions { get; set; }
+        public virtual IDbSet<APBDes> APBDeses { get; set; }
+        public virtual IDbSet<Account> Accounts { get; set; }
+        public virtual IDbSet<Realization> Realizations { get; set; }
         public virtual IDbSet<Transaction> Transactions  { get; set; }
         public virtual IDbSet<FrozenTransaction> FrozenTransactions  { get; set; }
         public virtual IDbSet<TransactionFile> TransactionFiles { get; set; }
-        public virtual IDbSet<TransferRecapitulation> Recapitulations { get; set; }
-        public virtual IDbSet<FrozenTransferRecapitulation> FrozenRecapitulations { get; set; }
-        public virtual IDbSet<Account> APBDesAccounts { get; set; }
+        public virtual IDbSet<TransferRecapitulation> TransferRecapitulations { get; set; }
+        public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
+        public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
+        public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);

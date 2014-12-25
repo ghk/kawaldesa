@@ -1,5 +1,4 @@
-﻿drop materialized view dbo."RegionDesaCounts";
-create materialized view dbo."RegionDesaCounts" AS
+﻿create materialized view dbo."RegionDesaCounts" AS
  SELECT 
 	desa."ID" as "ID",
 	desa."Type" as "Type",

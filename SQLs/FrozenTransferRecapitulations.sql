@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE VIEW dbo."Recapitulations" AS
+﻿CREATE MATERIALIZED VIEW dbo."FrozenTransferRecapitulations" AS
         SELECT
 	apbn."ID" * 100000 + r."ID" as "ID",
 	r."ID" as "RegionID",
@@ -9,7 +9,7 @@
 	apbn."DanaPerDesa" * (select dc."DesaCount" from dbo."RegionDesaCounts" dc where dc."ID" = r."ID") as "BudgetedAPBN",
 	COALESCE((
 		select sum(t."Amount") 
-		from dbo."Transactions" t 
+		from dbo."FrozenTransactions" t 
 		inner join dbo."RegionParents" desa on t."fkDestinationID" = desa."ID"
 		where t."fkSourceID" = 0 AND t."fkActorID" = 0 AND t."IsActivated" AND (
 			(r."Type" = 0 AND desa."ParentParentParentParentID" = r."ID") 
@@ -21,7 +21,7 @@
 	), 0) as "TransferredAPBN",
 	COALESCE((
 		select sum(t."Amount") 
-		from dbo."Transactions" t 
+		from dbo."FrozenTransactions" t 
 		inner join dbo."RegionParents" desa on t."fkDestinationID" = desa."ID"
 		where t."fkSourceID" = 0 AND t."fkActorID" = desa."ID" AND t."IsActivated"
 			AND (
@@ -35,7 +35,7 @@
 	(select add."ADD" from dbo."RegionADDs" add where add."ID" = r."ID" AND add."APBNID" = apbn."ID") as "BudgetedADD",
 	COALESCE((
 		select sum(t."Amount") 
-		from dbo."Transactions" t 
+		from dbo."FrozenTransactions" t 
 		inner join dbo."RegionParents" desa on t."fkDestinationID" = desa."ID"
 		where t."fkSourceID" = desa."ParentParentID" AND t."fkActorID" =  desa."ParentParentID" AND t."IsActivated" AND (
 			(r."Type" = 0 AND desa."ParentParentParentParentID" = r."ID") 
@@ -47,7 +47,7 @@
 	), 0) as "TransferredADD",
 	COALESCE((
 		select sum(t."Amount") 
-		from dbo."Transactions" t 
+		from dbo."FrozenTransactions" t 
 		inner join dbo."RegionParents" desa on t."fkDestinationID" = desa."ID"
 		where t."fkSourceID" = desa."ParentParentID" AND t."fkActorID" = desa."ID" AND t."IsActivated" AND (
 			(r."Type" = 0 AND desa."ParentParentParentParentID" = r."ID") 
@@ -58,3 +58,8 @@
 		)
 	), 0) as "AcknowledgedADD"
     FROM dbo."Regions" r, dbo."APBNs" apbn;
+
+CREATE UNIQUE INDEX "FrozenTransferRecapitulations_IDX_ID"
+  ON dbo."FrozenTransferRecapitulations" ("ID"); 
+CREATE INDEX "FrozenTransferRecapitulations_IDX_ParentRegionID"
+  ON dbo."FrozenTransferRecapitulations" ("ParentRegionID");
