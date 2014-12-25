@@ -116,7 +116,7 @@
 
 	bool IsModel(CodeClass _class)
     {
-        foreach (var p in GetParents(_class))
+        foreach (var p in GetSelfAndParents(_class))
 			 foreach (var i in GetParentInterfaces(p))
 				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold")
 					return true;
@@ -126,7 +126,7 @@
 	string GetModelIdType(CodeClass _class)
     {
         CodeInterface model = null;
-        foreach (var p in GetParents(_class))
+        foreach (var p in GetSelfAndParents(_class))
 			foreach (var i in GetParentInterfaces(p))
 				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold") {
 					model = i;
@@ -290,6 +290,17 @@
         }
     }
 
+	IEnumerable<CodeClass> GetSelfAndParents(CodeClass cs)
+    {
+        yield return cs;
+        foreach (var item in cs.Bases.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementClass).Cast<CodeClass>())
+        {
+			yield return item;
+			foreach (var sup in GetParents(item))
+				yield return sup;
+        }
+    }
+
 	IEnumerable<CodeInterface> GetParentInterfaces(CodeClass cs)
     {
         foreach (var item in cs.ImplementedInterfaces.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementInterface).Cast<CodeInterface>())
@@ -362,9 +373,10 @@
 			yield return member;
         }
 	}
-	
+
 	IEnumerable<CodeElement> EnumerateAllTSMembers(CodeClass _class)
     {
+        var propertiesSets = new System.Collections.Generic.HashSet<String>();
         IEnumerable<CodeElement> members = null;
         try 
         {
@@ -372,8 +384,16 @@
         } catch(Exception e)
         {
         }
+
         foreach (var member in  members)
         {
+			if (member.Kind == vsCMElement.vsCMElementProperty)
+            {
+                var tsName= GetTSName((CodeProperty) member);
+                if(propertiesSets.Contains(tsName))
+                    continue;
+                propertiesSets.Add(tsName);
+            }
             yield return member;
         }
         foreach (var p in GetParents(_class).ToList())
@@ -389,7 +409,14 @@
             {
                 foreach (var member in  members)
                 {
-                        yield return member;
+                    if (member.Kind == vsCMElement.vsCMElementProperty)
+                    {
+                        var tsName= GetTSName((CodeProperty) member);
+                        if(propertiesSets.Contains(tsName))
+                            continue;
+                        propertiesSets.Add(tsName);
+                    }
+                            yield return member;
                 }
             }
         }

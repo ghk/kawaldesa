@@ -45,17 +45,27 @@ module Scaffold {
 module <#=_namespace #> {
 	import IQuery = Scaffold.IQuery;
 <#
-	var jsoncls = EnumerateModels(_namespace);
+	var clses = EnumerateModels(_namespace).ToList();
+    var jsoncls  = clses
+        .OrderBy(_class =>
+            _class.Bases.Cast<CodeElement>()
+                .Where(x => clses.Select(c => c.Name).Contains(x.Name))
+                .Count()
+        )
+        .ToList();                 
 	foreach (var _class in jsoncls) 
 	{
 		var elem = (CodeElement)_class;
 		//Indent(1); WriteLine("// {0}: {1}", elem.ProjectItem.FileNames[0], elem.StartPoint.Line);
 
         Indent(1); Write("export interface {0}{1}", "I", _class.Name); 
-        if (_class.Bases.Count > 0)
+        var bases =  _class.Bases.Cast<CodeElement>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)).ToList();
+        var allMembers = EnumerateTSMembers(_class).ToList();
+
+        if (bases.Count > 0)
         {
             bool first = true;
-            foreach (var super in _class.Bases.Cast<CodeElement>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)))
+            foreach (var super in bases)
             {
                 Write(first ? " extends " : ", ");
                 first = false;
@@ -63,7 +73,7 @@ module <#=_namespace #> {
             }
         }
         WriteLine(" {");
-        foreach(var member in EnumerateTSMembers(_class)) 
+        foreach(var member in allMembers)
         {
             if (member.Kind == vsCMElement.vsCMElementProperty)
             {
@@ -71,22 +81,22 @@ module <#=_namespace #> {
                 Indent(2);
                 WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
             }
-            else if (member.Kind == vsCMElement.vsCMElementVariable)
-            {
-                var p = (CodeVariable)member;
-                Indent(2);
-                WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
-            }
         }
         Indent(1); WriteLine("}");
         WriteLine("");
 
-		var allClasses = new List<CodeClass>();
-		allClasses.Add(_class);
-		allClasses.AddRange(_class.Bases.Cast<CodeClass>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)));;
-		var allMembers = from c in allClasses from m in EnumerateTSMembers(c) select m;
-		 
-		Indent(1); Write("export class {0}", _class.Name); WriteLine(" {");
+		Indent(1); Write("export class {0}", _class.Name); 
+        if (bases.Count > 0)
+        {
+            bool first = true;
+            foreach (var super in bases)
+            {
+                Write(first ? " extends " : ", ");
+                first = false;
+                Write(super.Name);
+            }
+        }
+        WriteLine(" {");
 		Indent(2); WriteLine("public static ajaxSettings = new Scaffold.AjaxSettings();", _class.Name); 
 		foreach(var member in allMembers) 
 		{
@@ -96,15 +106,13 @@ module <#=_namespace #> {
 				Indent(2);
 				WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
             }
-			else if (member.Kind == vsCMElement.vsCMElementVariable)
-            {
-				var p = (CodeVariable)member;
-				Indent(2);
-				WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
-            }
 		}
 		Indent(2); Write("constructor(data?: I{0})",  _class.Name); WriteLine(" {");
-        //Indent(3); WriteLine("this.ID = data ? data.ID : null;");
+        if (bases.Count > 0)
+        {
+            Indent(3);
+            WriteLine("super(data);");
+        }
         foreach(var member in allMembers) 
 		{
 			if (member.Kind == vsCMElement.vsCMElementProperty)
@@ -112,12 +120,6 @@ module <#=_namespace #> {
 				var p = (CodeProperty)member;
 				Indent(3);
 				WriteLine("this.{0} = data ? data.{0} : null;", GetTSName(p), GetTSDefault(p));
-            }
-			else if (member.Kind == vsCMElement.vsCMElementVariable)
-            {
-				var p = (CodeVariable)member;
-				Indent(3);
-				WriteLine("this.{0} = data ? data.{0} : {1};", GetTSName(p), GetTSDefault(p));
             }
 		}
 		Indent(2); WriteLine("}");

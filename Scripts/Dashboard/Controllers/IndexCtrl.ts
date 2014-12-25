@@ -48,11 +48,6 @@ module KawalDesa.Controllers {
                         $scope.apbdFiles = apbdFiles;
                     });
                 });
-                Models.TransactionFile.GetAll().done(transactionFiles => {
-                    safeApply($scope, () => {
-                        $scope.transactionFiles = transactionFiles;
-                    });
-                });
             }
         }
 
@@ -89,10 +84,15 @@ module KawalDesa.Controllers {
             var ctrl = this;
             var res = null;
 
-            APBNFileUpload.UploadFile(file, res, ctrl.$upload).success(function (data, status, headers, config) {
+            var res = ctrl.$upload.upload({
+                type: 'POST',
+                url: '/api/APBDFile/PostFile',
+                data: { "anu": "lalala", "lalala": 11, "caca": true },
+                file: file
+            }).success(() => {
                 var modal: any = $("#apbnFileModal");
                 modal.modal("hide");
-            });;
+            });
         }
 
     }

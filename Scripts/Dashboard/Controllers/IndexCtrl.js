@@ -6,7 +6,6 @@ var KawalDesa;
 (function (KawalDesa) {
     (function (Controllers) {
         var Models = App.Models;
-        var APBNFileUpload = App.Models.APBNFileUpload;
 
         function safeApply(scope, fn) {
             (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
@@ -45,11 +44,6 @@ var KawalDesa;
                             $scope.apbdFiles = apbdFiles;
                         });
                     });
-                    Models.TransactionFile.GetAll().done(function (transactionFiles) {
-                        safeApply($scope, function () {
-                            $scope.transactionFiles = transactionFiles;
-                        });
-                    });
                 }
             };
 
@@ -86,11 +80,15 @@ var KawalDesa;
                 var ctrl = this;
                 var res = null;
 
-                APBNFileUpload.UploadFile(file, res, ctrl.$upload).success(function (data, status, headers, config) {
+                var res = ctrl.$upload.upload({
+                    type: 'POST',
+                    url: '/api/APBDFile/PostFile',
+                    data: { "anu": "lalala", "lalala": 11, "caca": true },
+                    file: file
+                }).success(function () {
                     var modal = $("#apbnFileModal");
                     modal.modal("hide");
                 });
-                ;
             };
             IndexCtrl.$inject = ["$scope", "$upload", "principal"];
             return IndexCtrl;

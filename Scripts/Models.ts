@@ -34,7 +34,211 @@ module Scaffold {
 
 module App.Models {
 	import IQuery = Scaffold.IQuery;
-    export interface IAPBD {
+    export interface IBaseAccountRecapitulation {
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgettedIncome: number;
+        RealizedIncome: number;
+        BudgettedExpense: number;
+        RealizedExpense: number;
+        EmployeeExpense: number;
+        GoodsAndServiceExpense: number;
+        CapitalExpense: number;
+        OtherExpense: number;
+        TotalVillage: number;
+        AccountCompletedVillage: number;
+    }
+
+    export class BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgettedIncome: number;
+        RealizedIncome: number;
+        BudgettedExpense: number;
+        RealizedExpense: number;
+        EmployeeExpense: number;
+        GoodsAndServiceExpense: number;
+        CapitalExpense: number;
+        OtherExpense: number;
+        TotalVillage: number;
+        AccountCompletedVillage: number;
+        constructor(data?: IBaseAccountRecapitulation) {
+            this.ID = data ? data.ID : null;
+            this.RegionID = data ? data.RegionID : null;
+            this.APBNID = data ? data.APBNID : null;
+            this.APBNYear = data ? data.APBNYear : null;
+            this.ParentRegionID = data ? data.ParentRegionID : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BudgettedIncome = data ? data.BudgettedIncome : null;
+            this.RealizedIncome = data ? data.RealizedIncome : null;
+            this.BudgettedExpense = data ? data.BudgettedExpense : null;
+            this.RealizedExpense = data ? data.RealizedExpense : null;
+            this.EmployeeExpense = data ? data.EmployeeExpense : null;
+            this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
+            this.CapitalExpense = data ? data.CapitalExpense : null;
+            this.OtherExpense = data ? data.OtherExpense : null;
+            this.TotalVillage = data ? data.TotalVillage : null;
+            this.AccountCompletedVillage = data ? data.AccountCompletedVillage : null;
+        }
+
+    }
+
+    export interface IBaseEntity {
+        ID: number;
+        DateCreated: /** System.DateTime **/ any;
+        DateModified: /** System.DateTime **/ any;
+    }
+
+    export class BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        DateCreated: /** System.DateTime **/ any;
+        DateModified: /** System.DateTime **/ any;
+        constructor(data?: IBaseEntity) {
+            this.ID = data ? data.ID : null;
+            this.DateCreated = data ? data.DateCreated : null;
+            this.DateModified = data ? data.DateModified : null;
+        }
+
+    }
+
+    export interface IBaseTransferRecapitulation {
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgetedAPBN: number;
+        TransferredAPBN: number;
+        AcknowledgedAPBN: number;
+        BudgetedADD: number;
+        TransferredADD: number;
+        AcknowledgedADD: number;
+        BudgettedTotal: number;
+        TransferredTotal: number;
+        AcknowledgedTotal: number;
+    }
+
+    export class BaseTransferRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        RegionID: number;
+        APBNID: number;
+        APBNYear: number;
+        ParentRegionID: number;
+        RegionName: string;
+        BudgetedAPBN: number;
+        TransferredAPBN: number;
+        AcknowledgedAPBN: number;
+        BudgetedADD: number;
+        TransferredADD: number;
+        AcknowledgedADD: number;
+        BudgettedTotal: number;
+        TransferredTotal: number;
+        AcknowledgedTotal: number;
+        constructor(data?: IBaseTransferRecapitulation) {
+            this.ID = data ? data.ID : null;
+            this.RegionID = data ? data.RegionID : null;
+            this.APBNID = data ? data.APBNID : null;
+            this.APBNYear = data ? data.APBNYear : null;
+            this.ParentRegionID = data ? data.ParentRegionID : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
+            this.TransferredAPBN = data ? data.TransferredAPBN : null;
+            this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
+            this.BudgetedADD = data ? data.BudgetedADD : null;
+            this.TransferredADD = data ? data.TransferredADD : null;
+            this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+            this.BudgettedTotal = data ? data.BudgettedTotal : null;
+            this.TransferredTotal = data ? data.TransferredTotal : null;
+            this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+        }
+
+    }
+
+    export interface IAccount extends IBaseEntity {
+        ID: number;
+        Code: string;
+        Name: string;
+        Type: /** App.Models.AccountType **/ any;
+        ExpenseType: /** App.Models.ExpenseType **/ any;
+        ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
+        Target: number;
+        IsActivated: boolean;
+        fkParentAccountID: number;
+        ParentAccount: App.Models.IAccount;
+        fkAPBDesID: number;
+        APBDes: App.Models.IAPBDes;
+        ParentCode: string;
+    }
+
+    export class Account extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        Code: string;
+        Name: string;
+        Type: /** App.Models.AccountType **/ any;
+        ExpenseType: /** App.Models.ExpenseType **/ any;
+        ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
+        Target: number;
+        IsActivated: boolean;
+        fkParentAccountID: number;
+        ParentAccount: App.Models.IAccount;
+        fkAPBDesID: number;
+        APBDes: App.Models.IAPBDes;
+        ParentCode: string;
+        constructor(data?: IAccount) {
+            super(data);
+            this.ID = data ? data.ID : null;
+            this.Code = data ? data.Code : null;
+            this.Name = data ? data.Name : null;
+            this.Type = data ? data.Type : null;
+            this.ExpenseType = data ? data.ExpenseType : null;
+            this.ExpenseGroup = data ? data.ExpenseGroup : null;
+            this.Target = data ? data.Target : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkParentAccountID = data ? data.fkParentAccountID : null;
+            this.ParentAccount = data ? data.ParentAccount : null;
+            this.fkAPBDesID = data ? data.fkAPBDesID : null;
+            this.APBDes = data ? data.APBDes : null;
+            this.ParentCode = data ? data.ParentCode : null;
+        }
+
+    }
+
+    export interface IAccountRecapitulation extends IBaseAccountRecapitulation {
+    }
+
+    export class AccountRecapitulation extends BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: IAccountRecapitulation) {
+            super(data);
+        }
+
+    }
+
+    export interface IFrozenAccountRecapitulation extends IBaseAccountRecapitulation {
+    }
+
+    export class FrozenAccountRecapitulation extends BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: IFrozenAccountRecapitulation) {
+            super(data);
+        }
+
+    }
+
+    export interface IAPBD extends IBaseEntity {
         ID: number;
         DAU: number;
         DBH: number;
@@ -47,7 +251,7 @@ module App.Models {
         APBDFile: App.Models.IAPBDFile;
     }
 
-    export class APBD {
+    export class APBD extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         DAU: number;
@@ -60,6 +264,7 @@ module App.Models {
         fkAPBDFileID: number;
         APBDFile: App.Models.IAPBDFile;
         constructor(data?: IAPBD) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.DAU = data ? data.DAU : null;
             this.DBH = data ? data.DBH : null;
@@ -74,53 +279,106 @@ module App.Models {
 
     }
 
-    export interface IAPBDesAccount {
+    export interface IAPBDes extends IBaseEntity {
         ID: number;
-        AccountNo: string;
-        AccountName: string;
-        Amount: number;
-        RealizationAmount: number;
         IsActivated: boolean;
-        fkParentAccountID: number;
-        ParentAccount: App.Models.IAPBDesAccount;
+        IsCompleted: boolean;
+        SourceURL: string;
+        fkSourceFileID: number;
+        SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkRegionID: number;
         Region: App.Models.IRegion;
+        Accounts: Array<App.Models.IAccount>;
     }
 
-    export class APBDesAccount {
+    export class APBDes extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
-        AccountNo: string;
-        AccountName: string;
-        Amount: number;
-        RealizationAmount: number;
         IsActivated: boolean;
-        fkParentAccountID: number;
-        ParentAccount: App.Models.IAPBDesAccount;
+        IsCompleted: boolean;
+        SourceURL: string;
+        fkSourceFileID: number;
+        SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkRegionID: number;
         Region: App.Models.IRegion;
-        constructor(data?: IAPBDesAccount) {
+        Accounts: Array<App.Models.IAccount>;
+        constructor(data?: IAPBDes) {
+            super(data);
             this.ID = data ? data.ID : null;
-            this.AccountNo = data ? data.AccountNo : null;
-            this.AccountName = data ? data.AccountName : null;
-            this.Amount = data ? data.Amount : null;
-            this.RealizationAmount = data ? data.RealizationAmount : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.fkParentAccountID = data ? data.fkParentAccountID : null;
-            this.ParentAccount = data ? data.ParentAccount : null;
+            this.IsCompleted = data ? data.IsCompleted : null;
+            this.SourceURL = data ? data.SourceURL : null;
+            this.fkSourceFileID = data ? data.fkSourceFileID : null;
+            this.SourceFile = data ? data.SourceFile : null;
             this.fkAPBNID = data ? data.fkAPBNID : null;
             this.APBN = data ? data.APBN : null;
             this.fkRegionID = data ? data.fkRegionID : null;
             this.Region = data ? data.Region : null;
+            this.Accounts = data ? data.Accounts : null;
+        }
+
+        /* App.Controllers.APBDesController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<APBDes>> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDes/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new APBDes(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<APBDes> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDes/Get/'+id,
+            })).then((model) => new APBDes(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDes/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        static UpdateSources(): JQueryPromise<void> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/APBDes/UpdateSources',
+            }));
+            return res;
+        }
+
+        static Complete(apbdesID: number): JQueryPromise<void> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/APBDes/Complete?apbdesID='+apbdesID+'',
+            }));
+            return res;
+        }
+
+        static AddAccounts(apbdesID: number, type: number, accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&type='+type+'&accounts='+accounts+'',
+            }));
+            return res;
         }
 
     }
 
-    export interface IAPBDFile {
+    export interface IAPBDFile extends IBaseEntity {
         ID: number;
         FileName: string;
         IsActivated: boolean;
@@ -133,7 +391,7 @@ module App.Models {
         TotalDBH: number;
     }
 
-    export class APBDFile {
+    export class APBDFile extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         FileName: string;
@@ -146,6 +404,7 @@ module App.Models {
         TotalDAU: number;
         TotalDBH: number;
         constructor(data?: IAPBDFile) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -220,7 +479,7 @@ module App.Models {
             return res;
         }
                 
-        static PostFile(): JQueryPromise</** System.Threading.Tasks.Task<Scaffold.UploadResult<App.Models.Blob>> **/ any> {
+        static PostFile(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
             var res = $.ajax(APBDFile.ajaxSettings.build({
                 type: 'POST',
                 url: '/api/APBDFile/PostFile',
@@ -230,18 +489,19 @@ module App.Models {
 
     }
 
-    export interface IAPBN {
+    export interface IAPBN extends IBaseEntity {
         ID: number;
         DanaPerDesa: number;
         Year: number;
     }
 
-    export class APBN {
+    export class APBN extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         DanaPerDesa: number;
         Year: number;
         constructor(data?: IAPBN) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.DanaPerDesa = data ? data.DanaPerDesa : null;
             this.Year = data ? data.Year : null;
@@ -311,30 +571,28 @@ module App.Models {
                 
     }
 
-    export interface IBlob {
+    export interface IBlob extends IBaseEntity {
         ID: number;
         Name: string;
         Type: string;
         Size: number;
-        UploadID: string;
-        UploadFolder: string;
+        FilePath: string;
     }
 
-    export class Blob {
+    export class Blob extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         Name: string;
         Type: string;
         Size: number;
-        UploadID: string;
-        UploadFolder: string;
+        FilePath: string;
         constructor(data?: IBlob) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.Size = data ? data.Size : null;
-            this.UploadID = data ? data.UploadID : null;
-            this.UploadFolder = data ? data.UploadFolder : null;
+            this.FilePath = data ? data.FilePath : null;
         }
 
         /* App.Controllers.BlobController */
@@ -378,84 +636,129 @@ module App.Models {
 
     }
 
-    export interface IRecapitulation {
+    export interface IFieldReport extends IBaseEntity {
         ID: number;
-        RegionID: number;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
-        RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
-        BudgettedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
+        Notes: string;
+        Date: /** System.DateTime **/ any;
+        IsActivated: boolean;
+        fkRealizationID: number;
+        Realization: App.Models.IRealization;
+        Pictures: Array<App.Models.IBlob>;
     }
 
-    export class Recapitulation {
+    export class FieldReport extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
-        RegionID: number;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
-        RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
-        BudgettedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
-        constructor(data?: IRecapitulation) {
+        Notes: string;
+        Date: /** System.DateTime **/ any;
+        IsActivated: boolean;
+        fkRealizationID: number;
+        Realization: App.Models.IRealization;
+        Pictures: Array<App.Models.IBlob>;
+        constructor(data?: IFieldReport) {
+            super(data);
             this.ID = data ? data.ID : null;
-            this.RegionID = data ? data.RegionID : null;
-            this.APBNID = data ? data.APBNID : null;
-            this.APBNYear = data ? data.APBNYear : null;
-            this.ParentRegionID = data ? data.ParentRegionID : null;
-            this.RegionName = data ? data.RegionName : null;
-            this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
-            this.TransferredAPBN = data ? data.TransferredAPBN : null;
-            this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
-            this.BudgetedADD = data ? data.BudgetedADD : null;
-            this.TransferredADD = data ? data.TransferredADD : null;
-            this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-            this.BudgettedTotal = data ? data.BudgettedTotal : null;
-            this.TransferredTotal = data ? data.TransferredTotal : null;
-            this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+            this.Notes = data ? data.Notes : null;
+            this.Date = data ? data.Date : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkRealizationID = data ? data.fkRealizationID : null;
+            this.Realization = data ? data.Realization : null;
+            this.Pictures = data ? data.Pictures : null;
         }
 
-        /* App.Controllers.RecapitulationController */
+        /* App.Controllers.FieldReportController */
 
-        static GetAll(query?: IQuery): JQueryPromise<Array<Recapitulation>> {
-            var res = $.ajax(Recapitulation.ajaxSettings.build({
+        static GetAll(query?: IQuery): JQueryPromise<Array<FieldReport>> {
+            var res = $.ajax(FieldReport.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/Recapitulation/GetAll',
+                url: '/api/FieldReport/GetAll',
 				data: query,
             })).then((models) => {
-                return models.map((model) => new Recapitulation(model));
+                return models.map((model) => new FieldReport(model));
             });
             return res;
         }
 
-        static Get(id: number): JQueryPromise<Recapitulation> {
-            var res = $.ajax(Recapitulation.ajaxSettings.build({
+        static Get(id: number): JQueryPromise<FieldReport> {
+            var res = $.ajax(FieldReport.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/Recapitulation/Get/'+id,
-            })).then((model) => new Recapitulation(model));
+                url: '/api/FieldReport/Get/'+id,
+            })).then((model) => new FieldReport(model));
             return res;
         }
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(Recapitulation.ajaxSettings.build({
+            var res = $.ajax(FieldReport.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/Recapitulation/GetCount',
+                url: '/api/FieldReport/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
+        static AddFieldReport(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
+            var res = $.ajax(FieldReport.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/FieldReport/AddFieldReport',
+            }));
+            return res;
+        }
+
+    }
+
+    export interface IRealization extends IBaseEntity {
+        ID: number;
+        Description: string;
+        Vendor: string;
+        Sector: /** App.Models.Sector **/ any;
+        fkTransactionID: number;
+        Transaction: App.Models.ITransaction;
+    }
+
+    export class Realization extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        Description: string;
+        Vendor: string;
+        Sector: /** App.Models.Sector **/ any;
+        fkTransactionID: number;
+        Transaction: App.Models.ITransaction;
+        constructor(data?: IRealization) {
+            super(data);
+            this.ID = data ? data.ID : null;
+            this.Description = data ? data.Description : null;
+            this.Vendor = data ? data.Vendor : null;
+            this.Sector = data ? data.Sector : null;
+            this.fkTransactionID = data ? data.fkTransactionID : null;
+            this.Transaction = data ? data.Transaction : null;
+        }
+
+        /* App.Controllers.RealizationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<Realization>> {
+            var res = $.ajax(Realization.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Realization/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new Realization(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<Realization> {
+            var res = $.ajax(Realization.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Realization/Get/'+id,
+            })).then((model) => new Realization(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(Realization.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Realization/GetCount',
 				data: query,
             }));
             return res;
@@ -464,113 +767,31 @@ module App.Models {
                 
     }
 
-    export interface ILiveRecapitulation {
-        ID: number;
-        RegionID: number;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
-        RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
-        BudgettedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
-    }
-
-    export class LiveRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
-        RegionID: number;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
-        RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
-        BudgettedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
-        constructor(data?: ILiveRecapitulation) {
-            this.ID = data ? data.ID : null;
-            this.RegionID = data ? data.RegionID : null;
-            this.APBNID = data ? data.APBNID : null;
-            this.APBNYear = data ? data.APBNYear : null;
-            this.ParentRegionID = data ? data.ParentRegionID : null;
-            this.RegionName = data ? data.RegionName : null;
-            this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
-            this.TransferredAPBN = data ? data.TransferredAPBN : null;
-            this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
-            this.BudgetedADD = data ? data.BudgetedADD : null;
-            this.TransferredADD = data ? data.TransferredADD : null;
-            this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-            this.BudgettedTotal = data ? data.BudgettedTotal : null;
-            this.TransferredTotal = data ? data.TransferredTotal : null;
-            this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
-        }
-
-        /* App.Controllers.LiveRecapitulationController */
-
-        static GetAll(query?: IQuery): JQueryPromise<Array<LiveRecapitulation>> {
-            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/LiveRecapitulation/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new LiveRecapitulation(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<LiveRecapitulation> {
-            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/LiveRecapitulation/Get/'+id,
-            })).then((model) => new LiveRecapitulation(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/LiveRecapitulation/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                
-    }
-
-    export interface IRegion {
+    export interface IRegion extends IBaseEntity {
         ID: number;
         Name: string;
         Type: /** App.Models.RegionType **/ any;
+        IsKelurahan: boolean;
         UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
     }
 
-    export class Region {
+    export class Region extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         Name: string;
         Type: /** App.Models.RegionType **/ any;
+        IsKelurahan: boolean;
         UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
         constructor(data?: IRegion) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
+            this.IsKelurahan = data ? data.IsKelurahan : null;
             this.UrlKey = data ? data.UrlKey : null;
             this.fkParentID = data ? data.fkParentID : null;
             this.Parent = data ? data.Parent : null;
@@ -607,52 +828,24 @@ module App.Models {
         }
 
                 
-        Save(): JQueryPromise<void> {
-            var isNew = this.ID == null;
-            var model = this;
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: isNew ? 'POST' : 'PUT',
-                url: '/api/Region/'+(isNew ? 'Post' : 'Put'),
-                data: JSON.stringify(this)
-            })).then((id) => {
-                if(isNew){
-                    this.ID = id;
-                }
-            });
-            return res;
-        }
-
-        Delete(): JQueryPromise<void> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'DELETE',
-                url: '/api/Region/Delete/'+this.ID,
-            }));
-            return res;
-        }
-
-        static Delete(id: number): JQueryPromise<void> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Region/Delete/'+id,
-            }));
-            return res;
-        }
-                
     }
 
-    export interface ITransaction {
+    export interface IBaseTransaction extends IBaseEntity {
         ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        fkProofID: number;
-        Proof: App.Models.IBlob;
+        SourceURL: string;
+        fkSourceFileID: number;
+        SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkSourceID: number;
         Source: App.Models.IRegion;
         fkDestinationID: number;
         Destination: App.Models.IRegion;
+        fkAccountID: number;
+        Account: App.Models.IAccount;
         fkActorID: number;
         Actor: App.Models.IRegion;
         fkCreatedByID: string;
@@ -661,45 +854,63 @@ module App.Models {
         TransactionFile: App.Models.ITransactionFile;
     }
 
-    export class Transaction {
+    export class BaseTransaction extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        fkProofID: number;
-        Proof: App.Models.IBlob;
+        SourceURL: string;
+        fkSourceFileID: number;
+        SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
         fkSourceID: number;
         Source: App.Models.IRegion;
         fkDestinationID: number;
         Destination: App.Models.IRegion;
+        fkAccountID: number;
+        Account: App.Models.IAccount;
         fkActorID: number;
         Actor: App.Models.IRegion;
         fkCreatedByID: string;
         CreatedBy: /** App.Models.User **/ any;
         fkTransactionFileID: number;
         TransactionFile: App.Models.ITransactionFile;
-        constructor(data?: ITransaction) {
+        constructor(data?: IBaseTransaction) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.Amount = data ? data.Amount : null;
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.fkProofID = data ? data.fkProofID : null;
-            this.Proof = data ? data.Proof : null;
+            this.SourceURL = data ? data.SourceURL : null;
+            this.fkSourceFileID = data ? data.fkSourceFileID : null;
+            this.SourceFile = data ? data.SourceFile : null;
             this.fkAPBNID = data ? data.fkAPBNID : null;
             this.APBN = data ? data.APBN : null;
             this.fkSourceID = data ? data.fkSourceID : null;
             this.Source = data ? data.Source : null;
             this.fkDestinationID = data ? data.fkDestinationID : null;
             this.Destination = data ? data.Destination : null;
+            this.fkAccountID = data ? data.fkAccountID : null;
+            this.Account = data ? data.Account : null;
             this.fkActorID = data ? data.fkActorID : null;
             this.Actor = data ? data.Actor : null;
             this.fkCreatedByID = data ? data.fkCreatedByID : null;
             this.CreatedBy = data ? data.CreatedBy : null;
             this.fkTransactionFileID = data ? data.fkTransactionFileID : null;
             this.TransactionFile = data ? data.TransactionFile : null;
+        }
+
+    }
+
+    export interface ITransaction extends IBaseTransaction {
+    }
+
+    export class Transaction extends BaseTransaction {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: ITransaction) {
+            super(data);
         }
 
         /* App.Controllers.TransactionController */
@@ -733,56 +944,52 @@ module App.Models {
         }
 
                 
-        Save(): JQueryPromise<void> {
-            var isNew = this.ID == null;
-            var model = this;
+        static AddTransferTransaction(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
             var res = $.ajax(Transaction.ajaxSettings.build({
-                type: isNew ? 'POST' : 'PUT',
-                url: '/api/Transaction/'+(isNew ? 'Post' : 'Put'),
-                data: JSON.stringify(this)
-            })).then((id) => {
-                if(isNew){
-                    this.ID = id;
-                }
-            });
-            return res;
-        }
-
-        Delete(): JQueryPromise<void> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'DELETE',
-                url: '/api/Transaction/Delete/'+this.ID,
+                type: 'POST',
+                url: '/api/Transaction/AddTransferTransaction',
             }));
             return res;
         }
 
-        static Delete(id: number): JQueryPromise<void> {
+        static GetTransferTransactions(regionID: number): JQueryPromise<Array</** App.Controllers.TransferTransactionRow **/ any>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/Transaction/Delete/'+id,
-            }));
-            return res;
-        }
-                
-        static AddTransaction(): JQueryPromise<void> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/AddTransaction',
+                url: '/api/Transaction/GetTransferTransactions?regionID='+regionID+'',
             }));
             return res;
         }
 
-        static GetTransactionDetails(regionID: number): JQueryPromise<Array</** App.Controllers.RegionTransactionRow **/ any>> {
+        static AddAccountTransaction(transaction: App.Models.ITransaction, realization: App.Models.IRealization): JQueryPromise<void> {
+            var res = $.ajax(Transaction.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/Transaction/AddAccountTransaction?transaction='+transaction+'&realization='+realization+'',
+            }));
+            return res;
+        }
+
+        static GetRealizationTransactions(accountID: number): JQueryPromise<Array</** App.Controllers.RealizationTransactionRow **/ any>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/Transaction/GetTransactionDetails?regionID='+regionID+'',
+                url: '/api/Transaction/GetRealizationTransactions?accountID='+accountID+'',
             }));
             return res;
         }
 
     }
 
-    export interface ITransactionFile {
+    export interface IFrozenTransaction extends IBaseTransaction {
+    }
+
+    export class FrozenTransaction extends BaseTransaction {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: IFrozenTransaction) {
+            super(data);
+        }
+
+    }
+
+    export interface ITransactionFile extends IBaseEntity {
         ID: number;
         FileName: string;
         IsActivated: boolean;
@@ -795,7 +1002,7 @@ module App.Models {
         TotalAmount: number;
     }
 
-    export class TransactionFile {
+    export class TransactionFile extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         FileName: string;
@@ -808,6 +1015,7 @@ module App.Models {
         DesaCount: number;
         TotalAmount: number;
         constructor(data?: ITransactionFile) {
+            super(data);
             this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -820,68 +1028,116 @@ module App.Models {
             this.TotalAmount = data ? data.TotalAmount : null;
         }
 
-        /* App.Controllers.TransactionFileController */
+    }
 
-        static GetAll(query?: IQuery): JQueryPromise<Array<TransactionFile>> {
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
+    export interface ITransferRecapitulation extends IBaseTransferRecapitulation {
+    }
+
+    export class TransferRecapitulation extends BaseTransferRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: ITransferRecapitulation) {
+            super(data);
+        }
+
+        /* App.Controllers.TransferRecapitulationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<TransferRecapitulation>> {
+            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/TransactionFile/GetAll',
+                url: '/api/TransferRecapitulation/GetAll',
 				data: query,
             })).then((models) => {
-                return models.map((model) => new TransactionFile(model));
+                return models.map((model) => new TransferRecapitulation(model));
             });
             return res;
         }
 
-        static Get(id: number): JQueryPromise<TransactionFile> {
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
+        static Get(id: number): JQueryPromise<TransferRecapitulation> {
+            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/TransactionFile/Get/'+id,
-            })).then((model) => new TransactionFile(model));
+                url: '/api/TransferRecapitulation/Get/'+id,
+            })).then((model) => new TransferRecapitulation(model));
             return res;
         }
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
+            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                 type: 'GET',
-                url: '/api/TransactionFile/GetCount',
+                url: '/api/TransferRecapitulation/GetCount',
 				data: query,
             }));
             return res;
         }
 
                 
-        Save(): JQueryPromise<void> {
-            var isNew = this.ID == null;
-            var model = this;
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
-                type: isNew ? 'POST' : 'PUT',
-                url: '/api/TransactionFile/'+(isNew ? 'Post' : 'Put'),
-                data: JSON.stringify(this)
-            })).then((id) => {
-                if(isNew){
-                    this.ID = id;
-                }
+    }
+
+    export interface IFrozenTransferRecapitulation extends IBaseTransferRecapitulation {
+    }
+
+    export class FrozenTransferRecapitulation extends BaseTransferRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        constructor(data?: IFrozenTransferRecapitulation) {
+            super(data);
+        }
+
+        /* App.Controllers.FrozenTransferRecapitulationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<FrozenTransferRecapitulation>> {
+            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenTransferRecapitulation/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new FrozenTransferRecapitulation(model));
             });
             return res;
         }
 
-        Delete(): JQueryPromise<void> {
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
-                type: 'DELETE',
-                url: '/api/TransactionFile/Delete/'+this.ID,
+        static Get(id: number): JQueryPromise<FrozenTransferRecapitulation> {
+            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenTransferRecapitulation/Get/'+id,
+            })).then((model) => new FrozenTransferRecapitulation(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenTransferRecapitulation/GetCount',
+				data: query,
             }));
             return res;
         }
 
-        static Delete(id: number): JQueryPromise<void> {
-            var res = $.ajax(TransactionFile.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/TransactionFile/Delete/'+id,
-            }));
-            return res;
-        }
                 
+    }
+
+    export interface IUserScope extends IBaseEntity {
+        ID: number;
+        fkUserID: string;
+        User: /** App.Models.User **/ any;
+        fkRegionID: number;
+        Region: App.Models.IRegion;
+    }
+
+    export class UserScope extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        ID: number;
+        fkUserID: string;
+        User: /** App.Models.User **/ any;
+        fkRegionID: number;
+        Region: App.Models.IRegion;
+        constructor(data?: IUserScope) {
+            super(data);
+            this.ID = data ? data.ID : null;
+            this.fkUserID = data ? data.fkUserID : null;
+            this.User = data ? data.User : null;
+            this.fkRegionID = data ? data.fkRegionID : null;
+            this.Region = data ? data.Region : null;
+        }
+
     }
 
 }

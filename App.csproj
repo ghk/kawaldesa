@@ -1075,14 +1075,6 @@
     <Compile Include="Security\KawalDesaHeaders.cs" />
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
-    <Content Include="SQLs\FrozenTransactions.sql" />
-    <Content Include="SQLs\InsertRegions.sql" />
-    <Content Include="SQLs\TransferRecapitulations.sql" />
-    <Content Include="SQLs\RegionADDs.sql" />
-    <Content Include="SQLs\RegionDesaCounts.sql" />
-    <Content Include="SQLs\RegionParents.sql" />
-    <Content Include="SQLs\FrozenTransferRecapitulations.sql" />
-    <Content Include="SQLs\SetRegionUrlKeys.sql" />
     <Content Include="Views\KawalDesa\Index.cshtml" />
     <Content Include="Content\APBD.xlsx" />
     <None Include="Properties\PublishProfiles\default.pubxml" />
@@ -1369,6 +1361,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\KawalDesa\Services\" />
+    <Folder Include="SQLs\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

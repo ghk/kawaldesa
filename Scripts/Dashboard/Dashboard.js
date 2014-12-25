@@ -3,7 +3,7 @@
 var KawalDesa;
 (function (KawalDesa) {
     KawalDesa.dashboard = angular.module('dashboard', [
-        'angular-loading-bar'
+        'angularFileUpload'
     ]);
 
     KawalDesa.dashboard.run([

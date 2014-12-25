@@ -1,5 +1,11 @@
 ﻿// WARNING: T4 generated file  (it is related to CodeToServerProxy)
 //
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 /// <reference path="../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 var Scaffold;
 (function (Scaffold) {
@@ -29,8 +35,111 @@ var Scaffold;
 var App;
 (function (App) {
     (function (Models) {
-        var APBD = (function () {
+        var BaseAccountRecapitulation = (function () {
+            function BaseAccountRecapitulation(data) {
+                this.ID = data ? data.ID : null;
+                this.RegionID = data ? data.RegionID : null;
+                this.APBNID = data ? data.APBNID : null;
+                this.APBNYear = data ? data.APBNYear : null;
+                this.ParentRegionID = data ? data.ParentRegionID : null;
+                this.RegionName = data ? data.RegionName : null;
+                this.BudgettedIncome = data ? data.BudgettedIncome : null;
+                this.RealizedIncome = data ? data.RealizedIncome : null;
+                this.BudgettedExpense = data ? data.BudgettedExpense : null;
+                this.RealizedExpense = data ? data.RealizedExpense : null;
+                this.EmployeeExpense = data ? data.EmployeeExpense : null;
+                this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
+                this.CapitalExpense = data ? data.CapitalExpense : null;
+                this.OtherExpense = data ? data.OtherExpense : null;
+                this.TotalVillage = data ? data.TotalVillage : null;
+                this.AccountCompletedVillage = data ? data.AccountCompletedVillage : null;
+            }
+            BaseAccountRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return BaseAccountRecapitulation;
+        })();
+        Models.BaseAccountRecapitulation = BaseAccountRecapitulation;
+
+        var BaseEntity = (function () {
+            function BaseEntity(data) {
+                this.ID = data ? data.ID : null;
+                this.DateCreated = data ? data.DateCreated : null;
+                this.DateModified = data ? data.DateModified : null;
+            }
+            BaseEntity.ajaxSettings = new Scaffold.AjaxSettings();
+            return BaseEntity;
+        })();
+        Models.BaseEntity = BaseEntity;
+
+        var BaseTransferRecapitulation = (function () {
+            function BaseTransferRecapitulation(data) {
+                this.ID = data ? data.ID : null;
+                this.RegionID = data ? data.RegionID : null;
+                this.APBNID = data ? data.APBNID : null;
+                this.APBNYear = data ? data.APBNYear : null;
+                this.ParentRegionID = data ? data.ParentRegionID : null;
+                this.RegionName = data ? data.RegionName : null;
+                this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
+                this.TransferredAPBN = data ? data.TransferredAPBN : null;
+                this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
+                this.BudgetedADD = data ? data.BudgetedADD : null;
+                this.TransferredADD = data ? data.TransferredADD : null;
+                this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+                this.BudgettedTotal = data ? data.BudgettedTotal : null;
+                this.TransferredTotal = data ? data.TransferredTotal : null;
+                this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+            }
+            BaseTransferRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return BaseTransferRecapitulation;
+        })();
+        Models.BaseTransferRecapitulation = BaseTransferRecapitulation;
+
+        var Account = (function (_super) {
+            __extends(Account, _super);
+            function Account(data) {
+                _super.call(this, data);
+                this.ID = data ? data.ID : null;
+                this.Code = data ? data.Code : null;
+                this.Name = data ? data.Name : null;
+                this.Type = data ? data.Type : null;
+                this.ExpenseType = data ? data.ExpenseType : null;
+                this.ExpenseGroup = data ? data.ExpenseGroup : null;
+                this.Target = data ? data.Target : null;
+                this.IsActivated = data ? data.IsActivated : null;
+                this.fkParentAccountID = data ? data.fkParentAccountID : null;
+                this.ParentAccount = data ? data.ParentAccount : null;
+                this.fkAPBDesID = data ? data.fkAPBDesID : null;
+                this.APBDes = data ? data.APBDes : null;
+                this.ParentCode = data ? data.ParentCode : null;
+            }
+            Account.ajaxSettings = new Scaffold.AjaxSettings();
+            return Account;
+        })(BaseEntity);
+        Models.Account = Account;
+
+        var AccountRecapitulation = (function (_super) {
+            __extends(AccountRecapitulation, _super);
+            function AccountRecapitulation(data) {
+                _super.call(this, data);
+            }
+            AccountRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return AccountRecapitulation;
+        })(BaseAccountRecapitulation);
+        Models.AccountRecapitulation = AccountRecapitulation;
+
+        var FrozenAccountRecapitulation = (function (_super) {
+            __extends(FrozenAccountRecapitulation, _super);
+            function FrozenAccountRecapitulation(data) {
+                _super.call(this, data);
+            }
+            FrozenAccountRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return FrozenAccountRecapitulation;
+        })(BaseAccountRecapitulation);
+        Models.FrozenAccountRecapitulation = FrozenAccountRecapitulation;
+
+        var APBD = (function (_super) {
+            __extends(APBD, _super);
             function APBD(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.DAU = data ? data.DAU : null;
                 this.DBH = data ? data.DBH : null;
@@ -44,31 +153,90 @@ var App;
             }
             APBD.ajaxSettings = new Scaffold.AjaxSettings();
             return APBD;
-        })();
+        })(BaseEntity);
         Models.APBD = APBD;
 
-        var APBDesAccount = (function () {
-            function APBDesAccount(data) {
+        var APBDes = (function (_super) {
+            __extends(APBDes, _super);
+            function APBDes(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
-                this.AccountNo = data ? data.AccountNo : null;
-                this.AccountName = data ? data.AccountName : null;
-                this.Amount = data ? data.Amount : null;
-                this.RealizationAmount = data ? data.RealizationAmount : null;
                 this.IsActivated = data ? data.IsActivated : null;
-                this.fkParentAccountID = data ? data.fkParentAccountID : null;
-                this.ParentAccount = data ? data.ParentAccount : null;
+                this.IsCompleted = data ? data.IsCompleted : null;
+                this.SourceURL = data ? data.SourceURL : null;
+                this.fkSourceFileID = data ? data.fkSourceFileID : null;
+                this.SourceFile = data ? data.SourceFile : null;
                 this.fkAPBNID = data ? data.fkAPBNID : null;
                 this.APBN = data ? data.APBN : null;
                 this.fkRegionID = data ? data.fkRegionID : null;
                 this.Region = data ? data.Region : null;
+                this.Accounts = data ? data.Accounts : null;
             }
-            APBDesAccount.ajaxSettings = new Scaffold.AjaxSettings();
-            return APBDesAccount;
-        })();
-        Models.APBDesAccount = APBDesAccount;
+            /* App.Controllers.APBDesController */
+            APBDes.GetAll = function (query) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/APBDes/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new APBDes(model);
+                    });
+                });
+                return res;
+            };
 
-        var APBDFile = (function () {
+            APBDes.Get = function (id) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/APBDes/Get/' + id
+                })).then(function (model) {
+                    return new APBDes(model);
+                });
+                return res;
+            };
+
+            APBDes.Count = function (query) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/APBDes/GetCount',
+                    data: query
+                }));
+                return res;
+            };
+
+            APBDes.UpdateSources = function () {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/APBDes/UpdateSources'
+                }));
+                return res;
+            };
+
+            APBDes.Complete = function (apbdesID) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/APBDes/Complete?apbdesID=' + apbdesID + ''
+                }));
+                return res;
+            };
+
+            APBDes.AddAccounts = function (apbdesID, type, accounts) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/APBDes/AddAccounts?apbdesID=' + apbdesID + '&type=' + type + '&accounts=' + accounts + ''
+                }));
+                return res;
+            };
+            APBDes.ajaxSettings = new Scaffold.AjaxSettings();
+            return APBDes;
+        })(BaseEntity);
+        Models.APBDes = APBDes;
+
+        var APBDFile = (function (_super) {
+            __extends(APBDFile, _super);
             function APBDFile(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.FileName = data ? data.FileName : null;
                 this.IsActivated = data ? data.IsActivated : null;
@@ -154,11 +322,13 @@ var App;
             };
             APBDFile.ajaxSettings = new Scaffold.AjaxSettings();
             return APBDFile;
-        })();
+        })(BaseEntity);
         Models.APBDFile = APBDFile;
 
-        var APBN = (function () {
+        var APBN = (function (_super) {
+            __extends(APBN, _super);
             function APBN(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.DanaPerDesa = data ? data.DanaPerDesa : null;
                 this.Year = data ? data.Year : null;
@@ -229,17 +399,18 @@ var App;
             };
             APBN.ajaxSettings = new Scaffold.AjaxSettings();
             return APBN;
-        })();
+        })(BaseEntity);
         Models.APBN = APBN;
 
-        var Blob = (function () {
+        var Blob = (function (_super) {
+            __extends(Blob, _super);
             function Blob(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
                 this.Size = data ? data.Size : null;
-                this.UploadID = data ? data.UploadID : null;
-                this.UploadFolder = data ? data.UploadFolder : null;
+                this.FilePath = data ? data.FilePath : null;
             }
             /* App.Controllers.BlobController */
             Blob.GetAll = function (query) {
@@ -283,124 +454,122 @@ var App;
             };
             Blob.ajaxSettings = new Scaffold.AjaxSettings();
             return Blob;
-        })();
+        })(BaseEntity);
         Models.Blob = Blob;
 
-        var Recapitulation = (function () {
-            function Recapitulation(data) {
+        var FieldReport = (function (_super) {
+            __extends(FieldReport, _super);
+            function FieldReport(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
-                this.RegionID = data ? data.RegionID : null;
-                this.APBNID = data ? data.APBNID : null;
-                this.APBNYear = data ? data.APBNYear : null;
-                this.ParentRegionID = data ? data.ParentRegionID : null;
-                this.RegionName = data ? data.RegionName : null;
-                this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
-                this.TransferredAPBN = data ? data.TransferredAPBN : null;
-                this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
-                this.BudgetedADD = data ? data.BudgetedADD : null;
-                this.TransferredADD = data ? data.TransferredADD : null;
-                this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-                this.BudgettedTotal = data ? data.BudgettedTotal : null;
-                this.TransferredTotal = data ? data.TransferredTotal : null;
-                this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+                this.Notes = data ? data.Notes : null;
+                this.Date = data ? data.Date : null;
+                this.IsActivated = data ? data.IsActivated : null;
+                this.fkRealizationID = data ? data.fkRealizationID : null;
+                this.Realization = data ? data.Realization : null;
+                this.Pictures = data ? data.Pictures : null;
             }
-            /* App.Controllers.RecapitulationController */
-            Recapitulation.GetAll = function (query) {
-                var res = $.ajax(Recapitulation.ajaxSettings.build({
+            /* App.Controllers.FieldReportController */
+            FieldReport.GetAll = function (query) {
+                var res = $.ajax(FieldReport.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/Recapitulation/GetAll',
+                    url: '/api/FieldReport/GetAll',
                     data: query
                 })).then(function (models) {
                     return models.map(function (model) {
-                        return new Recapitulation(model);
+                        return new FieldReport(model);
                     });
                 });
                 return res;
             };
 
-            Recapitulation.Get = function (id) {
-                var res = $.ajax(Recapitulation.ajaxSettings.build({
+            FieldReport.Get = function (id) {
+                var res = $.ajax(FieldReport.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/Recapitulation/Get/' + id
+                    url: '/api/FieldReport/Get/' + id
                 })).then(function (model) {
-                    return new Recapitulation(model);
+                    return new FieldReport(model);
                 });
                 return res;
             };
 
-            Recapitulation.Count = function (query) {
-                var res = $.ajax(Recapitulation.ajaxSettings.build({
+            FieldReport.Count = function (query) {
+                var res = $.ajax(FieldReport.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/Recapitulation/GetCount',
+                    url: '/api/FieldReport/GetCount',
                     data: query
                 }));
                 return res;
             };
-            Recapitulation.ajaxSettings = new Scaffold.AjaxSettings();
-            return Recapitulation;
-        })();
-        Models.Recapitulation = Recapitulation;
 
-        var LiveRecapitulation = (function () {
-            function LiveRecapitulation(data) {
+            FieldReport.AddFieldReport = function () {
+                var res = $.ajax(FieldReport.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/FieldReport/AddFieldReport'
+                }));
+                return res;
+            };
+            FieldReport.ajaxSettings = new Scaffold.AjaxSettings();
+            return FieldReport;
+        })(BaseEntity);
+        Models.FieldReport = FieldReport;
+
+        var Realization = (function (_super) {
+            __extends(Realization, _super);
+            function Realization(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
-                this.RegionID = data ? data.RegionID : null;
-                this.APBNID = data ? data.APBNID : null;
-                this.APBNYear = data ? data.APBNYear : null;
-                this.ParentRegionID = data ? data.ParentRegionID : null;
-                this.RegionName = data ? data.RegionName : null;
-                this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
-                this.TransferredAPBN = data ? data.TransferredAPBN : null;
-                this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
-                this.BudgetedADD = data ? data.BudgetedADD : null;
-                this.TransferredADD = data ? data.TransferredADD : null;
-                this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-                this.BudgettedTotal = data ? data.BudgettedTotal : null;
-                this.TransferredTotal = data ? data.TransferredTotal : null;
-                this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
+                this.Description = data ? data.Description : null;
+                this.Vendor = data ? data.Vendor : null;
+                this.Sector = data ? data.Sector : null;
+                this.fkTransactionID = data ? data.fkTransactionID : null;
+                this.Transaction = data ? data.Transaction : null;
             }
-            /* App.Controllers.LiveRecapitulationController */
-            LiveRecapitulation.GetAll = function (query) {
-                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+            /* App.Controllers.RealizationController */
+            Realization.GetAll = function (query) {
+                var res = $.ajax(Realization.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/LiveRecapitulation/GetAll',
+                    url: '/api/Realization/GetAll',
                     data: query
                 })).then(function (models) {
                     return models.map(function (model) {
-                        return new LiveRecapitulation(model);
+                        return new Realization(model);
                     });
                 });
                 return res;
             };
 
-            LiveRecapitulation.Get = function (id) {
-                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+            Realization.Get = function (id) {
+                var res = $.ajax(Realization.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/LiveRecapitulation/Get/' + id
+                    url: '/api/Realization/Get/' + id
                 })).then(function (model) {
-                    return new LiveRecapitulation(model);
+                    return new Realization(model);
                 });
                 return res;
             };
 
-            LiveRecapitulation.Count = function (query) {
-                var res = $.ajax(LiveRecapitulation.ajaxSettings.build({
+            Realization.Count = function (query) {
+                var res = $.ajax(Realization.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/LiveRecapitulation/GetCount',
+                    url: '/api/Realization/GetCount',
                     data: query
                 }));
                 return res;
             };
-            LiveRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
-            return LiveRecapitulation;
-        })();
-        Models.LiveRecapitulation = LiveRecapitulation;
+            Realization.ajaxSettings = new Scaffold.AjaxSettings();
+            return Realization;
+        })(BaseEntity);
+        Models.Realization = Realization;
 
-        var Region = (function () {
+        var Region = (function (_super) {
+            __extends(Region, _super);
             function Region(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
+                this.IsKelurahan = data ? data.IsKelurahan : null;
                 this.UrlKey = data ? data.UrlKey : null;
                 this.fkParentID = data ? data.fkParentID : null;
                 this.Parent = data ? data.Parent : null;
@@ -437,63 +606,46 @@ var App;
                 }));
                 return res;
             };
-
-            Region.prototype.Save = function () {
-                var _this = this;
-                var isNew = this.ID == null;
-                var model = this;
-                var res = $.ajax(Region.ajaxSettings.build({
-                    type: isNew ? 'POST' : 'PUT',
-                    url: '/api/Region/' + (isNew ? 'Post' : 'Put'),
-                    data: JSON.stringify(this)
-                })).then(function (id) {
-                    if (isNew) {
-                        _this.ID = id;
-                    }
-                });
-                return res;
-            };
-
-            Region.prototype.Delete = function () {
-                var res = $.ajax(Region.ajaxSettings.build({
-                    type: 'DELETE',
-                    url: '/api/Region/Delete/' + this.ID
-                }));
-                return res;
-            };
-
-            Region.Delete = function (id) {
-                var res = $.ajax(Region.ajaxSettings.build({
-                    type: 'GET',
-                    url: '/api/Region/Delete/' + id
-                }));
-                return res;
-            };
             Region.ajaxSettings = new Scaffold.AjaxSettings();
             return Region;
-        })();
+        })(BaseEntity);
         Models.Region = Region;
 
-        var Transaction = (function () {
-            function Transaction(data) {
+        var BaseTransaction = (function (_super) {
+            __extends(BaseTransaction, _super);
+            function BaseTransaction(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.Amount = data ? data.Amount : null;
                 this.Date = data ? data.Date : null;
                 this.IsActivated = data ? data.IsActivated : null;
-                this.fkProofID = data ? data.fkProofID : null;
-                this.Proof = data ? data.Proof : null;
+                this.SourceURL = data ? data.SourceURL : null;
+                this.fkSourceFileID = data ? data.fkSourceFileID : null;
+                this.SourceFile = data ? data.SourceFile : null;
                 this.fkAPBNID = data ? data.fkAPBNID : null;
                 this.APBN = data ? data.APBN : null;
                 this.fkSourceID = data ? data.fkSourceID : null;
                 this.Source = data ? data.Source : null;
                 this.fkDestinationID = data ? data.fkDestinationID : null;
                 this.Destination = data ? data.Destination : null;
+                this.fkAccountID = data ? data.fkAccountID : null;
+                this.Account = data ? data.Account : null;
                 this.fkActorID = data ? data.fkActorID : null;
                 this.Actor = data ? data.Actor : null;
                 this.fkCreatedByID = data ? data.fkCreatedByID : null;
                 this.CreatedBy = data ? data.CreatedBy : null;
                 this.fkTransactionFileID = data ? data.fkTransactionFileID : null;
                 this.TransactionFile = data ? data.TransactionFile : null;
+            }
+            BaseTransaction.ajaxSettings = new Scaffold.AjaxSettings();
+            return BaseTransaction;
+        })(BaseEntity);
+        Models.BaseTransaction = BaseTransaction;
+
+        var Transaction = (function (_super) {
+            __extends(Transaction, _super);
+            function Transaction(data) {
+                _super.call(this, data);
             }
             /* App.Controllers.TransactionController */
             Transaction.GetAll = function (query) {
@@ -528,60 +680,56 @@ var App;
                 return res;
             };
 
-            Transaction.prototype.Save = function () {
-                var _this = this;
-                var isNew = this.ID == null;
-                var model = this;
+            Transaction.AddTransferTransaction = function () {
                 var res = $.ajax(Transaction.ajaxSettings.build({
-                    type: isNew ? 'POST' : 'PUT',
-                    url: '/api/Transaction/' + (isNew ? 'Post' : 'Put'),
-                    data: JSON.stringify(this)
-                })).then(function (id) {
-                    if (isNew) {
-                        _this.ID = id;
-                    }
-                });
-                return res;
-            };
-
-            Transaction.prototype.Delete = function () {
-                var res = $.ajax(Transaction.ajaxSettings.build({
-                    type: 'DELETE',
-                    url: '/api/Transaction/Delete/' + this.ID
+                    type: 'POST',
+                    url: '/api/Transaction/AddTransferTransaction'
                 }));
                 return res;
             };
 
-            Transaction.Delete = function (id) {
+            Transaction.GetTransferTransactions = function (regionID) {
                 var res = $.ajax(Transaction.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/Transaction/Delete/' + id
+                    url: '/api/Transaction/GetTransferTransactions?regionID=' + regionID + ''
                 }));
                 return res;
             };
 
-            Transaction.AddTransaction = function () {
+            Transaction.AddAccountTransaction = function (transaction, realization) {
                 var res = $.ajax(Transaction.ajaxSettings.build({
-                    type: 'GET',
-                    url: '/api/Transaction/AddTransaction'
+                    type: 'POST',
+                    url: '/api/Transaction/AddAccountTransaction?transaction=' + transaction + '&realization=' + realization + ''
                 }));
                 return res;
             };
 
-            Transaction.GetTransactionDetails = function (regionID) {
+            Transaction.GetRealizationTransactions = function (accountID) {
                 var res = $.ajax(Transaction.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/Transaction/GetTransactionDetails?regionID=' + regionID + ''
+                    url: '/api/Transaction/GetRealizationTransactions?accountID=' + accountID + ''
                 }));
                 return res;
             };
             Transaction.ajaxSettings = new Scaffold.AjaxSettings();
             return Transaction;
-        })();
+        })(BaseTransaction);
         Models.Transaction = Transaction;
 
-        var TransactionFile = (function () {
+        var FrozenTransaction = (function (_super) {
+            __extends(FrozenTransaction, _super);
+            function FrozenTransaction(data) {
+                _super.call(this, data);
+            }
+            FrozenTransaction.ajaxSettings = new Scaffold.AjaxSettings();
+            return FrozenTransaction;
+        })(BaseTransaction);
+        Models.FrozenTransaction = FrozenTransaction;
+
+        var TransactionFile = (function (_super) {
+            __extends(TransactionFile, _super);
             function TransactionFile(data) {
+                _super.call(this, data);
                 this.ID = data ? data.ID : null;
                 this.FileName = data ? data.FileName : null;
                 this.IsActivated = data ? data.IsActivated : null;
@@ -593,74 +741,109 @@ var App;
                 this.DesaCount = data ? data.DesaCount : null;
                 this.TotalAmount = data ? data.TotalAmount : null;
             }
-            /* App.Controllers.TransactionFileController */
-            TransactionFile.GetAll = function (query) {
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
+            TransactionFile.ajaxSettings = new Scaffold.AjaxSettings();
+            return TransactionFile;
+        })(BaseEntity);
+        Models.TransactionFile = TransactionFile;
+
+        var TransferRecapitulation = (function (_super) {
+            __extends(TransferRecapitulation, _super);
+            function TransferRecapitulation(data) {
+                _super.call(this, data);
+            }
+            /* App.Controllers.TransferRecapitulationController */
+            TransferRecapitulation.GetAll = function (query) {
+                var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/TransactionFile/GetAll',
+                    url: '/api/TransferRecapitulation/GetAll',
                     data: query
                 })).then(function (models) {
                     return models.map(function (model) {
-                        return new TransactionFile(model);
+                        return new TransferRecapitulation(model);
                     });
                 });
                 return res;
             };
 
-            TransactionFile.Get = function (id) {
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
+            TransferRecapitulation.Get = function (id) {
+                var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/TransactionFile/Get/' + id
+                    url: '/api/TransferRecapitulation/Get/' + id
                 })).then(function (model) {
-                    return new TransactionFile(model);
+                    return new TransferRecapitulation(model);
                 });
                 return res;
             };
 
-            TransactionFile.Count = function (query) {
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
+            TransferRecapitulation.Count = function (query) {
+                var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/TransactionFile/GetCount',
+                    url: '/api/TransferRecapitulation/GetCount',
                     data: query
                 }));
                 return res;
             };
+            TransferRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return TransferRecapitulation;
+        })(BaseTransferRecapitulation);
+        Models.TransferRecapitulation = TransferRecapitulation;
 
-            TransactionFile.prototype.Save = function () {
-                var _this = this;
-                var isNew = this.ID == null;
-                var model = this;
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
-                    type: isNew ? 'POST' : 'PUT',
-                    url: '/api/TransactionFile/' + (isNew ? 'Post' : 'Put'),
-                    data: JSON.stringify(this)
-                })).then(function (id) {
-                    if (isNew) {
-                        _this.ID = id;
-                    }
+        var FrozenTransferRecapitulation = (function (_super) {
+            __extends(FrozenTransferRecapitulation, _super);
+            function FrozenTransferRecapitulation(data) {
+                _super.call(this, data);
+            }
+            /* App.Controllers.FrozenTransferRecapitulationController */
+            FrozenTransferRecapitulation.GetAll = function (query) {
+                var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/FrozenTransferRecapitulation/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new FrozenTransferRecapitulation(model);
+                    });
                 });
                 return res;
             };
 
-            TransactionFile.prototype.Delete = function () {
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
-                    type: 'DELETE',
-                    url: '/api/TransactionFile/Delete/' + this.ID
-                }));
+            FrozenTransferRecapitulation.Get = function (id) {
+                var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/FrozenTransferRecapitulation/Get/' + id
+                })).then(function (model) {
+                    return new FrozenTransferRecapitulation(model);
+                });
                 return res;
             };
 
-            TransactionFile.Delete = function (id) {
-                var res = $.ajax(TransactionFile.ajaxSettings.build({
+            FrozenTransferRecapitulation.Count = function (query) {
+                var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
                     type: 'GET',
-                    url: '/api/TransactionFile/Delete/' + id
+                    url: '/api/FrozenTransferRecapitulation/GetCount',
+                    data: query
                 }));
                 return res;
             };
-            TransactionFile.ajaxSettings = new Scaffold.AjaxSettings();
-            return TransactionFile;
-        })();
-        Models.TransactionFile = TransactionFile;
+            FrozenTransferRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
+            return FrozenTransferRecapitulation;
+        })(BaseTransferRecapitulation);
+        Models.FrozenTransferRecapitulation = FrozenTransferRecapitulation;
+
+        var UserScope = (function (_super) {
+            __extends(UserScope, _super);
+            function UserScope(data) {
+                _super.call(this, data);
+                this.ID = data ? data.ID : null;
+                this.fkUserID = data ? data.fkUserID : null;
+                this.User = data ? data.User : null;
+                this.fkRegionID = data ? data.fkRegionID : null;
+                this.Region = data ? data.Region : null;
+            }
+            UserScope.ajaxSettings = new Scaffold.AjaxSettings();
+            return UserScope;
+        })(BaseEntity);
+        Models.UserScope = UserScope;
     })(App.Models || (App.Models = {}));
     var Models = App.Models;
 })(App || (App = {}));

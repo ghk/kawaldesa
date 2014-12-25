@@ -25,19 +25,6 @@ namespace App.Migrations
 
         protected override void Seed(App.Models.DB context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             var UserManager = new UserManager<User>(new UserStore<User>(context));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
@@ -77,6 +64,15 @@ namespace App.Migrations
             if (viewerresult.Succeeded)
             {
                 var result2 = UserManager.AddToRole(volunteer.Id, Role.VOLUNTEER);
+            }
+
+            if(context.APBNs.Count() == 0)
+            {
+                context.APBNs.Add(new APBN
+                {
+                    DanaPerDesa = 812404036,
+                    Year = 2015
+                });
             }
 
             base.Seed(context);

@@ -134,9 +134,9 @@ var KawalDesa;
                     "SortOrder": "ASC",
                     "ParentID": parentID
                 };
-                var type = Models.Recapitulation;
+                var type = Models.FrozenTransferRecapitulation;
                 if (window.CurrentUserRoles) {
-                    type = Models.LiveRecapitulation;
+                    type = Models.TransferRecapitulation;
                 }
                 type.GetAll(query).done(function (recapitulations) {
                     scope.$apply(function () {
@@ -153,7 +153,7 @@ var KawalDesa;
             RecapitulationCtrl.prototype.loadTransactions = function (entityID) {
                 var ctrl = this;
                 if (this.expandedStates[entityID]) {
-                    Models.Transaction.GetTransactionDetails(entityID).done(function (details) {
+                    Models.Transaction.GetTransferTransactions(entityID).done(function (details) {
                         ctrl.$scope.$apply(function () {
                             ctrl.transactions[entityID] = details;
                         });

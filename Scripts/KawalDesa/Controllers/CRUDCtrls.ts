@@ -141,9 +141,9 @@ module KawalDesa.Controllers {
                 "SortOrder": "ASC",
                 "ParentID": parentID
             }
-            var type = Models.Recapitulation;
+            var type = Models.FrozenTransferRecapitulation;
             if (window.CurrentUserRoles) {
-                type = Models.LiveRecapitulation;
+                type = Models.TransferRecapitulation;
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
@@ -156,7 +156,7 @@ module KawalDesa.Controllers {
         loadTransactions(entityID) {
             var ctrl = this;
             if (this.expandedStates[entityID]) {
-                Models.Transaction.GetTransactionDetails(entityID).done(details => {
+                Models.Transaction.GetTransferTransactions(entityID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.transactions[entityID] = details;
                     });
