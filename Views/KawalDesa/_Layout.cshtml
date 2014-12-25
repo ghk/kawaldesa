@@ -20,7 +20,7 @@
     @Scripts.Render("~/js/base")
 
 </head>
-<body ng-controller="RecapitulationCtrl as recapitulationCtrl">
+<body ng-controller="IndexCtrl as indexCtrl">
     <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -30,24 +30,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav nav-menu">
                     <li>
-                        <a href="#" ng-click="recapitulationCtrl.activate(0, 0, $event)" style=" padding-left 20px;">Kawal Desa</a>
+                        <a href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
                     </li>
                     <li class="active">
-                        <a href="#" ng-click="recapitulationCtrl.activate(0, 0, $event)">Penyaluran</a>
+                        <a href="#" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
                     </li>
                     <li>
-                        <a href="#" ng-click="recapitulationCtrl.activate(0, 0, $event)">Realisasi</a>
+                        <a href="#" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav nav-region">
 
-                    <li ng-repeat-start="region in regionTree">
+                    <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
                         <div class="gt">→</div>
                     </li>
-                    <li ng-repeat-end>
-                        <a href="#" ng-click="recapitulationCtrl.activate(region.Type - 1, region.ID, $event)">
+                    <li ng-repeat-end ng-class="{'active':$last}">
+                        <a href="#" ng-click="indexCtrl.changeRegion(region.ID, $event)">
                             {{region.Name}}
                         </a>
                     </li>

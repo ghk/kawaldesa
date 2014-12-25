@@ -18,10 +18,11 @@ body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .
 }
 
 header {
-    box-shadow: -2px 0px 3px 0px rgba(0,0,0,0.5)
+    box-shadow: -2px 0px 3px 0px rgba(0,0,0,0.5);
+    border-bottom: 1px solid #337ab7;
 }
 
-header .nav.navbar-nav > li:first-child > a{
+header .nav.nav-menu {
     margin-left: -15px;
 }
 
@@ -43,11 +44,11 @@ header .nav.navbar-nav > li > a:hover {
 header .nav.navbar-nav > li > div.gt{
     color: #337ab7;
     font-size: 20px;
-    padding:13px 15px;
+    padding:13px 0px;
 }
 
-header.navbar {
-    border-bottom: 1px solid #337ab7;
+header.navbar .nav-region {
+    margin-left: 30px;
 }
 
 

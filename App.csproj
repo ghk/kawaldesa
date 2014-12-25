@@ -1387,7 +1387,8 @@
     <TypeScriptCompile Include="Scripts\Dashboard\Models\Upload.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Models\User.ts" />
     <TypeScriptCompile Include="Scripts\Dashboard\Services\Principal.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\CRUDCtrls.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\Models.ts">
       <AutoGen>True</AutoGen>
