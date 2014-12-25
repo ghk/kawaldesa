@@ -28,7 +28,7 @@ namespace App.Controllers
         public ActionResult Index()
         {
             var user = GetCurrentUserFromSession();
-            if(user != null)
+            if (user != null)
             {
                 ViewData["User.Name"] = user.Name;
                 ViewData["User.FacebookID"] = user.FacebookID;
@@ -41,7 +41,7 @@ namespace App.Controllers
         public ActionResult Dashboard()
         {
             var user = GetCurrentUserFromSession();
-            if(user == null)
+            if (user == null)
             {
                 return new RedirectResult("/login");
             }
@@ -71,7 +71,7 @@ namespace App.Controllers
             if (referrer != null)
                 Session["LoginRedirect"] = referrer;
 
-            if(GetCurrentUserFromSession() != null)
+            if (GetCurrentUserFromSession() != null)
             {
                 if (referrer != null)
                     return new RedirectResult(referrer);
@@ -84,6 +84,9 @@ namespace App.Controllers
         }
         public ActionResult FacebookRedirect(String code)
         {
+            if (String.IsNullOrEmpty(code))
+                return new RedirectResult("/");
+            
             var redirectHost = GetRedirectHost();
             var redirectUrl = redirectHost + "/FacebookRedirect";
 
@@ -91,9 +94,9 @@ namespace App.Controllers
             WebRequest request = WebRequest.Create(string.Format(url, FacebookClientID, redirectUrl, FacebookClientSecret, code));
             string accessToken = null;
 
-            using(WebResponse response = request.GetResponse())
+            using (WebResponse response = request.GetResponse())
             using (Stream stream = response.GetResponseStream())
-            { 
+            {
                 Encoding encode = Encoding.GetEncoding("utf-8");
                 using (StreamReader streamReader = new StreamReader(stream, encode))
                 {
@@ -121,24 +124,24 @@ namespace App.Controllers
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                logger.Error("facebook graph error, token:"+accessToken, e);
+                logger.Error("facebook graph error, token:" + accessToken, e);
             }
 
-            if(facebookID != null)
+            if (facebookID != null)
             {
-                using(DB db = new DB())
+                using (DB db = new DB())
                 {
                     var user = db.Users.FirstOrDefault(u => u.FacebookID == facebookID);
-                    if(user == null)
+                    if (user == null)
                     {
                         var userManager = new UserManager<User>(new UserStore<User>(db));
                         user = new User
                         {
                             FacebookID = facebookID,
                             Name = name,
-                            UserName = "fb"+facebookID,
+                            UserName = "fb" + facebookID,
                         };
                         var newUser = userManager.Create(user);
                         userManager.AddToRole(user.Id, Role.VOLUNTEER);
@@ -149,7 +152,7 @@ namespace App.Controllers
             }
 
             String loginRedirect = Session["LoginRedirect"] as string;
-            if(loginRedirect == null)
+            if (loginRedirect == null)
                 loginRedirect = "/";
             Session["LoginRedirect"] = null;
 
@@ -161,7 +164,7 @@ namespace App.Controllers
             string userId = Session[USERID_KEY] as string;
             if (userId == null)
                 return null;
-            using(var db = new DB())
+            using (var db = new DB())
             {
                 return db.Users.FirstOrDefault(u => u.Id == userId);
             }
@@ -171,7 +174,7 @@ namespace App.Controllers
             string userId = Session[USERID_KEY] as string;
             if (userId == null)
                 return null;
-            using(var db = new DB())
+            using (var db = new DB())
             {
                 var userManager = new UserManager<User>(new UserStore<User>(db));
                 return userManager.GetRoles(userId);
