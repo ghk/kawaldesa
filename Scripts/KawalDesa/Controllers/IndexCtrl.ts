@@ -3,7 +3,7 @@
 /// <reference path="../KawalDesa.ts"/>
 
 
-module KawalDesa.Controllers {
+module App.Controllers {
 
     interface MyWindow extends Window {
         CurrentUserRoles: string[];
@@ -28,6 +28,7 @@ module KawalDesa.Controllers {
         childName: string;
         type = "transfer";
         currentRoles: String[];
+        regionID: number;
 
         static $inject = ["$scope", "$location"];
 
@@ -54,17 +55,26 @@ module KawalDesa.Controllers {
                 regionID = parseInt(this.$location.path().replace("/r/", ""));
                 this.type = "realization";
             }
+            else if (path.indexOf("/dashboard") != -1) {
+                this.type = "dashboard";
+            }
             if(regionID != -1)
                 this.loadRegion(regionID);
+
+            if (regionID == -1)
+                regionID = 0;
+            this.regionID = regionID;
         }
 
         changeType(type, $event) {
-            $event.preventDefault();
-            var t = "p"
-            if (type == "realization")
-                t = "r";
-            var path = "/" + t + "/" + this.region.ID;
-            this.$location.path(path);
+            if (this.type != 'dashboard') {
+                $event.preventDefault();
+                var t = "p"
+                if (type == "realization")
+                    t = "r";
+                var path = "/" + t + "/" + this.region.ID;
+                this.$location.path(path);
+            }
         }
 
         changeRegion(regionID, $event) {

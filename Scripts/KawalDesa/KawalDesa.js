@@ -1,19 +1,19 @@
 ﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../Models.ts"/>
-var KawalDesa;
-(function (KawalDesa) {
-    KawalDesa.kawaldesa = angular.module('kawaldesa', [
+var App;
+(function (App) {
+    App.kawaldesa = angular.module('kawaldesa', [
         'angularFileUpload'
     ]);
 
-    KawalDesa.kawaldesa.run([
+    App.kawaldesa.run([
         '$location', '$rootElement', function ($location, $rootElement) {
             $rootElement.off('click');
         }]);
 
-    KawalDesa.kawaldesa.config([
+    App.kawaldesa.config([
         '$locationProvider', function ($locationProvider) {
             $locationProvider.html5Mode(true);
         }]);
-})(KawalDesa || (KawalDesa = {}));
+})(App || (App = {}));
 //# sourceMappingURL=KawalDesa.js.map

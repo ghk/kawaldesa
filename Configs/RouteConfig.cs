@@ -11,7 +11,7 @@ namespace App.Configs
 
             routes.MapRoute(
                 name: "Default r",
-                url: "r/{id}",
+                url: "p/{id}",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
             routes.MapRoute(

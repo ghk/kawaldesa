@@ -2,7 +2,7 @@
     Layout = "_Layout.cshtml";
 }
 
-<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl">
+<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'transfer'">
     <div class="content-header">
         Penyaluran Dana Desa Dari Pusat & Kabupaten/Kota
     </div>
@@ -214,7 +214,4 @@
 
         </table>
     </div>
-
 </div>
-
-@Scripts.Render("~/js/index")

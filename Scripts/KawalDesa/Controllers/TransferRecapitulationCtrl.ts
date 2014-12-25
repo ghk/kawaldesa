@@ -4,7 +4,7 @@
 /// <reference path="../KawalDesa.ts"/>
 
 
-module KawalDesa.Controllers {
+module App.Controllers {
 
     import Models = App.Models;
 

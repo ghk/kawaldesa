@@ -47,6 +47,7 @@ namespace App.Controllers
             }
             ViewData["User.Name"] = user.Name;
             ViewData["User.FacebookID"] = user.FacebookID;
+            ViewData["User.Roles"] = new JavaScriptSerializer().Serialize(GetCurrentRolesFromSession());
             return View();
         }
 

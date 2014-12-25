@@ -1360,7 +1360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\KawalDesa\Services\" />
     <Folder Include="SQLs\" />
   </ItemGroup>
   <ItemGroup>
@@ -1381,15 +1380,11 @@
     <TypeScriptCompile Include="Scaffold\Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\flot\jquery.flot.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Controllers\CRUDCtrls.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Controllers\IndexCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Dashboard.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Models\Upload.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Models\User.ts" />
-    <TypeScriptCompile Include="Scripts\Dashboard\Services\Principal.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
     <TypeScriptCompile Include="Scripts\Models.ts">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

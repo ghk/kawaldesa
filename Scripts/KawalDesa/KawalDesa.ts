@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../Models.ts"/>
 
-module KawalDesa {
+module App {
 
     export var kawaldesa = angular.module('kawaldesa', [
         'angularFileUpload'

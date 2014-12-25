@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../Models.ts"/>
 /// <reference path="../KawalDesa.ts"/>
-var KawalDesa;
-(function (KawalDesa) {
+var App;
+(function (App) {
     (function (Controllers) {
         var Models = App.Models;
 
@@ -38,18 +38,26 @@ var KawalDesa;
                 } else if (path.indexOf("/r/") != -1) {
                     regionID = parseInt(this.$location.path().replace("/r/", ""));
                     this.type = "realization";
+                } else if (path.indexOf("/dashboard") != -1) {
+                    this.type = "dashboard";
                 }
                 if (regionID != -1)
                     this.loadRegion(regionID);
+
+                if (regionID == -1)
+                    regionID = 0;
+                this.regionID = regionID;
             };
 
             IndexCtrl.prototype.changeType = function (type, $event) {
-                $event.preventDefault();
-                var t = "p";
-                if (type == "realization")
-                    t = "r";
-                var path = "/" + t + "/" + this.region.ID;
-                this.$location.path(path);
+                if (this.type != 'dashboard') {
+                    $event.preventDefault();
+                    var t = "p";
+                    if (type == "realization")
+                        t = "r";
+                    var path = "/" + t + "/" + this.region.ID;
+                    this.$location.path(path);
+                }
             };
 
             IndexCtrl.prototype.changeRegion = function (regionID, $event) {
@@ -101,8 +109,8 @@ var KawalDesa;
         })();
         Controllers.IndexCtrl = IndexCtrl;
 
-        KawalDesa.kawaldesa.controller("IndexCtrl", IndexCtrl);
-    })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
-    var Controllers = KawalDesa.Controllers;
-})(KawalDesa || (KawalDesa = {}));
+        App.kawaldesa.controller("IndexCtrl", IndexCtrl);
+    })(App.Controllers || (App.Controllers = {}));
+    var Controllers = App.Controllers;
+})(App || (App = {}));
 //# sourceMappingURL=IndexCtrl.js.map

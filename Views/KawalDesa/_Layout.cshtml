@@ -10,14 +10,15 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    @Styles.Render("~/css/libs/bootstrap")
+    @Styles.Render("~/css/libs/bootstrap-theme")
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' />
-    @Styles.Render("~/css/index")
+    @Styles.Render("~/css/kawaldesa")
 
 
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    @Scripts.Render("~/js/base")
+    @Scripts.Render("~/js/libs/jquery")
+    @Scripts.Render("~/js/libs/bootstrap")
+    @Scripts.Render("~/js/kawaldesa")
 
 </head>
 <body ng-controller="IndexCtrl as indexCtrl">
@@ -34,11 +35,11 @@
                     <li>
                         <a href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
                     </li>
-                    <li class="active">
-                        <a href="#" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
+                    <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
+                        <a href="/p/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
                     </li>
-                    <li>
-                        <a href="#" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
+                    <li ng-class="{'active' : indexCtrl.type == 'realization'}">
+                        <a href="/r/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav nav-region">
@@ -56,7 +57,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @{ if (ViewData["User.Name"] != null)
                  {
-                    <li>
+                    <li ng-class="{'active' : indexCtrl.type == 'dashboard'}">
                         <a style="padding-right: 20px;" href="/dashboard">
                             <img src='http://graph.facebook.com/v2.2/@ViewData["User.FacebookID"]/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
                             @ViewData["User.Name"]

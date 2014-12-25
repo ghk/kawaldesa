@@ -2,8 +2,8 @@
 /// <reference path="../../Models.ts"/>
 /// <reference path="IndexCtrl.ts"/>
 /// <reference path="../KawalDesa.ts"/>
-var KawalDesa;
-(function (KawalDesa) {
+var App;
+(function (App) {
     (function (Controllers) {
         var Models = App.Models;
 
@@ -107,8 +107,8 @@ var KawalDesa;
             return TransferRecapitulationCtrl;
         })();
 
-        KawalDesa.kawaldesa.controller("TransferRecapitulationCtrl", TransferRecapitulationCtrl);
-    })(KawalDesa.Controllers || (KawalDesa.Controllers = {}));
-    var Controllers = KawalDesa.Controllers;
-})(KawalDesa || (KawalDesa = {}));
+        App.kawaldesa.controller("TransferRecapitulationCtrl", TransferRecapitulationCtrl);
+    })(App.Controllers || (App.Controllers = {}));
+    var Controllers = App.Controllers;
+})(App || (App = {}));
 //# sourceMappingURL=TransferRecapitulationCtrl.js.map

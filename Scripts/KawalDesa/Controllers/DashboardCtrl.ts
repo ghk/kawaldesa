@@ -1,43 +1,35 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../Models.ts"/>
-/// <reference path="../Services/Principal.ts"/>
-/// <reference path="../Dashboard.ts"/>
 
-module KawalDesa.Controllers {
+module App.Controllers {
     import Models = App.Models;
-    import APBNFileUpload = App.Models.APBNFileUpload;
 
     function safeApply(scope, fn) {
         (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
     }
 
-    class IndexCtrl {
+    class DashboardCtrl {
 
         state: string
 
-        static $inject = ["$scope", "$upload", "principal"];
+        indexCtrl: IndexCtrl;
+
+        static $inject = ["$scope", "$upload"];
 
         roles = {};
 
-        constructor(public $scope, public $upload, public principal: IPrincipal) {
-            var ctrl = this;
-            $scope.principal = principal;
+        constructor(public $scope, public $upload) {
             $scope.model = {};
-            principal.identity().then(function (identity) {
-                ctrl.loadThings();
-                ctrl.loadRoles();
-            });
+            this.indexCtrl = $scope.indexCtrl;
+            this.loadThings();
+            this.loadRoles();
         }
 
         loadThings() {
             var $scope = this.$scope;
-            var principal = this.principal;
+            var indexCtrl = this.indexCtrl;
 
-            principal.identity().then(function (identity) {
-                $scope.user = new Models.User(identity.user);
-            });
-
-            if (principal.isInRole("admin")) {
+            if (indexCtrl.isInRole("admin")) {
                 Models.APBN.GetAll().done(apbns => {
                     safeApply($scope, () => {
                         $scope.apbns = apbns;
@@ -87,7 +79,6 @@ module KawalDesa.Controllers {
             var res = ctrl.$upload.upload({
                 type: 'POST',
                 url: '/api/APBDFile/PostFile',
-                data: { "anu": "lalala", "lalala": 11, "caca": true },
                 file: file
             }).success(() => {
                 var modal: any = $("#apbnFileModal");
@@ -96,5 +87,5 @@ module KawalDesa.Controllers {
         }
 
     }
-    dashboard.controller("IndexCtrl",  IndexCtrl);
+    kawaldesa.controller("DashboardCtrl",  DashboardCtrl);
 }
