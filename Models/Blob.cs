@@ -28,7 +28,7 @@ namespace App.Models
         {
             get
             {
-                var root = HttpContext.Current.Server.MapPath("~/App_Data/files");
+                var root = HttpContext.Current.Server.MapPath("~/Content/files");
                 Directory.CreateDirectory(root);
                 return Path.Combine(root, ID.ToString());
             }

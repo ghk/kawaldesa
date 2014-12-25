@@ -1,6 +1,7 @@
 # user defined ignore
 connectionStrings.config
 /Content/uploads/
+/Content/files/
 /App_Data/
 
 # Created by http://www.gitignore.io
