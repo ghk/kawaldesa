@@ -20,12 +20,12 @@ namespace App.Models
         public decimal RealizedIncome { get; set; }
         public decimal BudgettedExpense { get; set; }
         public decimal RealizedExpense { get; set; }
-        public decimal PegawaiExpense { get; set; }
-        public decimal BarangDanJasaExpense { get; set; }
-        public decimal ModalExpense { get; set; }
+        public decimal EmployeeExpense { get; set; }
+        public decimal GoodsAndServiceExpense { get; set; }
+        public decimal CapitalExpense { get; set; }
         public decimal OtherExpense { get; set; }
         public decimal TotalVillage { get; set; }
-        public decimal EntriedVillage { get; set; }
+        public decimal AccountCompletedVillage { get; set; }
 
     }
     public class AccountRecapitulation : BaseAccountRecapitulation

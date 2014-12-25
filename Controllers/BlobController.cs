@@ -16,7 +16,7 @@ namespace App.Controllers
 {
     public class BlobController: ReadOnlyController<Blob, long>
     {
-        private Uploader uploader = new Uploader("APBDFile");
+        private Uploader uploader = new Uploader();
 
         public BlobController(DB dbContext)
             : base(dbContext)
@@ -32,7 +32,7 @@ namespace App.Controllers
                     return new HttpResponseMessage(HttpStatusCode.NotModified);
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            FileInfo file = Uploader.ToAbsoluteFile(blob);
+            FileInfo file = new FileInfo(blob.FilePath);
             var stream = File.OpenRead(file.FullName);
             result.Content = new StreamContent(stream);
             result.Content.Headers.ContentType = new MediaTypeHeaderValue(blob.Type);

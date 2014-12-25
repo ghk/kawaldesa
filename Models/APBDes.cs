@@ -10,6 +10,8 @@ namespace App.Models
     {
         public override long ID { get; set; }
         public bool IsActivated { get; set; }
+        public bool IsCompleted { get; set; }
+
         public string SourceURL { get; set; }
 
         [ForeignKey("SourceFile")]
@@ -23,6 +25,8 @@ namespace App.Models
         [ForeignKey("Region")]
         public long fkRegionID { get; set; }
         public virtual Region Region { get; set; }
+
+        public virtual List<Account> Accounts { get; set; }
         
     }
 }

@@ -12,56 +12,61 @@ namespace App.Controllers
 {
     public class APBDFileController: BaseController<APBDFile, long>
     {
-        private Uploader uploader = new Uploader("APBDFile");
+        private Uploader uploader = new Uploader();
 
         public APBDFileController(DB dbContext)
             : base(dbContext)
         {
         }
 
-        public async Task<UploadResult<Blob>> PostFile()
+        public async Task PostFile()
         {
             var res = await uploader.PostFile<Blob>(Request);
-            
-            Blob blob = res.Files.ToList()[0];
-            dbContext.Set<Blob>().Add(blob);
 
-            foreach(var existingAPBDFile in dbContext.Set<APBDFile>().Where(a => a.IsActivated))
+            try
             {
-                existingAPBDFile.IsActivated = false;
-                dbContext.Entry(existingAPBDFile).State = System.Data.Entity.EntityState.Modified;
+                var fileResult = res.Files[0];
+                var blob = new Blob(fileResult);
+                dbContext.Set<Blob>().Add(blob);
+
+                foreach(var existingAPBDFile in dbContext.Set<APBDFile>().Where(a => a.IsActivated))
+                {
+                    existingAPBDFile.IsActivated = false;
+                    dbContext.Entry(existingAPBDFile).State = System.Data.Entity.EntityState.Modified;
+                }
+
+                
+                foreach(var existingAPBD in dbContext.Set<APBD>().Where(a => a.IsActivated))
+                {
+                    existingAPBD.IsActivated = false;
+                    dbContext.Entry(existingAPBD).State = System.Data.Entity.EntityState.Modified;
+                }
+
+
+                APBDFile apbdFile = new APBDFile()
+                {
+                    FileName = blob.Name,
+                    fkFileID = blob.ID,
+                    IsActivated = true,
+                };
+                dbContext.Set<APBDFile>().Add(apbdFile);
+
+                var provinces = dbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
+                var kabupatens = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
+                var apbds = ParseAPBDExcel(new FileInfo(fileResult.FilePath), apbdFile, provinces, kabupatens);
+
+                foreach(var apbd in apbds)
+                {
+                    dbContext.Set<APBD>().Add(apbd);
+                }
+
+                fileResult.Move(blob.FilePath);
+                dbContext.SaveChanges();
             }
-
-            
-            foreach(var existingAPBD in dbContext.Set<APBD>().Where(a => a.IsActivated))
+            finally
             {
-                existingAPBD.IsActivated = false;
-                dbContext.Entry(existingAPBD).State = System.Data.Entity.EntityState.Modified;
+                res.DeleteUnmoved();
             }
-
-
-            APBDFile apbdFile = new APBDFile()
-            {
-                FileName = blob.Name,
-                fkFileID = blob.ID,
-                IsActivated = true,
-            };
-            dbContext.Set<APBDFile>().Add(apbdFile);
-
-            FileInfo file = Uploader.ToAbsoluteFile(blob);
-
-            var provinces = dbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
-            var kabupatens = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
-            var apbds = ParseAPBDExcel(file, apbdFile, provinces, kabupatens);
-
-            foreach(var apbd in apbds)
-            {
-                dbContext.Set<APBD>().Add(apbd);
-            }
-
-            dbContext.SaveChanges();
-
-            return res;
         }
 
         private List<APBD> ParseAPBDExcel(FileInfo file, APBDFile apbdFile, List<Region> provinces, List<Region> kabupatens)

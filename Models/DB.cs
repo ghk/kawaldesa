@@ -13,6 +13,7 @@ namespace App.Models
         public DB(): base("DefaultConnection") { }
         public virtual IDbSet<Blob> Blobs { get; set; }
         public virtual IDbSet<User> Users { get; set; }
+        public virtual IDbSet<UserScope> UserScopes { get; set; }
         public virtual IDbSet<APBN> APBNs { get; set; }
         public virtual IDbSet<APBD> APBDs { get; set; }
         public virtual IDbSet<APBDFile> APBDFiles { get; set; }

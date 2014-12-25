@@ -2,10 +2,11 @@
 using log4net;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
@@ -186,6 +187,34 @@ namespace App.Controllers
 
             return identity.User;
         }
+        public static void CheckRegionAllowed(DbContext db, long regionID)
+        {
+            var principal = System.Web.HttpContext.Current.User;
+            String userID = principal.Identity.GetUserId();
+            if (userID == null)
+                throw new ApplicationException("region is not allowed for thee");
+
+            var region = db.Set<Region>()
+                .Include(r => r.Parent)
+                .Include(r => r.Parent.Parent)
+                .Include(r => r.Parent.Parent.Parent)
+                .Include(r => r.Parent.Parent.Parent.Parent)
+                .First(r => r.ID == regionID);
+
+            var regionIDs = new List<long>();
+            var current = region;
+            while(current != null)
+            {
+                regionIDs.Add(current.ID);
+                current = current.Parent;
+            }
+
+            var allowed = db.Set<UserScope>().Include(s => s.Region)
+                .Any(s => s.fkUserID == userID && regionIDs.Contains(s.fkRegionID));
+            if (!allowed)
+                throw new ApplicationException("region is not allowed for thee");
+        }
+
         public static bool IsInRole(String roleName)
         {
             var principal = System.Web.HttpContext.Current.User;

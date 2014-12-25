@@ -6,7 +6,7 @@ using System.Web;
 namespace App.Models
 {
     public enum AccountType {
-        INCOME = 0,
+        INCOME = 1,
         EXPENSE,
     }
 }

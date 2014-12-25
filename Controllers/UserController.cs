@@ -2,6 +2,7 @@
 using App.Models;
 using App.Security;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Net;
@@ -208,6 +209,46 @@ namespace App.Controllers
             var view = AutoMapper.Mapper.Map<User, UserViewModel>(identity.User);
             view.Roles = UserManager.GetRoles(identity.User.Id).ToList();
             return view;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public List<Region> GetScopes()
+        {
+            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
+            return dbContext.Set<UserScope>()
+                .Include(r => r.Region)
+                .Include(r => r.Region.Parent)
+                .Include(r => r.Region.Parent.Parent)
+                .Include(r => r.Region.Parent.Parent.Parent)
+                .Include(r => r.Region.Parent.Parent.Parent)
+                .Where(s => s.fkUserID == identity.User.Id)
+                .Select(r => r.Region)
+                .ToList();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public void SetScopes(List<Region> regions)
+        {
+            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
+            var currentScopes = dbContext.Set<UserScope>()
+                .Where(s => s.fkUserID == identity.User.Id)
+                .ToList();
+            foreach(var scope in currentScopes)
+            {
+                dbContext.Entry(scope).State = EntityState.Deleted;
+            }
+            foreach(var region in regions)
+            {
+                var scope = new UserScope
+                {
+                    fkUserID = identity.User.Id,
+                    fkRegionID = region.ID
+                };
+                dbContext.Set<UserScope>().Add(scope);
+            }
+            dbContext.SaveChanges();
         }
 
         [HttpGet]

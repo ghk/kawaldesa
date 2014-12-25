@@ -25,5 +25,15 @@ namespace App.Models
         public long fkAPBDesID { get; set; }
         public virtual APBDes APBDes { get; set; }
 
+
+        public String ParentCode
+        {
+            get
+            {
+                if (!Code.Contains('.'))
+                    return null;
+                return Code.Substring(0, Code.LastIndexOf('.'));
+            }
+        }
     }
 }

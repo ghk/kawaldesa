@@ -30,13 +30,13 @@ namespace App.Models
         public long? fkDestinationID { get; set; }
         public virtual Region Destination { get; set; }
         
-        [ForeignKey("Actor")]
-        public long? fkActorID { get; set; }
-        public virtual Region Actor { get; set; }
-
         [ForeignKey("Account")]
         public long? fkAccountID { get; set; }
         public virtual Account Account { get; set; }
+
+        [ForeignKey("Actor")]
+        public long fkActorID { get; set; }
+        public virtual Region Actor { get; set; }
 
         [ForeignKey("CreatedBy")]
         public string fkCreatedByID { get; set; }
