@@ -8,7 +8,6 @@ namespace App.Models
 {
     public class APBDes : BaseEntity
     {
-        public override long ID { get; set; }
         public bool IsActivated { get; set; }
         public bool IsCompleted { get; set; }
 
@@ -18,10 +17,14 @@ namespace App.Models
         public long? fkSourceFileID { get; set; }
         public virtual Blob SourceFile { get; set; }
         
+        [Index("IX_fkAPBNID_fkRegionID", 1, IsUnique=true)]
+        [Index]
         [ForeignKey("APBN")]
         public long fkAPBNID { get; set; }
         public virtual APBN APBN { get; set; }
 
+        [Index("IX_fkAPBNID_fkRegionID", 2, IsUnique=true)]
+        [Index]
         [ForeignKey("Region")]
         public long fkRegionID { get; set; }
         public virtual Region Region { get; set; }

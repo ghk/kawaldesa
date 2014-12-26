@@ -8,8 +8,6 @@ namespace App.Models
 {
     public class UserScope : BaseEntity
     {
-        public override long ID { get; set; }
-
         [ForeignKey("User")]
         public string fkUserID { get; set; }
         public virtual User User { get; set; }

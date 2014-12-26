@@ -19,7 +19,6 @@ namespace App.Models
             Name = fResult.Name;
         }
 
-        public override long ID { get; set; }
         public string Name { get; set;}
         public string Type { get; set; }
         public long Size { get; set; }

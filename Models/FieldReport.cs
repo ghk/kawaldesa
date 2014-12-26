@@ -8,7 +8,6 @@ namespace App.Models
 {
     public class FieldReport : BaseEntity
     {
-        public override long ID { get; set; }
         public String Notes { get; set; }
         public DateTime Date { get; set; }
         public bool IsActivated { get; set; }

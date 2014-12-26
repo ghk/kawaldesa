@@ -8,7 +8,6 @@ namespace App.Models
 {
     public class Realization : BaseEntity
     {
-        public override long ID { get; set; }
         public String Description { get; set; }
         public String Vendor { get; set; }
         public Sector? Sector { get; set; }

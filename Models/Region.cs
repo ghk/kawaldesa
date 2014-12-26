@@ -15,6 +15,7 @@ namespace App.Models
         public string Name { get; set; }
         public RegionType Type { get; set; }
         public bool IsKelurahan { get; set; }
+        public string Website { get; set; }
 
         [Index(IsUnique=true)]
         public String UrlKey { get; set; }

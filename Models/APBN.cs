@@ -8,8 +8,9 @@ namespace App.Models
 {
     public class APBN : BaseEntity
     {
-        public override long ID { get; set; }
         public decimal DanaPerDesa { get; set; }
+
+        [Index("IX_Year", IsUnique=true)]
         public int Year { get; set; }
 
     }

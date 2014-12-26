@@ -8,7 +8,6 @@ namespace App.Models
 {
     public class BaseTransaction : BaseEntity
     {
-        public override long ID { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public bool IsActivated { get; set; }

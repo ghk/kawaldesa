@@ -8,11 +8,9 @@ namespace App.Models
 {
     public class TransactionFile : BaseEntity
     {
-        public override long ID { get; set; }
         public String FileName { get; set; }
         public bool IsActivated { get; set; }
         public virtual List<Transaction> Transactions { get; set; }
-        public override DateTime DateCreated { get; set; }
         
         [ForeignKey("File")]
         public long fkFileID { get; set; } 
