@@ -38,6 +38,6 @@ Installation:
 
 ## Current Contributors
 
-Gozali Kumara (ghk@microvac.co.id)
-Vidyapati (vidyapati@microvac.co.id)
-Muhammad Reza (m.reza@microvac.co.id)
+- Gozali Kumara (ghk@microvac.co.id)
+- Vidyapati (vidyapati@microvac.co.id)
+- Muhammad Reza (m.reza@microvac.co.id)
