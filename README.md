@@ -16,24 +16,23 @@ Currently build with C# WebAPI, Typescript and angularjs:
 - `Scripts/KawalDesa`: Here lies the angular code
 - `SQLs`: SQL Views and Seeds
 
-## Installation
 
-Requirements:
+## Requirements:
 
 - Visual Studio 2013 (Download the community edition, it's free for this kind of project)
 - PostgreSQL > 9.3 (Requires materialized views)
 - WebEssentials for Visual Studio (not mandatory, but it leads to nicer typescript development)
 - Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold
 
-Installation:
+## Installation:
 
-- symlink asp-scaffold's Scaffold folder to Scaffold directory right under this root directory (for excample in windows `mklink /j Scaffold ..\asp-scaffold\Scaffold`)
-- Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it
-- Copy appSettings.config.example to appSettings.config
-- Open the project in VS, build it so it will download the nuget dependencies
-- Open nuget package manager, run `update-database`
-- You can run it now, but to load the region load the SQLs\Seeds\combined.sql, e.g. `psql -U postgres kawaldesa < SQLs\Seeds\combined.sql`
-- Run App projects! You can login with username: 'admin' or 'volunteer' and password: '123456'
+1. Create a symlink from asp-scaffold's Scaffold folder to Scaffold directory; right under this root directory (for example in windows `mklink /j Scaffold ..\asp-scaffold\Scaffold`)
+2. Create a new postgresql database, copy the connectionStrings.config.example to connectionStrings.config, change the database settings on it.
+3. Copy appSettings.config.example to appSettings.config.
+4. Open the project in Visual Studio; Build and let it download the nuget dependencies.
+5. Open nuget package manager, run `update-database`
+6. You can run it now; but to have all regions, you need to load SQLs\Seeds\combined.sql, e.g. `psql -U postgres kawaldesa < SQLs\Seeds\combined.sql`
+7. Run App projects! You can login with username: 'admin' or 'volunteer' and password: '123456'
 
 ## Current Contributors
 

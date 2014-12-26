@@ -64,7 +64,7 @@ namespace App.Controllers
                 if(useInDebugStr != null)
                 {
                     bool useInDebug;
-                    if (bool.TryParse(useInDebugStr, out useInDebug) && useInDebug)
+                    if (bool.TryParse(useInDebugStr, out useInDebug) && !useInDebug)
                         return View();
                 }
             }

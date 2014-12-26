@@ -19,9 +19,7 @@
 <li><code>SQLs</code>: SQL Views and Seeds</li>
 </ul>
 
-<h2>Installation</h2>
-
-<p>Requirements:</p>
+<h2>Requirements:</h2>
 
 <ul>
 <li>Visual Studio 2013 (Download the community edition, it's free for this kind of project)</li>
@@ -30,17 +28,17 @@
 <li>Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold</li>
 </ul>
 
-<p>Installation:</p>
+<h2>Installation:</h2>
 
-<ul>
-<li>symlink asp-scaffold's Scaffold folder to Scaffold directory right under this root directory (for excample in windows <code>mklink /j Scaffold ..\asp-scaffold\Scaffold</code>)</li>
-<li>Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it</li>
-<li>Copy appSettings.config.example to appSettings.config</li>
-<li>Open the project in VS, build it so it will download the nuget dependencies</li>
+<ol>
+<li>Create a symlink from asp-scaffold's Scaffold folder to Scaffold directory; right under this root directory (for example in windows <code>mklink /j Scaffold ..\asp-scaffold\Scaffold</code>)</li>
+<li>Create a new postgresql database, copy the connectionStrings.config.example to connectionStrings.config, change the database settings on it.</li>
+<li>Copy appSettings.config.example to appSettings.config.</li>
+<li>Open the project in Visual Studio; Build and let it download the nuget dependencies.</li>
 <li>Open nuget package manager, run <code>update-database</code></li>
-<li>You can run it now, but to load the region load the SQLs\Seeds\combined.sql, e.g. <code>psql -U postgres kawaldesa &lt; SQLs\Seeds\combined.sql</code></li>
+<li>You can run it now; but to have all regions, you need to load SQLs\Seeds\combined.sql, e.g. <code>psql -U postgres kawaldesa &lt; SQLs\Seeds\combined.sql</code></li>
 <li>Run App projects! You can login with username: 'admin' or 'volunteer' and password: '123456'</li>
-</ul>
+</ol>
 
 <h2>Current Contributors</h2>
 
