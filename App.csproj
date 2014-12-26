@@ -205,12 +205,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configs\AutoMapperConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="Configs\BundleConfig.cs" />
-    <Compile Include="Configs\FilterConfig.cs" />
-    <Compile Include="Configs\RouteConfig.cs" />
-    <Compile Include="Configs\WebApiConfig.cs" />
+    <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\APBDesController.cs" />
     <Compile Include="Controllers\BlobController.cs" />
     <Compile Include="Controllers\APBDFileController.cs" />

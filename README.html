@@ -1,7 +1,9 @@
 <h1>Kawal Desa</h1>
 
 <p>Source code untuk kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
-Semua kontribusi sangatlah dibutuhkan. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues </p>
+Kontribusi diterima dengan terbuka. </p>
+
+<p>Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues </p>
 
 <p>Hak Cipta Kontributor &amp; Relawan kawaldesa.org, source code berlisensi AGPL</p>
 
@@ -24,20 +26,12 @@ Semua kontribusi sangatlah dibutuhkan. Saran/bug/diskusi bisa di https://github.
 
 <ul>
 <li>symlink asp-scaffold's Scaffold folder to Scaffold directory right under this root directory (for excample in windows <code>mklink /j Scaffold ..\asp-scaffold\Scaffold</code>)</li>
-<li>Open the project in VS, build so it download the nuget dependencies</li>
 <li>Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it</li>
+<li>Copy appSettings.config.example to appSettings.config</li>
+<li>Open the project in VS, build it so it will download the nuget dependencies</li>
 <li>Open nuget package manager, run <code>update-database</code></li>
-<li>Delete Recapitulations table on the database, load the regions.sql, then all the materialized views on it</li>
+<li>You can run it now, but to load the region load the SQLs\Seeds\combined.sql, e.g. <code>psql -U postgres kawaldesa &lt; SQLs\Seeds\combined.sql</code></li>
 <li>Run App projects!</li>
-</ul>
-
-<h2>Roles</h2>
-
-<ul>
-<li><strong>admin</strong>: Set APBN (APBN), Upload APBD (Unggah DAU &amp; DBH Daerah), User Management (Daftar Pengguna)</li>
-<li><strong>pusat</strong>: Upload APBN Transactions (Unggah Penyaluran Dana Desa Dari APBN)</li>
-<li><strong>daerah</strong>: Upload ADD Transactions (Unggah Penyaluran Dana Desa Dari ADD)</li>
-<li><strong>desa</strong>: Input Transaction (Input Penyaluran Dana Desa)</li>
 </ul>
 
 <h2>Current Contributors</h2>

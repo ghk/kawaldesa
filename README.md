@@ -1,6 +1,8 @@
 # Kawal Desa
 Source code untuk kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
-Semua kontribusi sangatlah dibutuhkan. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
+Kontribusi diterima dengan terbuka. 
+
+Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
 
 Hak Cipta Kontributor & Relawan kawaldesa.org, source code berlisensi AGPL
 
@@ -20,18 +22,12 @@ Requirements:
 Installation:
 
 - symlink asp-scaffold's Scaffold folder to Scaffold directory right under this root directory (for excample in windows `mklink /j Scaffold ..\asp-scaffold\Scaffold`)
-- Open the project in VS, build so it download the nuget dependencies
 - Create a new postgres database, copy the connectionStrings.config.example to connectionStrings.config, change the database connections config on it
+- Copy appSettings.config.example to appSettings.config
+- Open the project in VS, build it so it will download the nuget dependencies
 - Open nuget package manager, run `update-database`
-- Delete Recapitulations table on the database, load the regions.sql, then all the materialized views on it
+- You can run it now, but to load the region load the SQLs\Seeds\combined.sql, e.g. `psql -U postgres kawaldesa < SQLs\Seeds\combined.sql`
 - Run App projects!
-
-## Roles
-
-- **admin**: Set APBN (APBN), Upload APBD (Unggah DAU & DBH Daerah), User Management (Daftar Pengguna)
-- **pusat**: Upload APBN Transactions (Unggah Penyaluran Dana Desa Dari APBN)
-- **daerah**: Upload ADD Transactions (Unggah Penyaluran Dana Desa Dari ADD)
-- **desa**: Input Transaction (Input Penyaluran Dana Desa)
 
 ## Current Contributors
 Gozali Kumara (ghk@microvac.co.id)

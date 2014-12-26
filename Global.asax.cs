@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using App.Configs;
 using FluentValidation.WebApi;
 using App.App_Start;
 using System.Web;
@@ -28,11 +27,7 @@ namespace App
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);            
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutoMapperConfig.RegisterMappings();            
+            Configurator.Configure();
 
             FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
