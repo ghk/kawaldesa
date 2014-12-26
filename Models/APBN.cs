@@ -10,7 +10,7 @@ namespace App.Models
     {
         public decimal DanaPerDesa { get; set; }
 
-        [Index("IX_Year", IsUnique=true)]
+        [Index(IsUnique=true)]
         public int Year { get; set; }
 
     }
