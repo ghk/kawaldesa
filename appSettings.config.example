@@ -9,9 +9,7 @@
   <add key="log4net.Config" value="log4net.config" />
   <add key="log4net.Config.Watch" value="True" />
 
-  <add key="Facebook.UseInDevelopment" value="True" />
-  <add key="Facebook.ClientID" value="True" />
-  <add key="Facebook.SecretKey" value="True" />
+  <add key="Facebook.ClientID" value="" />
+  <add key="Facebook.SecretKey" value="" />
 
-  <add key="Static.UseCDN" value="True" />
 </appSettings>

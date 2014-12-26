@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using App.Security;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace App.Controllers
 {
@@ -21,8 +22,9 @@ namespace App.Controllers
     {
         private static ILog logger = LogManager.GetLogger(typeof(KawalDesaController));
         public static string USERID_KEY = "userid";
-        private readonly string FacebookClientID = "1512932775635958";
-        private readonly string FacebookClientSecret = "d8fd9e1d1f785a04975af1555ba5417c";
+
+        private readonly string FacebookClientIDConfig = "Facebook.ClientID";
+        private readonly string FacebookClientSecretConfig = "Facebook.SecretKey";
 
         [AllowAnonymous]
         public ActionResult Index()
@@ -74,7 +76,8 @@ namespace App.Controllers
                 return new RedirectResult("/");
             }
 
-            String facebookRedirect = String.Format("https://graph.facebook.com/oauth/authorize? type=web_server&client_id={0}&redirect_uri={1}", FacebookClientID, redirectUrl);
+            String clientID = ConfigurationManager.AppSettings[FacebookClientIDConfig];
+            String facebookRedirect = String.Format("https://graph.facebook.com/oauth/authorize? type=web_server&client_id={0}&redirect_uri={1}", clientID, redirectUrl);
             return new RedirectResult(facebookRedirect);
         }
         public ActionResult FacebookRedirect(String code)
@@ -95,11 +98,13 @@ namespace App.Controllers
 
             try
             {
+                String clientID = ConfigurationManager.AppSettings[FacebookClientIDConfig];
+                String secretKey = ConfigurationManager.AppSettings[FacebookClientSecretConfig];
                 var redirectHost = GetRedirectHost();
                 var redirectUrl = redirectHost + "/FacebookRedirect";
 
                 string url = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}";
-                WebRequest request = WebRequest.Create(string.Format(url, FacebookClientID, redirectUrl, FacebookClientSecret, code));
+                WebRequest request = WebRequest.Create(string.Format(url, clientID, redirectUrl, secretKey, code));
 
                 using (WebResponse response = request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
