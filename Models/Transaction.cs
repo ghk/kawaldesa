@@ -10,7 +10,10 @@ namespace App.Models
     {
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
+
+        [Index]
         public bool IsActivated { get; set; }
+
         public string SourceURL { get; set; }
 
         [ForeignKey("SourceFile")]

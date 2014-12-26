@@ -8,8 +8,12 @@ namespace App.Models
 {
     public class APBDes : BaseEntity
     {
+        [Index]
         public bool IsActivated { get; set; }
+
+        [Index]
         public bool IsCompleted { get; set; }
+        public DateTime? DateCompleted { get; set; }
 
         public string SourceURL { get; set; }
 
@@ -30,6 +34,14 @@ namespace App.Models
         public virtual Region Region { get; set; }
 
         public virtual List<Account> Accounts { get; set; }
+
+        [ForeignKey("CompletedBy")]
+        public string fkCompletedByID { get; set; }
+        public virtual User CompletedBy { get; set; }
+
+        [ForeignKey("ModifiedBy")]
+        public string fkModifiedByID { get; set; }
+        public virtual User ModifiedBy { get; set; }
         
     }
 }

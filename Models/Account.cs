@@ -14,11 +14,16 @@ namespace App.Models
         public String Name { get; set; }
 
         [Index("IX_Code_Type_fkAPBDesID", 2, IsUnique=true)]
+        [Index]
         public AccountType Type { get; set; }
         public ExpenseType? ExpenseType { get; set; }
+        [Index]
         public ExpenseGroup? ExpenseGroup { get; set; }
         public decimal? Target { get; set; }
+
+        [Index]
         public bool IsActivated { get; set; }
+        public DateTime? DateDeactivated { get; set; }
 
         [Index("IX_TargetSource_fkAPBDesID", 1, IsUnique=true)]
         public String TargetSource { get; set; }
@@ -34,6 +39,17 @@ namespace App.Models
         public long fkAPBDesID { get; set; }
         public virtual APBDes APBDes { get; set; }
 
+        [ForeignKey("CreatedBy")]
+        public string fkCreatedByID { get; set; }
+        public virtual User CreatedBy { get; set; }
+
+        [ForeignKey("ModifiedBy")]
+        public string fkModifiedByID { get; set; }
+        public virtual User ModifiedBy { get; set; }
+
+        [ForeignKey("DeactivatedBy")]
+        public string fkDeactivatedByID { get; set; }
+        public virtual User DeactivatedBy { get; set; }
 
         public String ParentCode
         {

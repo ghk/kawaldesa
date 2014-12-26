@@ -16,9 +16,9 @@ namespace App.Models
         public int APBNYear { get; set; }
         public long? ParentRegionID { get; set; }
         public string RegionName { get; set; }
-        public decimal BudgettedIncome { get; set; }
+        public decimal BudgetedIncome { get; set; }
         public decimal RealizedIncome { get; set; }
-        public decimal BudgettedExpense { get; set; }
+        public decimal BudgetedExpense { get; set; }
         public decimal RealizedExpense { get; set; }
         public decimal EmployeeExpense { get; set; }
         public decimal GoodsAndServiceExpense { get; set; }

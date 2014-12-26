@@ -24,7 +24,7 @@ namespace App.Models
         public decimal AcknowledgedADD { get; set; }
 
         [NotMapped]
-        public decimal BudgettedTotal
+        public decimal BudgetedTotal
         {
             get
             {

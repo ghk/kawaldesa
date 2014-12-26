@@ -41,9 +41,9 @@ module App.Models {
         APBNYear: number;
         ParentRegionID: number;
         RegionName: string;
-        BudgettedIncome: number;
+        BudgetedIncome: number;
         RealizedIncome: number;
-        BudgettedExpense: number;
+        BudgetedExpense: number;
         RealizedExpense: number;
         EmployeeExpense: number;
         GoodsAndServiceExpense: number;
@@ -61,9 +61,9 @@ module App.Models {
         APBNYear: number;
         ParentRegionID: number;
         RegionName: string;
-        BudgettedIncome: number;
+        BudgetedIncome: number;
         RealizedIncome: number;
-        BudgettedExpense: number;
+        BudgetedExpense: number;
         RealizedExpense: number;
         EmployeeExpense: number;
         GoodsAndServiceExpense: number;
@@ -78,9 +78,9 @@ module App.Models {
             this.APBNYear = data ? data.APBNYear : null;
             this.ParentRegionID = data ? data.ParentRegionID : null;
             this.RegionName = data ? data.RegionName : null;
-            this.BudgettedIncome = data ? data.BudgettedIncome : null;
+            this.BudgetedIncome = data ? data.BudgetedIncome : null;
             this.RealizedIncome = data ? data.RealizedIncome : null;
-            this.BudgettedExpense = data ? data.BudgettedExpense : null;
+            this.BudgetedExpense = data ? data.BudgetedExpense : null;
             this.RealizedExpense = data ? data.RealizedExpense : null;
             this.EmployeeExpense = data ? data.EmployeeExpense : null;
             this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
@@ -124,7 +124,7 @@ module App.Models {
         BudgetedADD: number;
         TransferredADD: number;
         AcknowledgedADD: number;
-        BudgettedTotal: number;
+        BudgetedTotal: number;
         TransferredTotal: number;
         AcknowledgedTotal: number;
     }
@@ -143,7 +143,7 @@ module App.Models {
         BudgetedADD: number;
         TransferredADD: number;
         AcknowledgedADD: number;
-        BudgettedTotal: number;
+        BudgetedTotal: number;
         TransferredTotal: number;
         AcknowledgedTotal: number;
         constructor(data?: IBaseTransferRecapitulation) {
@@ -159,7 +159,7 @@ module App.Models {
             this.BudgetedADD = data ? data.BudgetedADD : null;
             this.TransferredADD = data ? data.TransferredADD : null;
             this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-            this.BudgettedTotal = data ? data.BudgettedTotal : null;
+            this.BudgetedTotal = data ? data.BudgetedTotal : null;
             this.TransferredTotal = data ? data.TransferredTotal : null;
             this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
         }
@@ -167,7 +167,6 @@ module App.Models {
     }
 
     export interface IAccount extends IBaseEntity {
-        ID: number;
         Code: string;
         Name: string;
         Type: /** App.Models.AccountType **/ any;
@@ -175,6 +174,7 @@ module App.Models {
         ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
         Target: number;
         IsActivated: boolean;
+        TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
         fkAPBDesID: number;
@@ -184,7 +184,6 @@ module App.Models {
 
     export class Account extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         Code: string;
         Name: string;
         Type: /** App.Models.AccountType **/ any;
@@ -192,6 +191,7 @@ module App.Models {
         ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
         Target: number;
         IsActivated: boolean;
+        TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
         fkAPBDesID: number;
@@ -199,7 +199,6 @@ module App.Models {
         ParentCode: string;
         constructor(data?: IAccount) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.Code = data ? data.Code : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
@@ -207,6 +206,7 @@ module App.Models {
             this.ExpenseGroup = data ? data.ExpenseGroup : null;
             this.Target = data ? data.Target : null;
             this.IsActivated = data ? data.IsActivated : null;
+            this.TargetSource = data ? data.TargetSource : null;
             this.fkParentAccountID = data ? data.fkParentAccountID : null;
             this.ParentAccount = data ? data.ParentAccount : null;
             this.fkAPBDesID = data ? data.fkAPBDesID : null;
@@ -239,7 +239,6 @@ module App.Models {
     }
 
     export interface IAPBD extends IBaseEntity {
-        ID: number;
         DAU: number;
         DBH: number;
         IsActivated: boolean;
@@ -253,7 +252,6 @@ module App.Models {
 
     export class APBD extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         DAU: number;
         DBH: number;
         IsActivated: boolean;
@@ -265,7 +263,6 @@ module App.Models {
         APBDFile: App.Models.IAPBDFile;
         constructor(data?: IAPBD) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.DAU = data ? data.DAU : null;
             this.DBH = data ? data.DBH : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -280,7 +277,6 @@ module App.Models {
     }
 
     export interface IAPBDes extends IBaseEntity {
-        ID: number;
         IsActivated: boolean;
         IsCompleted: boolean;
         SourceURL: string;
@@ -295,7 +291,6 @@ module App.Models {
 
     export class APBDes extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         IsActivated: boolean;
         IsCompleted: boolean;
         SourceURL: string;
@@ -308,7 +303,6 @@ module App.Models {
         Accounts: Array<App.Models.IAccount>;
         constructor(data?: IAPBDes) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.IsCompleted = data ? data.IsCompleted : null;
             this.SourceURL = data ? data.SourceURL : null;
@@ -379,11 +373,9 @@ module App.Models {
     }
 
     export interface IAPBDFile extends IBaseEntity {
-        ID: number;
         FileName: string;
         IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
-        DateCreated: /** System.DateTime **/ any;
         fkFileID: number;
         File: App.Models.IBlob;
         APBDCount: number;
@@ -393,11 +385,9 @@ module App.Models {
 
     export class APBDFile extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         FileName: string;
         IsActivated: boolean;
         APBDs: Array<App.Models.IAPBD>;
-        DateCreated: /** System.DateTime **/ any;
         fkFileID: number;
         File: App.Models.IBlob;
         APBDCount: number;
@@ -405,11 +395,9 @@ module App.Models {
         TotalDBH: number;
         constructor(data?: IAPBDFile) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.APBDs = data ? data.APBDs : null;
-            this.DateCreated = data ? data.DateCreated : null;
             this.fkFileID = data ? data.fkFileID : null;
             this.File = data ? data.File : null;
             this.APBDCount = data ? data.APBDCount : null;
@@ -490,19 +478,16 @@ module App.Models {
     }
 
     export interface IAPBN extends IBaseEntity {
-        ID: number;
         DanaPerDesa: number;
         Year: number;
     }
 
     export class APBN extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         DanaPerDesa: number;
         Year: number;
         constructor(data?: IAPBN) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.DanaPerDesa = data ? data.DanaPerDesa : null;
             this.Year = data ? data.Year : null;
         }
@@ -572,7 +557,6 @@ module App.Models {
     }
 
     export interface IBlob extends IBaseEntity {
-        ID: number;
         Name: string;
         Type: string;
         Size: number;
@@ -581,14 +565,12 @@ module App.Models {
 
     export class Blob extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         Name: string;
         Type: string;
         Size: number;
         FilePath: string;
         constructor(data?: IBlob) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.Size = data ? data.Size : null;
@@ -637,7 +619,6 @@ module App.Models {
     }
 
     export interface IFieldReport extends IBaseEntity {
-        ID: number;
         Notes: string;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
@@ -648,7 +629,6 @@ module App.Models {
 
     export class FieldReport extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         Notes: string;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
@@ -657,7 +637,6 @@ module App.Models {
         Pictures: Array<App.Models.IBlob>;
         constructor(data?: IFieldReport) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.Notes = data ? data.Notes : null;
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -708,7 +687,6 @@ module App.Models {
     }
 
     export interface IRealization extends IBaseEntity {
-        ID: number;
         Description: string;
         Vendor: string;
         Sector: /** App.Models.Sector **/ any;
@@ -718,7 +696,6 @@ module App.Models {
 
     export class Realization extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         Description: string;
         Vendor: string;
         Sector: /** App.Models.Sector **/ any;
@@ -726,7 +703,6 @@ module App.Models {
         Transaction: App.Models.ITransaction;
         constructor(data?: IRealization) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.Description = data ? data.Description : null;
             this.Vendor = data ? data.Vendor : null;
             this.Sector = data ? data.Sector : null;
@@ -772,6 +748,7 @@ module App.Models {
         Name: string;
         Type: /** App.Models.RegionType **/ any;
         IsKelurahan: boolean;
+        Website: string;
         UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
@@ -783,6 +760,7 @@ module App.Models {
         Name: string;
         Type: /** App.Models.RegionType **/ any;
         IsKelurahan: boolean;
+        Website: string;
         UrlKey: string;
         fkParentID: number;
         Parent: App.Models.IRegion;
@@ -792,6 +770,7 @@ module App.Models {
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.IsKelurahan = data ? data.IsKelurahan : null;
+            this.Website = data ? data.Website : null;
             this.UrlKey = data ? data.UrlKey : null;
             this.fkParentID = data ? data.fkParentID : null;
             this.Parent = data ? data.Parent : null;
@@ -831,7 +810,6 @@ module App.Models {
     }
 
     export interface IBaseTransaction extends IBaseEntity {
-        ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
@@ -856,7 +834,6 @@ module App.Models {
 
     export class BaseTransaction extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
@@ -879,7 +856,6 @@ module App.Models {
         TransactionFile: App.Models.ITransactionFile;
         constructor(data?: IBaseTransaction) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.Amount = data ? data.Amount : null;
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -990,11 +966,9 @@ module App.Models {
     }
 
     export interface ITransactionFile extends IBaseEntity {
-        ID: number;
         FileName: string;
         IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
-        DateCreated: /** System.DateTime **/ any;
         fkFileID: number;
         File: App.Models.IBlob;
         TransactionCount: number;
@@ -1004,11 +978,9 @@ module App.Models {
 
     export class TransactionFile extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         FileName: string;
         IsActivated: boolean;
         Transactions: Array<App.Models.ITransaction>;
-        DateCreated: /** System.DateTime **/ any;
         fkFileID: number;
         File: App.Models.IBlob;
         TransactionCount: number;
@@ -1016,11 +988,9 @@ module App.Models {
         TotalAmount: number;
         constructor(data?: ITransactionFile) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.Transactions = data ? data.Transactions : null;
-            this.DateCreated = data ? data.DateCreated : null;
             this.fkFileID = data ? data.fkFileID : null;
             this.File = data ? data.File : null;
             this.TransactionCount = data ? data.TransactionCount : null;
@@ -1115,7 +1085,6 @@ module App.Models {
     }
 
     export interface IUserScope extends IBaseEntity {
-        ID: number;
         fkUserID: string;
         User: /** App.Models.User **/ any;
         fkRegionID: number;
@@ -1124,14 +1093,12 @@ module App.Models {
 
     export class UserScope extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        ID: number;
         fkUserID: string;
         User: /** App.Models.User **/ any;
         fkRegionID: number;
         Region: App.Models.IRegion;
         constructor(data?: IUserScope) {
             super(data);
-            this.ID = data ? data.ID : null;
             this.fkUserID = data ? data.fkUserID : null;
             this.User = data ? data.User : null;
             this.fkRegionID = data ? data.fkRegionID : null;

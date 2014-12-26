@@ -227,9 +227,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412251251475_Views.cs" />
-    <Compile Include="Migrations\201412251251475_Views.Designer.cs">
-      <DependentUpon>201412251251475_Views.cs</DependentUpon>
+    <Compile Include="Migrations\201412260626255_Views.cs" />
+    <Compile Include="Migrations\201412260626255_Views.Designer.cs">
+      <DependentUpon>201412260626255_Views.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APBDes.cs" />
@@ -1398,8 +1398,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412251251475_Views.resx">
-      <DependentUpon>201412251251475_Views.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412260626255_Views.resx">
+      <DependentUpon>201412260626255_Views.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

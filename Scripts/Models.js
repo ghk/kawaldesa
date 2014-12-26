@@ -43,9 +43,9 @@ var App;
                 this.APBNYear = data ? data.APBNYear : null;
                 this.ParentRegionID = data ? data.ParentRegionID : null;
                 this.RegionName = data ? data.RegionName : null;
-                this.BudgettedIncome = data ? data.BudgettedIncome : null;
+                this.BudgetedIncome = data ? data.BudgetedIncome : null;
                 this.RealizedIncome = data ? data.RealizedIncome : null;
-                this.BudgettedExpense = data ? data.BudgettedExpense : null;
+                this.BudgetedExpense = data ? data.BudgetedExpense : null;
                 this.RealizedExpense = data ? data.RealizedExpense : null;
                 this.EmployeeExpense = data ? data.EmployeeExpense : null;
                 this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
@@ -84,7 +84,7 @@ var App;
                 this.BudgetedADD = data ? data.BudgetedADD : null;
                 this.TransferredADD = data ? data.TransferredADD : null;
                 this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
-                this.BudgettedTotal = data ? data.BudgettedTotal : null;
+                this.BudgetedTotal = data ? data.BudgetedTotal : null;
                 this.TransferredTotal = data ? data.TransferredTotal : null;
                 this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
             }
@@ -97,7 +97,6 @@ var App;
             __extends(Account, _super);
             function Account(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.Code = data ? data.Code : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
@@ -105,6 +104,7 @@ var App;
                 this.ExpenseGroup = data ? data.ExpenseGroup : null;
                 this.Target = data ? data.Target : null;
                 this.IsActivated = data ? data.IsActivated : null;
+                this.TargetSource = data ? data.TargetSource : null;
                 this.fkParentAccountID = data ? data.fkParentAccountID : null;
                 this.ParentAccount = data ? data.ParentAccount : null;
                 this.fkAPBDesID = data ? data.fkAPBDesID : null;
@@ -140,7 +140,6 @@ var App;
             __extends(APBD, _super);
             function APBD(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.DAU = data ? data.DAU : null;
                 this.DBH = data ? data.DBH : null;
                 this.IsActivated = data ? data.IsActivated : null;
@@ -160,7 +159,6 @@ var App;
             __extends(APBDes, _super);
             function APBDes(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.IsActivated = data ? data.IsActivated : null;
                 this.IsCompleted = data ? data.IsCompleted : null;
                 this.SourceURL = data ? data.SourceURL : null;
@@ -237,11 +235,9 @@ var App;
             __extends(APBDFile, _super);
             function APBDFile(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.FileName = data ? data.FileName : null;
                 this.IsActivated = data ? data.IsActivated : null;
                 this.APBDs = data ? data.APBDs : null;
-                this.DateCreated = data ? data.DateCreated : null;
                 this.fkFileID = data ? data.fkFileID : null;
                 this.File = data ? data.File : null;
                 this.APBDCount = data ? data.APBDCount : null;
@@ -329,7 +325,6 @@ var App;
             __extends(APBN, _super);
             function APBN(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.DanaPerDesa = data ? data.DanaPerDesa : null;
                 this.Year = data ? data.Year : null;
             }
@@ -406,7 +401,6 @@ var App;
             __extends(Blob, _super);
             function Blob(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
                 this.Size = data ? data.Size : null;
@@ -461,7 +455,6 @@ var App;
             __extends(FieldReport, _super);
             function FieldReport(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.Notes = data ? data.Notes : null;
                 this.Date = data ? data.Date : null;
                 this.IsActivated = data ? data.IsActivated : null;
@@ -518,7 +511,6 @@ var App;
             __extends(Realization, _super);
             function Realization(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.Description = data ? data.Description : null;
                 this.Vendor = data ? data.Vendor : null;
                 this.Sector = data ? data.Sector : null;
@@ -570,6 +562,7 @@ var App;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
                 this.IsKelurahan = data ? data.IsKelurahan : null;
+                this.Website = data ? data.Website : null;
                 this.UrlKey = data ? data.UrlKey : null;
                 this.fkParentID = data ? data.fkParentID : null;
                 this.Parent = data ? data.Parent : null;
@@ -615,7 +608,6 @@ var App;
             __extends(BaseTransaction, _super);
             function BaseTransaction(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.Amount = data ? data.Amount : null;
                 this.Date = data ? data.Date : null;
                 this.IsActivated = data ? data.IsActivated : null;
@@ -730,11 +722,9 @@ var App;
             __extends(TransactionFile, _super);
             function TransactionFile(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.FileName = data ? data.FileName : null;
                 this.IsActivated = data ? data.IsActivated : null;
                 this.Transactions = data ? data.Transactions : null;
-                this.DateCreated = data ? data.DateCreated : null;
                 this.fkFileID = data ? data.fkFileID : null;
                 this.File = data ? data.File : null;
                 this.TransactionCount = data ? data.TransactionCount : null;
@@ -834,7 +824,6 @@ var App;
             __extends(UserScope, _super);
             function UserScope(data) {
                 _super.call(this, data);
-                this.ID = data ? data.ID : null;
                 this.fkUserID = data ? data.fkUserID : null;
                 this.User = data ? data.User : null;
                 this.fkRegionID = data ? data.fkRegionID : null;

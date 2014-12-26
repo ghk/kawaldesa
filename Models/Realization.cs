@@ -15,5 +15,9 @@ namespace App.Models
         [ForeignKey("Transaction")]
         public long fkTransactionID { get; set; }
         public virtual Transaction Transaction { get; set; }
+
+        [ForeignKey("CreatedBy")]
+        public string fkCreatedByID { get; set; }
+        public virtual User CreatedBy { get; set; }
     }
 }

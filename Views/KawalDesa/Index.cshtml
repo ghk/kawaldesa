@@ -175,7 +175,7 @@
                             {{entity.RegionName}}
                         </a>
                     </td>
-                    <td class="money"> {{entity.BudgettedTotal | number:0}}</td>
+                    <td class="money"> {{entity.BudgetedTotal | number:0}}</td>
                     <td class="money"> {{entity.TransferredTotal | number:0}} </td>
                     <td class="money"> {{entity.AcknowledgedTotal | number:0}} </td>
 
@@ -192,7 +192,7 @@
             <tfoot ng-show="entities.length > 0">
                 <tr class="success">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgettedTotal | number:0}} </td>
+                    <td class="money"> {{total.BudgetedTotal | number:0}} </td>
                     <td class="money"> {{total.TransferredTotal | number:0}} </td>
                     <td class="money"> {{total.AcknowledgedTotal | number:0}} </td>
 

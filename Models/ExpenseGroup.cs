@@ -7,8 +7,8 @@ namespace App.Models
 {
     public enum ExpenseGroup {
         Employee = 0,
-        GoodsAndJasa,
-        BELANJA_MODAL,
+        GoodsAndServices,
+        Capital,
         Others = 99
     }
 }
