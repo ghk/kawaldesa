@@ -31,6 +31,7 @@ namespace App.Models
         [ForeignKey("ParentAccount")]
         public long? fkParentAccountID { get; set; }
         public virtual Account ParentAccount { get; set; }
+        public virtual List<Account> ChildAccounts { get; set; }
         
         [Index("IX_TargetSource_fkAPBDesID", 2, IsUnique=true)]
         [Index("IX_Code_Type_fkAPBDesID", 3, IsUnique=true)]

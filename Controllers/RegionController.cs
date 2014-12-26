@@ -2,6 +2,7 @@
 using Scaffold;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -17,6 +18,16 @@ namespace App.Controllers
         {
             var parentID = GetQueryString<long>("ParentID");
             return query.Where(r => r.fkParentID == parentID);
+        }
+
+        public Region GetByURLKey(String urlKey)
+        {
+            IQueryable<Region> exp = dbSet;
+            foreach (var include in SingleIncludes)
+            {
+                exp = exp.Include(include);
+            }
+            return exp.FirstOrDefault(r => r.UrlKey == urlKey);
         }
     }
 }

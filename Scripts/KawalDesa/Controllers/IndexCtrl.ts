@@ -37,6 +37,7 @@ module App.Controllers {
         type = "transfer";
         currentUser: ICurrentUser;
         regionID: number;
+        isPathReplacing = false;
 
         static $inject = ["$scope", "$location"];
 
@@ -45,14 +46,17 @@ module App.Controllers {
             this.currentUser = window.CurrentUser;
 
             $scope.$on('$locationChangeSuccess', function () {
-                ctrl.onLocationChange();
+                if(!ctrl.isPathReplacing)
+                    ctrl.onLocationChange();
+                ctrl.isPathReplacing = false;
             });
         }
 
         onLocationChange() {
             var path = this.$location.path();
             var regionID = -1;
-            if (path == "/") {
+            var regionKey = null;
+            if (path == "/" || path == "") {
                 regionID = 0;
                 this.type = "transfer";
             } else if (path.indexOf("/p/") != -1) {
@@ -65,11 +69,15 @@ module App.Controllers {
             }
             else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
+            } else {
+                this.type = "realization";
+                regionKey = path.substring(1);
             }
-            if(regionID != -1)
-                this.loadRegion(regionID);
 
-            if (regionID == -1)
+            if(regionID != -1 || regionKey)
+                this.loadRegion(regionID, regionKey);
+
+            if (regionID == -1 && !regionKey)
                 regionID = 0;
             this.regionID = regionID;
         }
@@ -116,15 +124,22 @@ module App.Controllers {
             return this.isInRole(roleName) && this.isInScope(entityID);
         }
 
-        loadRegion(parentID: number) {
+        loadRegion(parentID?: number, parentKey?: string) {
             var ctrl = this;
 
             this.regionTree = [];
             this.childName = CHILD_NAMES[0];
-            
-            Models.Region.Get(parentID).done(region => {
+
+            var promise = null;
+            if (parentID != -1)
+                promise = Models.Region.Get(parentID);
+            else if (parentKey)
+                promise = Models.Region.GetByURLKey(parentKey);
+
+            promise.done((region: Models.Region) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.region = region;
+                    ctrl.regionID = region.ID;
                     var regionTree = [];
                     var cur : Models.IRegion = region;
                     while (cur) {
@@ -134,7 +149,17 @@ module App.Controllers {
                     ctrl.regionTree = regionTree.reverse();
                     if (regionTree.length < CHILD_NAMES.length)
                         ctrl.childName = CHILD_NAMES[regionTree.length];
-                    ctrl.$scope.$broadcast("regionChangeSuccess");
+
+                    setTimeout(() => {
+                        ctrl.$scope.$apply(() => {
+                            ctrl.$scope.$broadcast("regionChangeSuccess");
+                        });
+                    }, 0);
+                    if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
+                        ctrl.isPathReplacing = true;
+                        ctrl.$location.path("/" + region.UrlKey);
+                        ctrl.$location.replace();
+                    }
                 });
             });
         }

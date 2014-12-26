@@ -178,6 +178,7 @@ module App.Models {
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
+        ChildAccounts: Array<App.Models.IAccount>;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
         fkCreatedByID: string;
@@ -202,6 +203,7 @@ module App.Models {
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
+        ChildAccounts: Array<App.Models.IAccount>;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
         fkCreatedByID: string;
@@ -224,6 +226,7 @@ module App.Models {
             this.TargetSource = data ? data.TargetSource : null;
             this.fkParentAccountID = data ? data.fkParentAccountID : null;
             this.ParentAccount = data ? data.ParentAccount : null;
+            this.ChildAccounts = data ? data.ChildAccounts : null;
             this.fkAPBDesID = data ? data.fkAPBDesID : null;
             this.APBDes = data ? data.APBDes : null;
             this.fkCreatedByID = data ? data.fkCreatedByID : null;
@@ -464,6 +467,14 @@ module App.Models {
             var res = $.ajax(APBDes.ajaxSettings.build({
                 type: 'POST',
                 url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&type='+type+'&accounts='+accounts+'',
+            }));
+            return res;
+        }
+
+        static GetByRegionID(regionID: number): JQueryPromise<App.Models.IAPBDes> {
+            var res = $.ajax(APBDes.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/APBDes/GetByRegionID?regionID='+regionID+'',
             }));
             return res;
         }
@@ -917,6 +928,14 @@ module App.Models {
         }
 
                 
+        static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IRegion> {
+            var res = $.ajax(Region.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Region/GetByURLKey?urlKey='+encodeURI(urlKey)+'',
+            }));
+            return res;
+        }
+
     }
 
     export interface IBaseTransaction extends IBaseEntity {

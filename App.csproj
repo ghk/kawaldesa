@@ -1349,6 +1349,7 @@
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
+    <Content Include="Views\KawalDesa\APBDes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -1385,6 +1386,7 @@
     <TypeScriptCompile Include="Scaffold\Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\flot\jquery.flot.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBDesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />

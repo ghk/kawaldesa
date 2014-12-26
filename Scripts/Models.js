@@ -108,6 +108,7 @@ var App;
                 this.TargetSource = data ? data.TargetSource : null;
                 this.fkParentAccountID = data ? data.fkParentAccountID : null;
                 this.ParentAccount = data ? data.ParentAccount : null;
+                this.ChildAccounts = data ? data.ChildAccounts : null;
                 this.fkAPBDesID = data ? data.fkAPBDesID : null;
                 this.APBDes = data ? data.APBDes : null;
                 this.fkCreatedByID = data ? data.fkCreatedByID : null;
@@ -299,6 +300,14 @@ var App;
                 var res = $.ajax(APBDes.ajaxSettings.build({
                     type: 'POST',
                     url: '/api/APBDes/AddAccounts?apbdesID=' + apbdesID + '&type=' + type + '&accounts=' + accounts + ''
+                }));
+                return res;
+            };
+
+            APBDes.GetByRegionID = function (regionID) {
+                var res = $.ajax(APBDes.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/APBDes/GetByRegionID?regionID=' + regionID + ''
                 }));
                 return res;
             };
@@ -676,6 +685,14 @@ var App;
                     type: 'GET',
                     url: '/api/Region/GetCount',
                     data: query
+                }));
+                return res;
+            };
+
+            Region.GetByURLKey = function (urlKey) {
+                var res = $.ajax(Region.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/Region/GetByURLKey?urlKey=' + encodeURI(urlKey) + ''
                 }));
                 return res;
             };

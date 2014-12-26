@@ -19,17 +19,21 @@ var App;
                 this.$scope = $scope;
                 this.$location = $location;
                 this.type = "transfer";
+                this.isPathReplacing = false;
                 var ctrl = this;
                 this.currentUser = window.CurrentUser;
 
                 $scope.$on('$locationChangeSuccess', function () {
-                    ctrl.onLocationChange();
+                    if (!ctrl.isPathReplacing)
+                        ctrl.onLocationChange();
+                    ctrl.isPathReplacing = false;
                 });
             }
             IndexCtrl.prototype.onLocationChange = function () {
                 var path = this.$location.path();
                 var regionID = -1;
-                if (path == "/") {
+                var regionKey = null;
+                if (path == "/" || path == "") {
                     regionID = 0;
                     this.type = "transfer";
                 } else if (path.indexOf("/p/") != -1) {
@@ -40,11 +44,15 @@ var App;
                     this.type = "realization";
                 } else if (path.indexOf("/dashboard") != -1) {
                     this.type = "dashboard";
+                } else {
+                    this.type = "realization";
+                    regionKey = path.substring(1);
                 }
-                if (regionID != -1)
-                    this.loadRegion(regionID);
 
-                if (regionID == -1)
+                if (regionID != -1 || regionKey)
+                    this.loadRegion(regionID, regionKey);
+
+                if (regionID == -1 && !regionKey)
                     regionID = 0;
                 this.regionID = regionID;
             };
@@ -101,15 +109,22 @@ var App;
                 return this.isInRole(roleName) && this.isInScope(entityID);
             };
 
-            IndexCtrl.prototype.loadRegion = function (parentID) {
+            IndexCtrl.prototype.loadRegion = function (parentID, parentKey) {
                 var ctrl = this;
 
                 this.regionTree = [];
                 this.childName = CHILD_NAMES[0];
 
-                Models.Region.Get(parentID).done(function (region) {
+                var promise = null;
+                if (parentID != -1)
+                    promise = Models.Region.Get(parentID);
+                else if (parentKey)
+                    promise = Models.Region.GetByURLKey(parentKey);
+
+                promise.done(function (region) {
                     ctrl.$scope.$apply(function () {
                         ctrl.region = region;
+                        ctrl.regionID = region.ID;
                         var regionTree = [];
                         var cur = region;
                         while (cur) {
@@ -119,7 +134,17 @@ var App;
                         ctrl.regionTree = regionTree.reverse();
                         if (regionTree.length < CHILD_NAMES.length)
                             ctrl.childName = CHILD_NAMES[regionTree.length];
-                        ctrl.$scope.$broadcast("regionChangeSuccess");
+
+                        setTimeout(function () {
+                            ctrl.$scope.$apply(function () {
+                                ctrl.$scope.$broadcast("regionChangeSuccess");
+                            });
+                        }, 0);
+                        if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
+                            ctrl.isPathReplacing = true;
+                            ctrl.$location.path("/" + region.UrlKey);
+                            ctrl.$location.replace();
+                        }
                     });
                 });
             };

@@ -16,7 +16,6 @@ namespace App.Controllers
             : base(dbContext)
         {
             AllowGetAll = false;
-            SingleInclude(e => e.Accounts);
         }
 
         [HttpPost]
@@ -129,6 +128,11 @@ namespace App.Controllers
             }
 
             dbContext.SaveChanges();
+        }
+
+        public APBDes GetByRegionID(long regionID)
+        {
+            return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionID == regionID);
         }
 
     }
