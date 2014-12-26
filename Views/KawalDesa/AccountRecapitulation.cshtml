@@ -1,0 +1,79 @@
+﻿<div ng-controller="AccountRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'realization'">
+    <div class="content-header">
+        Anggaran Pendapatan dan Belanja Desa (APBDes) beserta Realisasinya
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
+                    <th colspan="2" style="text-align: center; width: 20%;">Pendapatan Desa</th>
+                    <th colspan="2" style="text-align: center; width: 20%;">Belanja Desa</th>
+                    <th colspan="4" style="text-align: center; width: 40%;">Jenis Belanja Desa</th>
+                    <th colspan="2" style="text-align: center; width: 20%;">Jumlah APBDes</th>
+                </tr>
+                <tr>
+                    <th class="money" style="width: 8.3333%;">Anggaran</th>
+                    <th class="money" style="width: 8.3333%;">Realisasi</th>
+                    <th class="money" style="width: 8.3333%;">Anggaran</th>
+                    <th class="money" style="width: 8.3333%;">Realisasi</th>
+                    <th class="money" style="width: 8.3333%;">Pegawai</th>
+                    <th class="money" style="width: 8.3333%;">Barang &amp; Jasa</th>
+                    <th class="money" style="width: 8.3333%;">Modal</th>
+                    <th class="money" style="width: 8.3333%;">Lain-lain</th>
+                    <th class="money" style="width: 8.3333%;">Total</th>
+                    <th class="money" style="width: 8.3333%;">Lengkap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in entities">
+                    <td>
+                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                            {{entity.RegionName}}
+                        </a>
+                    </td>
+                    <td class="money"> {{entity.BudgetedIncome | number:0}}</td>
+                    <td class="money"> {{entity.RealizedIncome | number:0}} </td>
+
+                    <td class="money"> {{entity.BudgetedExpense | number:0}} </td>
+                    <td class="money"> {{entity.RealizedExpense | number:0}} </td>
+
+                    <td class="money"> {{entity.EmployeeExpense | number:0}} </td>
+                    <td class="money"> {{entity.GoodsAndServicesExpense | number:0}} </td>
+                    <td class="money"> {{entity.CapitalExpense | number:0}} </td>
+                    <td class="money"> {{entity.OthersExpense | number:0}} </td>
+
+                    <td class="money"> {{entity.TotalVillage | number:0}} </td>
+                    <td class="money"> {{entity.AccountCompletedVillage | number:0}} </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-show="entities.length > 0">
+                <tr class="success">
+                    <td><a href="">Total</a></td>
+                    <td class="money"> {{total.BudgetedIncome | number:0}}</td>
+                    <td class="money"> {{total.RealizedIncome | number:0}} </td>
+
+                    <td class="money"> {{total.BudgetedExpense | number:0}} </td>
+                    <td class="money"> {{total.RealizedExpense | number:0}} </td>
+
+                    <td class="money"> {{total.EmployeeExpense | number:0}} </td>
+                    <td class="money"> {{total.GoodsAndServicesExpense | number:0}} </td>
+                    <td class="money"> {{total.CapitalExpense | number:0}} </td>
+                    <td class="money"> {{total.OthersExpense | number:0}} </td>
+
+                    <td class="money"> {{total.TotalVillage | number:0}} </td>
+                    <td class="money"> {{total.AccountCompletedVillage | number:0}} </td>
+                </tr>
+            </tfoot>
+
+            <tfoot ng-show="entities.length == 0">
+                <tr>
+                    <td colspan="10" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+</div>

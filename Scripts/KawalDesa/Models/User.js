@@ -7,6 +7,7 @@ var App;
                 this.Id = data ? data.Id : null;
                 this.UserName = data ? data.UserName : null;
                 this.Roles = data ? data.Roles : [];
+                this.Scopes = data ? data.Scopes : [];
                 this.Password = data ? data.Password : null;
                 this.ConfirmPassword = data ? data.ConfirmPassword : null;
             }
@@ -100,6 +101,16 @@ var App;
                     type: 'POST',
                     url: '/api/User/UpdateVolunteerRoles',
                     data: JSON.stringify(roleNames)
+                }));
+                return res;
+            };
+
+            User.SetScopes = function (regions) {
+                var model = this;
+                var res = $.ajax(User.ajaxSettings.build({
+                    type: 'POST',
+                    url: '/api/User/SetScopes',
+                    data: JSON.stringify(regions)
                 }));
                 return res;
             };

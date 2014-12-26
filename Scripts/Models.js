@@ -48,9 +48,9 @@ var App;
                 this.BudgetedExpense = data ? data.BudgetedExpense : null;
                 this.RealizedExpense = data ? data.RealizedExpense : null;
                 this.EmployeeExpense = data ? data.EmployeeExpense : null;
-                this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
+                this.GoodsAndServicesExpense = data ? data.GoodsAndServicesExpense : null;
                 this.CapitalExpense = data ? data.CapitalExpense : null;
-                this.OtherExpense = data ? data.OtherExpense : null;
+                this.OthersExpense = data ? data.OthersExpense : null;
                 this.TotalVillage = data ? data.TotalVillage : null;
                 this.AccountCompletedVillage = data ? data.AccountCompletedVillage : null;
             }
@@ -104,11 +104,18 @@ var App;
                 this.ExpenseGroup = data ? data.ExpenseGroup : null;
                 this.Target = data ? data.Target : null;
                 this.IsActivated = data ? data.IsActivated : null;
+                this.DateDeactivated = data ? data.DateDeactivated : null;
                 this.TargetSource = data ? data.TargetSource : null;
                 this.fkParentAccountID = data ? data.fkParentAccountID : null;
                 this.ParentAccount = data ? data.ParentAccount : null;
                 this.fkAPBDesID = data ? data.fkAPBDesID : null;
                 this.APBDes = data ? data.APBDes : null;
+                this.fkCreatedByID = data ? data.fkCreatedByID : null;
+                this.CreatedBy = data ? data.CreatedBy : null;
+                this.fkModifiedByID = data ? data.fkModifiedByID : null;
+                this.ModifiedBy = data ? data.ModifiedBy : null;
+                this.fkDeactivatedByID = data ? data.fkDeactivatedByID : null;
+                this.DeactivatedBy = data ? data.DeactivatedBy : null;
                 this.ParentCode = data ? data.ParentCode : null;
             }
             Account.ajaxSettings = new Scaffold.AjaxSettings();
@@ -121,6 +128,38 @@ var App;
             function AccountRecapitulation(data) {
                 _super.call(this, data);
             }
+            /* App.Controllers.AccountRecapitulationController */
+            AccountRecapitulation.GetAll = function (query) {
+                var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/AccountRecapitulation/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new AccountRecapitulation(model);
+                    });
+                });
+                return res;
+            };
+
+            AccountRecapitulation.Get = function (id) {
+                var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/AccountRecapitulation/Get/' + id
+                })).then(function (model) {
+                    return new AccountRecapitulation(model);
+                });
+                return res;
+            };
+
+            AccountRecapitulation.Count = function (query) {
+                var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/AccountRecapitulation/GetCount',
+                    data: query
+                }));
+                return res;
+            };
             AccountRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
             return AccountRecapitulation;
         })(BaseAccountRecapitulation);
@@ -131,6 +170,38 @@ var App;
             function FrozenAccountRecapitulation(data) {
                 _super.call(this, data);
             }
+            /* App.Controllers.FrozenAccountRecapitulationController */
+            FrozenAccountRecapitulation.GetAll = function (query) {
+                var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/FrozenAccountRecapitulation/GetAll',
+                    data: query
+                })).then(function (models) {
+                    return models.map(function (model) {
+                        return new FrozenAccountRecapitulation(model);
+                    });
+                });
+                return res;
+            };
+
+            FrozenAccountRecapitulation.Get = function (id) {
+                var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/FrozenAccountRecapitulation/Get/' + id
+                })).then(function (model) {
+                    return new FrozenAccountRecapitulation(model);
+                });
+                return res;
+            };
+
+            FrozenAccountRecapitulation.Count = function (query) {
+                var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                    type: 'GET',
+                    url: '/api/FrozenAccountRecapitulation/GetCount',
+                    data: query
+                }));
+                return res;
+            };
             FrozenAccountRecapitulation.ajaxSettings = new Scaffold.AjaxSettings();
             return FrozenAccountRecapitulation;
         })(BaseAccountRecapitulation);
@@ -161,6 +232,7 @@ var App;
                 _super.call(this, data);
                 this.IsActivated = data ? data.IsActivated : null;
                 this.IsCompleted = data ? data.IsCompleted : null;
+                this.DateCompleted = data ? data.DateCompleted : null;
                 this.SourceURL = data ? data.SourceURL : null;
                 this.fkSourceFileID = data ? data.fkSourceFileID : null;
                 this.SourceFile = data ? data.SourceFile : null;
@@ -169,6 +241,10 @@ var App;
                 this.fkRegionID = data ? data.fkRegionID : null;
                 this.Region = data ? data.Region : null;
                 this.Accounts = data ? data.Accounts : null;
+                this.fkCompletedByID = data ? data.fkCompletedByID : null;
+                this.CompletedBy = data ? data.CompletedBy : null;
+                this.fkModifiedByID = data ? data.fkModifiedByID : null;
+                this.ModifiedBy = data ? data.ModifiedBy : null;
             }
             /* App.Controllers.APBDesController */
             APBDes.GetAll = function (query) {
@@ -461,6 +537,8 @@ var App;
                 this.fkRealizationID = data ? data.fkRealizationID : null;
                 this.Realization = data ? data.Realization : null;
                 this.Pictures = data ? data.Pictures : null;
+                this.fkCreatedByID = data ? data.fkCreatedByID : null;
+                this.CreatedBy = data ? data.CreatedBy : null;
             }
             /* App.Controllers.FieldReportController */
             FieldReport.GetAll = function (query) {
@@ -516,6 +594,8 @@ var App;
                 this.Sector = data ? data.Sector : null;
                 this.fkTransactionID = data ? data.fkTransactionID : null;
                 this.Transaction = data ? data.Transaction : null;
+                this.fkCreatedByID = data ? data.fkCreatedByID : null;
+                this.CreatedBy = data ? data.CreatedBy : null;
             }
             /* App.Controllers.RealizationController */
             Realization.GetAll = function (query) {

@@ -33,7 +33,7 @@ module Scaffold {
 		PageLength?: number;
 		PageBegin?: number;
 		SortField?: string;
-		SortOrder: string;
+		SortOrder?: string;
 	}
 }
 <#

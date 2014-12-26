@@ -81,7 +81,8 @@ namespace App.Controllers
             UserViewModel userViewModel = new UserViewModel() 
             { 
                 UserName = user.UserName, 
-                Roles = roles.ToList()
+                Roles = roles.ToList(),
+                Scopes = GetScopes()
             };
             return userViewModel;
         }
@@ -211,9 +212,7 @@ namespace App.Controllers
             return view;
         }
 
-        [HttpGet]
-        [Authorize]
-        public List<Region> GetScopes()
+        private List<Region> GetScopes()
         {
             KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
             return dbContext.Set<UserScope>()
@@ -221,14 +220,16 @@ namespace App.Controllers
                 .Include(r => r.Region.Parent)
                 .Include(r => r.Region.Parent.Parent)
                 .Include(r => r.Region.Parent.Parent.Parent)
-                .Include(r => r.Region.Parent.Parent.Parent)
+                .Include(r => r.Region.Parent.Parent.Parent.Parent)
                 .Where(s => s.fkUserID == identity.User.Id)
+                .ToList()
+                .OrderBy(s => s.ID)
                 .Select(r => r.Region)
                 .ToList();
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpPost]
+        [Authorize(Roles=Role.VOLUNTEER)]
         public void SetScopes(List<Region> regions)
         {
             KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
@@ -271,7 +272,8 @@ namespace App.Controllers
         [Authorize(Roles=Role.VOLUNTEER)]
         public virtual void UpdateVolunteerRoles(List<String> roleNames)
         {
-            var allowedRoles = new String[]{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA};
+            var allowedRoles = new String[]{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
+            Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION};
 
             var principal = HttpContext.Current.User;
             var user = KawalDesaController.GetCurrentUser();

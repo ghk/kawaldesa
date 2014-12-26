@@ -27,27 +27,21 @@ namespace App.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            var user = GetCurrentUserFromSession();
-            if (user != null)
-            {
-                ViewData["User.Name"] = user.Name;
-                ViewData["User.FacebookID"] = user.FacebookID;
-                ViewData["User.Roles"] = new JavaScriptSerializer().Serialize(GetCurrentRolesFromSession());
-            }
+            var user = GetUserDictFromSession();
+            ViewData["User"] = new JavaScriptSerializer().Serialize(user);
             return View();
         }
 
         [KawalDesaAuthorize]
         public ActionResult Dashboard()
         {
-            var user = GetCurrentUserFromSession();
+            var user = GetUserDictFromSession();
             if (user == null)
             {
                 return new RedirectResult("/login");
             }
-            ViewData["User.Name"] = user.Name;
-            ViewData["User.FacebookID"] = user.FacebookID;
-            ViewData["User.Roles"] = new JavaScriptSerializer().Serialize(GetCurrentRolesFromSession());
+
+            ViewData["User"] = new JavaScriptSerializer().Serialize(user);
             return View();
         }
 
@@ -71,7 +65,8 @@ namespace App.Controllers
             if (referrer != null)
                 Session["LoginRedirect"] = referrer;
 
-            if (GetCurrentUserFromSession() != null)
+            string userId = Session[USERID_KEY] as string;
+            if (userId != null)
             {
                 if (referrer != null)
                     return new RedirectResult(referrer);
@@ -84,32 +79,40 @@ namespace App.Controllers
         }
         public ActionResult FacebookRedirect(String code)
         {
+            String loginRedirect = Session["LoginRedirect"] as string;
+            if (loginRedirect == null)
+                loginRedirect = "/";
+            Session["LoginRedirect"] = null;
+
             if (String.IsNullOrEmpty(code))
-                return new RedirectResult("/");
-            
-            var redirectHost = GetRedirectHost();
-            var redirectUrl = redirectHost + "/FacebookRedirect";
-
-            string url = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}";
-            WebRequest request = WebRequest.Create(string.Format(url, FacebookClientID, redirectUrl, FacebookClientSecret, code));
-            string accessToken = null;
-
-            using (WebResponse response = request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
             {
-                Encoding encode = Encoding.GetEncoding("utf-8");
-                using (StreamReader streamReader = new StreamReader(stream, encode))
-                {
-                    accessToken = streamReader.ReadToEnd().Replace("access_token=", "");
-                }
+                return new RedirectResult(loginRedirect);
             }
-
-            Session["FacebookAccessToken"] = accessToken;
-
+            
+            string accessToken = null;
             String facebookID = null;
             String name = null;
+
             try
             {
+                var redirectHost = GetRedirectHost();
+                var redirectUrl = redirectHost + "/FacebookRedirect";
+
+                string url = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}";
+                WebRequest request = WebRequest.Create(string.Format(url, FacebookClientID, redirectUrl, FacebookClientSecret, code));
+
+                using (WebResponse response = request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                {
+                    Encoding encode = Encoding.GetEncoding("utf-8");
+                    using (StreamReader streamReader = new StreamReader(stream, encode))
+                    {
+                        accessToken = streamReader.ReadToEnd().Replace("access_token=", "");
+                    }
+                }
+
+                Session["FacebookAccessToken"] = accessToken;
+
                 string meUrl = "https://graph.facebook.com/me?access_token={0}";
                 request = WebRequest.Create(string.Format(meUrl, accessToken));
                 using (WebResponse response = request.GetResponse())
@@ -151,35 +154,29 @@ namespace App.Controllers
                 }
             }
 
-            String loginRedirect = Session["LoginRedirect"] as string;
-            if (loginRedirect == null)
-                loginRedirect = "/";
-            Session["LoginRedirect"] = null;
-
             return new RedirectResult(loginRedirect);
         }
-
-        public User GetCurrentUserFromSession()
+        private IDictionary<String, Object> GetUserDictFromSession()
         {
-            string userId = Session[USERID_KEY] as string;
-            if (userId == null)
-                return null;
-            using (var db = new DB())
-            {
-                return db.Users.FirstOrDefault(u => u.Id == userId);
-            }
-        }
-        public IList<String> GetCurrentRolesFromSession()
-        {
+            var result = new Dictionary<String, Object>();
             string userId = Session[USERID_KEY] as string;
             if (userId == null)
                 return null;
             using (var db = new DB())
             {
                 var userManager = new UserManager<User>(new UserStore<User>(db));
-                return userManager.GetRoles(userId);
+                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+                result["ID"] = user.Id;
+                result["Name"] = user.Name;
+                result["FacebookID"] = user.FacebookID;
+                result["Roles"] = userManager.GetRoles(user.Id);
+                result["Scopes"] = db.UserScopes.Where(s => s.fkUserID == user.Id)
+                    .Select(s => s.fkRegionID)
+                    .ToList();
+                return result;
             }
         }
+
         public static User GetCurrentUser()
         {
             var principal = System.Web.HttpContext.Current.User;
@@ -194,7 +191,7 @@ namespace App.Controllers
         public static void CheckRegionAllowed(DbContext db, long regionID)
         {
             var principal = System.Web.HttpContext.Current.User;
-            String userID = principal.Identity.GetUserId();
+            String userID = ((KawalDesaIdentity)principal.Identity).User.Id;
             if (userID == null)
                 throw new ApplicationException("region is not allowed for thee");
 

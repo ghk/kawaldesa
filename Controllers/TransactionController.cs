@@ -9,12 +9,25 @@ using App.Security;
 using Scaffold;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Net.Http;
 using System.Web.Http;
+using System.Net;
 
 namespace App.Controllers
 {
     public class TransactionController: ReadOnlyController<Transaction, long>
     {
+        //todo, use better validation
+        public class InputException: Exception
+        {
+            public String Field { get; set; }
+            public InputException(String field, String message)
+                :base(message)
+            {
+                Field = field;
+            }
+        }
+
         private Uploader uploader = new Uploader();
         public TransactionController(DB dbContext) : base(dbContext) {
             AllowGetAll = false;
@@ -28,29 +41,52 @@ namespace App.Controllers
 
             try
             {
-                var fileResult = res.Files[0];
-                var blob = new Blob(fileResult);
-                dbContext.Set<Blob>().Add(blob);
+
                 var principal = HttpContext.Current.User;
                 var user = (principal.Identity as KawalDesaIdentity).User;
 
                 var sourceID = long.Parse(res.Forms["fkSourceID"]);
                 var destID = long.Parse(res.Forms["fkDestinationID"]);
                 var actorID = long.Parse(res.Forms["fkActorID"]);
-                var amount = decimal.Parse(res.Forms["Amount"]);
-                var date = DateTime.ParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+                decimal amount;
+                var amountStr = res.GetForm("Amount");
+                if (amountStr == null || !decimal.TryParse(amountStr, out amount) || amount < 0)
+                {
+                    var error = new HttpError("Jumlah harus merupakan angka dan positif") { { "Field", "Amount" } };
+                    throw new HttpResponseException(
+                        ControllerContext.Request.CreateErrorResponse(
+                            HttpStatusCode.BadRequest,
+                            error));
+                }
+
+                DateTime date;
+                if (!DateTime.TryParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out date))
+                {
+                    var error = new HttpError("Format tanggal harus 'dd-mm-yyyy'") { { "Field", "Date" } };
+                    throw new HttpResponseException(
+                        ControllerContext.Request.CreateErrorResponse(
+                            HttpStatusCode.BadRequest,
+                            error));
+                }
+
+                var sourceURL = res.GetForm("SourceURL");
 
                 KawalDesaController.CheckRegionAllowed(dbContext, destID);
 
                 if (actorID != sourceID && actorID != destID)
                     throw new ApplicationException("actor id must matched source id or dest id");
 
-                var actor = dbContext.Set<Region>().FirstOrDefault(r => r.ID == actorID);
-                var source = dbContext.Set<Region>().FirstOrDefault(r => r.ID == sourceID);
-                var destination = dbContext.Set<Region>().FirstOrDefault(r => r.ID == destID);
+                var actor = dbContext.Set<Region>().First(r => r.ID == actorID);
+                var source = dbContext.Set<Region>().First(r => r.ID == sourceID);
+                var destination = dbContext.Set<Region>().First(r => r.ID == destID);
 
-                if (amount <= 0)
-                    throw new ApplicationException("Amount must > 0");
+                long? accountID = null;
+                if (actorID == destID)
+                {
+                    var targetSource = sourceID == 0 ? "apbn" : "add";
+                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.APBDes.fkRegionID == destID).ID;
+                }
 
                 string roleRequired = null;
                 if (actor.Type == RegionType.NASIONAL || actor.Type == RegionType.KABUPATEN)
@@ -72,23 +108,32 @@ namespace App.Controllers
                 if (!principal.IsInRole(roleRequired))
                     throw new ApplicationException("Principal is not in role");
 
-                dbContext.Set<Blob>().Add(blob);
+                long? blobID = null;
+                if (res.Files.Count > 0)
+                {
+                    var fileResult = res.Files[0];
+                    var blob = new Blob(fileResult);
+                    dbContext.Set<Blob>().Add(blob);
+                    fileResult.Move(blob.FilePath);
+                    blobID = blob.ID;
+                }
 
                 var transaction = new Transaction
                 {
                     fkAPBNID = 1,
-                    fkSourceFileID = blob.ID,
+                    fkSourceFileID = blobID,
                     fkSourceID = sourceID,
                     fkDestinationID = destID,
                     fkActorID = actorID,
+                    fkAccountID = accountID,
                     fkCreatedByID = user.Id,
                     Amount = amount,
                     Date = date,
+                    SourceURL = sourceURL,
                     IsActivated = true
                 };
 
                 dbSet.Add(transaction);
-                fileResult.Move(blob.FilePath);
                 dbContext.SaveChanges();
             }
             finally

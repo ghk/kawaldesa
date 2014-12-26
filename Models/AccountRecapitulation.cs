@@ -21,9 +21,9 @@ namespace App.Models
         public decimal BudgetedExpense { get; set; }
         public decimal RealizedExpense { get; set; }
         public decimal EmployeeExpense { get; set; }
-        public decimal GoodsAndServiceExpense { get; set; }
+        public decimal GoodsAndServicesExpense { get; set; }
         public decimal CapitalExpense { get; set; }
-        public decimal OtherExpense { get; set; }
+        public decimal OthersExpense { get; set; }
         public decimal TotalVillage { get; set; }
         public decimal AccountCompletedVillage { get; set; }
 

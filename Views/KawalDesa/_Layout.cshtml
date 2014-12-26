@@ -2,16 +2,14 @@
 <head>
     <!-- facebook hash remover -->
     <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
-    @{ if (ViewData["User.Name"] != null)
-     {
-        <script type="text/javascript">window.CurrentUserRoles = @Html.Raw(ViewData["User.Roles"]);</script>
-     }}
+
+    <script type="text/javascript">window.CurrentUser = @Html.Raw(ViewData["User"]);</script>
+
     <title>Kawal Desa - Transparansi Penyaluran dan Realisasi Dana Desa</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
 
     @Styles.Render("~/css/libs/bootstrap")
-    @Styles.Render("~/css/libs/bootstrap-theme")
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' />
     @Styles.Render("~/css/kawaldesa")
 
@@ -55,21 +53,13 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                @{ if (ViewData["User.Name"] != null)
-                 {
-                    <li ng-class="{'active' : indexCtrl.type == 'dashboard'}">
-                        <a style="padding-right: 20px;" href="/dashboard">
-                            <img src='http://graph.facebook.com/v2.2/@ViewData["User.FacebookID"]/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
-                            @ViewData["User.Name"]
-                        </a>
-                    </li>
-                 }
-                 else
-                 {
-                    <li><a style="padding-right: 20px;" href="/login">Login</a></li>
-                 } }
-
-
+                <li ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
+                    <a style="padding-right: 20px;" href="/dashboard">
+                        <img src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookID}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
+                        {{indexCtrl.currentUser.Name}}
+                    </a>
+                </li>
+                <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>
             </ul>
         </div>
     </header>

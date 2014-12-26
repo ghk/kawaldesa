@@ -29,6 +29,7 @@ namespace App.Models
         public string Id { get; set; }
         public string UserName { get; set; }
         public List<string> Roles { get; set; }
+        public List<Region> Scopes { get; set; }
     }
 
     [Validator(typeof(LoginViewModelValidator))]

@@ -28,7 +28,7 @@ module Scaffold {
 		PageLength?: number;
 		PageBegin?: number;
 		SortField?: string;
-		SortOrder: string;
+		SortOrder?: string;
 	}
 }
 
@@ -46,9 +46,9 @@ module App.Models {
         BudgetedExpense: number;
         RealizedExpense: number;
         EmployeeExpense: number;
-        GoodsAndServiceExpense: number;
+        GoodsAndServicesExpense: number;
         CapitalExpense: number;
-        OtherExpense: number;
+        OthersExpense: number;
         TotalVillage: number;
         AccountCompletedVillage: number;
     }
@@ -66,9 +66,9 @@ module App.Models {
         BudgetedExpense: number;
         RealizedExpense: number;
         EmployeeExpense: number;
-        GoodsAndServiceExpense: number;
+        GoodsAndServicesExpense: number;
         CapitalExpense: number;
-        OtherExpense: number;
+        OthersExpense: number;
         TotalVillage: number;
         AccountCompletedVillage: number;
         constructor(data?: IBaseAccountRecapitulation) {
@@ -83,9 +83,9 @@ module App.Models {
             this.BudgetedExpense = data ? data.BudgetedExpense : null;
             this.RealizedExpense = data ? data.RealizedExpense : null;
             this.EmployeeExpense = data ? data.EmployeeExpense : null;
-            this.GoodsAndServiceExpense = data ? data.GoodsAndServiceExpense : null;
+            this.GoodsAndServicesExpense = data ? data.GoodsAndServicesExpense : null;
             this.CapitalExpense = data ? data.CapitalExpense : null;
-            this.OtherExpense = data ? data.OtherExpense : null;
+            this.OthersExpense = data ? data.OthersExpense : null;
             this.TotalVillage = data ? data.TotalVillage : null;
             this.AccountCompletedVillage = data ? data.AccountCompletedVillage : null;
         }
@@ -174,11 +174,18 @@ module App.Models {
         ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
         Target: number;
         IsActivated: boolean;
+        DateDeactivated: /** System.DateTime **/ any;
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkModifiedByID: string;
+        ModifiedBy: /** App.Models.User **/ any;
+        fkDeactivatedByID: string;
+        DeactivatedBy: /** App.Models.User **/ any;
         ParentCode: string;
     }
 
@@ -191,11 +198,18 @@ module App.Models {
         ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
         Target: number;
         IsActivated: boolean;
+        DateDeactivated: /** System.DateTime **/ any;
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkModifiedByID: string;
+        ModifiedBy: /** App.Models.User **/ any;
+        fkDeactivatedByID: string;
+        DeactivatedBy: /** App.Models.User **/ any;
         ParentCode: string;
         constructor(data?: IAccount) {
             super(data);
@@ -206,11 +220,18 @@ module App.Models {
             this.ExpenseGroup = data ? data.ExpenseGroup : null;
             this.Target = data ? data.Target : null;
             this.IsActivated = data ? data.IsActivated : null;
+            this.DateDeactivated = data ? data.DateDeactivated : null;
             this.TargetSource = data ? data.TargetSource : null;
             this.fkParentAccountID = data ? data.fkParentAccountID : null;
             this.ParentAccount = data ? data.ParentAccount : null;
             this.fkAPBDesID = data ? data.fkAPBDesID : null;
             this.APBDes = data ? data.APBDes : null;
+            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
+            this.fkModifiedByID = data ? data.fkModifiedByID : null;
+            this.ModifiedBy = data ? data.ModifiedBy : null;
+            this.fkDeactivatedByID = data ? data.fkDeactivatedByID : null;
+            this.DeactivatedBy = data ? data.DeactivatedBy : null;
             this.ParentCode = data ? data.ParentCode : null;
         }
 
@@ -225,6 +246,37 @@ module App.Models {
             super(data);
         }
 
+        /* App.Controllers.AccountRecapitulationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<AccountRecapitulation>> {
+            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/AccountRecapitulation/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new AccountRecapitulation(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<AccountRecapitulation> {
+            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/AccountRecapitulation/Get/'+id,
+            })).then((model) => new AccountRecapitulation(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/AccountRecapitulation/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
     }
 
     export interface IFrozenAccountRecapitulation extends IBaseAccountRecapitulation {
@@ -236,6 +288,37 @@ module App.Models {
             super(data);
         }
 
+        /* App.Controllers.FrozenAccountRecapitulationController */
+
+        static GetAll(query?: IQuery): JQueryPromise<Array<FrozenAccountRecapitulation>> {
+            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenAccountRecapitulation/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new FrozenAccountRecapitulation(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<FrozenAccountRecapitulation> {
+            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenAccountRecapitulation/Get/'+id,
+            })).then((model) => new FrozenAccountRecapitulation(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FrozenAccountRecapitulation/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                
     }
 
     export interface IAPBD extends IBaseEntity {
@@ -279,6 +362,7 @@ module App.Models {
     export interface IAPBDes extends IBaseEntity {
         IsActivated: boolean;
         IsCompleted: boolean;
+        DateCompleted: /** System.DateTime **/ any;
         SourceURL: string;
         fkSourceFileID: number;
         SourceFile: App.Models.IBlob;
@@ -287,12 +371,17 @@ module App.Models {
         fkRegionID: number;
         Region: App.Models.IRegion;
         Accounts: Array<App.Models.IAccount>;
+        fkCompletedByID: string;
+        CompletedBy: /** App.Models.User **/ any;
+        fkModifiedByID: string;
+        ModifiedBy: /** App.Models.User **/ any;
     }
 
     export class APBDes extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         IsActivated: boolean;
         IsCompleted: boolean;
+        DateCompleted: /** System.DateTime **/ any;
         SourceURL: string;
         fkSourceFileID: number;
         SourceFile: App.Models.IBlob;
@@ -301,10 +390,15 @@ module App.Models {
         fkRegionID: number;
         Region: App.Models.IRegion;
         Accounts: Array<App.Models.IAccount>;
+        fkCompletedByID: string;
+        CompletedBy: /** App.Models.User **/ any;
+        fkModifiedByID: string;
+        ModifiedBy: /** App.Models.User **/ any;
         constructor(data?: IAPBDes) {
             super(data);
             this.IsActivated = data ? data.IsActivated : null;
             this.IsCompleted = data ? data.IsCompleted : null;
+            this.DateCompleted = data ? data.DateCompleted : null;
             this.SourceURL = data ? data.SourceURL : null;
             this.fkSourceFileID = data ? data.fkSourceFileID : null;
             this.SourceFile = data ? data.SourceFile : null;
@@ -313,6 +407,10 @@ module App.Models {
             this.fkRegionID = data ? data.fkRegionID : null;
             this.Region = data ? data.Region : null;
             this.Accounts = data ? data.Accounts : null;
+            this.fkCompletedByID = data ? data.fkCompletedByID : null;
+            this.CompletedBy = data ? data.CompletedBy : null;
+            this.fkModifiedByID = data ? data.fkModifiedByID : null;
+            this.ModifiedBy = data ? data.ModifiedBy : null;
         }
 
         /* App.Controllers.APBDesController */
@@ -625,6 +723,8 @@ module App.Models {
         fkRealizationID: number;
         Realization: App.Models.IRealization;
         Pictures: Array<App.Models.IBlob>;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
     }
 
     export class FieldReport extends BaseEntity {
@@ -635,6 +735,8 @@ module App.Models {
         fkRealizationID: number;
         Realization: App.Models.IRealization;
         Pictures: Array<App.Models.IBlob>;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
         constructor(data?: IFieldReport) {
             super(data);
             this.Notes = data ? data.Notes : null;
@@ -643,6 +745,8 @@ module App.Models {
             this.fkRealizationID = data ? data.fkRealizationID : null;
             this.Realization = data ? data.Realization : null;
             this.Pictures = data ? data.Pictures : null;
+            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
         }
 
         /* App.Controllers.FieldReportController */
@@ -692,6 +796,8 @@ module App.Models {
         Sector: /** App.Models.Sector **/ any;
         fkTransactionID: number;
         Transaction: App.Models.ITransaction;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
     }
 
     export class Realization extends BaseEntity {
@@ -701,6 +807,8 @@ module App.Models {
         Sector: /** App.Models.Sector **/ any;
         fkTransactionID: number;
         Transaction: App.Models.ITransaction;
+        fkCreatedByID: string;
+        CreatedBy: /** App.Models.User **/ any;
         constructor(data?: IRealization) {
             super(data);
             this.Description = data ? data.Description : null;
@@ -708,6 +816,8 @@ module App.Models {
             this.Sector = data ? data.Sector : null;
             this.fkTransactionID = data ? data.fkTransactionID : null;
             this.Transaction = data ? data.Transaction : null;
+            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
         }
 
         /* App.Controllers.RealizationController */

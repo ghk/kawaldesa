@@ -20,7 +20,7 @@ var App;
                 this.$location = $location;
                 this.type = "transfer";
                 var ctrl = this;
-                this.currentRoles = window.CurrentUserRoles;
+                this.currentUser = window.CurrentUser;
 
                 $scope.$on('$locationChangeSuccess', function () {
                     ctrl.onLocationChange();
@@ -63,23 +63,42 @@ var App;
             IndexCtrl.prototype.changeRegion = function (regionID, $event) {
                 $event.preventDefault();
                 var t = "p";
+                if (this.type == "realization")
+                    t = "r";
                 var path = "/" + t + "/" + regionID;
                 this.$location.path(path);
             };
 
             IndexCtrl.prototype.hasAnyVolunteerRoles = function () {
-                return window.CurrentUserRoles.some(function (r) {
+                return this.currentUser != null && this.currentUser.Roles.some(function (r) {
                     return r.indexOf("volunteer_") != -1;
                 });
             };
 
             IndexCtrl.prototype.isInRole = function (roleName) {
-                if (!window.CurrentUserRoles) {
+                if (!this.currentUser) {
                     return false;
                 }
-                return window.CurrentUserRoles.some(function (r) {
+                return this.currentUser.Roles.some(function (r) {
                     return roleName == r;
                 });
+            };
+
+            IndexCtrl.prototype.isInScope = function (entityID) {
+                var _this = this;
+                var regionIDs = this.regionTree.map(function (r) {
+                    return r.ID;
+                });
+                regionIDs.push(entityID);
+                return regionIDs.some(function (rid) {
+                    return _this.currentUser.Scopes.some(function (id) {
+                        return rid == id;
+                    });
+                });
+            };
+
+            IndexCtrl.prototype.isInRoleAndScope = function (roleName, entityID) {
+                return this.isInRole(roleName) && this.isInScope(entityID);
             };
 
             IndexCtrl.prototype.loadRegion = function (parentID) {

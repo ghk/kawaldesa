@@ -5,8 +5,16 @@
 
 module App.Controllers {
 
+    export interface ICurrentUser {
+        ID: string;
+        FacebookID: String;
+        Name: String;
+        Roles: String[];
+        Scopes: number[];
+    }
+
     interface MyWindow extends Window {
-        CurrentUserRoles: string[];
+        CurrentUser: ICurrentUser;
     }
 
     declare var window: MyWindow;
@@ -27,14 +35,14 @@ module App.Controllers {
         region: Models.Region;
         childName: string;
         type = "transfer";
-        currentRoles: String[];
+        currentUser: ICurrentUser;
         regionID: number;
 
         static $inject = ["$scope", "$location"];
 
         constructor(public $scope, public $location) {
             var ctrl = this;
-            this.currentRoles = window.CurrentUserRoles;
+            this.currentUser = window.CurrentUser;
 
             $scope.$on('$locationChangeSuccess', function () {
                 ctrl.onLocationChange();
@@ -80,19 +88,32 @@ module App.Controllers {
         changeRegion(regionID, $event) {
             $event.preventDefault();
             var t = "p"
+            if (this.type == "realization")
+                t = "r";
             var path = "/" + t + "/" + regionID;
             this.$location.path(path);
         }
 
         hasAnyVolunteerRoles() {
-            return window.CurrentUserRoles.some(r => r.indexOf("volunteer_") != -1);
+            return this.currentUser != null
+                && this.currentUser.Roles.some(r => r.indexOf("volunteer_") != -1);
         }
 
         isInRole(roleName) {
-            if (!window.CurrentUserRoles) {
+            if (!this.currentUser) {
                 return false;
             }
-            return window.CurrentUserRoles.some(r => roleName == r);
+            return this.currentUser.Roles.some(r => roleName == r);
+        }
+
+        isInScope(entityID) {
+            var regionIDs = this.regionTree.map(r => r.ID);
+            regionIDs.push(entityID);
+            return regionIDs.some(rid => this.currentUser.Scopes.some(id => rid == id));
+        }
+
+        isInRoleAndScope(roleName, entityID) {
+            return this.isInRole(roleName) && this.isInScope(entityID);
         }
 
         loadRegion(parentID: number) {

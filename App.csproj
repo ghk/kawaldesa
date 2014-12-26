@@ -216,6 +216,7 @@
     <Compile Include="Controllers\APBDFileController.cs" />
     <Compile Include="Controllers\FieldReportController.cs" />
     <Compile Include="Controllers\RealizationController.cs" />
+    <Compile Include="Controllers\AccountRecapitulationController.cs" />
     <Compile Include="Controllers\TransferRecapitulationController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\APBNController.cs" />
@@ -227,9 +228,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412260626255_Views.cs" />
-    <Compile Include="Migrations\201412260626255_Views.Designer.cs">
-      <DependentUpon>201412260626255_Views.cs</DependentUpon>
+    <Compile Include="Migrations\201412260908019_Views.cs" />
+    <Compile Include="Migrations\201412260908019_Views.Designer.cs">
+      <DependentUpon>201412260908019_Views.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APBDes.cs" />
@@ -266,6 +267,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <None Include="refresh-mv.psql" />
     <Content Include="Scaffold\Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Scaffold\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scaffold\Content\smartadmin\overrides.css" />
@@ -1057,6 +1059,7 @@
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu.js" />
     <Content Include="appSettings.config" />
+    <Content Include="refresh-mv.bat" />
     <None Include="Scaffold\Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.min.js" />
@@ -1344,6 +1347,8 @@
     <Content Include="Scaffold\Scripts\version.json" />
     <None Include="Scripts\T4Utils.t4" />
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
+    <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
+    <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -1382,6 +1387,7 @@
     <TypeScriptCompile Include="Scaffold\Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
@@ -1398,8 +1404,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412260626255_Views.resx">
-      <DependentUpon>201412260626255_Views.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412260908019_Views.resx">
+      <DependentUpon>201412260908019_Views.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

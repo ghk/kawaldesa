@@ -148,6 +148,12 @@ table.table-bordered > thead > tr > th:last-child{
     text-align: left;
     float: none;
 }
+.table > tbody > tr.detail > td {
+    border-top: 1px solid #ddd;
+}
+.table > tbody > tr.detail > td:first-child {
+    border-top: 0px;
+}
 p.subtext {
     max-width: 700px;
 }

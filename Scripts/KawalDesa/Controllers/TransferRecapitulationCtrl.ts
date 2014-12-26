@@ -14,6 +14,7 @@ module App.Controllers {
 
         expandedStates = {};
         formTransactions: { [key:number]: any } = {};
+        formErrors = {};
         transactions: { [key:number]: any } = {};
         indexCtrl: IndexCtrl;
 
@@ -30,6 +31,7 @@ module App.Controllers {
             if (this.indexCtrl.type == "transfer") {
                 this.expandedStates = {};
                 this.formTransactions = {};
+                this.formErrors = {};
                 this.transactions = {};
                 this.getRecapitulations(this.indexCtrl.region.ID);
             }
@@ -42,7 +44,8 @@ module App.Controllers {
         }
 
         isExpanded(entity) {
-            return this.expandedStates[entity.RegionID];
+            var result = this.expandedStates[entity.RegionID];
+            return result;
         }
 
         setFormExpanded(entity, state) {
@@ -54,6 +57,7 @@ module App.Controllers {
                 }
             } else {
                 delete this.formTransactions[entity.RegionID];
+                delete this.formErrors[entity.RegionID];
             }
         }
 
@@ -65,13 +69,16 @@ module App.Controllers {
             var ctrl = this;
             this.$upload.upload({
                 type: 'POST',
-                url: '/api/Transaction/AddTransaction',
+                url: '/api/Transaction/AddTransferTransaction',
                 data: this.formTransactions[entity.RegionID],
                 file: this.formTransactions[entity.RegionID].File
             }).success(() => {
-                ctrl.setFormExpanded(entity, null);
-                ctrl.getRecapitulations(entity.ParentRegionID);
-                ctrl.loadTransactions(entity.RegionID);
+                    ctrl.setFormExpanded(entity, null);
+                    ctrl.getRecapitulations(entity.ParentRegionID);
+                    ctrl.loadTransactions(entity.RegionID);
+            }).error(formErr => {
+                ctrl.formErrors[entity.RegionID] = {};
+                ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;
             });
         }
 
@@ -83,7 +90,7 @@ module App.Controllers {
                 "ParentID": parentID
             }
             var type = Models.FrozenTransferRecapitulation;
-            if (this.indexCtrl.currentRoles) {
+            if (this.indexCtrl.currentUser) {
                 type = Models.TransferRecapitulation;
             }
             type.GetAll(query).done((recapitulations) => {
@@ -97,6 +104,7 @@ module App.Controllers {
         loadTransactions(entityID) {
             var ctrl = this;
             if (this.expandedStates[entityID]) {
+                console.log("haaa");
                 Models.Transaction.GetTransferTransactions(entityID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.transactions[entityID] = details;

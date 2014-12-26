@@ -13,6 +13,7 @@ var App;
                 this.$upload = $upload;
                 this.expandedStates = {};
                 this.formTransactions = {};
+                this.formErrors = {};
                 this.transactions = {};
                 var ctrl = this;
                 this.indexCtrl = this.$scope.indexCtrl;
@@ -25,6 +26,7 @@ var App;
                 if (this.indexCtrl.type == "transfer") {
                     this.expandedStates = {};
                     this.formTransactions = {};
+                    this.formErrors = {};
                     this.transactions = {};
                     this.getRecapitulations(this.indexCtrl.region.ID);
                 }
@@ -37,7 +39,8 @@ var App;
             };
 
             TransferRecapitulationCtrl.prototype.isExpanded = function (entity) {
-                return this.expandedStates[entity.RegionID];
+                var result = this.expandedStates[entity.RegionID];
+                return result;
             };
 
             TransferRecapitulationCtrl.prototype.setFormExpanded = function (entity, state) {
@@ -49,6 +52,7 @@ var App;
                     };
                 } else {
                     delete this.formTransactions[entity.RegionID];
+                    delete this.formErrors[entity.RegionID];
                 }
             };
 
@@ -60,13 +64,16 @@ var App;
                 var ctrl = this;
                 this.$upload.upload({
                     type: 'POST',
-                    url: '/api/Transaction/AddTransaction',
+                    url: '/api/Transaction/AddTransferTransaction',
                     data: this.formTransactions[entity.RegionID],
                     file: this.formTransactions[entity.RegionID].File
                 }).success(function () {
                     ctrl.setFormExpanded(entity, null);
                     ctrl.getRecapitulations(entity.ParentRegionID);
                     ctrl.loadTransactions(entity.RegionID);
+                }).error(function (formErr) {
+                    ctrl.formErrors[entity.RegionID] = {};
+                    ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;
                 });
             };
 
@@ -78,7 +85,7 @@ var App;
                     "ParentID": parentID
                 };
                 var type = Models.FrozenTransferRecapitulation;
-                if (this.indexCtrl.currentRoles) {
+                if (this.indexCtrl.currentUser) {
                     type = Models.TransferRecapitulation;
                 }
                 type.GetAll(query).done(function (recapitulations) {
@@ -96,6 +103,7 @@ var App;
             TransferRecapitulationCtrl.prototype.loadTransactions = function (entityID) {
                 var ctrl = this;
                 if (this.expandedStates[entityID]) {
+                    console.log("haaa");
                     Models.Transaction.GetTransferTransactions(entityID).done(function (details) {
                         ctrl.$scope.$apply(function () {
                             ctrl.transactions[entityID] = details;

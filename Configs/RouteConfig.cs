@@ -10,8 +10,13 @@ namespace App.Configs
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default r",
+                name: "Default p",
                 url: "p/{id}",
+                defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Default r",
+                url: "r/{id}",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
             routes.MapRoute(
