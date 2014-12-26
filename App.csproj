@@ -263,7 +263,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
-    <None Include="refresh-mv.psql" />
+    <Content Include="refresh-mv.psql" />
+    <Content Include="Scaffold\Content\bootstrap\bootstrap.css" />
     <Content Include="Scaffold\Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Scaffold\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scaffold\Content\smartadmin\overrides.css" />

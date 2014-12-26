@@ -26,10 +26,12 @@ namespace App
         private static void ConfigureBundles(BundleCollection bundles)
         {
             // CSS Bundles
-            bundles.Add(new StyleBundle("~/css/libs/bootstrap", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+            bundles.Add(new StyleBundle("~/css/libs/bootstrap", 
+                "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
                 .Include("~/Scaffold/Content/bootstrap/bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/css/libs/bootstrap-theme", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css")
+            bundles.Add(new StyleBundle("~/css/libs/bootstrap-theme", 
+                "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css")
                 .Include("~/Scaffold/Content/bootstrap-theme.min.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa")
@@ -41,7 +43,7 @@ namespace App
             bundles.Add(new ScriptBundle("~/js/libs/jquery", "http://code.jquery.com/jquery-2.1.1.min.js")
                 .Include("~/Scaffold/Scripts/jquery-2.1.1.js"));
 
-            bundles.Add(new ScriptBundle("~/js/libs/bootstrap", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.js")
+            bundles.Add(new ScriptBundle("~/js/libs/bootstrap", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
                 .Include("~/Scaffold/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa")
