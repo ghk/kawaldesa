@@ -109,6 +109,7 @@ table.table-bordered > thead > tr > th:last-child{
 	padding: 10px;
 	border: 0;
 	border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
 }
 .table.table-bordered thead tr:last-child th {
     border-bottom: 1px solid #ddd;
@@ -160,4 +161,21 @@ p.subtext {
 
 .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
 padding: 3px;
+}
+
+
+.help > ul li:target {
+    background-color: #def;
+}
+
+.help > ul {
+    display: inline-block;
+    padding-left: 20px;
+}
+.help > ul > li {
+    margin-bottom: 1em;
+}
+
+.help.well {
+    background-color: #fafafa;
 }

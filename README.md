@@ -1,8 +1,7 @@
 # Kawal Desa
-Source code untuk kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
-Kontribusi diterima dengan terbuka. 
+Source code untuk http://kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
 
-Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
+Kontribusi diterima dengan terbuka. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
 
 Hak Cipta Kontributor & Relawan kawaldesa.org, source code berlisensi AGPL
 

@@ -14,6 +14,7 @@ var App;
     App.kawaldesa.config([
         '$locationProvider', function ($locationProvider) {
             $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix('!');
         }]);
 })(App || (App = {}));
 //# sourceMappingURL=KawalDesa.js.map

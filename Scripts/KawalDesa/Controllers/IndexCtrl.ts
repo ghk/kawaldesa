@@ -41,7 +41,7 @@ module App.Controllers {
 
         static $inject = ["$scope", "$location"];
 
-        constructor(public $scope, public $location) {
+        constructor(public $scope, public $location){
             var ctrl = this;
             this.currentUser = window.CurrentUser;
 

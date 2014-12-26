@@ -114,6 +114,7 @@ namespace App.Controllers
                     var fileResult = res.Files[0];
                     var blob = new Blob(fileResult);
                     dbContext.Set<Blob>().Add(blob);
+                    dbContext.SaveChanges();
                     fileResult.Move(blob.FilePath);
                     blobID = blob.ID;
                 }
@@ -233,11 +234,11 @@ namespace App.Controllers
     {
         public String TransferredDate { get; set;  }
         public decimal TransferredAmount {get; set; }
-        public long? TransferredProofID { get; set; }
+        public String TransferredProofID { get; set; }
 
         public String AcknowledgedDate { get; set; }
         public decimal AcknowledgedAmount { get; set; }
-        public long? AcknowledgedProofID { get; set; }
+        public String AcknowledgedProofID { get; set; }
 
         public TransferTransaction (Transaction transferred, Transaction acknowledged)
         {
@@ -246,7 +247,7 @@ namespace App.Controllers
                 TransferredDate = transferred.Date.ToString("dd-MM-yyyy");
                 TransferredAmount = transferred.Amount;
                 if(transferred.SourceFile != null)
-                    TransferredProofID = transferred.SourceFile.ID;
+                    TransferredProofID = transferred.SourceFile.RelativeFileName;
             }
             if(acknowledged != null)
             {
@@ -254,7 +255,7 @@ namespace App.Controllers
                 AcknowledgedDate = acknowledged.Date.ToString("dd-MM-yyyy");
                 AcknowledgedAmount = acknowledged.Amount;
                 if (acknowledged.SourceFile != null)
-                    AcknowledgedProofID = acknowledged.SourceFile.ID;
+                    AcknowledgedProofID = acknowledged.SourceFile.RelativeFileName;
             }
         }
     }
