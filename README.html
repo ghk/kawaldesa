@@ -9,14 +9,23 @@ Kontribusi diterima dengan terbuka. </p>
 
 <h2>Code Overview</h2>
 
-<p>Currently build with C# WebAPI, Typescript and angularjs, come contribute!</p>
+<p>Currently build with C# WebAPI, Typescript and angularjs:</p>
+
+<ul>
+<li><code>Content</code>: mostly stylesheets</li>
+<li><code>Controllers</code>: WebAPI and MVC Controllers</li>
+<li><code>Migrations</code>: DB seed and migrations code</li>
+<li><code>Models</code>: EF Code First Models</li>
+<li><code>Scripts/KawalDesa</code>: Here lies the angular code</li>
+<li><code>SQLs</code>: SQL Views and Seeds</li>
+</ul>
 
 <h2>Installation</h2>
 
 <p>Requirements:</p>
 
 <ul>
-<li>Visual Studio 2013 (Download the community edition, it's free for this kind of project!)</li>
+<li>Visual Studio 2013 (Download the community edition, it's free for this kind of project)</li>
 <li>PostgreSQL > 9.3 (Requires materialized views)</li>
 <li>WebEssentials for Visual Studio (not mandatory, but it leads to nicer typescript development)</li>
 <li>Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold</li>
@@ -31,7 +40,7 @@ Kontribusi diterima dengan terbuka. </p>
 <li>Open the project in VS, build it so it will download the nuget dependencies</li>
 <li>Open nuget package manager, run <code>update-database</code></li>
 <li>You can run it now, but to load the region load the SQLs\Seeds\combined.sql, e.g. <code>psql -U postgres kawaldesa &lt; SQLs\Seeds\combined.sql</code></li>
-<li>Run App projects!</li>
+<li>Run App projects! You can login with username: 'admin' or 'volunteer' and password: '123456'</li>
 </ul>
 
 <h2>Current Contributors</h2>

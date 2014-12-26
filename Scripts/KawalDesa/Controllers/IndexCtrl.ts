@@ -62,13 +62,13 @@ module App.Controllers {
             } else if (path.indexOf("/p/") != -1) {
                 regionID = parseInt(this.$location.path().replace("/p/", ""));
                 this.type = "transfer";
-            }
-            else if (path.indexOf("/r/") != -1) {
+            } else if (path.indexOf("/r/") != -1) {
                 regionID = parseInt(this.$location.path().replace("/r/", ""));
                 this.type = "realization";
-            }
-            else if (path.indexOf("/dashboard") != -1) {
+            } else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
+            } else if (path.indexOf("/login") != -1) {
+                this.type = "login";
             } else {
                 this.type = "realization";
                 regionKey = path.substring(1);

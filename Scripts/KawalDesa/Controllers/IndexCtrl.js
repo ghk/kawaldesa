@@ -44,6 +44,8 @@ var App;
                     this.type = "realization";
                 } else if (path.indexOf("/dashboard") != -1) {
                     this.type = "dashboard";
+                } else if (path.indexOf("/login") != -1) {
+                    this.type = "login";
                 } else {
                     this.type = "realization";
                     regionKey = path.substring(1);

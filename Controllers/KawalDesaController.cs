@@ -24,7 +24,8 @@ namespace App.Controllers
         public static string USERID_KEY = "userid";
 
         private readonly string FacebookClientIDConfig = "Facebook.ClientID";
-        private readonly string FacebookClientSecretConfig = "Facebook.SecretKey";
+        private readonly string FacebookSecretKeyConfig = "Facebook.SecretKey";
+        private readonly string FacebookUseInDebugConfig = "Facebook.UseInDebug";
 
         [AllowAnonymous]
         public ActionResult Index()
@@ -57,6 +58,17 @@ namespace App.Controllers
         }
         public ActionResult Login()
         {
+            if(System.Web.HttpContext.Current.IsDebuggingEnabled)
+            {
+                var useInDebugStr = ConfigurationManager.AppSettings[FacebookUseInDebugConfig];
+                if(useInDebugStr != null)
+                {
+                    bool useInDebug;
+                    if (bool.TryParse(useInDebugStr, out useInDebug) && useInDebug)
+                        return View();
+                }
+            }
+
             var redirectHost = GetRedirectHost();
             var redirectUrl = redirectHost + "/FacebookRedirect";
 
@@ -95,11 +107,12 @@ namespace App.Controllers
             string accessToken = null;
             String facebookID = null;
             String name = null;
+            bool isVerified = false;
 
             try
             {
                 String clientID = ConfigurationManager.AppSettings[FacebookClientIDConfig];
-                String secretKey = ConfigurationManager.AppSettings[FacebookClientSecretConfig];
+                String secretKey = ConfigurationManager.AppSettings[FacebookSecretKeyConfig];
                 var redirectHost = GetRedirectHost();
                 var redirectUrl = redirectHost + "/FacebookRedirect";
 
@@ -129,6 +142,7 @@ namespace App.Controllers
                         var userDict = JsonConvert.DeserializeObject<IDictionary<String, Object>>(streamReader.ReadToEnd());
                         facebookID = userDict["id"] as string;
                         name = userDict["name"] as string;
+                        isVerified = (bool) userDict["verified"];
                     }
                 }
             }
@@ -150,6 +164,7 @@ namespace App.Controllers
                             FacebookID = facebookID,
                             Name = name,
                             UserName = "fb" + facebookID,
+                            FacebookIsVerified = isVerified
                         };
                         var newUser = userManager.Create(user);
                         userManager.AddToRole(user.Id, Role.VOLUNTEER);
@@ -221,12 +236,5 @@ namespace App.Controllers
                 throw new ApplicationException("region is not allowed for thee");
         }
 
-        public static bool IsInRole(String roleName)
-        {
-            var principal = System.Web.HttpContext.Current.User;
-            if (principal == null)
-                return false;
-            return principal.IsInRole(roleName);
-        }
     }
 }

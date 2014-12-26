@@ -49,6 +49,7 @@ namespace App.Migrations
             var user = new User();
             user.SecretKey = "XYzjd4k85UWPG9Sf4MQSxjvuT9TaWtLn+lZXSoKkPh2hjYGenKmW9nZJ8KXuZFVrXeM6bptMchJj2qHgEvpUoxCE1iK9LYlPJQ4Dw7PAGprMkfnhKjy6J94jmdYZSwEdLW7NZFY4fLVST3Wz9LzUpDM0wYiN7K45+dRH+owPZunaa13buYafoQZCIjKS3BPOih8lTfbfRhKrK40wM5xgLgBL3AWUuRJ7WTQAeMB+Wckusfud5f0PeTSE5qKb0LVnVvnyOoveQwuRdxzxwqakEk5eHF9c+6MG/91m+ESynkzdbv7+a6ux19rlYHTMam8D1ntoxeZyRbOA/ygEn3UFzzeZCnswpMgEeiHaqXl9SWcqizqLCPNz/u63dGjQRGr1rKgTjyWJ5NiprO79arWxFFZkPv4G5MRZdYvt9KFmIe4O7WhQ1Hl2WBv8rwTzsBDjDHj4VxmnPiJW0dJnQI9k90I6CXTa3YEGsUpEvTqvyBPp2C7ZjWQyJ4xoxZLLlk/Z/2S722VIdKuzYJoozZqzEAoFNhOQnNJwtgujtg14FVoELR1tzZaXmJHaZIlFbjqRwSBeGWO8wgJb1vsIo7OfW7UGAFPn3PzUgvD+fMasZi93K2Ur6lz7IbdPoAqFiZhBoEgEz6bK5gYOzVTWkybIpHli6u+fDaw3IA0Xvxk+WFg=";
             user.UserName = name;
+            user.Name = name;
             var adminresult = UserManager.Create(user, password);
 
             //Add User Admin to Role Admin
@@ -58,7 +59,7 @@ namespace App.Migrations
             }
 
             var volunteer = new User();
-            volunteer.UserName = "volunteer";
+            volunteer.UserName = volunteer.Name = "volunteer";
             var viewerresult = UserManager.Create(volunteer, "123456");
 
             if (viewerresult.Succeeded)
