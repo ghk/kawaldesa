@@ -7,7 +7,7 @@ Hak Cipta Kontributor & Relawan kawaldesa.org, source code berlisensi AGPL
 
 ## Code Overview
 
-Currently build with C# WebAPI, Typescript and angularjs:
+Currently built with C# WebAPI, Typescript and angularjs:
 
 - `Content`: mostly stylesheets
 - `Controllers`: WebAPI and MVC Controllers
