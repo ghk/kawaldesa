@@ -1,5 +1,6 @@
 # user defined ignore
 connectionStrings.config
+appSettings.config
 /Content/uploads/
 /Content/files/
 /App_Data/
