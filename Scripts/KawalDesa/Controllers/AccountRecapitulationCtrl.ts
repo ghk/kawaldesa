@@ -38,7 +38,7 @@ module App.Controllers {
             }
             var type = Models.FrozenAccountRecapitulation;
             if (this.indexCtrl.currentUser) {
-                type = Models.AccountRecapitulation;
+                type = Models.FrozenAccountRecapitulation;
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
