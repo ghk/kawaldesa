@@ -26,6 +26,7 @@ var App;
 
             APBDesCtrl.prototype.getAPBDes = function (regionID) {
                 var ctrl = this;
+                var scope = this.$scope;
                 Models.APBDes.GetByRegionID(regionID).done(function (apbdes) {
                     ctrl.$scope.$apply(function () {
                         ctrl.apbdes = apbdes;

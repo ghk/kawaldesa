@@ -1055,8 +1055,8 @@
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scaffold\Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="appSettings.config" />
     <Content Include="refresh-mv.bat" />
+    <None Include="appSettings.config" />
     <None Include="Scaffold\Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.js" />
     <Content Include="Scaffold\Scripts\jquery-2.1.1.min.js" />

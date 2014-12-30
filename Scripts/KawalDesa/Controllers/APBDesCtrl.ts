@@ -33,6 +33,7 @@ module App.Controllers {
 
         getAPBDes(regionID: number) {
             var ctrl = this;
+            var scope = this.$scope;
             Models.APBDes.GetByRegionID(regionID).done((apbdes) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.apbdes = apbdes;

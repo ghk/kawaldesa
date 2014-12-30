@@ -3,9 +3,14 @@ html {
     font-family: "Lato",sans-serif !important;
     margin: 0;
 }
-td, th {
+/*td, th {
+	font-size: 12px;
+}*/
+
+tr {
 	font-size: 12px;
 }
+
 body {
     font-family: "Lato",sans-serif !important;
     line-height: 20px;
@@ -63,10 +68,21 @@ table.table > tbody > tr > td:last-child{
 	padding-right: 20px;
 }
 
+table.table > tfoot > tr.account-tab > td,
+table.table > thead > tr.account-tab > td,
+table.table > tbody > tr.account-tab > td{
+	padding-left: 40px;
+}
+
+
 table.table > tfoot > tr > td{
 	font-weight: 700;
 }
 
+.account-head{
+    font-weight: bold;
+    font-size: 14px;
+}
 
 .content-header {
 	border-top: 1px solid #337ab7;

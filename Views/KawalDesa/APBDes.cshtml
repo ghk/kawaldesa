@@ -1,7 +1,8 @@
 ﻿<div ng-controller="APBDesCtrl as apbdesCtrl" ng-if="indexCtrl.region.Type == 4">
     <div ng-repeat="rootAccount in apbdesCtrl.rootAccounts">
         <div class="content-header">
-            {{rootAccount.Code}}. {{rootAccount.Name}} Desa
+            {{rootAccount.Code}}. {{rootAccount.Name}} Desa 
+
         </div>
 
         <div class="table-responsive">
@@ -16,9 +17,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="account in rootAccount.ChildAccounts">
+                    <tr ng-repeat="account in rootAccount.ChildAccounts" ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null, 'account-tab' : account.ParentAccount.fkParentAccountID != null }">
                         <td>
-                            <a href="#" ng-click="">
+                            <a href=" #" ng-click="">
                                 {{account.Code}}
                             </a>
                         </td>
@@ -28,23 +29,18 @@
                             </a>
                         </td>
 
-                        <td class="money"> {{account.Target | number:0}} </td>
+                        <td class="money"> {{( account.Target | number:0 ) || "0"}} </td>
                         <td class="money"> {{0 | number:0}} </td>
                         <td class="money"> {{0 | number:0}} </td>
 
                     </tr>
                 </tbody>
-
-                <tfoot ng-show="entities.length > 0">
+                <tfoot ng-show="rootAccount.ChildAccounts.length > 0">
                     <tr class="success">
-                        <td><a href="">Total</a></td>
-                        <td class="money"> {{total.BudgetedIncome | number:0}}</td>
-                        <td class="money"> {{total.RealizedIncome | number:0}} </td>
-
-                        <td class="money"> {{total.BudgetedExpense | number:0}} </td>
-                        <td class="money"> {{total.RealizedExpense | number:0}} </td>
-
-                        <td class="money"> {{total.EmployeeExpense | number:0}} </td>
+                        <td colspan="2"><a href="">Total</a></td>
+                        <td class="money"> {{(total.RealizedIncome | number:0) || "0"}} </td>
+                        <td class="money"> {{(total.BudgetedExpense | number:0) || "0"}} </td>
+                        <td class="money"> {{(total.RealizedExpense | number:0) || "0"}} </td>
                     </tr>
                 </tfoot>
 
