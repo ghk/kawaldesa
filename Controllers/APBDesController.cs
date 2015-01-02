@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
+using System.Net.Http;
+using System.Net;
 
 namespace App.Controllers
 {
-    public class APBDesController: ReadOnlyController<APBDes, long>
+    public class APBDesController : ReadOnlyController<APBDes, long>
     {
         public APBDesController(DB dbContext)
             : base(dbContext)
@@ -18,8 +20,17 @@ namespace App.Controllers
             AllowGetAll = false;
         }
 
+        public HttpResponseException CreateInputException(int index, String field, String message)
+        {
+            var error = new HttpError(message) { {"Field", field }, {"Index", index} };
+            return new HttpResponseException(
+                ControllerContext.Request.CreateErrorResponse(
+                    HttpStatusCode.BadRequest,
+                    error));
+        }
+
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER_ACCOUNT)]
+        [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
         public async void UpdateSources()
         {
             var res = await new Uploader().PostFile<Blob>(Request);
@@ -55,7 +66,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER_ACCOUNT)]
+        [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
         public void Complete(long apbdesID)
         {
             var apbdes = dbSet.Find(apbdesID);
@@ -70,7 +81,7 @@ namespace App.Controllers
 
         [HttpPost]
         //Holy! so much validation
-        public void AddAccounts(long apbdesID, int type, List<Account> accounts)
+        public void AddAccounts(long apbdesID, long rootAccountID, [FromBody] List<Account> accounts)
         {
             var apbdes = Get(apbdesID);
 
@@ -78,56 +89,68 @@ namespace App.Controllers
                 throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
 
-            foreach(var account in accounts)
+            var rootAccount = dbContext.Set<Account>().Find(rootAccountID);
+            var type = rootAccount.Type;
+
+            foreach (var account in accounts)
             {
-                account.Code = Regex.Replace(account.Code, @"\s+", "");
+                if (!string.IsNullOrEmpty(account.Code))
+                {
+                    account.Code = Regex.Replace(account.Code, @"\s+", "");
+                    account.Type = type;
+                }
+            }
+
+            var existingAccounts = apbdes.Accounts
+                .Where(a => a.Type == type)
+                .ToList();
+
+            var allAccounts = existingAccounts
+                .Union(accounts)
+                .ToList();
+
+            var accountCodesSet = new HashSet<String>(existingAccounts.Select(e => e.Code));
+
+            for (var i = 0; i < accounts.Count; i++)
+            {
+                var account = accounts[i];
+                if (string.IsNullOrWhiteSpace(account.Code))
+                    throw CreateInputException(i, "Code", "Kode harus diisi"); 
                 if (!Regex.IsMatch(account.Code, @"[\d\.]+"))
-                    throw new ApplicationException(String.Format("invalid code {0}", account.Code));
-            }
+                    throw CreateInputException(i, "Code", "Kode invalid");
+                if (accountCodesSet.Contains(account.Code))
+                    throw CreateInputException(i, "Code", "Kode sudah terdaftar");
+                if (string.IsNullOrWhiteSpace(account.Name))
+                    throw CreateInputException(i, "Name", "Nama harus diisi");
+                if (account.Target.HasValue && account.Target.Value < 0)
+                    throw CreateInputException(i, "Target", "Nilai target harus lebih dari 0");
+                accountCodesSet.Add(account.Code);
 
-            var mismatchedType = accounts.FirstOrDefault(a => (int)a.Type != type);
-            if(mismatchedType != null)
-                throw new ApplicationException(String.Format("mismatched account {0} {1}", type, mismatchedType.Code));
-
-            var mismatchedCode = accounts.FirstOrDefault(a => !a.Code.StartsWith(type+"."));
-            if(mismatchedCode != null)
-                throw new ApplicationException(String.Format("mismatched account code and type {0} {1}", type, mismatchedCode.Code));
-
-            var allAccounts = apbdes.Accounts.Union(accounts).ToList();
-
-            var duplicateCode = allAccounts.GroupBy(a => a.Code)
-                .Where(g => g.Count() > 1)
-                .Select(g => g.Key)
-                .FirstOrDefault();
-            if(duplicateCode != null)
-                throw new ApplicationException(String.Format("duplicate account codes {1}", duplicateCode));
-
-            foreach(var account in accounts)
-            {
                 var parentCode = account.ParentCode;
-                if(!allAccounts.Any(a => a.Code == parentCode))
+                if (!allAccounts.Any(a => a.Code == parentCode))
                     throw new ApplicationException(String.Format("parent account not exists for {1}", account.Code));
+
             }
 
-            foreach(var account in accounts.OrderBy(a => a.Code))
+            foreach (var account in accounts.OrderBy(a => a.Code))
             {
                 var parentAccount = allAccounts.First(a => a.Code == account.ParentCode);
                 account.fkParentAccountID = parentAccount.ID;
                 account.fkAPBDesID = apbdes.ID;
                 dbContext.Set<Account>().Add(account);
+                dbContext.SaveChanges();
             }
 
-            foreach(var account in accounts.OrderByDescending(a => a.Code))
+            foreach (var account in accounts.OrderByDescending(a => a.Code))
             {
                 var childAccounts = allAccounts.Where(a => a.ParentCode == account.Code).ToList();
-                if(childAccounts.Count > 0)
+                if (childAccounts.Count > 0)
                 {
-                    account.Target = childAccounts.Sum(c => c.Target);
+                    account.Target = null;
                     dbContext.Entry(account).State = EntityState.Modified;
+                    dbContext.SaveChanges();
                 }
             }
-
-            dbContext.SaveChanges();
         }
 
         public APBDes GetByRegionID(long regionID)

@@ -296,10 +296,11 @@ var App;
                 return res;
             };
 
-            APBDes.AddAccounts = function (apbdesID, type, accounts) {
+            APBDes.AddAccounts = function (apbdesID, rootAccountID, accounts) {
                 var res = $.ajax(APBDes.ajaxSettings.build({
                     type: 'POST',
-                    url: '/api/APBDes/AddAccounts?apbdesID=' + apbdesID + '&type=' + type + '&accounts=' + accounts + ''
+                    url: '/api/APBDes/AddAccounts?apbdesID=' + apbdesID + '&rootAccountID=' + rootAccountID + '',
+                    data: JSON.stringify(accounts)
                 }));
                 return res;
             };
@@ -489,6 +490,7 @@ var App;
                 this.Name = data ? data.Name : null;
                 this.Type = data ? data.Type : null;
                 this.Size = data ? data.Size : null;
+                this.RelativeFileName = data ? data.RelativeFileName : null;
                 this.FilePath = data ? data.FilePath : null;
             }
             /* App.Controllers.BlobController */

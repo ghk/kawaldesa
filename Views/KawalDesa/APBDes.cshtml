@@ -1,7 +1,7 @@
 ﻿<div ng-controller="APBDesCtrl as apbdesCtrl" ng-if="indexCtrl.region.Type == 4">
     <div ng-repeat="rootAccount in apbdesCtrl.rootAccounts">
         <div class="content-header">
-            {{rootAccount.Code}}. {{rootAccount.Name}} Desa 
+            {{rootAccount.Code}}. {{rootAccount.Name}} Desa
 
         </div>
 
@@ -32,7 +32,43 @@
                         <td class="money"> {{( account.Target | number:0 ) || "0"}} </td>
                         <td class="money"> {{0 | number:0}} </td>
                         <td class="money"> {{0 | number:0}} </td>
-
+                    </tr>
+                    <tr ng-repeat="newAccount in apbdesCtrl.newAccounts[rootAccount.ID]">
+                        <td>
+                            <input type="text" placeholder="Kode" ng-model="newAccount.Code"/>
+                            <span ng-if="apbdesCtrl.formErrors[$index].Code" style="color:red">
+                                {{apbdesCtrl.formErrors[$index].Code}}
+                            </span>
+                        </td>
+                        <td>
+                            <input type="text" placeholder="Nama" ng-model="newAccount.Name" />
+                            <span ng-if="apbdesCtrl.formErrors[$index].Name" style="color:red">
+                                {{apbdesCtrl.formErrors[$index].Name}}
+                            </span>
+                        </td>
+                        <td colspan="3">
+                            <input type="number" placeholder="Target" ng-model="newAccount.Target" />
+                            <span ng-if="apbdesCtrl.formErrors[$index].Target" style="color:red">
+                                {{apbdesCtrl.formErrors[$index].Target}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                        <td colspan="5">
+                            <button class="btn btn-xs"
+                                    ng-click="apbdesCtrl.addNewAccount(rootAccount.ID)">
+                                Tambah {{rootAccount.Name}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                        <td colspan="2">
+                            <button class="btn btn-primary btn-xs"
+                                    ng-click="apbdesCtrl.saveNewAccounts(rootAccount.ID)">
+                                Simpan
+                            </button>
+                            <span ng-if="">Menyimpan</span>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot ng-show="rootAccount.ChildAccounts.length > 0">
@@ -43,9 +79,7 @@
                         <td class="money"> {{(total.RealizedExpense | number:0) || "0"}} </td>
                     </tr>
                 </tfoot>
-
             </table>
         </div>
-
     </div>
 </div>

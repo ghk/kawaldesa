@@ -14,16 +14,39 @@ module App.Controllers {
 
         indexCtrl: IndexCtrl;
         apbdes: Models.APBDes;
+        formErrors = {};
         rootAccounts: Models.Account[];
+        newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
 
         constructor(public $scope, public $upload) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
+            this.formErrors = {};
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });
         }
+
+        addNewAccount(rootAccountID: number) {
+            this.newAccounts[rootAccountID].push(new Models.Account());
+        }
+
+        saveNewAccounts(rootAccountID: number) {
+            var ctrl = this;
+            Models.APBDes.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
+                .done(() => {
+                    ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
+                })
+                .fail((error: any) => { 
+                    ctrl.$scope.$apply(() => {
+                        console.log(error.responseJSON);
+                        ctrl.formErrors[error.responseJSON.Index] = {};
+                        ctrl.formErrors[error.responseJSON.Index][error.responseJSON.Field] = error.responseJSON.Message;
+                    });
+                });
+        }
+
 
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
@@ -44,6 +67,12 @@ module App.Controllers {
                         root.ChildAccounts = apbdes.Accounts
                             .filter(a => a.Type == root.Type && a.fkParentAccountID != null);
                         root.ChildAccounts.sort((a, b) => a.Code.localeCompare(b.Code));
+                    }
+
+                    ctrl.newAccounts = {};
+                    for (var i = 0; i < ctrl.rootAccounts.length; i++) {
+                        var root = ctrl.rootAccounts[i];
+                        ctrl.newAccounts[root.ID] = [];
                     }
                 });
             });

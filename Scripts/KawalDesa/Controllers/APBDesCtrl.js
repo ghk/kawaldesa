@@ -11,13 +11,33 @@ var App;
             function APBDesCtrl($scope, $upload) {
                 this.$scope = $scope;
                 this.$upload = $upload;
+                this.formErrors = {};
+                this.newAccounts = {};
                 var ctrl = this;
                 this.indexCtrl = this.$scope.indexCtrl;
 
+                this.formErrors = {};
                 $scope.$on('regionChangeSuccess', function () {
                     ctrl.onRegionChanged();
                 });
             }
+            APBDesCtrl.prototype.addNewAccount = function (rootAccountID) {
+                this.newAccounts[rootAccountID].push(new Models.Account());
+            };
+
+            APBDesCtrl.prototype.saveNewAccounts = function (rootAccountID) {
+                var ctrl = this;
+                Models.APBDes.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID]).done(function () {
+                    ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
+                }).fail(function (error) {
+                    ctrl.$scope.$apply(function () {
+                        console.log(error.responseJSON);
+                        ctrl.formErrors[error.responseJSON.Index] = {};
+                        ctrl.formErrors[error.responseJSON.Index][error.responseJSON.Field] = error.responseJSON.Message;
+                    });
+                });
+            };
+
             APBDesCtrl.prototype.onRegionChanged = function () {
                 if (this.indexCtrl.region.Type == 4) {
                     this.getAPBDes(this.indexCtrl.region.ID);
@@ -44,6 +64,12 @@ var App;
                             root.ChildAccounts.sort(function (a, b) {
                                 return a.Code.localeCompare(b.Code);
                             });
+                        }
+
+                        ctrl.newAccounts = {};
+                        for (var i = 0; i < ctrl.rootAccounts.length; i++) {
+                            var root = ctrl.rootAccounts[i];
+                            ctrl.newAccounts[root.ID] = [];
                         }
                     });
                 });

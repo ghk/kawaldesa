@@ -18,14 +18,13 @@ namespace App.Controllers
     public class TransactionController: ReadOnlyController<Transaction, long>
     {
         //todo, use better validation
-        public class InputException: Exception
+        private HttpResponseException CreateInputException(String field, String message)
         {
-            public String Field { get; set; }
-            public InputException(String field, String message)
-                :base(message)
-            {
-                Field = field;
-            }
+            var error = new HttpError(message) { { "Field", field } };
+            return new HttpResponseException(
+                ControllerContext.Request.CreateErrorResponse(
+                    HttpStatusCode.BadRequest,
+                    error));
         }
 
         private Uploader uploader = new Uploader();
@@ -53,21 +52,13 @@ namespace App.Controllers
                 var amountStr = res.GetForm("Amount");
                 if (amountStr == null || !decimal.TryParse(amountStr, out amount) || amount < 0)
                 {
-                    var error = new HttpError("Jumlah harus merupakan angka dan positif") { { "Field", "Amount" } };
-                    throw new HttpResponseException(
-                        ControllerContext.Request.CreateErrorResponse(
-                            HttpStatusCode.BadRequest,
-                            error));
+                    throw CreateInputException("Amount", "Jumlah harus merupakan angka dan positif");
                 }
 
                 DateTime date;
                 if (!DateTime.TryParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out date))
                 {
-                    var error = new HttpError("Format tanggal harus 'dd-mm-yyyy'") { { "Field", "Date" } };
-                    throw new HttpResponseException(
-                        ControllerContext.Request.CreateErrorResponse(
-                            HttpStatusCode.BadRequest,
-                            error));
+                    throw CreateInputException("Date", "Format tanggal harus 'dd-mm-yyyy'");
                 }
 
                 var sourceURL = res.GetForm("SourceURL");

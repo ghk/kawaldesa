@@ -463,10 +463,11 @@ module App.Models {
             return res;
         }
 
-        static AddAccounts(apbdesID: number, type: number, accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
+        static AddAccounts(apbdesID: number, rootAccountID: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
             var res = $.ajax(APBDes.ajaxSettings.build({
                 type: 'POST',
-                url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&type='+type+'&accounts='+accounts+'',
+                url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&rootAccountID='+rootAccountID+'',
+                data: JSON.stringify(accounts),
             }));
             return res;
         }
@@ -669,6 +670,7 @@ module App.Models {
         Name: string;
         Type: string;
         Size: number;
+        RelativeFileName: string;
         FilePath: string;
     }
 
@@ -677,12 +679,14 @@ module App.Models {
         Name: string;
         Type: string;
         Size: number;
+        RelativeFileName: string;
         FilePath: string;
         constructor(data?: IBlob) {
             super(data);
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.Size = data ? data.Size : null;
+            this.RelativeFileName = data ? data.RelativeFileName : null;
             this.FilePath = data ? data.FilePath : null;
         }
 
