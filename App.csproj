@@ -201,7 +201,6 @@
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\APBDesController.cs" />
-    <Compile Include="Controllers\BlobController.cs" />
     <Compile Include="Controllers\APBDFileController.cs" />
     <Compile Include="Controllers\FieldReportController.cs" />
     <Compile Include="Controllers\RealizationController.cs" />
