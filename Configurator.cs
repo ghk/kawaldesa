@@ -26,13 +26,16 @@ namespace App
         public static void Configure()
         {
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
-            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
             XmlConfigurator.Configure(new FileInfo(ConfigurationManager.AppSettings["log4net.Config"]));
-            GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
 
-            ConfigureWebAPI(GlobalConfiguration.Configuration);            
+            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
+            GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHandler());
+
             ConfigureRoutes(RouteTable.Routes);
             ConfigureBundles(BundleTable.Bundles);
             ConfigureMappings();            
@@ -108,17 +111,9 @@ namespace App
             var route = routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional },
             );
             route.RouteHandler = new RequiresSessionHttpControllerRouteHandler();
-        }
-
-        private static void ConfigureWebAPI(HttpConfiguration config)
-        {
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
-            config.MessageHandlers.Add(new AuthorizationHandler());
         }
 
 
