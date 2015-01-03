@@ -11,6 +11,13 @@ using System.Web.Http;
 using System.Web.SessionState;
 using System.Web.Optimization;
 using System.Web.Http.WebHost;
+using App.Utils;
+using FluentValidation.WebApi;
+using log4net.Config;
+using System.IO;
+using System.Configuration;
+using System.Web.Http.Filters;
+using log4net;
 
 namespace App
 {
@@ -18,8 +25,14 @@ namespace App
     {
         public static void Configure()
         {
+            AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
+            GlobalFilters.Filters.Add(new HandleErrorAttribute());
+            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
+            XmlConfigurator.Configure(new FileInfo(ConfigurationManager.AppSettings["log4net.Config"]));
+            GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
+
             ConfigureWebAPI(GlobalConfiguration.Configuration);            
-            ConfigureGlobalFilters(GlobalFilters.Filters);
             ConfigureRoutes(RouteTable.Routes);
             ConfigureBundles(BundleTable.Bundles);
             ConfigureMappings();            
@@ -91,12 +104,13 @@ namespace App
                 "{regionKey}",
                 new { controller = "KawalDesa", action = "Index" }
             );
+
             var route = routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            route.RouteHandler = new MyHttpControllerRouteHandler();
+            route.RouteHandler = new RequiresSessionHttpControllerRouteHandler();
         }
 
         private static void ConfigureWebAPI(HttpConfiguration config)
@@ -107,10 +121,6 @@ namespace App
             config.MessageHandlers.Add(new AuthorizationHandler());
         }
 
-        private static void ConfigureGlobalFilters(GlobalFilterCollection filters)
-        {
-            filters.Add(new HandleErrorAttribute());
-        }
 
         private static void ConfigureMappings()
         {
@@ -125,19 +135,33 @@ namespace App
         }
     }
 
-    public class MyHttpControllerHandler
-  : HttpControllerHandler, IRequiresSessionState
+    public class RequiresSessionHttpControllerHandler : HttpControllerHandler, IRequiresSessionState
     {
-        public MyHttpControllerHandler(RouteData routeData)
+        public RequiresSessionHttpControllerHandler(RouteData routeData)
             : base(routeData)
         { }
     }
 
-    public class MyHttpControllerRouteHandler : HttpControllerRouteHandler
+    public class RequiresSessionHttpControllerRouteHandler : HttpControllerRouteHandler
     {
         protected override IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return new MyHttpControllerHandler(requestContext.RouteData);
+            return new RequiresSessionHttpControllerHandler(requestContext.RouteData);
+        }
+    }
+
+    public class ExceptionHandlingAttribute : ExceptionFilterAttribute
+    {
+        private static ILog logger = LogManager.GetLogger(typeof(ExceptionHandlingAttribute));
+
+        public override void OnException(HttpActionExecutedContext context)
+        {
+            var message = String.Format("Error on {0} {1} {2}.{3}",
+                context.Request.Method, context.Request.RequestUri.PathAndQuery,
+                context.ActionContext.ControllerContext.ControllerDescriptor.ControllerName, context.ActionContext.ActionDescriptor.ActionName);
+
+            logger.Error(message, context.Exception);
+            base.OnException(context);
         }
     }
 }

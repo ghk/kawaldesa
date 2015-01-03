@@ -21,32 +21,13 @@ namespace App
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static ILog logger = LogManager.GetLogger(typeof(MvcApplication));
 
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
 
             Configurator.Configure();
-
-            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
-            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
-            GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
-            log4net.Config.XmlConfigurator.Configure(new FileInfo(System.Configuration.ConfigurationManager.AppSettings["log4net.Config"]));
         }
 
-        public class ExceptionHandlingAttribute : ExceptionFilterAttribute
-        {
-            public override void OnException(HttpActionExecutedContext context)
-            {
-                var message = String.Format("Error on {0} {1} {2}.{3}",
-                    context.Request.Method, context.Request.RequestUri.PathAndQuery,
-                    context.ActionContext.ControllerContext.ControllerDescriptor.ControllerName, context.ActionContext.ActionDescriptor.ActionName);
-
-                logger.Error(message, context.Exception);
-                base.OnException(context);
-            }
-        }
 
         protected void Application_PostAuthorizeRequest()
         {
