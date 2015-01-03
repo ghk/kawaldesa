@@ -39,7 +39,7 @@ namespace App.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public UserViewModel Login(LoginViewModel model)
+        public UserViewModel Login([FromBody] LoginViewModel model)
         {
             ModelState.Clear();
             Validate(model);
@@ -49,12 +49,12 @@ namespace App.Controllers
                     ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
             else
             {
+                Console.WriteLine(model.UserName);
                 var user = UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
                     var session = HttpContext.Current.Session;
-                    if (session != null)
-                        session["userid"] = user.Id;
+                    session["userid"] = user.Id;
                     
                     var roles = UserManager.GetRoles(user.Id);
                     UserViewModel userViewModel = new UserViewModel() 

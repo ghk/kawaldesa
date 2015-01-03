@@ -1,5 +1,3 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(App.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(App.App_Start.NinjectWebCommon), "Stop")]
 
 namespace App.App_Start
 {
@@ -47,7 +45,7 @@ namespace App.App_Start
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
-        private static IKernel CreateKernel()
+        public static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
             try

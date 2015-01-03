@@ -32,7 +32,6 @@ namespace App.Models
         public List<Region> Scopes { get; set; }
     }
 
-    [Validator(typeof(LoginViewModelValidator))]
     public class LoginViewModel
     {
         public string UserName { get; set; }

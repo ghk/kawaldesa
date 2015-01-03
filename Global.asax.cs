@@ -29,6 +29,7 @@ namespace App
 
             Configurator.Configure();
 
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(NinjectWebCommon.CreateKernel());
             FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
             log4net.Config.XmlConfigurator.Configure(new FileInfo(System.Configuration.ConfigurationManager.AppSettings["log4net.Config"]));
@@ -49,10 +50,8 @@ namespace App
 
         protected void Application_PostAuthorizeRequest()
         {
-            if (!IsEmissRequest())
-            {
-                HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
-            }
+            Console.WriteLine("post auth");
+            HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
         }
 
         private bool IsWebApiRequest()
