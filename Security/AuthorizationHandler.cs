@@ -13,10 +13,11 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.SessionState;
 
 namespace App.Security
 {
-    public class AuthorizationHandler: DelegatingHandler
+    public class AuthorizationHandler: DelegatingHandler, IRequiresSessionState
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {

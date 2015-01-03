@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.SessionState;
 using System.Web.Optimization;
+using System.Web.Http.WebHost;
 
 namespace App
 {
@@ -90,15 +91,16 @@ namespace App
                 "{regionKey}",
                 new { controller = "KawalDesa", action = "Index" }
             );
+            var route = routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            route.RouteHandler = new MyHttpControllerRouteHandler();
         }
 
         private static void ConfigureWebAPI(HttpConfiguration config)
         {
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );            
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
@@ -120,6 +122,22 @@ namespace App
                 .ForMember(view => view.Id, opt => opt.MapFrom(user => user.Id))
                 .ForMember(view => view.UserName, opt => opt.MapFrom(user => user.UserName))
                 .ForMember(view => view.Roles, opt => opt.Ignore());
+        }
+    }
+
+    public class MyHttpControllerHandler
+  : HttpControllerHandler, IRequiresSessionState
+    {
+        public MyHttpControllerHandler(RouteData routeData)
+            : base(routeData)
+        { }
+    }
+
+    public class MyHttpControllerRouteHandler : HttpControllerRouteHandler
+    {
+        protected override IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            return new MyHttpControllerHandler(requestContext.RouteData);
         }
     }
 }

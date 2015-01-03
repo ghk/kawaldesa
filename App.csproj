@@ -198,7 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\APBDesController.cs" />
     <Compile Include="Controllers\BlobController.cs" />
@@ -1361,6 +1361,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\" />
     <Folder Include="SQLs\" />
   </ItemGroup>
   <ItemGroup>

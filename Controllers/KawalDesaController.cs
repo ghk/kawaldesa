@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using App.Security;
 using System.Web.Script.Serialization;
 using System.Configuration;
+using System.Security.Principal;
 
 namespace App.Controllers
 {
@@ -211,6 +212,10 @@ namespace App.Controllers
         public static void CheckRegionAllowed(DbContext db, long regionID)
         {
             var principal = System.Web.HttpContext.Current.User;
+            CheckRegionAllowed(principal, db, regionID);
+        }
+        public static void CheckRegionAllowed(IPrincipal principal,DbContext db, long regionID)
+        {
             String userID = ((KawalDesaIdentity)principal.Identity).User.Id;
             if (userID == null)
                 throw new ApplicationException("region is not allowed for thee");

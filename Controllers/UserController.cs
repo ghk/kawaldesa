@@ -49,7 +49,6 @@ namespace App.Controllers
                     ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
             else
             {
-                Console.WriteLine(model.UserName);
                 var user = UserManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
@@ -292,7 +291,6 @@ namespace App.Controllers
                     else
                         res = UserManager.RemoveFromRoles(user.Id, new string[]{roleName});
                 }
-                Console.WriteLine(res);
             }
             dbContext.SaveChanges();
         }

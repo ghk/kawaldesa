@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using FluentValidation.WebApi;
-using App.App_Start;
 using System.Web;
 using System.Web.SessionState;
 using System.Linq;
@@ -13,6 +12,7 @@ using System;
 using log4net;
 using System.IO;
 using System.Configuration;
+using App.Utils;
 
 namespace App
 {
@@ -29,7 +29,7 @@ namespace App
 
             Configurator.Configure();
 
-            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(NinjectWebCommon.CreateKernel());
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
             FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
             log4net.Config.XmlConfigurator.Configure(new FileInfo(System.Configuration.ConfigurationManager.AppSettings["log4net.Config"]));
@@ -50,19 +50,9 @@ namespace App
 
         protected void Application_PostAuthorizeRequest()
         {
-            Console.WriteLine("post auth");
             HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
         }
 
-        private bool IsWebApiRequest()
-        {
-            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/api");
-        }
-
-        private bool IsEmissRequest()
-        {
-            return HttpContext.Current.Request.Headers.AllKeys.Contains(KawalDesaHeaders.X_KD_USERID);
-        }
 
 
     }

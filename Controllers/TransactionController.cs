@@ -36,17 +36,20 @@ namespace App.Controllers
         [Authorize(Roles=Role.VOLUNTEER)]
         public async Task AddTransferTransaction()
         {
+            var context = HttpContext.Current;
+            var principal = HttpContext.Current.User;
             var res = await uploader.PostFile<Blob>(Request);
+            HttpContext.Current = context;
 
             try
             {
 
-                var principal = HttpContext.Current.User;
                 var user = (principal.Identity as KawalDesaIdentity).User;
 
                 var sourceID = long.Parse(res.Forms["fkSourceID"]);
                 var destID = long.Parse(res.Forms["fkDestinationID"]);
                 var actorID = long.Parse(res.Forms["fkActorID"]);
+
 
                 decimal amount;
                 var amountStr = res.GetForm("Amount");
@@ -63,7 +66,7 @@ namespace App.Controllers
 
                 var sourceURL = res.GetForm("SourceURL");
 
-                KawalDesaController.CheckRegionAllowed(dbContext, destID);
+                KawalDesaController.CheckRegionAllowed(principal,dbContext, destID);
 
                 if (actorID != sourceID && actorID != destID)
                     throw new ApplicationException("actor id must matched source id or dest id");
