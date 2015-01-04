@@ -31,9 +31,9 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
-        public async void UpdateSources()
+        public async void UpdateSources(Uploader uploader)
         {
-            var res = await new Uploader().PostFile<Blob>(Request);
+            var res = await uploader.PostFile();
 
             try
             {

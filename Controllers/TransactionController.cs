@@ -27,18 +27,17 @@ namespace App.Controllers
                     error));
         }
 
-        private Uploader uploader = new Uploader();
         public TransactionController(DB dbContext) : base(dbContext) {
             AllowGetAll = false;
         }
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public async Task AddTransferTransaction()
+        public async Task AddTransferTransaction(Uploader uploader)
         {
             var context = HttpContext.Current;
             var principal = HttpContext.Current.User;
-            var res = await uploader.PostFile<Blob>(Request);
+            var res = await uploader.PostFile();
             HttpContext.Current = context;
 
             try

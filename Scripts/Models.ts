@@ -24,6 +24,22 @@ module Scaffold {
 
     }
 
+    declare var angular;
+    export class Uploader {
+        forms = {};
+        files: any;
+
+        public upload(url): any{
+            var $upload = angular.element("html").injector().get("$upload");
+            return $upload.upload({
+                type: 'POST',
+                url: url,
+                data: this.forms,
+                file: this.files
+            });
+        }
+    }
+
 	export interface IQuery {
 		PageLength?: number;
 		PageBegin?: number;
@@ -447,11 +463,16 @@ module App.Models {
         }
 
                 
-        static UpdateSources(): JQueryPromise<void> {
+        static CreateInputException(index: number, field: string, message: string): JQueryPromise</** System.Web.Http.HttpResponseException **/ any> {
             var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/APBDes/UpdateSources',
+                type: 'GET',
+                url: '/api/APBDes/CreateInputException?index='+index+'&field='+encodeURI(field)+'&message='+encodeURI(message)+'',
             }));
+            return res;
+        }
+
+        static UpdateSources(uploader: Scaffold.Uploader): any {
+            var res = uploader.upload('/api/APBDes/UpdateSources');
             return res;
         }
 
@@ -577,11 +598,8 @@ module App.Models {
             return res;
         }
                 
-        static PostFile(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/APBDFile/PostFile',
-            }));
+        static PostFile(uploader: Scaffold.Uploader): any {
+            var res = uploader.upload('/api/APBDFile/PostFile');
             return res;
         }
 
@@ -690,45 +708,6 @@ module App.Models {
             this.FilePath = data ? data.FilePath : null;
         }
 
-        /* App.Controllers.BlobController */
-
-        static GetAll(query?: IQuery): JQueryPromise<Array<Blob>> {
-            var res = $.ajax(Blob.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Blob/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new Blob(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<Blob> {
-            var res = $.ajax(Blob.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Blob/Get/'+id,
-            })).then((model) => new Blob(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(Blob.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Blob/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                
-        static Download(blobID: number): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-            var res = $.ajax(Blob.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Blob/Download?blobID='+blobID+'',
-            }));
-            return res;
-        }
-
     }
 
     export interface IFieldReport extends IBaseEntity {
@@ -795,11 +774,8 @@ module App.Models {
         }
 
                 
-        static AddFieldReport(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
-            var res = $.ajax(FieldReport.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/FieldReport/AddFieldReport',
-            }));
+        static AddFieldReport(uploader: Scaffold.Uploader): any {
+            var res = uploader.upload('/api/FieldReport/AddFieldReport');
             return res;
         }
 
@@ -1053,11 +1029,8 @@ module App.Models {
         }
 
                 
-        static AddTransferTransaction(): JQueryPromise</** System.Threading.Tasks.Task **/ any> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/Transaction/AddTransferTransaction',
-            }));
+        static AddTransferTransaction(uploader: Scaffold.Uploader): any {
+            var res = uploader.upload('/api/Transaction/AddTransferTransaction');
             return res;
         }
 

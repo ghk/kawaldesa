@@ -12,16 +12,14 @@ namespace App.Controllers
 {
     public class APBDFileController: BaseController<APBDFile, long>
     {
-        private Uploader uploader = new Uploader();
-
         public APBDFileController(DB dbContext)
             : base(dbContext)
         {
         }
 
-        public async Task PostFile()
+        public async Task PostFile(Uploader uploader)
         {
-            var res = await uploader.PostFile<Blob>(Request);
+            var res = await uploader.PostFile();
 
             try
             {

@@ -221,6 +221,10 @@
             {
                 return "string";
             }
+            case "Scaffold.Uploader":
+            {
+                return "Scaffold.Uploader";
+            }
 			default: 
                 if (EnumerateModels("App.Models").Select(x => x.FullName).Contains(type))
                     return "App.Models.I" + ShortName(type);

@@ -29,6 +29,22 @@ module Scaffold {
 
     }
 
+    declare var angular;
+    export class Uploader {
+        forms = {};
+        files: any;
+
+        public upload(url): any{
+            var $upload = angular.element("html").injector().get("$upload");
+            return $upload.upload({
+                type: 'POST',
+                url: url,
+                data: this.forms,
+                file: this.files
+            });
+        }
+    }
+
 	export interface IQuery {
 		PageLength?: number;
 		PageBegin?: number;
@@ -56,7 +72,6 @@ module <#=_namespace #> {
 	foreach (var _class in jsoncls) 
 	{
 		var elem = (CodeElement)_class;
-		//Indent(1); WriteLine("// {0}: {1}", elem.ProjectItem.FileNames[0], elem.StartPoint.Line);
 
         Indent(1); Write("export interface {0}{1}", "I", _class.Name); 
         var bases =  _class.Bases.Cast<CodeElement>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)).ToList();
@@ -212,6 +227,8 @@ module <#=_namespace #> {
                 var tresult = GetReturnType(fct, true);
                 var method = GetMethod((CodeElement)member, true);
 
+                var isUpload= false;
+                var uploaderName = "uploader";
                 var url = string.Format("/api/{0}/{1}", GetRouteName(_class.Name), member.Name);
                 var sb = new StringBuilder("");
                 bool first = true;
@@ -219,9 +236,14 @@ module <#=_namespace #> {
                     var p = (CodeParameter)fct.Parameters.Item(i+1);
                     if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody"))
                         continue;
+                    var pt = GetTSType(p);
+                    if(pt == "Scaffold.Uploader"){
+                        isUpload = true;
+                        uploaderName = p.Name;
+                        continue;
+                    }
                     sb.Append(first ? "?" : "&");
                     first = false;
-                    var pt = GetTSType(p);
                     if (pt == "string")
                         sb.AppendFormat("{0}='+encodeURI({0})+'", p.Name);
                     else
@@ -261,36 +283,45 @@ module <#=_namespace #> {
                     var pt = GetTSType(p);
                     Write("{0}: {1}", p.Name, pt);
                 }
+                if(!isUpload){
                 Write("): JQueryPromise<{0}> ", tresult); WriteLine("{");
 #>
             var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
                 type: '<#= method #>',
                 url: '<#= url #>',
 <# 
-            for (int i = 0; i<fct.Parameters.Count; i++) {
-                    var p = (CodeParameter)fct.Parameters.Item(i+1);
-                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
-                        if (method == "GET") {
-                            WriteLine("error: GET methods don't support FromBody parameters.");
-                        }
-                        else {
-                            Indent(4);
-                            Write("data: JSON.stringify(");
-                            if(hasFromBodyAndSameClass)
-                            {
-                                Write("this");
+                    for (int i = 0; i<fct.Parameters.Count; i++) {
+                        var p = (CodeParameter)fct.Parameters.Item(i+1);
+                        if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                            if (method == "GET") {
+                                WriteLine("error: GET methods don't support FromBody parameters.");
                             }
-                            else 
-                            {
-                                Write(p.Name);
+                            else {
+                                Indent(4);
+                                Write("data: JSON.stringify(");
+                                if(hasFromBodyAndSameClass)
+                                {
+                                    Write("this");
+                                }
+                                else 
+                                {
+                                    Write(p.Name);
+                                }
+                                WriteLine("),");
                             }
-                            WriteLine("),");
+                            break;
                         }
-                        break;
                     }
-                }
 #>
             }));
+<#
+                } else {
+                Write("): any "); WriteLine("{");
+#>
+            var res = <#= uploaderName #>.upload('<#= url #>');
+<#
+                } 
+#>
             return res;
 <#
                 Indent(2); WriteLine("}");
