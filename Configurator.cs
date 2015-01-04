@@ -111,7 +111,7 @@ namespace App
             var route = routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional },
+                defaults: new { id = RouteParameter.Optional }
             );
             route.RouteHandler = new RequiresSessionHttpControllerRouteHandler();
         }
