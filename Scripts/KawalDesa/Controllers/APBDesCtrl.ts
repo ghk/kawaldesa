@@ -14,9 +14,14 @@ module App.Controllers {
 
         indexCtrl: IndexCtrl;
         apbdes: Models.APBDes;
-        formErrors = {};
+        formErrors: {}
         rootAccounts: Models.Account[];
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
+
+        websiteText: string;
+        websiteDisable: boolean = true;
+        isCompleteStatus: string = "belum";
+
 
         constructor(public $scope, public $upload) {
             var ctrl = this;
@@ -38,20 +43,49 @@ module App.Controllers {
                 .done(() => {
                     ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
                 })
-                .fail((error: any) => { 
+                .fail((error: any) => {
                     ctrl.$scope.$apply(() => {
-                        console.log(error.responseJSON);
-                        ctrl.formErrors[error.responseJSON.Index] = {};
-                        ctrl.formErrors[error.responseJSON.Index][error.responseJSON.Field] = error.responseJSON.Message;
+                        var err = {};
+                        for (var i = 0; i < this.newAccounts[rootAccountID].length; i++) {
+                            for (var j = 0; j < error.responseJSON[i].length; j++) {
+                                err[error.responseJSON[i][j].Field] = error.responseJSON[i][j].Message;
+                                ctrl.formErrors[rootAccountID] = {};
+                                ctrl.formErrors[rootAccountID][i] = {};
+                                ctrl.formErrors[rootAccountID][i][j] = err;
+                            }
+                        }
                     });
                 });
         }
-
 
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
                 this.getAPBDes(this.indexCtrl.region.ID);
             }
+        }
+
+        onEnableInput() {
+            this.websiteDisable = false;
+        }
+
+        onSubmittingWebsite() {
+            var ctrl = this;
+            Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.websiteText)
+                .done(() => {
+                    ctrl.$scope.$apply(() => {
+                        this.websiteDisable = true;
+                    });
+                })
+        }
+
+        onComplete() {
+            var ctrl = this;
+            Models.APBDes.Complete(this.apbdes.ID)
+                .done(() => {
+                    ctrl.$scope.$apply(() => {
+                        this.isCompleteStatus = "sudah";
+                    });
+                })
         }
 
         getAPBDes(regionID: number) {
@@ -74,6 +108,9 @@ module App.Controllers {
                         var root = ctrl.rootAccounts[i];
                         ctrl.newAccounts[root.ID] = [];
                     }
+
+                    if (apbdes.IsCompleted)
+                        this.isCompleteStatus = "sudah";
                 });
             });
         }

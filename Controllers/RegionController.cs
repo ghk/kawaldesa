@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace App.Controllers
 {
     public class RegionController : ReadOnlyController<Region, long>
     {
-        public RegionController(DB dbContext) : base(dbContext) {
+        public RegionController(DB dbContext) : base(dbContext)
+        {
             dbContext.Configuration.ProxyCreationEnabled = false;
             SingleInclude(r => r.Parent.Parent, r => r.Parent.Parent.Parent, r => r.Parent.Parent.Parent.Parent);
         }
@@ -28,6 +30,18 @@ namespace App.Controllers
                 exp = exp.Include(include);
             }
             return exp.FirstOrDefault(r => r.UrlKey == urlKey);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
+        public void UpdateWebsite(long regionID, String regionWebsite)
+        {
+            var region = dbSet.Find(regionID);
+            KawalDesaController.CheckRegionAllowed(dbContext, regionID);
+
+            region.Website = regionWebsite;
+            dbContext.Entry(region).State = EntityState.Modified;
+            dbContext.SaveChanges();
         }
     }
 }
