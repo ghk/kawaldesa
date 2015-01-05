@@ -1,0 +1,49 @@
+<h1>Kawal Desa</h1>
+
+<p>Source code untuk http://kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. </p>
+
+<p>Kontribusi diterima dengan terbuka. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues </p>
+
+<p>Hak Cipta Kontributor &amp; Relawan kawaldesa.org, source code berlisensi AGPL</p>
+
+<h2>Code Overview</h2>
+
+<p>Currently built with C# WebAPI, Typescript and angularjs:</p>
+
+<ul>
+<li><code>Content</code>: mostly stylesheets</li>
+<li><code>Controllers</code>: WebAPI and MVC Controllers</li>
+<li><code>Migrations</code>: DB seed and migrations code</li>
+<li><code>Models</code>: EF Code First Models</li>
+<li><code>Scripts/KawalDesa</code>: Here lies the angular code</li>
+<li><code>SQLs</code>: SQL Views and Seeds</li>
+</ul>
+
+<h2>Requirements:</h2>
+
+<ul>
+<li>Visual Studio 2013 (Download the community edition, it's free for this kind of project)</li>
+<li>PostgreSQL > 9.3 (Requires materialized views)</li>
+<li>WebEssentials for Visual Studio (not mandatory, but it leads to nicer typescript development)</li>
+<li>Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold</li>
+</ul>
+
+<h2>Installation:</h2>
+
+<ol>
+<li>Create a symlink from asp-scaffold's Scaffold folder to Scaffold directory; right under this root directory (for example in windows <code>mklink /j Scaffold ..\asp-scaffold\Scaffold</code>)</li>
+<li>Create a new postgresql database, copy the connectionStrings.config.example to connectionStrings.config, change the database settings on it.</li>
+<li>Copy appSettings.config.example to appSettings.config.</li>
+<li>Open the project in Visual Studio; Build and let it download the nuget dependencies.</li>
+<li>Open nuget package manager, run <code>update-database</code></li>
+<li>You can run it now; but to have all regions, you need to load SQLs\Seeds\combined.sql, e.g. <code>psql -U postgres kawaldesa &lt; SQLs\Seeds\combined.sql</code></li>
+<li>Run App projects! You can login with username: 'admin' or 'volunteer' and password: '123456'</li>
+</ol>
+
+<h2>Current Contributors</h2>
+
+<ul>
+<li>Gozali Kumara (ghk@microvac.co.id)</li>
+<li>Vidyapati (vidyapati@microvac.co.id)</li>
+<li>Muhammad Reza (m.reza@microvac.co.id)</li>
+</ul>

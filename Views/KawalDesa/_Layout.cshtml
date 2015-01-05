@@ -1,0 +1,68 @@
+﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
+<head>
+    <!-- facebook hash remover -->
+    <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
+
+    <script type="text/javascript">window.CurrentUser = @Html.Raw(ViewData["User"]);</script>
+
+    <title>Kawal Desa - Transparansi Penyaluran dan Realisasi Dana Desa</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+
+    @Styles.Render("~/css/libs/bootstrap")
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' />
+    @Styles.Render("~/css/kawaldesa")
+
+
+    @Scripts.Render("~/js/libs/jquery")
+    @Scripts.Render("~/js/libs/bootstrap")
+    @Scripts.Render("~/js/kawaldesa")
+
+</head>
+<body ng-controller="IndexCtrl as indexCtrl">
+    <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav nav-menu">
+                    <li>
+                        <a href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
+                    </li>
+                    <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
+                        <a href="/p/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
+                    </li>
+                    <li ng-class="{'active' : indexCtrl.type == 'realization'}">
+                        <a href="/r/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav nav-region">
+
+                    <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
+                        <div class="gt">→</div>
+                    </li>
+                    <li ng-repeat-end ng-class="{'active':$last}">
+                        <a href="#" ng-click="indexCtrl.changeRegion(region.ID, $event)">
+                            {{region.Name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
+                    <a style="padding-right: 20px;" href="/dashboard">
+                        <img src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookID}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
+                        {{indexCtrl.currentUser.Name}}
+                    </a>
+                </li>
+                <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>
+            </ul>
+        </div>
+    </header>
+    @RenderBody()
+</body>
+</html>

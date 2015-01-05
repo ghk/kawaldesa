@@ -1,0 +1,296 @@
+﻿<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'transfer' && indexCtrl.region.Type < 4">
+
+    <div class="container-fluid alert alert-success" ng-if="indexCtrl.currentUser.ID && indexCtrl.currentUser.Roles.length == 1">
+        Anda telah login tetapi belum menentukan jenis relawan Anda. klik <a href="/dashboard">Di Sini</a> untuk mengubahnya.
+    </div>
+
+    <div class="content-header">
+        Penyaluran Dana Desa Dari Pusat & Kabupaten/Kota
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
+                    <th colspan="3" style="text-align: center; width: 25%;">Dana Desa (APBN + ADD) <sup><a href="#help-dana-desa">?</a></sup></th>
+                    <th colspan="3" style="text-align: center; width: 25%;">APBN (Pusat → Desa) <sup><a href="#help-apbn">?</a></sup></th>
+                    <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
+                </tr>
+                <tr>
+                    <th class="money" style="width: 8.3333%;">Anggaran <sup><a href="#help-anggaran">?</a></sup></th>
+                    <th class="money" style="width: 8.3333%;">Tertransfer <sup> <a href="#help-tertransfer">?</a></sup></th>
+                    <th class="money" style="width: 8.3333%;">Diterima <sup><a href="#help-diterima">?</a></sup></th>
+                    <th class="money" style="width: 8.3333%;">Anggaran</th>
+                    <th class="money" style="width: 8.3333%;">Tertransfer</th>
+                    <th class="money" style="width: 8.3333%;">Diterima</th>
+                    <th class="money" style="width: 8.3333%;">Anggaran</th>
+                    <th class="money" style="width: 8.3333%;">Tertransfer</th>
+                    <th class="money" style="width: 8.3333%;">Diterima</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="entity in entities"></tr>
+                <tr class="detail-padding" ng-if="recapitulationCtrl.isExpanded(entity)">
+                    <td colspan="10"></td>
+                </tr>
+                <tr ng-if="recapitulationCtrl.isExpanded(entity)
+                    && recapitulationCtrl.isFormExpanded(entity)
+                    && indexCtrl.hasAnyVolunteerRoles()">
+                    <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
+                    <td colspan="9" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" role="form" ng-submit="recapitulationCtrl.saveForm(entity)">
+                                <h5 style="text-align: center; width: 100%">
+                                    Tambah Laporan
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkActorID == entity.RegionID ? 'Terima Transfer' : 'Transfer'}}
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'APBN' : 'ADD'}}
+                                    (
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'Pusat' : regionTree[2].Name}}
+                                    -> Desa {{entity.RegionName}})
+                                </h5>
+                                <div class="form-group input-sm">
+                                    <label for="date" class="col-sm-2 control-label">Tanggal</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].Date"
+                                               class="form-control" id="date" placeholder="dd-mm-yyyy">
+                                        <div ng-if="recapitulationCtrl.formErrors[entity.RegionID].Date" class="alert alert-danger" role="alert">
+                                            {{recapitulationCtrl.formErrors[entity.RegionID].Date}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group input-sm">
+                                    <label for="amount" class="col-sm-2 control-label">Jumlah</label>
+                                    <div class="col-sm-10">
+                                        <input type="number"
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].Amount"
+                                               class="form-control" id="amount" placeholder="Jumlah Transfer">
+                                        <div ng-if="recapitulationCtrl.formErrors[entity.RegionID].Amount" class="alert alert-danger" role="alert">
+                                            {{recapitulationCtrl.formErrors[entity.RegionID].Amount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group input-sm">
+                                    <label for="proof" class="col-sm-2 control-label">Lampiran</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" ng-file-select
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].File"
+                                               id="proof" />
+                                    </div>
+                                </div>
+                                <div class="form-group input-sm">
+                                    <label for="amount" class="col-sm-2 control-label">URL Sumber</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                               ng-model="recapitulationCtrl.formTransactions[entity.RegionID].SourceURL"
+                                               class="form-control" id="amount" placeholder="jika ada, masukkan URL sumber">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="width: 100%; text-align: center;">
+                                        <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
+                                        <button class="btn btn-xs btn-danger" ng-click="recapitulationCtrl.setFormExpanded(entity, false)">Batal</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity)
+                    && !recapitulationCtrl.isFormExpanded(entity)
+                    && indexCtrl.hasAnyVolunteerRoles()
+                    && indexCtrl.isInScope(entity.RegionID)">
+                    <td colspan="4"></td>
+                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [0, entity.RegionID, 0])"
+                                ng-if="indexCtrl.isInRoleAndScope('volunteer_apbn', entity.RegionID)">
+                            Tambah
+                        </button>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [0, entity.RegionID, entity.RegionID])"
+                                ng-if="indexCtrl.isInRoleAndScope('volunteer_desa', entity.RegionID)">
+                            Tambah
+                        </button>
+                    </td>
+
+                    <td></td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, regionTree[2].ID])"
+                                ng-if="indexCtrl.isInRoleAndScope('volunteer_add', entity.RegionID)">
+                            Tambah
+                        </button>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn btn-primary btn-xs"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, entity.RegionID])"
+                                ng-if="indexCtrl.isInRoleAndScope('volunteer_desa', entity.RegionID)">
+                            Tambah
+                        </button>
+                    </td>
+                </tr>
+                <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity)" ng-repeat="transaction in recapitulationCtrl.transactions[entity.RegionID]">
+                    <td colspan="4"></td>
+                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                    <td class="money">
+                        <span class="info">
+                            <a ng-if="transaction.APBN.TransferredProofID" target="_blank" href="/Content/files/{{transaction.APBN.TransferredProofID}}">
+                                {{transaction.APBN.TransferredDate}}
+                            </a>
+                            <span ng-if="!transaction.APBN.TransferredProofID">{{transaction.APBN.TransferredDate}}</span>
+                        </span>
+                        {{transaction.APBN.TransferredAmount | number:0}}
+                    </td>
+                    <td class="money">
+                        <span class="info">
+                            <a ng-if="transaction.APBN.AcknowledgedProofID" target="_blank" href="/Content/files/{{transaction.APBN.AcknowledgedProofID}}">
+                                {{transaction.APBN.AcknowledgedDate}}
+                            </a>
+                            <span ng-if="!transaction.APBN.AcknowledgedProofID">
+                                {{transaction.APBN.AcknowledgedDate}}
+                            </span>
+                        </span>
+                        {{transaction.APBN.AcknowledgedAmount | number:0}}
+                    </td>
+                    <td></td>
+                    <td class="money">
+                        <span class="info">
+                            <a ng-if="transaction.ADD.TransferredProofID" target="_blank" href="/Content/files/{{transaction.ADD.TransferredProofID}}">
+                                {{transaction.ADD.TransferredDate}}
+                            </a>
+                            <span ng-if="!transaction.ADD.TransferredProofID">{{transaction.ADD.TransferredDate}}</span>
+                        </span>
+                        {{transaction.ADD.TransferredAmount | number:0}}
+                    </td>
+                    <td class="money">
+                        <span class="info">
+                            <a ng-if="transaction.ADD.AcknowledgedProofID" target="_blank" href="/Content/files/{{transaction.ADD.AcknowledgedProofID}}">
+                                {{transaction.ADD.AcknowledgedDate}}
+                            </a>
+                            <span ng-if="!transaction.ADD.AcknowledgedProofID">
+                                {{transaction.ADD.AcknowledgedDate}}
+                            </span>
+                        </span>
+                        {{transaction.ADD.AcknowledgedAmount | number:0}}
+                    </td>
+                </tr>
+                <tr class="detail-sum" ng-if="recapitulationCtrl.isExpanded(entity)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">
+                    <td colspan="4"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat-end="">
+                    <td>
+                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                            {{entity.RegionName}}
+                        </a>
+                    </td>
+                    <td class="money"> {{entity.BudgetedTotal | number:0}}</td>
+                    <td class="money"> {{entity.TransferredTotal | number:0}} </td>
+                    <td class="money"> {{entity.AcknowledgedTotal | number:0}} </td>
+
+                    <td class="money"> {{entity.BudgetedAPBN | number:0}} </td>
+                    <td class="money">
+                        <span ng-if="indexCtrl.region.Type < 3">
+                            {{entity.TransferredAPBN | number:0}}
+                        </span>
+                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
+                            {{entity.TransferredAPBN | number:0}}
+                        </a>
+                    </td>
+                    <td class="money">
+                        <span ng-if="indexCtrl.region.Type < 3">
+                            {{entity.AcknowledgedAPBN | number:0}}
+                        </span>
+                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
+                            {{entity.AcknowledgedAPBN | number:0}}
+                        </a>
+                    </td>
+
+                    <td class="money"> {{entity.BudgetedADD | number:0}} </td>
+                    <td class="money">
+                        <span ng-if="indexCtrl.region.Type < 3">
+                            {{entity.TransferredADD | number:0}}
+                        </span>
+                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
+                            {{entity.TransferredADD | number:0}}
+                        </a>
+                    </td>
+                    <td class="money">
+                        <span ng-if="indexCtrl.region.Type < 3">
+                            {{entity.AcknowledgedADD | number:0}}
+                        </span>
+                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
+                            {{entity.AcknowledgedADD | number:0}}
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-show="entities.length > 0">
+                <tr class="success">
+                    <td><a href="">Total</a></td>
+                    <td class="money"> {{total.BudgetedTotal | number:0}} </td>
+                    <td class="money"> {{total.TransferredTotal | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedTotal | number:0}} </td>
+
+                    <td class="money"> {{total.BudgetedAPBN | number:0}} </td>
+                    <td class="money"> {{total.TransferredAPBN | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedAPBN | number:0}} </td>
+
+                    <td class="money"> {{total.BudgetedADD | number:0}} </td>
+                    <td class="money"> {{total.TransferredADD | number:0}} </td>
+                    <td class="money"> {{total.AcknowledgedADD | number:0}} </td>
+                </tr>
+            </tfoot>
+
+            <tfoot ng-show="entities.length == 0">
+                <tr>
+                    <td colspan="10" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    <div class="container-fluid well help">
+        <ul>
+            <li ng-if="indexCtrl.isInRole('volunteer')">
+                Untuk melaporkan penyaluran, klik kolom Tertransfer dan Diterima di baris desa di halaman kecamatan.
+            </li>
+            <li>
+                Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
+                <br />
+                Untuk saran/bug/diskusi saat ini dikumpulkan di <a href="https://github.com/ghk/kawaldesa/issues">sini</a>
+            </li>
+            <li id="help-dana-desa">
+                Penyaluran Dana Desa yang ditampilkan kawaldesa.org dibagi menjadi 2:
+                <ol>
+                    <li id="help-apbn"> Penyaluran dari pusat ke desa yang dianggarkan dalam APBN </li>
+                    <li id="help-add"> Penyaluran dari kabupaten/kota dari DAU & DBH kabupaten/kota ke desa </li>
+                </ol>
+            </li>
+            <li id="help-anggaran">
+                Anggaran yang ditampilkan pada kawaldesa.org saat ini adalah perkiraan dan mengacu ke APBN/APBD 2014,
+                <br />
+                Anggaran APBN 2015 akan berbeda (bahkan porsinya masih simpang siur dan berbeda dengan di UU Desa).
+            </li>
+            <li id="help-penyaluran">
+                Data penyaluran dilaporkan dalam 2 bagian,
+                <ol>
+                    <li id="help-tertransfer"> Tertransfer (angka yang dilaporkan penyalur (pusat/kabupaten)  </li>
+                    <li id="help-diterima">  Diterima, angka yang dilaporkan oleh desa </li>
+                </ol>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0"?>
+<connectionStrings>
+  <add name="DefaultConnection" connectionString="User ID=postgres;Password=root;Host=localhost;Port=5432;Database=kawaldesa;" providerName="Npgsql" />
+</connectionStrings>

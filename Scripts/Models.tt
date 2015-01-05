@@ -1,0 +1,395 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".ts" #>
+<#@include file="T4Utils.t4" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+// WARNING: T4 generated file  (it is related to CodeToServerProxy)
+//
+
+/// <reference path="../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+
+module Scaffold {
+    export class AjaxSettings {
+        async = true;
+        cache = false;
+        timeout = -1;
+
+        public build(settings: JQueryAjaxSettings): JQueryAjaxSettings{
+            return {
+                async: this.async,
+                cache: this.cache,
+                timeout: this.timeout,
+                dataType: 'json',
+				contentType: 'application/json',
+			    type: settings.type,
+			    url: settings.url,
+                data: settings.data
+            }
+        }
+
+    }
+
+    declare var angular;
+    export class Uploader {
+        forms = {};
+        files: any;
+
+        public upload(url): any{
+            var $upload = angular.element("html").injector().get("$upload");
+            return $upload.upload({
+                type: 'POST',
+                url: url,
+                data: this.forms,
+                file: this.files
+            });
+        }
+    }
+
+	export interface IQuery {
+		PageLength?: number;
+		PageBegin?: number;
+		SortField?: string;
+		SortOrder?: string;
+	}
+}
+<#
+    var namespaces = new []{"App.Models"};
+    foreach(var _namespace in namespaces)
+    {
+#>
+
+module <#=_namespace #> {
+	import IQuery = Scaffold.IQuery;
+<#
+	var clses = EnumerateModels(_namespace).ToList();
+    var jsoncls  = clses
+        .OrderBy(_class =>
+            _class.Bases.Cast<CodeElement>()
+                .Where(x => clses.Select(c => c.Name).Contains(x.Name))
+                .Count()
+        )
+        .ToList();                 
+	foreach (var _class in jsoncls) 
+	{
+		var elem = (CodeElement)_class;
+
+        Indent(1); Write("export interface {0}{1}", "I", _class.Name); 
+        var bases =  _class.Bases.Cast<CodeElement>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)).ToList();
+        var allMembers = EnumerateTSMembers(_class).ToList();
+
+        if (bases.Count > 0)
+        {
+            bool first = true;
+            foreach (var super in bases)
+            {
+                Write(first ? " extends " : ", ");
+                first = false;
+                Write("I" + super.Name);
+            }
+        }
+        WriteLine(" {");
+        foreach(var member in allMembers)
+        {
+            if (member.Kind == vsCMElement.vsCMElementProperty)
+            {
+                var p = (CodeProperty)member;
+                Indent(2);
+                WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
+            }
+        }
+        Indent(1); WriteLine("}");
+        WriteLine("");
+
+		Indent(1); Write("export class {0}", _class.Name); 
+        if (bases.Count > 0)
+        {
+            bool first = true;
+            foreach (var super in bases)
+            {
+                Write(first ? " extends " : ", ");
+                first = false;
+                Write(super.Name);
+            }
+        }
+        WriteLine(" {");
+		Indent(2); WriteLine("public static ajaxSettings = new Scaffold.AjaxSettings();", _class.Name); 
+		foreach(var member in allMembers) 
+		{
+			if (member.Kind == vsCMElement.vsCMElementProperty)
+            {
+				var p = (CodeProperty)member;
+				Indent(2);
+				WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
+            }
+		}
+		Indent(2); Write("constructor(data?: I{0})",  _class.Name); WriteLine(" {");
+        if (bases.Count > 0)
+        {
+            Indent(3);
+            WriteLine("super(data);");
+        }
+        foreach(var member in allMembers) 
+		{
+			if (member.Kind == vsCMElement.vsCMElementProperty)
+            {
+				var p = (CodeProperty)member;
+				Indent(3);
+				WriteLine("this.{0} = data ? data.{0} : null;", GetTSName(p), GetTSDefault(p));
+            }
+		}
+		Indent(2); WriteLine("}");
+        var idType = GetModelIdType(_class);
+        foreach(var _controller in EnumerateControllers(_class))
+        {
+            WriteLine("");
+            Indent(2); WriteLine("/* {0} */", _controller.FullName);
+            WriteLine("");
+
+            if(IsReadOnlyController(_controller))
+            {
+                #>
+        static GetAll(query?: IQuery): JQueryPromise<Array<<#= _class.Name #>>> {
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/<#= _class.Name #>/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new <#= _class.Name #>(model));
+            });
+            return res;
+        }
+
+        static Get(id: <#= idType #>): JQueryPromise<<#= _class.Name #>> {
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/<#= _class.Name #>/Get/'+id,
+            })).then((model) => new <#= _class.Name #>(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/<#= _class.Name #>/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                <#
+            }
+
+            if(IsCrudController(_controller))
+            {
+                #>
+
+        Save(): JQueryPromise<void> {
+            var isNew = this.ID == null;
+            var model = this;
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: isNew ? 'POST' : 'PUT',
+                url: '/api/<#= _class.Name #>/'+(isNew ? 'Post' : 'Put'),
+                data: JSON.stringify(this)
+            })).then((id) => {
+                if(isNew){
+                    this.ID = id;
+                }
+            });
+            return res;
+        }
+
+        Delete(): JQueryPromise<void> {
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: 'DELETE',
+                url: '/api/<#= _class.Name #>/Delete/'+this.ID,
+            }));
+            return res;
+        }
+
+        static Delete(id: <#= idType #>): JQueryPromise<void> {
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/<#= _class.Name #>/Delete/'+id,
+            }));
+            return res;
+        }
+                <#
+            }
+
+            foreach(var member in EnumerateTSMembers(_controller)
+                .Where(x => x.Kind == vsCMElement.vsCMElementFunction)) 
+            {
+                if(member.Name == _controller.Name)
+                    continue;
+
+                var fct = (CodeFunction)member;
+
+                var tresult = GetReturnType(fct, true);
+                var method = GetMethod((CodeElement)member, true);
+
+                var isUpload= false;
+                var uploaderName = "uploader";
+                var url = string.Format("/api/{0}/{1}", GetRouteName(_class.Name), member.Name);
+                var sb = new StringBuilder("");
+                bool first = true;
+                for (int i = 0; i<fct.Parameters.Count; i++) {
+                    var p = (CodeParameter)fct.Parameters.Item(i+1);
+                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody"))
+                        continue;
+                    var pt = GetTSType(p);
+                    if(pt == "Scaffold.Uploader"){
+                        isUpload = true;
+                        uploaderName = p.Name;
+                        continue;
+                    }
+                    sb.Append(first ? "?" : "&");
+                    first = false;
+                    if (pt == "string")
+                        sb.AppendFormat("{0}='+encodeURI({0})+'", p.Name);
+                    else
+                        sb.AppendFormat("{0}='+{0}+'", p.Name);
+                }
+                url += sb.ToString();
+
+                WriteLine("");
+                var hasFromBodyAndSameClass = false;
+                for (int i = 0; i<fct.Parameters.Count; i++) {
+                    var p = (CodeParameter)fct.Parameters.Item(i+1);
+                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        var pt = GetTSType(p);
+                        if(p.Type.AsString == _class.FullName)
+                            hasFromBodyAndSameClass = true;
+                    }
+                }
+                Indent(2); 
+                if(!hasFromBodyAndSameClass)
+                {
+                    Write("static ");
+                }
+                Write("{0}(", fct.Name); 
+                for (int i = 0; i<fct.Parameters.Count; i++) {
+                    var p = (CodeParameter)fct.Parameters.Item(i+1);
+                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        if(hasFromBodyAndSameClass)
+                            continue;
+                    }
+                    if (i>0)
+                        Write(", ");
+                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        if(hasFromBodyAndSameClass)
+                            continue;
+                        Write("/** [FromBody] **/");
+                    }
+                    var pt = GetTSType(p);
+                    Write("{0}: {1}", p.Name, pt);
+                }
+                if(!isUpload){
+                Write("): JQueryPromise<{0}> ", tresult); WriteLine("{");
+#>
+            var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
+                type: '<#= method #>',
+                url: '<#= url #>',
+<# 
+                    for (int i = 0; i<fct.Parameters.Count; i++) {
+                        var p = (CodeParameter)fct.Parameters.Item(i+1);
+                        if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                            if (method == "GET") {
+                                WriteLine("error: GET methods don't support FromBody parameters.");
+                            }
+                            else {
+                                Indent(4);
+                                Write("data: JSON.stringify(");
+                                if(hasFromBodyAndSameClass)
+                                {
+                                    Write("this");
+                                }
+                                else 
+                                {
+                                    Write(p.Name);
+                                }
+                                WriteLine("),");
+                            }
+                            break;
+                        }
+                    }
+#>
+            }));
+<#
+                } else {
+                Write("): any "); WriteLine("{");
+#>
+            var res = <#= uploaderName #>.upload('<#= url #>');
+<#
+                } 
+#>
+            return res;
+<#
+                Indent(2); WriteLine("}");
+
+            }
+
+
+        }
+
+		WriteLine("");
+		Indent(1); WriteLine("}");
+		WriteLine("");
+
+	}
+#>
+}
+<#
+    }
+#>
+<#+
+	string GetRouteName(string name)
+	{
+		if (name.EndsWith("Controller"))
+			name = name.Substring(0, name.Length - "Controller".Length);
+		return name;
+	}
+	string GetReturnType(CodeFunction fct, bool isWeb)
+	{
+		if (isWeb) 
+		{
+			return GetTSType(fct);
+        }
+		else 
+		{
+			var tsa = GetAttribute((CodeElement)fct, xa => xa.FullName.EndsWith("ToTSAttribute"));
+			if (tsa == null)
+				return "any";
+			var tre = tsa.Children.Cast<CodeElement>().Where(x => x.Name == "ReturnType" && x.Kind == vsCMElement.vsCMElementOther).FirstOrDefault();
+			if (tre == null)
+				return "any";
+
+			var text = GetText(tre);
+			var i0 = text.IndexOf('"');
+			var i1 = text.LastIndexOf('"');
+			var ttext = text.Substring(i0 + 1, i1 - i0 - 1);
+
+			return GetTSType(ttext);
+        }
+	}
+	string GetMethod(CodeElement member, bool isWeb)
+	{
+        var method = "GET";
+		if (isWeb) {
+			if (member.Name.ToLower().StartsWith("get"))
+				method = "GET";
+			else if (member.Name.ToLower().StartsWith("post"))
+				method = "POST";
+			else if (member.Name.ToLower().StartsWith("delete"))
+				method = "DELETE";
+			else if (member.Name.ToLower().StartsWith("put"))
+				method = "PUT";
+        }
+        if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPostAttribute")))
+            method = "POST";
+        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpDeleteAttribute")))
+            method = "DELETE";
+        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPutAttribute")))
+            method = "PUT";
+		return method;
+	}
+#>

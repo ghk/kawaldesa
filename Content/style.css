@@ -1,0 +1,197 @@
+
+html {
+    font-family: "Lato",sans-serif !important;
+    margin: 0;
+}
+/*td, th {
+	font-size: 12px;
+}*/
+
+tr {
+	font-size: 12px;
+}
+
+body {
+    font-family: "Lato",sans-serif !important;
+    line-height: 20px;
+}
+body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .h3, body .h4, body .h5, body .h6 {
+    color: inherit;
+    font-family: "Lato",sans-serif !important;
+    font-weight: bold;
+    text-rendering: optimizelegibility;
+}
+
+header {
+    box-shadow: -2px 0px 3px 0px rgba(0,0,0,0.5);
+    border-bottom: 1px solid #337ab7;
+}
+
+header .nav.nav-menu {
+    margin-left: -15px;
+}
+
+header .nav.navbar-nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+header .nav.navbar-nav > li.active > a {
+    padding-top: 11px;
+    border-top: 4px solid #337ab7;
+}
+
+header .nav.navbar-nav > li > a:hover {
+    padding-top: 11px;
+    border-top: 4px solid #337ab7;
+}
+
+header .nav.navbar-nav > li > div.gt{
+    color: #337ab7;
+    font-size: 20px;
+    padding:13px 0px;
+}
+
+header.navbar .nav-region {
+    margin-left: 30px;
+}
+
+
+table.table > thead > tr > th:first-child,
+table.table > tbody > tr > td:first-child,
+table.table > tfoot > tr > td:first-child{
+	padding-left: 20px;
+}
+table.table > tfoot > tr > td:last-child,
+table.table > thead > tr > th:last-child,
+table.table > tbody > tr > td:last-child{
+	padding-right: 20px;
+}
+
+table.table > tfoot > tr.account-tab > td,
+table.table > thead > tr.account-tab > td,
+table.table > tbody > tr.account-tab > td{
+	padding-left: 40px;
+}
+
+
+table.table > tfoot > tr > td{
+	font-weight: 700;
+}
+
+.account-head{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.content-header {
+	border-top: 1px solid #337ab7;
+	border-bottom: 1px solid #337ab7;
+	color: #337ab7;
+	text-transform: uppercase;
+	padding: 0 0 0 20px;
+}
+
+.table.table-bordered th {
+	border-bottom: 0px;
+}
+
+th.money, td.money {
+	text-align: right;
+}
+
+td.money {
+font-family:'Consolas','Consolata',monospace;
+}
+
+div.insert{
+	text-align: right;
+	text-transform: none;
+	float: right;
+	margin-right: 20px;
+}
+
+div.insert a {
+	font-family: "Lato",sans-serif !important;
+	font-style: italic;
+	text-decoration: underline;
+}
+
+table.table-bordered > thead > tr > th:first-child,
+table.table-bordered > thead > tr > th:last-child{
+	border-right: 0;
+}
+.table > tbody > tr.detail-padding > td {
+	padding: 10px;
+	border: 0;
+	border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+}
+.table.table-bordered thead tr:last-child th {
+    border-bottom: 1px solid #ddd;
+}
+.table.table-bordered thead tr:first-child th:first-child {
+    border-bottom: 1px solid #ddd;
+}
+.table > tbody > tr.detail-padding > td:first-child {
+	border-bottom: 0;
+}
+.table > tbody > tr.detail-sum > td {
+	padding: 0px;
+	border: 0;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #888;
+}
+.table > tbody > tr.detail-sum > td:first-child{
+	border-bottom: 0;
+}
+.table > tbody > tr.detail > td {
+	border: 0;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.table > tbody > tr.detail > td:first-child{
+	border-bottom: 0;
+}
+
+.table > tbody > tr.detail > td:last-child {
+	border-left: 1px solid #ddd;
+}
+.table > tbody > tr > td .info{
+	display: left; 
+}
+.table > tbody > tr.detail > td .info{
+    display: block; 
+    text-align: left;
+    float: none;
+}
+.table > tbody > tr.detail > td {
+    border-top: 1px solid #ddd;
+}
+.table > tbody > tr.detail > td:first-child {
+    border-top: 0px;
+}
+p.subtext {
+    max-width: 700px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+padding: 3px;
+}
+
+
+.help > ul li:target {
+    background-color: #def;
+}
+
+.help > ul {
+    display: inline-block;
+    padding-left: 20px;
+}
+.help > ul > li {
+    margin-bottom: 1em;
+}
+
+.help.well {
+    background-color: #fafafa;
+}
