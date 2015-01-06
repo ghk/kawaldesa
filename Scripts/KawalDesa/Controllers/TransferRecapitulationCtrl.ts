@@ -67,11 +67,11 @@ module App.Controllers {
 
         saveForm(entity) {
             var ctrl = this;
-            var uploader = new Scaffold.Uploader();
-            uploader.forms = this.formTransactions[entity.RegionID];
-            uploader.files = this.formTransactions[entity.RegionID].File;
-            Models.Transaction.AddTransferTransaction(uploader)
-                .success(() => {
+
+            Models.Transaction.AddTransferTransaction(new Scaffold.Multipart({
+                forms: this.formTransactions[entity.RegionID],
+                files: this.formTransactions[entity.RegionID].File
+            })).success(() => {
                     ctrl.setFormExpanded(entity, null);
                     ctrl.getRecapitulations(entity.ParentRegionID);
                     ctrl.loadTransactions(entity.RegionID);

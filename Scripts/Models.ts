@@ -25,9 +25,15 @@ module Scaffold {
     }
 
     declare var angular;
-    export class Uploader {
+    export class Multipart {
         forms = {};
         files: any;
+
+		public constructor(data?: any)
+		{
+		    this.forms = data ? data.forms : {};
+            this.files = data ? data.files : null;
+		}
 
         public upload(url): any{
             var $upload = angular.element("html").injector().get("$upload");
@@ -194,7 +200,6 @@ module App.Models {
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
-        ChildAccounts: Array<App.Models.IAccount>;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
         fkCreatedByID: string;
@@ -203,6 +208,7 @@ module App.Models {
         ModifiedBy: /** App.Models.User **/ any;
         fkDeactivatedByID: string;
         DeactivatedBy: /** App.Models.User **/ any;
+        ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
     }
 
@@ -219,7 +225,6 @@ module App.Models {
         TargetSource: string;
         fkParentAccountID: number;
         ParentAccount: App.Models.IAccount;
-        ChildAccounts: Array<App.Models.IAccount>;
         fkAPBDesID: number;
         APBDes: App.Models.IAPBDes;
         fkCreatedByID: string;
@@ -228,6 +233,7 @@ module App.Models {
         ModifiedBy: /** App.Models.User **/ any;
         fkDeactivatedByID: string;
         DeactivatedBy: /** App.Models.User **/ any;
+        ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
         constructor(data?: IAccount) {
             super(data);
@@ -242,7 +248,6 @@ module App.Models {
             this.TargetSource = data ? data.TargetSource : null;
             this.fkParentAccountID = data ? data.fkParentAccountID : null;
             this.ParentAccount = data ? data.ParentAccount : null;
-            this.ChildAccounts = data ? data.ChildAccounts : null;
             this.fkAPBDesID = data ? data.fkAPBDesID : null;
             this.APBDes = data ? data.APBDes : null;
             this.fkCreatedByID = data ? data.fkCreatedByID : null;
@@ -251,6 +256,7 @@ module App.Models {
             this.ModifiedBy = data ? data.ModifiedBy : null;
             this.fkDeactivatedByID = data ? data.fkDeactivatedByID : null;
             this.DeactivatedBy = data ? data.DeactivatedBy : null;
+            this.ChildAccounts = data ? data.ChildAccounts : null;
             this.ParentCode = data ? data.ParentCode : null;
         }
 
@@ -389,11 +395,11 @@ module App.Models {
         APBN: App.Models.IAPBN;
         fkRegionID: number;
         Region: App.Models.IRegion;
-        Accounts: Array<App.Models.IAccount>;
         fkCompletedByID: string;
         CompletedBy: /** App.Models.User **/ any;
         fkModifiedByID: string;
         ModifiedBy: /** App.Models.User **/ any;
+        Accounts: Array<App.Models.IAccount>;
     }
 
     export class APBDes extends BaseEntity {
@@ -408,11 +414,11 @@ module App.Models {
         APBN: App.Models.IAPBN;
         fkRegionID: number;
         Region: App.Models.IRegion;
-        Accounts: Array<App.Models.IAccount>;
         fkCompletedByID: string;
         CompletedBy: /** App.Models.User **/ any;
         fkModifiedByID: string;
         ModifiedBy: /** App.Models.User **/ any;
+        Accounts: Array<App.Models.IAccount>;
         constructor(data?: IAPBDes) {
             super(data);
             this.IsActivated = data ? data.IsActivated : null;
@@ -425,11 +431,11 @@ module App.Models {
             this.APBN = data ? data.APBN : null;
             this.fkRegionID = data ? data.fkRegionID : null;
             this.Region = data ? data.Region : null;
-            this.Accounts = data ? data.Accounts : null;
             this.fkCompletedByID = data ? data.fkCompletedByID : null;
             this.CompletedBy = data ? data.CompletedBy : null;
             this.fkModifiedByID = data ? data.fkModifiedByID : null;
             this.ModifiedBy = data ? data.ModifiedBy : null;
+            this.Accounts = data ? data.Accounts : null;
         }
 
         /* App.Controllers.APBDesController */
@@ -463,16 +469,8 @@ module App.Models {
         }
 
                 
-        static CreateInputException(index: number, field: string, message: string): JQueryPromise</** System.Web.Http.HttpResponseException **/ any> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDes/CreateInputException?index='+index+'&field='+encodeURI(field)+'&message='+encodeURI(message)+'',
-            }));
-            return res;
-        }
-
-        static UpdateSources(uploader: Scaffold.Uploader): any {
-            var res = uploader.upload('/api/APBDes/UpdateSources');
+        static UpdateSources(multipart: Scaffold.Multipart): any {
+            var res = multipart.upload('/api/APBDes/UpdateSources');
             return res;
         }
 
@@ -598,8 +596,8 @@ module App.Models {
             return res;
         }
                 
-        static PostFile(uploader: Scaffold.Uploader): any {
-            var res = uploader.upload('/api/APBDFile/PostFile');
+        static PostFile(multipart: Scaffold.Multipart): any {
+            var res = multipart.upload('/api/APBDFile/PostFile');
             return res;
         }
 
@@ -716,9 +714,9 @@ module App.Models {
         IsActivated: boolean;
         fkRealizationID: number;
         Realization: App.Models.IRealization;
-        Pictures: Array<App.Models.IBlob>;
         fkCreatedByID: string;
         CreatedBy: /** App.Models.User **/ any;
+        Pictures: Array<App.Models.IBlob>;
     }
 
     export class FieldReport extends BaseEntity {
@@ -728,9 +726,9 @@ module App.Models {
         IsActivated: boolean;
         fkRealizationID: number;
         Realization: App.Models.IRealization;
-        Pictures: Array<App.Models.IBlob>;
         fkCreatedByID: string;
         CreatedBy: /** App.Models.User **/ any;
+        Pictures: Array<App.Models.IBlob>;
         constructor(data?: IFieldReport) {
             super(data);
             this.Notes = data ? data.Notes : null;
@@ -738,9 +736,9 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkRealizationID = data ? data.fkRealizationID : null;
             this.Realization = data ? data.Realization : null;
-            this.Pictures = data ? data.Pictures : null;
             this.fkCreatedByID = data ? data.fkCreatedByID : null;
             this.CreatedBy = data ? data.CreatedBy : null;
+            this.Pictures = data ? data.Pictures : null;
         }
 
         /* App.Controllers.FieldReportController */
@@ -774,7 +772,7 @@ module App.Models {
         }
 
                 
-        static AddFieldReport(uploader: Scaffold.Uploader): any {
+        static AddFieldReport(uploader: Scaffold.Multipart): any {
             var res = uploader.upload('/api/FieldReport/AddFieldReport');
             return res;
         }
@@ -1037,8 +1035,8 @@ module App.Models {
         }
 
                 
-        static AddTransferTransaction(uploader: Scaffold.Uploader): any {
-            var res = uploader.upload('/api/Transaction/AddTransferTransaction');
+        static AddTransferTransaction(multipart: Scaffold.Multipart): any {
+            var res = multipart.upload('/api/Transaction/AddTransferTransaction');
             return res;
         }
 
@@ -1082,9 +1080,9 @@ module App.Models {
     export interface ITransactionFile extends IBaseEntity {
         FileName: string;
         IsActivated: boolean;
-        Transactions: Array<App.Models.ITransaction>;
         fkFileID: number;
         File: App.Models.IBlob;
+        Transactions: Array<App.Models.ITransaction>;
         TransactionCount: number;
         DesaCount: number;
         TotalAmount: number;
@@ -1094,9 +1092,9 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         FileName: string;
         IsActivated: boolean;
-        Transactions: Array<App.Models.ITransaction>;
         fkFileID: number;
         File: App.Models.IBlob;
+        Transactions: Array<App.Models.ITransaction>;
         TransactionCount: number;
         DesaCount: number;
         TotalAmount: number;
@@ -1104,9 +1102,9 @@ module App.Models {
             super(data);
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.Transactions = data ? data.Transactions : null;
             this.fkFileID = data ? data.fkFileID : null;
             this.File = data ? data.File : null;
+            this.Transactions = data ? data.Transactions : null;
             this.TransactionCount = data ? data.TransactionCount : null;
             this.DesaCount = data ? data.DesaCount : null;
             this.TotalAmount = data ? data.TotalAmount : null;

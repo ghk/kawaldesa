@@ -30,9 +30,15 @@ module Scaffold {
     }
 
     declare var angular;
-    export class Uploader {
+    export class Multipart {
         forms = {};
         files: any;
+
+		public constructor(data?: any)
+		{
+		    this.forms = data ? data.forms : {};
+            this.files = data ? data.files : null;
+		}
 
         public upload(url): any{
             var $upload = angular.element("html").injector().get("$upload");
@@ -227,8 +233,8 @@ module <#=_namespace #> {
                 var tresult = GetReturnType(fct, true);
                 var method = GetMethod((CodeElement)member, true);
 
-                var isUpload= false;
-                var uploaderName = "uploader";
+                var isMultipart= false;
+                var multipartName = "multipart";
                 var url = string.Format("/api/{0}/{1}", GetRouteName(_class.Name), member.Name);
                 var sb = new StringBuilder("");
                 bool first = true;
@@ -237,9 +243,9 @@ module <#=_namespace #> {
                     if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody"))
                         continue;
                     var pt = GetTSType(p);
-                    if(pt == "Scaffold.Uploader"){
-                        isUpload = true;
-                        uploaderName = p.Name;
+                    if(pt == "Scaffold.Multipart"){
+                        isMultipart = true;
+                        multipartName = p.Name;
                         continue;
                     }
                     sb.Append(first ? "?" : "&");
@@ -283,7 +289,7 @@ module <#=_namespace #> {
                     var pt = GetTSType(p);
                     Write("{0}: {1}", p.Name, pt);
                 }
-                if(!isUpload){
+                if(!isMultipart){
                 Write("): JQueryPromise<{0}> ", tresult); WriteLine("{");
 #>
             var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
@@ -318,7 +324,7 @@ module <#=_namespace #> {
                 } else {
                 Write("): any "); WriteLine("{");
 #>
-            var res = <#= uploaderName #>.upload('<#= url #>');
+            var res = <#= multipartName #>.upload('<#= url #>');
 <#
                 } 
 #>
