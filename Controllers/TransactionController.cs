@@ -23,9 +23,9 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public void AddTransferTransaction(Uploader<Transaction> uploader)
+        public void AddTransferTransaction(Multipart<Transaction> multipart)
         {
-            Validate(uploader.Entity);
+            Validate(multipart.Entity);
             if (!ModelState.IsValid)
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
 
@@ -36,7 +36,7 @@ namespace App.Controllers
             {
                 var user = (principal.Identity as KawalDesaIdentity).User;
                 
-                var transaction = uploader.Entity;
+                var transaction = multipart.Entity;
 
                 KawalDesaController.CheckRegionAllowed(principal,dbContext, transaction.fkDestinationID.Value);
 
@@ -72,9 +72,9 @@ namespace App.Controllers
                     throw new ApplicationException("Principal is not in role");
 
                 long? blobID = null;
-                if (uploader.Files.Count > 0)
+                if (multipart.Files.Count > 0)
                 {
-                    var fileResult = uploader.Files[0];
+                    var fileResult = multipart.Files[0];
                     var blob = new Blob(fileResult);
                     dbContext.Set<Blob>().Add(blob);
                     dbContext.SaveChanges();
@@ -94,7 +94,7 @@ namespace App.Controllers
             }
             finally
             { 
-                uploader.DeleteUnmoved();
+                multipart.DeleteUnmoved();
             }
         }
 

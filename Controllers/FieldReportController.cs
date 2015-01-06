@@ -24,7 +24,7 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_REALIZATION)]
-        public void AddFieldReport(Uploader uploader)
+        public void AddFieldReport(Multipart uploader)
         {
             try
             {

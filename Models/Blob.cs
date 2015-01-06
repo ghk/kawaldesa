@@ -13,7 +13,7 @@ namespace App.Models
         {
         }
 
-        public Blob(FileResult fResult)
+        public Blob(MultipartFile fResult)
         {
             Type = fResult.Type;
             Size = fResult.Size;

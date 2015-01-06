@@ -17,11 +17,11 @@ namespace App.Controllers
         {
         }
 
-        public void PostFile(Uploader uploader)
+        public void PostFile(Multipart multipart)
         {
             try
             {
-                var fileResult = uploader.Files[0];
+                var fileResult = multipart.Files[0];
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
@@ -61,7 +61,7 @@ namespace App.Controllers
             }
             finally
             {
-                uploader.DeleteUnmoved();
+                multipart.DeleteUnmoved();
             }
         }
 

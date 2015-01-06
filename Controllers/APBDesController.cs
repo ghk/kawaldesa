@@ -25,14 +25,14 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
-        public void UpdateSources(Uploader uploader)
+        public void UpdateSources(Multipart multipart)
         {
             try
             {
-                var apbdesID = long.Parse(uploader.Forms["ID"]);
-                var sourceURL = uploader.Forms["SourceURL"];
+                var apbdesID = long.Parse(multipart.Forms["ID"]);
+                var sourceURL = multipart.Forms["SourceURL"];
 
-                var fileResult = uploader.Files[0];
+                var fileResult = multipart.Files[0];
                 var blob = new Blob(fileResult);
 
                 var apbdes = dbSet.Find(apbdesID);
@@ -53,7 +53,7 @@ namespace App.Controllers
             }
             finally
             {
-                uploader.DeleteUnmoved();
+                multipart.DeleteUnmoved();
             }
         }
 
