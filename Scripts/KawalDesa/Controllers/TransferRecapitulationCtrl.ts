@@ -75,10 +75,16 @@ module App.Controllers {
                     ctrl.setFormExpanded(entity, null);
                     ctrl.getRecapitulations(entity.ParentRegionID);
                     ctrl.loadTransactions(entity.RegionID);
-                }).error(formErr => {
-                    ctrl.formErrors[entity.RegionID] = {};
-                    ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;
-                });
+            }).error(formErr => {
+                ctrl.formErrors[entity.RegionID] = {};
+                ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;
+                var modelState = formErr.ModelState;
+                var keys = Object.keys(modelState);
+                for (var i = 0; i < keys.length; i++) {
+                    var key = keys[i];
+                    ctrl.formErrors[entity.RegionID][key] = modelState[key].join(",");
+                }
+            });
         }
 
         getRecapitulations(parentID: number) {

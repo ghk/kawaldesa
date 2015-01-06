@@ -18,6 +18,7 @@ using System.IO;
 using System.Configuration;
 using System.Web.Http.Filters;
 using log4net;
+using Scaffold.Validation;
 
 namespace App
 {
@@ -29,8 +30,8 @@ namespace App
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
             XmlConfigurator.Configure(new FileInfo(ConfigurationManager.AppSettings["log4net.Config"]));
 
-            FluentValidationModelValidatorProvider.Configure(GlobalConfiguration.Configuration);
-            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver();
+            GlobalConfiguration.Configuration.Services.Add(typeof(System.Web.Http.Validation.ModelValidatorProvider), new MethodModelValidatorProvider());
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacResolver();
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -115,7 +116,6 @@ namespace App
             );
             route.RouteHandler = new RequiresSessionHttpControllerRouteHandler();
         }
-
 
         private static void ConfigureMappings()
         {
