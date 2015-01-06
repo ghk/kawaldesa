@@ -235,7 +235,7 @@ namespace App.Controllers
                 current = current.Parent;
             }
 
-            var allowed = db.Set<UserScope>().Include(s => s.Region)
+            var allowed = db.Set<UserScope>()
                 .Any(s => s.fkUserID == userID && regionIDs.Contains(s.fkRegionID));
             if (!allowed)
                 throw new ApplicationException("region is not allowed for thee");

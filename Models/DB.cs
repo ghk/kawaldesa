@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Scaffold;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -68,6 +70,18 @@ namespace App.Models
             foreach (var getUpdatedField in getUpdatedFields)
                 dbContext.Entry<T>(entity).Property(getUpdatedField).IsModified = true;
             dbContext.SaveChanges();
+        }
+    }
+    public static class DbSetExtensions
+    {
+        public static TSelect SelectOne<TEntity, TSelect>(this DbSet<TEntity> dbSet, 
+            long id, Func<TEntity, TSelect> select)
+            where TEntity: class, IModel<long>
+        {
+            return dbSet
+                .Where(e => e.ID == id)
+                .Select(select)
+                .FirstOrDefault();
         }
     }
 }

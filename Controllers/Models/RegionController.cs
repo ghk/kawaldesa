@@ -37,11 +37,9 @@ namespace App.Controllers.Models
         public void UpdateWebsite(long regionID, String regionWebsite)
         {
             KawalDesaController.CheckRegionAllowed(dbContext, regionID);
-            dbContext.Update(new Region
-            {
-                ID = regionID,
-                Website = regionWebsite
-            }, e => e.Website);
+            Update(regionID)
+                .Set(e => e.Website, regionWebsite)
+                .Save();
         }
     }
 }
