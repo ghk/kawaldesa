@@ -24,12 +24,11 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_REALIZATION)]
-        public async Task AddFieldReport(Uploader uploader)
+        public void AddFieldReport(Uploader uploader)
         {
-            var res = uploader;
             try
             {
-                var realizationID = long.Parse(res.Forms["RealizationID"]);
+                var realizationID = long.Parse(uploader.Forms["RealizationID"]);
                 var realization = dbContext.Set<Realization>()
                     .Include(r => r.Transaction)
                     .First(r => r.ID == realizationID);
@@ -38,11 +37,11 @@ namespace App.Controllers
                 {
                     fkRealizationID = realizationID,
                     IsActivated = true,
-                    Notes = res.Forms["Notes"],
-                    Date = DateTime.ParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    Notes = uploader.Forms["Notes"],
+                    Date = DateTime.ParseExact(uploader.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Pictures = new List<Blob>(),
                 };
-                foreach(var file in res.Files)
+                foreach (var file in uploader.Files)
                 {
                     var blob = new Blob(file);
                     fr.Pictures.Add(blob);
@@ -53,7 +52,7 @@ namespace App.Controllers
             }
             finally
             {
-                res.DeleteUnmoved();
+                uploader.DeleteUnmoved();
             }
         }
     }

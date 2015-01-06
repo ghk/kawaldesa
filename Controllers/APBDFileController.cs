@@ -17,13 +17,11 @@ namespace App.Controllers
         {
         }
 
-        public async Task PostFile(Uploader uploader)
+        public void PostFile(Uploader uploader)
         {
-            var res = uploader;
-
             try
             {
-                var fileResult = res.Files[0];
+                var fileResult = uploader.Files[0];
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
@@ -63,7 +61,7 @@ namespace App.Controllers
             }
             finally
             {
-                res.DeleteUnmoved();
+                uploader.DeleteUnmoved();
             }
         }
 

@@ -23,7 +23,7 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public async Task AddTransferTransaction(Uploader<Transaction> uploader)
+        public void AddTransferTransaction(Uploader<Transaction> uploader)
         {
             Validate(uploader.Entity);
             if (!ModelState.IsValid)
