@@ -29,13 +29,17 @@ namespace App.Models
         [Index("IX_Code_Type_fkAPBDesID", 2, IsUnique = true)]
         [Index]
         public AccountType Type { get; set; }
+
         public ExpenseType? ExpenseType { get; set; }
+
         [Index]
         public ExpenseGroup? ExpenseGroup { get; set; }
+
         public decimal? Target { get; set; }
 
         [Index]
         public bool IsActivated { get; set; }
+
         public DateTime? DateDeactivated { get; set; }
 
         [Index("IX_TargetSource_fkAPBDesID", 1, IsUnique = true)]
@@ -44,7 +48,6 @@ namespace App.Models
         [ForeignKey("ParentAccount")]
         public long? fkParentAccountID { get; set; }
         public virtual Account ParentAccount { get; set; }
-        public virtual List<Account> ChildAccounts { get; set; }
 
         [Index("IX_TargetSource_fkAPBDesID", 2, IsUnique = true)]
         [Index("IX_Code_Type_fkAPBDesID", 3, IsUnique = true)]
@@ -64,6 +67,8 @@ namespace App.Models
         [ForeignKey("DeactivatedBy")]
         public string fkDeactivatedByID { get; set; }
         public virtual User DeactivatedBy { get; set; }
+
+        public virtual List<Account> ChildAccounts { get; set; }
 
         public String ParentCode
         {

@@ -13,6 +13,7 @@ namespace App.Models
 
         [Index]
         public bool IsCompleted { get; set; }
+
         public DateTime? DateCompleted { get; set; }
 
         public string SourceURL { get; set; }
@@ -33,8 +34,6 @@ namespace App.Models
         public long fkRegionID { get; set; }
         public virtual Region Region { get; set; }
 
-        public virtual List<Account> Accounts { get; set; }
-
         [ForeignKey("CompletedBy")]
         public string fkCompletedByID { get; set; }
         public virtual User CompletedBy { get; set; }
@@ -42,6 +41,8 @@ namespace App.Models
         [ForeignKey("ModifiedBy")]
         public string fkModifiedByID { get; set; }
         public virtual User ModifiedBy { get; set; }
+        
+        public virtual List<Account> Accounts { get; set; }
         
     }
 }

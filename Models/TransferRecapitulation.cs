@@ -11,16 +11,27 @@ namespace App.Models
     public class BaseTransferRecapitulation : IModel<long>
     {
         public long ID { get; set; }
+
         public long RegionID { get; set; }
+
         public long APBNID { get; set; }
+
         public int APBNYear { get; set; }
+
         public long? ParentRegionID { get; set; }
+
         public string RegionName { get; set; }
+
         public decimal BudgetedAPBN { get; set; }
+
         public decimal TransferredAPBN { get; set; }
+
         public decimal AcknowledgedAPBN { get; set; }
+
         public decimal BudgetedADD { get; set; }
+
         public decimal TransferredADD { get; set; }
+
         public decimal AcknowledgedADD { get; set; }
 
         [NotMapped]

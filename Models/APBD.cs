@@ -9,7 +9,9 @@ namespace App.Models
     public class APBD : BaseEntity
     {
         public decimal DAU { get; set; }
+
         public decimal DBH { get; set; }
+
         public bool IsActivated { get; set; }
         
         [ForeignKey("APBN")]

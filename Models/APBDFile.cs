@@ -9,7 +9,9 @@ namespace App.Models
     public class APBDFile : BaseEntity
     {
         public String FileName { get; set; }
+
         public bool IsActivated { get; set; }
+        
         public virtual List<APBD> APBDs { get; set; }
 
         [ForeignKey("File")]

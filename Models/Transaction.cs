@@ -49,13 +49,10 @@ namespace App.Models
 
         [ForeignKey("CreatedBy")]
         public string fkCreatedByID { get; set; }
-
-
         public virtual User CreatedBy { get; set; }
 
         [ForeignKey("TransactionFile")]
         public long? fkTransactionFileID { get; set; }
-
         public virtual TransactionFile TransactionFile { get; set; }
 
         [Validator]

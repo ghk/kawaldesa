@@ -12,9 +12,13 @@ namespace App.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public override long ID { get; set; }
+
         public string Name { get; set; }
+        
         public RegionType Type { get; set; }
+        
         public bool IsKelurahan { get; set; }
+        
         public string Website { get; set; }
 
         [Index(IsUnique=true)]
