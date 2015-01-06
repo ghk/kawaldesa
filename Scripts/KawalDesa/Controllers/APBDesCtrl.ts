@@ -19,7 +19,9 @@ module App.Controllers {
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
 
         websiteText: string;
-        websiteDisable: boolean = true;
+        linktWebsiteShow: boolean = true;
+        buttontWebsiteShow: boolean = true;
+        inputtWebsiteShow: boolean = false;
         isCompleteStatus: string = "belum";
 
 
@@ -28,6 +30,12 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
 
             this.formErrors = {};
+            this.websiteText = this.indexCtrl.region.Website;
+
+            if (!this.indexCtrl.region.Website) {
+                this.onWebsiteShowInput();
+            }
+
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });
@@ -35,6 +43,10 @@ module App.Controllers {
 
         addNewAccount(rootAccountID: number) {
             this.newAccounts[rootAccountID].push(new Models.Account());
+        }
+
+        deleteNewAccount( accounts: any, index: number) {
+            accounts.splice(index, 1);
         }
 
         saveNewAccounts(rootAccountID: number) {
@@ -72,18 +84,31 @@ module App.Controllers {
             }
         }
 
-        onEnableInput() {
-            this.websiteDisable = false;
+        onWebsiteShowInput() {
+            this.linktWebsiteShow = false;
+            this.buttontWebsiteShow = false;
+            this.inputtWebsiteShow = true;
+        }
+
+        onWebsiteShowLink() {
+            this.linktWebsiteShow = true;
+            this.buttontWebsiteShow = true;
+            this.inputtWebsiteShow = false;
         }
 
         onSubmittingWebsite() {
             var ctrl = this;
-            Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.websiteText)
-                .done(() => {
-                    ctrl.$scope.$apply(() => {
-                        this.websiteDisable = true;
-                    });
-                })
+            if (this.websiteText)
+                Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.websiteText)
+                    .done(() => {
+                        ctrl.$scope.$apply(() => {
+                            this.onWebsiteShowLink();
+                        });
+                    })
+                else {
+                    this.websiteText = this.indexCtrl.region.Website;
+                    this.onWebsiteShowLink();
+            }
         }
 
         onComplete() {
@@ -122,7 +147,6 @@ module App.Controllers {
                 });
             });
         }
-
     }
 
     kawaldesa.controller("APBDesCtrl", APBDesCtrl);

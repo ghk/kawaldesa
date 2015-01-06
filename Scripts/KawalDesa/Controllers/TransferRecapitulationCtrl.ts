@@ -13,9 +13,9 @@ module App.Controllers {
         static $inject = ["$scope", "$upload"];
 
         expandedStates = {};
-        formTransactions: { [key:number]: any } = {};
+        formTransactions: { [key: number]: any } = {};
         formErrors = {};
-        transactions: { [key:number]: any } = {};
+        transactions: { [key: number]: any } = {};
         indexCtrl: IndexCtrl;
 
         constructor(public $scope, public $upload) {
@@ -71,7 +71,7 @@ module App.Controllers {
             uploader.forms = this.formTransactions[entity.RegionID];
             uploader.files = this.formTransactions[entity.RegionID].File;
             Models.Transaction.AddTransferTransaction(uploader)
-            .success(() => {
+                .success(() => {
                     ctrl.setFormExpanded(entity, null);
                     ctrl.getRecapitulations(entity.ParentRegionID);
                     ctrl.loadTransactions(entity.RegionID);
@@ -109,13 +109,17 @@ module App.Controllers {
         loadTransactions(entityID) {
             var ctrl = this;
             if (this.expandedStates[entityID]) {
-                console.log("haaa");
                 Models.Transaction.GetTransferTransactions(entityID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.transactions[entityID] = details;
                     });
                 });
             }
+        }
+
+        moveFillMeterBar(fullValue:number, realValue:number) {
+            var getPercent = (realValue / fullValue) * 100;
+            return { "width": getPercent + "%" };
         }
 
     }

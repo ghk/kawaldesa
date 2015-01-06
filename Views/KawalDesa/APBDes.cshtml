@@ -5,10 +5,13 @@
                 <div class="sidebar">
                     <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.onSubmittingWebsite()">
                         Website Desa<br />
-                        <input type="text" placeholder="{{indexCtrl.region.Website}}"
-                               ng-disabled="apbdesCtrl.websiteDisable"
-                               ng-model="apbdesCtrl.websiteText" />
-                        <input type="button" class="btn btn-xs" value="Edit" ng-click="apbdesCtrl.onEnableInput()" />
+                        <a href="{{indexCtrl.region.Website}}" ng-if="apbdesCtrl.linktWebsiteShow">{{apbdesCtrl.websiteText}}</a>
+                        <input type="text" placeholder="Masukkan nama website desanya"
+                               ng-model="apbdesCtrl.websiteText" 
+                               ng-if="apbdesCtrl.inputtWebsiteShow" />
+                        <input type="button" class="btn btn-xs" value="Edit"
+                               ng-click="apbdesCtrl.onWebsiteShowInput()"
+                               ng-if="apbdesCtrl.buttontWebsiteShow" />
                     </form>
                 </div>
                 <div class="sidebar">
@@ -33,6 +36,10 @@
             <td width="86%" valign="top">
 
                 <div ng-repeat="rootAccount in apbdesCtrl.rootAccounts">
+                    <div class="meter">
+                        <span style="width: 25%"></span>
+                    </div>
+
                     <div class="content-header">
                         {{rootAccount.Code}}. {{rootAccount.Name}} Desa
                     </div>
@@ -82,7 +89,7 @@
                                         <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index].Target" style="color:red">
                                             {{apbdesCtrl.formErrors[rootAccount.ID][$index].Target}}
                                         </span>
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <button type="button" class="close" ng-click="apbdesCtrl.deleteNewAccount(apbdesCtrl.newAccounts[rootAccount.ID], $index)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     </td>
                                 </tr>
                                 <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
