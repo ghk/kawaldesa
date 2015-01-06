@@ -79,6 +79,7 @@ namespace App.Models
             where TEntity: class, IModel<long>
         {
             return dbSet
+                .AsNoTracking()
                 .Where(e => e.ID == id)
                 .Select(select)
                 .FirstOrDefault();

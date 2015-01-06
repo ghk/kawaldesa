@@ -221,6 +221,7 @@ namespace App.Controllers
                 throw new ApplicationException("region is not allowed for thee");
 
             var region = db.Set<Region>()
+                .AsNoTracking()
                 .Include(r => r.Parent)
                 .Include(r => r.Parent.Parent)
                 .Include(r => r.Parent.Parent.Parent)
