@@ -916,6 +916,14 @@ module App.Models {
             return res;
         }
 
+        static UpdateWebsite(regionID: number, regionWebsite: string): JQueryPromise<void> {
+            var res = $.ajax(Region.ajaxSettings.build({
+                type: 'POST',
+                url: '/api/Region/UpdateWebsite?regionID='+regionID+'&regionWebsite='+encodeURI(regionWebsite)+'',
+            }));
+            return res;
+        }
+
     }
 
     export interface IBaseTransaction extends IBaseEntity {

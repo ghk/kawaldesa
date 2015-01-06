@@ -20,9 +20,24 @@ namespace App.Controllers
             AllowGetAll = false;
         }
 
-        public HttpResponseException CreateInputException(int index, String field, String message)
+        //public HttpResponseException CreateInputException(int index, String field, String message)
+        //{
+        //    var error = new HttpError(message) { {"Field", field }, {"Index", index} };
+        //    return new HttpResponseException(
+        //        ControllerContext.Request.CreateErrorResponse(
+        //            HttpStatusCode.BadRequest,
+        //            error));
+        //}
+
+        public HttpResponseException CreateInputExceptions(Dictionary<String, List<Dictionary<String, Object>>> exceptions)
         {
-            var error = new HttpError(message) { {"Field", field }, {"Index", index} };
+            var error = new HttpError("Error");
+
+            foreach (var exception in exceptions)
+            {
+                error.Add(exception.Key, exception.Value);
+            }
+
             return new HttpResponseException(
                 ControllerContext.Request.CreateErrorResponse(
                     HttpStatusCode.BadRequest,
@@ -84,6 +99,7 @@ namespace App.Controllers
         public void AddAccounts(long apbdesID, long rootAccountID, [FromBody] List<Account> accounts)
         {
             var apbdes = Get(apbdesID);
+            var errors = new Dictionary<String, List<Dictionary<String, Object>>>();
 
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
@@ -114,16 +130,34 @@ namespace App.Controllers
             for (var i = 0; i < accounts.Count; i++)
             {
                 var account = accounts[i];
+                var errorList = new List<Dictionary<String, Object>>();
                 if (string.IsNullOrWhiteSpace(account.Code))
-                    throw CreateInputException(i, "Code", "Kode harus diisi"); 
-                if (!Regex.IsMatch(account.Code, @"[\d\.]+"))
-                    throw CreateInputException(i, "Code", "Kode invalid");
-                if (accountCodesSet.Contains(account.Code))
-                    throw CreateInputException(i, "Code", "Kode sudah terdaftar");
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode harus diisi" } });                    
+                else if(!Regex.IsMatch(account.Code, @"[\d\.]+"))
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode invalid" } });
+                else if (accountCodesSet.Contains(account.Code))
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode sudah terdaftar" } });
+                
                 if (string.IsNullOrWhiteSpace(account.Name))
-                    throw CreateInputException(i, "Name", "Nama harus diisi");
-                if (account.Target.HasValue && account.Target.Value < 0)
-                    throw CreateInputException(i, "Target", "Nilai target harus lebih dari 0");
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Name" }, { "Message", "Nama harus diisi" } });
+
+                if (!account.Target.HasValue)
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Target" }, { "Message", "Target harus diisi" } });
+                else if (account.Target.HasValue && account.Target.Value < 0)
+                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Target" }, { "Message", "Nilai target harus lebih dari 0" } });
+                
+                //throw CreateInputException(i, "Code", "Kode harus diisi"); 
+                //throw CreateInputException(i, "Code", "Kode invalid");
+                //throw CreateInputException(i, "Code", "Kode sudah terdaftar");
+                //throw CreateInputException(i, "Name", "Nama harus diisi");
+                //throw CreateInputException(i, "Target", "Nilai target harus lebih dari 0");
+
+                if (errorList.Count > 0)
+                {
+                    errors.Add(i.ToString(), errorList);
+                    continue;
+                }
+                
                 accountCodesSet.Add(account.Code);
 
                 var parentCode = account.ParentCode;
@@ -131,6 +165,9 @@ namespace App.Controllers
                     throw new ApplicationException(String.Format("parent account not exists for {1}", account.Code));
 
             }
+
+            if (errors.Count > 0)
+                throw CreateInputExceptions(errors);
 
             foreach (var account in accounts.OrderBy(a => a.Code))
             {

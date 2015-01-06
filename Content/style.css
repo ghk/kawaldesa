@@ -92,8 +92,19 @@ table.table > tfoot > tr > td{
 	padding: 0 0 0 20px;
 }
 
+td.sidebar {
+	border-top: 1px solid #337ab7;
+	border-right: 1px solid #337ab7;
+}
+
+.sidebar {
+	color: -webkit-text;
+    font: bold 12px sans-serif;
+	padding: 10px 20px 10px 10px;
+}
+
 .table.table-bordered th {
-	border-bottom: 0px;
+	border-bottom: 0;
 }
 
 th.money, td.money {
@@ -137,7 +148,7 @@ table.table-bordered > thead > tr > th:last-child{
 	border-bottom: 0;
 }
 .table > tbody > tr.detail-sum > td {
-	padding: 0px;
+	padding: 0;
 	border: 0;
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #888;
@@ -169,7 +180,7 @@ table.table-bordered > thead > tr > th:last-child{
     border-top: 1px solid #ddd;
 }
 .table > tbody > tr.detail > td:first-child {
-    border-top: 0px;
+    border-top: 0;
 }
 p.subtext {
     max-width: 700px;
