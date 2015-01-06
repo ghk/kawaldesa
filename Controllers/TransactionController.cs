@@ -17,16 +17,6 @@ namespace App.Controllers
 {
     public class TransactionController: ReadOnlyController<Transaction, long>
     {
-        //todo, use better validation
-        private HttpResponseException CreateInputException(String field, String message)
-        {
-            var error = new HttpError(message) { { "Field", field } };
-            return new HttpResponseException(
-                ControllerContext.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    error));
-        }
-
         public TransactionController(DB dbContext) : base(dbContext) {
             AllowGetAll = false;
         }
