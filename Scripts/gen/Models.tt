@@ -3,19 +3,16 @@
 <#@include file="T4Utils.t4" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-// WARNING: T4 generated file 
-//
-
+/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
-
 
 <#
     var namespaces = new []{"App.Models"};
     foreach(var _namespace in namespaces)
     {
 #>
-
 module <#=_namespace #> {
+
 	import IQuery = Scaffold.IQuery;
 <#
 	var clses = EnumerateModels(_namespace).ToList();
@@ -28,9 +25,12 @@ module <#=_namespace #> {
         .ToList();                 
 	foreach (var _class in jsoncls) 
 	{
-		var elem = (CodeElement)_class;
+		println("");
 
-        Indent(1); Write("export interface {0}{1}", "I", _class.Name); 
+		var elem = (CodeElement)_class;
+		Indent(1);
+
+        print("export interface {0}{1}", "I", _class.Name); 
         var bases =  _class.Bases.Cast<CodeElement>().Where(x => jsoncls.Select(c => c.Name).Contains(x.Name)).ToList();
         var allMembers = EnumerateTSMembers(_class).ToList();
 
@@ -39,68 +39,77 @@ module <#=_namespace #> {
             bool first = true;
             foreach (var super in bases)
             {
-                Write(first ? " extends " : ", ");
+				print(first ? " extends " : ", ");
                 first = false;
-                Write("I" + super.Name);
+				print("I" + super.Name);
             }
         }
-        WriteLine(" {");
+
+		println(" {");
+        Indent(2);
+
         foreach(var member in allMembers)
         {
             if (member.Kind == vsCMElement.vsCMElementProperty)
             {
                 var p = (CodeProperty)member;
-                Indent(2);
-                WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
+                println("{0}: {1};", GetTSName(p), GetTSType(p));
             }
         }
-        Indent(1); WriteLine("}");
-        WriteLine("");
+		Indent(1);
+		println("}");
+		
+        println();
 
-		Indent(1); Write("export class {0}", _class.Name); 
+		print("export class {0}", _class.Name); 
         if (bases.Count > 0)
         {
             bool first = true;
             foreach (var super in bases)
             {
-                Write(first ? " extends " : ", ");
+                print(first ? " extends " : ", ");
                 first = false;
-                Write(super.Name);
+                print(super.Name);
             }
         }
-        WriteLine(" {");
-		Indent(2); WriteLine("public static ajaxSettings = new Scaffold.AjaxSettings();", _class.Name); 
+        println(" {");
+		Indent(2);
+		println("public static ajaxSettings = new Scaffold.AjaxSettings();", _class.Name); 
+		println();
 		foreach(var member in allMembers) 
 		{
 			if (member.Kind == vsCMElement.vsCMElementProperty)
             {
 				var p = (CodeProperty)member;
-				Indent(2);
-				WriteLine("{0}: {1};", GetTSName(p), GetTSType(p));
+				println("{0}: {1};", GetTSName(p), GetTSType(p));
             }
 		}
-		Indent(2); Write("constructor(data?: I{0})",  _class.Name); WriteLine(" {");
+		println();
+		print("constructor(data?: I{0})",  _class.Name); 
+		println(" {");
+
+		Indent(3);
+
         if (bases.Count > 0)
         {
-            Indent(3);
-            WriteLine("super(data);");
+            println("super(data);");
         }
         foreach(var member in allMembers) 
 		{
 			if (member.Kind == vsCMElement.vsCMElementProperty)
             {
 				var p = (CodeProperty)member;
-				Indent(3);
-				WriteLine("this.{0} = data ? data.{0} : null;", GetTSName(p), GetTSDefault(p));
+				println("this.{0} = data ? data.{0} : null;", GetTSName(p), GetTSDefault(p));
             }
 		}
-		Indent(2); WriteLine("}");
+		Indent(2);
+		println("}");
         var idType = GetModelIdType(_class);
         foreach(var _controller in EnumerateControllers(_class))
         {
-            WriteLine("");
-            Indent(2); WriteLine("/* {0} */", _controller.FullName);
-            WriteLine("");
+            println();
+            println("/* {0} */", _controller.FullName);
+            println("");
 
             if(IsReadOnlyController(_controller))
             {
@@ -208,7 +217,7 @@ module <#=_namespace #> {
                 }
                 url += sb.ToString();
 
-                WriteLine("");
+                println("");
                 var hasFromBodyAndSameClass = false;
                 for (int i = 0; i<fct.Parameters.Count; i++) {
                     var p = (CodeParameter)fct.Parameters.Item(i+1);
@@ -218,12 +227,11 @@ module <#=_namespace #> {
                             hasFromBodyAndSameClass = true;
                     }
                 }
-                Indent(2); 
                 if(!hasFromBodyAndSameClass)
                 {
-                    Write("static ");
+                    print("static ");
                 }
-                Write("{0}(", fct.Name); 
+                print("{0}(", fct.Name); 
                 for (int i = 0; i<fct.Parameters.Count; i++) {
                     var p = (CodeParameter)fct.Parameters.Item(i+1);
                     if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
@@ -231,17 +239,18 @@ module <#=_namespace #> {
                             continue;
                     }
                     if (i>0)
-                        Write(", ");
+                        print(", ");
                     if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
                         if(hasFromBodyAndSameClass)
                             continue;
-                        Write("/** [FromBody] **/");
+                        print("/** [FromBody] **/");
                     }
                     var pt = GetTSType(p);
-                    Write("{0}: {1}", p.Name, pt);
+                    print("{0}: {1}", p.Name, pt);
                 }
                 if(!isMultipart){
-                Write("): JQueryPromise<{0}> ", tresult); WriteLine("{");
+                print("): JQueryPromise<{0}> ", tresult); 
+				println("{");
 #>
             var res = $.ajax(<#= _class.Name #>.ajaxSettings.build({
                 type: '<#= method #>',
@@ -251,20 +260,20 @@ module <#=_namespace #> {
                         var p = (CodeParameter)fct.Parameters.Item(i+1);
                         if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
                             if (method == "GET") {
-                                WriteLine("error: GET methods don't support FromBody parameters.");
+                                println("error: GET methods don't support FromBody parameters.");
                             }
                             else {
                                 Indent(4);
-                                Write("data: JSON.stringify(");
+                                print("data: JSON.stringify(");
                                 if(hasFromBodyAndSameClass)
                                 {
-                                    Write("this");
+                                    print("this");
                                 }
                                 else 
                                 {
-                                    Write(p.Name);
+                                    print(p.Name);
                                 }
-                                WriteLine("),");
+                                println("),");
                             }
                             break;
                         }
@@ -273,7 +282,7 @@ module <#=_namespace #> {
             }));
 <#
                 } else {
-                Write("): any "); WriteLine("{");
+					println("): any  {");
 #>
             var res = <#= multipartName #>.upload('<#= url #>');
 <#
@@ -281,16 +290,17 @@ module <#=_namespace #> {
 #>
             return res;
 <#
-                Indent(2); WriteLine("}");
+                Indent(2); println("}");
 
             }
 
 
         }
 
-		WriteLine("");
-		Indent(1); WriteLine("}");
-		WriteLine("");
+		println("");
+		Indent(1); 
+		println("}");
+		println("");
 
 	}
 #>

@@ -3,35 +3,35 @@
 <#@include file="T4Utils.t4" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-// WARNING: T4 generated file 
-//
-
+/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
-
 
 <#
     var namespaces = new []{"App.Models"};
     foreach(var _namespace in namespaces)
     {
 #>
-
 module <#=_namespace #> {
+
 <#
 		var enums = EnumerateEnums(_namespace).ToList();
                
 		foreach (var _enum in enums) 
 		{
 
-			Indent(1); Write("export enum {0}", _enum.Name); WriteLine(" {");
+			Indent(1); print("export enum {0}", _enum.Name); println(" {");
 			var first = true;
+			Indent(2);
 			foreach(var member in _enum.Members.OfType<CodeVariable>())
 			{
-				Indent(2);Write(member.Prototype);
+				print(member.Prototype);
 				if(member.InitExpression != null)
-					Write(" = {0}", member.InitExpression.ToString());
-				WriteLine(",");
+					print(" = {0}", member.InitExpression.ToString());
+				println(",");
 			}
-			Indent(1);WriteLine("}");WriteLine("");;
+			Indent(1);
+			println("}");
+			println();
 
 		}
 #>

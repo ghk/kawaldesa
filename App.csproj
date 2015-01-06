@@ -1390,6 +1390,11 @@
     <TypeScriptCompile Include="Scaffold\Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\flot\jquery.flot.d.ts" />
     <TypeScriptCompile Include="Scaffold\Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\gen\Enums.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Enums.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBDesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
@@ -1398,11 +1403,6 @@
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
-    <TypeScriptCompile Include="Scripts\gen\Enums.ts">
-      <DependentUpon>Enums.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\gen\Models.ts">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

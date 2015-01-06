@@ -11,11 +11,9 @@
 	IEnumerable<ProjectItem> EnumerateProjectItem(ProjectItem p)
 	{
 		yield return p;
-		Level++;
 		foreach (var sub in p.ProjectItems.Cast<ProjectItem>())
 			foreach (var sub2 in EnumerateProjectItem(sub))
 				yield return sub2;
-		Level--;
 	}
 	IEnumerable<ProjectItem> EnumerateProjectItem(Project p)
 	{
@@ -27,21 +25,17 @@
 	IEnumerable<CodeElement> EnumerateCodeElement(CodeElement element)
 	{
 		yield return element;
-		Level++;
 		foreach (var sub in element.Children.Cast<CodeElement>()) {
 			foreach(var sub2 in EnumerateCodeElement(sub))
 				yield return sub2;
 		}
-		Level--;
 	}
 	IEnumerable<CodeElement> EnumerateCodeElement(CodeElements elements)
 	{
-		Level++;
 		foreach (var sub in elements.Cast<CodeElement>()) {
 			foreach(var sub2 in EnumerateCodeElement(sub))
 				yield return sub2;
 		}
-		Level--;
 	}
 	IEnumerable<CodeElement> EnumerateCodeElement(FileCodeModel code)
 	{
@@ -433,11 +427,50 @@
 
 	// miscellaneous utility
 	int Level = 0;
-	void Indent() { Indent(Level); }
+	void IndentPlus() { Indent(Level + 1); }
+	void IndentMinus() { Indent(Level + 1); }
 	void Indent(int lvl)
 	{
-		for(int i=0; i<lvl; i++)
-			Write("    ");
+		Level = lvl;
+	}
+	bool indentPrinted = false;
+
+	void WriteIndent()
+	{
+		if(!indentPrinted){
+			for(int i=0; i<Level; i++)
+				Write("    ");
+			indentPrinted = true;
+		}
+	}
+	void print(String s)
+	{
+		WriteIndent();
+		Write(s);
+	}
+	void print(String s, params String[] args)
+	{
+		WriteIndent();
+		Write(s, args);
+	}
+	
+	void println()
+	{
+		WriteIndent();
+		WriteLine("");
+		indentPrinted = false;
+	}
+	void println(String s)
+	{
+		WriteIndent();
+		WriteLine(s);
+		indentPrinted = false;
+	}
+	void println(String s, params String[] args)
+	{
+		WriteIndent();
+		WriteLine(s, args);
+		indentPrinted = false;
 	}
 
 	string GetRouteName(string name)
