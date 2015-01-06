@@ -67,7 +67,7 @@ namespace App
             bundles.Add(new ScriptBundle("~/js/kawaldesa")
                 .Include("~/Scaffold/Scripts/angular.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
-                .Include("~/Scripts/Scaffold.js")
+                .Include("~/Scripts/gen/Scaffold.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/KawalDesa/Models/*.js")
