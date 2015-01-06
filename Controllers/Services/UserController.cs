@@ -18,9 +18,9 @@ using System;
 using System.Web;
 using System.Net.Http.Headers;
 
-namespace App.Controllers
+namespace App.Controllers.Services
 {
-    [ToTS(TSFlag.Ignore)]
+    [Service]
     public class UserController: ApiController
     {
         private DB dbContext;

@@ -8,8 +8,8 @@ appSettings.config
 # Created by http://www.gitignore.io
 # Scaffold Content
 /Scaffold/
-/Scripts/Models.js
-/Scripts/Models.js.map
+/Scripts/gen/*.js
+/Scripts/gen/*.js.map
 /Scripts/KawalDesa/*.js
 /Scripts/KawalDesa/*.js.map
 /Scripts/KawalDesa/*/*.js

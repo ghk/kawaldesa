@@ -1,58 +1,9 @@
-﻿// WARNING: T4 generated file  (it is related to CodeToServerProxy)
+﻿// WARNING: T4 generated file 
 //
 
-/// <reference path="../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 
-module Scaffold {
-    export class AjaxSettings {
-        async = true;
-        cache = false;
-        timeout = -1;
 
-        public build(settings: JQueryAjaxSettings): JQueryAjaxSettings{
-            return {
-                async: this.async,
-                cache: this.cache,
-                timeout: this.timeout,
-                dataType: 'json',
-				contentType: 'application/json',
-			    type: settings.type,
-			    url: settings.url,
-                data: settings.data
-            }
-        }
-
-    }
-
-    declare var angular;
-    export class Multipart {
-        forms = {};
-        files: any;
-
-		public constructor(data?: any)
-		{
-		    this.forms = data ? data.forms : {};
-            this.files = data ? data.files : null;
-		}
-
-        public upload(url): any{
-            var $upload = angular.element("html").injector().get("$upload");
-            return $upload.upload({
-                type: 'POST',
-                url: url,
-                data: this.forms,
-                file: this.files
-            });
-        }
-    }
-
-	export interface IQuery {
-		PageLength?: number;
-		PageBegin?: number;
-		SortField?: string;
-		SortOrder?: string;
-	}
-}
 
 module App.Models {
 	import IQuery = Scaffold.IQuery;
@@ -191,9 +142,9 @@ module App.Models {
     export interface IAccount extends IBaseEntity {
         Code: string;
         Name: string;
-        Type: /** App.Models.AccountType **/ any;
-        ExpenseType: /** App.Models.ExpenseType **/ any;
-        ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
+        Type: App.Models.AccountType;
+        ExpenseType: App.Models.ExpenseType;
+        ExpenseGroup: App.Models.ExpenseGroup;
         Target: number;
         IsActivated: boolean;
         DateDeactivated: /** System.DateTime **/ any;
@@ -216,9 +167,9 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         Code: string;
         Name: string;
-        Type: /** App.Models.AccountType **/ any;
-        ExpenseType: /** App.Models.ExpenseType **/ any;
-        ExpenseGroup: /** App.Models.ExpenseGroup **/ any;
+        Type: App.Models.AccountType;
+        ExpenseType: App.Models.ExpenseType;
+        ExpenseGroup: App.Models.ExpenseGroup;
         Target: number;
         IsActivated: boolean;
         DateDeactivated: /** System.DateTime **/ any;
@@ -782,7 +733,7 @@ module App.Models {
     export interface IRealization extends IBaseEntity {
         Description: string;
         Vendor: string;
-        Sector: /** App.Models.Sector **/ any;
+        Sector: App.Models.Sector;
         fkTransactionID: number;
         Transaction: App.Models.ITransaction;
         fkCreatedByID: string;
@@ -793,7 +744,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         Description: string;
         Vendor: string;
-        Sector: /** App.Models.Sector **/ any;
+        Sector: App.Models.Sector;
         fkTransactionID: number;
         Transaction: App.Models.ITransaction;
         fkCreatedByID: string;
@@ -845,7 +796,7 @@ module App.Models {
     export interface IRegion extends IBaseEntity {
         ID: number;
         Name: string;
-        Type: /** App.Models.RegionType **/ any;
+        Type: App.Models.RegionType;
         IsKelurahan: boolean;
         Website: string;
         UrlKey: string;
@@ -857,7 +808,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         ID: number;
         Name: string;
-        Type: /** App.Models.RegionType **/ any;
+        Type: App.Models.RegionType;
         IsKelurahan: boolean;
         Website: string;
         UrlKey: string;

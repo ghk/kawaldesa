@@ -1,0 +1,41 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".ts" #>
+<#@include file="T4Utils.t4" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+// WARNING: T4 generated file 
+//
+
+/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+
+
+<#
+    var namespaces = new []{"App.Models"};
+    foreach(var _namespace in namespaces)
+    {
+#>
+
+module <#=_namespace #> {
+<#
+		var enums = EnumerateEnums(_namespace).ToList();
+               
+		foreach (var _enum in enums) 
+		{
+
+			Indent(1); Write("export enum {0}", _enum.Name); WriteLine(" {");
+			var first = true;
+			foreach(var member in _enum.Members.OfType<CodeVariable>())
+			{
+				Indent(2);Write(member.Prototype);
+				if(member.InitExpression != null)
+					Write(" = {0}", member.InitExpression.ToString());
+				WriteLine(",");
+			}
+			Indent(1);WriteLine("}");WriteLine("");;
+
+		}
+#>
+}
+<#
+    }
+#>

@@ -216,7 +216,7 @@
     <Compile Include="Controllers\Models\RegionController.cs" />
     <Compile Include="Controllers\Models\APBNController.cs" />
     <Compile Include="Controllers\Models\TransactionController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\Services\UserController.cs" />
     <Compile Include="Controllers\Models\BaseController.cs" />
     <Compile Include="Controllers\KawalDesaController.cs" />
     <Compile Include="Controllers\Validators\Validators.cs" />
@@ -1083,7 +1083,7 @@
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\KawalDesa\Dashboard.cshtml" />
-    <Content Include="Scripts\Models.tt">
+    <Content Include="Scripts\gen\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models.ts</LastGenOutput>
     </Content>
@@ -1343,7 +1343,11 @@
     <Content Include="Scaffold\Scripts\Scaffold\Models.js.map" />
     <Content Include="Scaffold\Scripts\Scaffold\Scaffold.js.map" />
     <Content Include="Scaffold\Scripts\version.json" />
-    <None Include="Scripts\T4Utils.t4" />
+    <Content Include="Scripts\gen\Enums.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Enums.ts</LastGenOutput>
+    </Content>
+    <None Include="Scripts\gen\T4Utils.t4" />
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
@@ -1367,7 +1371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="SQLs\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1395,11 +1398,17 @@
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
-    <TypeScriptCompile Include="Scripts\Models.ts">
+    <TypeScriptCompile Include="Scripts\gen\Enums.ts">
+      <DependentUpon>Enums.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\gen\Models.ts">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\gen\Scaffold.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Scaffold\Scaffold.csproj">

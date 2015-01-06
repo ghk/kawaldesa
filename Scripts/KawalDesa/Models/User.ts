@@ -1,4 +1,4 @@
-﻿/// <reference path="../../Models.ts"/> 
+﻿/// <reference path="../../gen/Models.ts"/> 
 
 module App.Models {
 

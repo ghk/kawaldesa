@@ -226,7 +226,7 @@
 					return "Scaffold.Multipart";
                 if (EnumerateModels("App.Models").Select(x => x.FullName).Contains(type))
                     return "App.Models.I" + ShortName(type);
-                if (EnumerateTSEnum().Select(x => x.FullName).Contains(type))
+                if (EnumerateEnums("App.Models").Select(x => x.FullName).Contains(type))
                     return "App.Models."+ShortName(type);
 				var a = GetListType(type);
 				if (a != null)
@@ -311,16 +311,6 @@
         }
     }
 
-	// enumerate classes, enums, members with ToTSAttribute in ActiveProject
-	IEnumerable<CodeClass> EnumerateTSClass(string kind)
-	{
-		foreach (var _class in AllClasses
-								.Where(x => x.Kind == vsCMElement.vsCMElementClass)
-								.Where(x => IsTSFlag((CodeElement)x, ca => ca.Value.EndsWith(kind)))
-				) 
-			yield return _class;
-	}
-	
 	IEnumerable<CodeClass> EnumerateModels(string _namespace)
 	{
 		foreach (var _class in AllClasses
@@ -337,11 +327,10 @@
 			yield return _class;
 	}
 	
-	IEnumerable<CodeEnum> EnumerateTSEnum()
+	IEnumerable<CodeEnum> EnumerateEnums(string _namespace)
 	{
 		foreach (var _class in AllEnums
-								.Where(x => x.Kind == vsCMElement.vsCMElementEnum)
-								.Where(x => IsTSFlag((CodeElement)x, yield => true))
+								.Where(x => x.Kind == vsCMElement.vsCMElementEnum && x.Namespace.Name == _namespace)
 				) 
 			yield return _class;
 	}
@@ -350,8 +339,6 @@
 	{
 		foreach (var member in _class.Children.Cast<CodeElement>()) 
         {
-			if (HasAttribute(member, xa => xa.FullName.EndsWith("ToTSAttribute") && xa.Value.EndsWith("TSFlag.Ignore")))
-				continue;
 			switch(member.Kind) 
             {
 				case vsCMElement.vsCMElementFunction:
@@ -424,15 +411,6 @@
         }
     }
 
-	IEnumerable<CodeClass> EnumerateFluentValidators(CodeClass codeClass)
-	{
-		foreach (var _class in AllClasses
-								.Where(c => IsValidatorForModel(c, codeClass))
-				) 
-		yield return _class;
-    }
-
-	bool IsTSFlag(CodeElement e, Predicate<CodeAttribute> extra) { return HasAttribute(e, xa => xa.FullName.EndsWith("ToTSAttribute") && (extra == null || extra(xa))); }
     bool HasAttribute(CodeElement e, Predicate<CodeAttribute> _check) { return GetAttribute(e, _check) != null; }
     CodeAttribute GetAttribute(CodeElement e, Predicate<CodeAttribute> _check)
     {
@@ -460,5 +438,45 @@
 	{
 		for(int i=0; i<lvl; i++)
 			Write("    ");
+	}
+
+	string GetRouteName(string name)
+	{
+		if (name.EndsWith("Controller"))
+			name = name.Substring(0, name.Length - "Controller".Length);
+		return name;
+	}
+
+	string GetReturnType(CodeFunction fct, bool isWeb)
+	{
+		if (isWeb) 
+		{
+			return GetTSType(fct);
+        }
+		else 
+		{
+			return "any";
+        }
+	}
+	string GetMethod(CodeElement member, bool isWeb)
+	{
+        var method = "GET";
+		if (isWeb) {
+			if (member.Name.ToLower().StartsWith("get"))
+				method = "GET";
+			else if (member.Name.ToLower().StartsWith("post"))
+				method = "POST";
+			else if (member.Name.ToLower().StartsWith("delete"))
+				method = "DELETE";
+			else if (member.Name.ToLower().StartsWith("put"))
+				method = "PUT";
+        }
+        if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPostAttribute")))
+            method = "POST";
+        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpDeleteAttribute")))
+            method = "DELETE";
+        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPutAttribute")))
+            method = "PUT";
+		return method;
 	}
 #>

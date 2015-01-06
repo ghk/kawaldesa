@@ -3,61 +3,12 @@
 <#@include file="T4Utils.t4" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-// WARNING: T4 generated file  (it is related to CodeToServerProxy)
+// WARNING: T4 generated file 
 //
 
-/// <reference path="../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 
-module Scaffold {
-    export class AjaxSettings {
-        async = true;
-        cache = false;
-        timeout = -1;
 
-        public build(settings: JQueryAjaxSettings): JQueryAjaxSettings{
-            return {
-                async: this.async,
-                cache: this.cache,
-                timeout: this.timeout,
-                dataType: 'json',
-				contentType: 'application/json',
-			    type: settings.type,
-			    url: settings.url,
-                data: settings.data
-            }
-        }
-
-    }
-
-    declare var angular;
-    export class Multipart {
-        forms = {};
-        files: any;
-
-		public constructor(data?: any)
-		{
-		    this.forms = data ? data.forms : {};
-            this.files = data ? data.files : null;
-		}
-
-        public upload(url): any{
-            var $upload = angular.element("html").injector().get("$upload");
-            return $upload.upload({
-                type: 'POST',
-                url: url,
-                data: this.forms,
-                file: this.files
-            });
-        }
-    }
-
-	export interface IQuery {
-		PageLength?: number;
-		PageBegin?: number;
-		SortField?: string;
-		SortOrder?: string;
-	}
-}
 <#
     var namespaces = new []{"App.Models"};
     foreach(var _namespace in namespaces)
@@ -346,56 +297,4 @@ module <#=_namespace #> {
 }
 <#
     }
-#>
-<#+
-	string GetRouteName(string name)
-	{
-		if (name.EndsWith("Controller"))
-			name = name.Substring(0, name.Length - "Controller".Length);
-		return name;
-	}
-	string GetReturnType(CodeFunction fct, bool isWeb)
-	{
-		if (isWeb) 
-		{
-			return GetTSType(fct);
-        }
-		else 
-		{
-			var tsa = GetAttribute((CodeElement)fct, xa => xa.FullName.EndsWith("ToTSAttribute"));
-			if (tsa == null)
-				return "any";
-			var tre = tsa.Children.Cast<CodeElement>().Where(x => x.Name == "ReturnType" && x.Kind == vsCMElement.vsCMElementOther).FirstOrDefault();
-			if (tre == null)
-				return "any";
-
-			var text = GetText(tre);
-			var i0 = text.IndexOf('"');
-			var i1 = text.LastIndexOf('"');
-			var ttext = text.Substring(i0 + 1, i1 - i0 - 1);
-
-			return GetTSType(ttext);
-        }
-	}
-	string GetMethod(CodeElement member, bool isWeb)
-	{
-        var method = "GET";
-		if (isWeb) {
-			if (member.Name.ToLower().StartsWith("get"))
-				method = "GET";
-			else if (member.Name.ToLower().StartsWith("post"))
-				method = "POST";
-			else if (member.Name.ToLower().StartsWith("delete"))
-				method = "DELETE";
-			else if (member.Name.ToLower().StartsWith("put"))
-				method = "PUT";
-        }
-        if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPostAttribute")))
-            method = "POST";
-        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpDeleteAttribute")))
-            method = "DELETE";
-        else if (HasAttribute(member, xa => xa.FullName.EndsWith("HttpPutAttribute")))
-            method = "PUT";
-		return method;
-	}
 #>
