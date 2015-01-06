@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Scaffold.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Http.Validation;
 
 namespace App.Models
 {
@@ -15,9 +18,12 @@ namespace App.Models
             {AccountType.EXPENSE, "B"}
         };
 
+        [Required(ErrorMessage="Kode harus diisi")]
+        [RegularExpression(@"[a-zA-Z0-9\.]+", ErrorMessage = "Kode harus berupa digit atau titik")]
         [Index("IX_Code_Type_fkAPBDesID", 1, IsUnique = true)]
         public String Code { get; set; }
 
+        [Required(ErrorMessage="Nama harus diisi")]
         public String Name { get; set; }
 
         [Index("IX_Code_Type_fkAPBDesID", 2, IsUnique = true)]

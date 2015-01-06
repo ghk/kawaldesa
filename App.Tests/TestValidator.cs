@@ -58,7 +58,23 @@ namespace App.Tests
             Assert.IsFalse(result);
         }
 
+       [TestMethod]
+       public void TestValidateBatch()
+       {
+           Account acc1 = new Account();
+           Account acc2 = new Account();
+           Account acc3 = new Account();
+
+           acc1.Code = "1.1";
+           acc2.Code = "3.1";
+           acc3.Code = "2.1";
 
 
+       }
+
+       public class AccountsBatch : List<Account>
+       {
+
+       }
     }
 }

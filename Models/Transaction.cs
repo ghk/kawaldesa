@@ -62,7 +62,7 @@ namespace App.Models
         public IEnumerable<ModelValidationResult> Validate()
         {
             if (fkSourceID != fkActorID && fkDestinationID != fkActorID)
-                yield return new ModelValidationResult{MemberName = "fkActorID", Message = "fkActorID must matched either fkDestinationID or fkSourceID"};
+                yield return new Invalid("fkActorID", "fkActorID must matched either fkDestinationID or fkSourceID");
 
         }
     }

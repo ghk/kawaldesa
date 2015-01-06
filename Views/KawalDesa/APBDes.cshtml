@@ -67,20 +67,20 @@
                                 <tr ng-repeat="newAccount in apbdesCtrl.newAccounts[rootAccount.ID]">
                                     <td>
                                         <input type="text" placeholder="Kode" ng-model="newAccount.Code" />
-                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index][0].Code" style="color:red">
-                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index][0].Code}}
+                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index].Code" style="color:red">
+                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index].Code}}
                                         </span>
                                     </td>
                                     <td>
                                         <input type="text" placeholder="Nama" ng-model="newAccount.Name" />
-                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index][1].Name" style="color:red">
-                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index][1].Name}}
+                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index].Name" style="color:red">
+                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index].Name}}
                                         </span>
                                     </td>
                                     <td colspan="3">
                                         <input type="number" placeholder="Target" ng-model="newAccount.Target" />
-                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index][2].Target" style="color:red">
-                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index][2].Target}}
+                                        <span ng-if="apbdesCtrl.formErrors[rootAccount.ID][$index].Target" style="color:red">
+                                            {{apbdesCtrl.formErrors[rootAccount.ID][$index].Target}}
                                         </span>
                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     </td>

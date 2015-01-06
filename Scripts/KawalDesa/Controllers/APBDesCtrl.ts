@@ -39,20 +39,28 @@ module App.Controllers {
 
         saveNewAccounts(rootAccountID: number) {
             var ctrl = this;
+            ctrl.formErrors[rootAccountID] = {};
             Models.APBDes.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
                 .done(() => {
                     ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
                 })
                 .fail((error: any) => {
                     ctrl.$scope.$apply(() => {
-                        var err = {};
-                        for (var i = 0; i < this.newAccounts[rootAccountID].length; i++) {
-                            for (var j = 0; j < error.responseJSON[i].length; j++) {
-                                err[error.responseJSON[i][j].Field] = error.responseJSON[i][j].Message;
-                                ctrl.formErrors[rootAccountID] = {};
-                                ctrl.formErrors[rootAccountID][i] = {};
-                                ctrl.formErrors[rootAccountID][i][j] = err;
+                        var modelState = error.responseJSON.ModelState;
+                        function getError(idx) {
+                            var idxKey = "[" + idx + "].";
+                            var keys = Object.keys(modelState);
+                            var results = {};
+                            for (var i = 0; i < keys.length; i++) {
+                                if (keys[i].indexOf(idxKey) == 0) {
+                                    var attr = keys[i].substr(idxKey.length);
+                                    results[attr] = modelState[keys[i]].join(",");
+                                }
                             }
+                            return results;
+                        }
+                        for (var i = 0; i < ctrl.newAccounts[rootAccountID].length; i++) {
+                            ctrl.formErrors[rootAccountID][i] = getError(i);
                         }
                     });
                 });

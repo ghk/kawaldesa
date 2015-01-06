@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Http;
 using System.Net.Http;
 using System.Net;
+using Scaffold.Validation;
+using Scaffold.ControllerExtensions;
 
 namespace App.Controllers
 {
@@ -95,85 +97,74 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        //Holy! so much validation
         public void AddAccounts(long apbdesID, long rootAccountID, [FromBody] List<Account> accounts)
         {
-            var apbdes = Get(apbdesID);
-            var errors = new Dictionary<String, List<Dictionary<String, Object>>>();
+            /* Fetches */
 
+            var apbdes = Get(apbdesID);
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
 
             var rootAccount = dbContext.Set<Account>().Find(rootAccountID);
-            var type = rootAccount.Type;
-
-            foreach (var account in accounts)
-            {
-                if (!string.IsNullOrEmpty(account.Code))
-                {
-                    account.Code = Regex.Replace(account.Code, @"\s+", "");
-                    account.Type = type;
-                }
-            }
 
             var existingAccounts = apbdes.Accounts
-                .Where(a => a.Type == type)
+                .Where(a => a.Type == rootAccount.Type)
                 .ToList();
 
             var allAccounts = existingAccounts
                 .Union(accounts)
                 .ToList();
 
-            var accountCodesSet = new HashSet<String>(existingAccounts.Select(e => e.Code));
+            /* Cleanups */
 
-            for (var i = 0; i < accounts.Count; i++)
+            foreach (var account in accounts)
             {
-                var account = accounts[i];
-                var errorList = new List<Dictionary<String, Object>>();
-                if (string.IsNullOrWhiteSpace(account.Code))
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode harus diisi" } });                    
-                else if(!Regex.IsMatch(account.Code, @"[\d\.]+"))
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode invalid" } });
-                else if (accountCodesSet.Contains(account.Code))
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Code" }, { "Message", "Kode sudah terdaftar" } });
-                
-                if (string.IsNullOrWhiteSpace(account.Name))
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Name" }, { "Message", "Nama harus diisi" } });
-
-                if (!account.Target.HasValue)
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Target" }, { "Message", "Target harus diisi" } });
-                else if (account.Target.HasValue && account.Target.Value < 0)
-                    errorList.Add(new Dictionary<String, Object>() { { "Field", "Target" }, { "Message", "Nilai target harus lebih dari 0" } });
-                
-                //throw CreateInputException(i, "Code", "Kode harus diisi"); 
-                //throw CreateInputException(i, "Code", "Kode invalid");
-                //throw CreateInputException(i, "Code", "Kode sudah terdaftar");
-                //throw CreateInputException(i, "Name", "Nama harus diisi");
-                //throw CreateInputException(i, "Target", "Nilai target harus lebih dari 0");
-
-                if (errorList.Count > 0)
+                if (!string.IsNullOrEmpty(account.Code))
                 {
-                    errors.Add(i.ToString(), errorList);
-                    continue;
+                    account.Code = Regex.Replace(account.Code, @"\s+", "");
+                    account.Type = rootAccount.Type;
+                    account.fkAPBDesID = apbdes.ID;
                 }
-                
-                accountCodesSet.Add(account.Code);
-
-                var parentCode = account.ParentCode;
-                if (!allAccounts.Any(a => a.Code == parentCode))
-                    throw new ApplicationException(String.Format("parent account not exists for {1}", account.Code));
-
             }
 
-            if (errors.Count > 0)
-                throw CreateInputExceptions(errors);
+            /* Validate */
+
+            this.ModelState.Clear();
+            this.Validate(accounts);
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+
+            var invalids = new List<Invalid>();
+
+            var accountCodesSet = new HashSet<String>(existingAccounts.Select(e => e.Code));
+            for (var i = 0; i < accounts.Count; i++)
+            {
+                var field = String.Format("[{0}].{1}", i, "Code");
+                var account = accounts[i];
+
+                if (!Regex.IsMatch(account.Code, @"[\d\.]+"))
+                    invalids.Add(new Invalid(field, "Kode tidak valid"));  
+  
+                if (accountCodesSet.Contains(account.Code))
+                    invalids.Add(new Invalid(field, "Kode sudah terdaftar"));  
+               
+                accountCodesSet.Add(account.Code);
+                
+                var parentCode = account.ParentCode;
+                if (!allAccounts.Any(a => a.Code == parentCode))
+                    invalids.Add(new Invalid(field, "Anggaran tidak mempunyai induk anggaran")); 
+            }
+
+            this.ValidateWith(invalids);
+
+            /* Persist */
 
             foreach (var account in accounts.OrderBy(a => a.Code))
             {
                 var parentAccount = allAccounts.First(a => a.Code == account.ParentCode);
                 account.fkParentAccountID = parentAccount.ID;
-                account.fkAPBDesID = apbdes.ID;
+
                 dbContext.Set<Account>().Add(account);
                 dbContext.SaveChanges();
             }
