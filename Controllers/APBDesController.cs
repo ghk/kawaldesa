@@ -22,29 +22,6 @@ namespace App.Controllers
             AllowGetAll = false;
         }
 
-        //public HttpResponseException CreateInputException(int index, String field, String message)
-        //{
-        //    var error = new HttpError(message) { {"Field", field }, {"Index", index} };
-        //    return new HttpResponseException(
-        //        ControllerContext.Request.CreateErrorResponse(
-        //            HttpStatusCode.BadRequest,
-        //            error));
-        //}
-
-        public HttpResponseException CreateInputExceptions(Dictionary<String, List<Dictionary<String, Object>>> exceptions)
-        {
-            var error = new HttpError("Error");
-
-            foreach (var exception in exceptions)
-            {
-                error.Add(exception.Key, exception.Value);
-            }
-
-            return new HttpResponseException(
-                ControllerContext.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    error));
-        }
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
