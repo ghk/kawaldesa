@@ -195,10 +195,15 @@
                             {{entity.RegionName}}
                         </a>
                     </td>
-                    <td class="money"> {{entity.BudgetedTotal | number:0}}</td>
+                    <td class="money">
+                        <div style="float:right">{{entity.BudgetedTotal | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.BudgetedTotal)"> </div>
+                    </td>
                     <td class="money"> {{entity.TransferredTotal | number:0}} </td>
-                    <td class="money"> {{entity.AcknowledgedTotal | number:0}} </td>
-
+                    <td class="money">
+                        <div style="text-align:right; float:right; z-index:100" >40000{{entity.AcknowledgedTotal | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, 4000000000)"> </div>
+                    </td>
                     <td class="money"> {{entity.BudgetedAPBN | number:0}} </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
