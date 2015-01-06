@@ -48,7 +48,7 @@ namespace App.Controllers
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
         public async void UpdateSources(Uploader uploader)
         {
-            var res = await uploader.PostFile();
+            var res = uploader;
 
             try
             {

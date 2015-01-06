@@ -1,14 +1,21 @@
-﻿using System;
+﻿using FluentValidation;
+using Scaffold.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Validation;
 
 namespace App.Models
 {
     public class BaseTransaction : BaseEntity
     {
+        [Required(ErrorMessage="Jumlah harus diisi")]
+        [Range(0, double.MaxValue, ErrorMessage = "Jumlah harus merupakan angka dan positif")]
         public decimal Amount { get; set; }
+
         public DateTime Date { get; set; }
 
         [Index]
@@ -42,11 +49,22 @@ namespace App.Models
 
         [ForeignKey("CreatedBy")]
         public string fkCreatedByID { get; set; }
+
+
         public virtual User CreatedBy { get; set; }
 
         [ForeignKey("TransactionFile")]
         public long? fkTransactionFileID { get; set; }
+
         public virtual TransactionFile TransactionFile { get; set; }
+
+        [Validator]
+        public IEnumerable<ModelValidationResult> Validate()
+        {
+            if (fkSourceID != fkActorID && fkDestinationID != fkActorID)
+                yield return new ModelValidationResult{MemberName = "fkActorID", Message = "fkActorID must matched either fkDestinationID or fkSourceID"};
+
+        }
     }
 
     public class Transaction : BaseTransaction

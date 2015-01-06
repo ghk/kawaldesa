@@ -26,7 +26,7 @@ namespace App.Controllers
         [Authorize(Roles = Role.VOLUNTEER_REALIZATION)]
         public async Task AddFieldReport(Uploader uploader)
         {
-            var res = await uploader.PostFile();
+            var res = uploader;
             try
             {
                 var realizationID = long.Parse(res.Forms["RealizationID"]);

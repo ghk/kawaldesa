@@ -33,52 +33,32 @@ namespace App.Controllers
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public async Task AddTransferTransaction(Uploader uploader)
+        public async Task AddTransferTransaction(Uploader<Transaction> uploader)
         {
+            Validate(uploader.Entity);
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+
             var context = HttpContext.Current;
             var principal = HttpContext.Current.User;
-            var res = await uploader.PostFile();
-            HttpContext.Current = context;
-
+            
             try
             {
-
                 var user = (principal.Identity as KawalDesaIdentity).User;
+                
+                var transaction = uploader.Entity;
 
-                var sourceID = long.Parse(res.Forms["fkSourceID"]);
-                var destID = long.Parse(res.Forms["fkDestinationID"]);
-                var actorID = long.Parse(res.Forms["fkActorID"]);
+                KawalDesaController.CheckRegionAllowed(principal,dbContext, transaction.fkDestinationID.Value);
 
-
-                decimal amount;
-                var amountStr = res.GetForm("Amount");
-                if (amountStr == null || !decimal.TryParse(amountStr, out amount) || amount < 0)
-                {
-                    throw CreateInputException("Amount", "Jumlah harus merupakan angka dan positif");
-                }
-
-                DateTime date;
-                if (!DateTime.TryParseExact(res.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out date))
-                {
-                    throw CreateInputException("Date", "Format tanggal harus 'dd-mm-yyyy'");
-                }
-
-                var sourceURL = res.GetForm("SourceURL");
-
-                KawalDesaController.CheckRegionAllowed(principal,dbContext, destID);
-
-                if (actorID != sourceID && actorID != destID)
-                    throw new ApplicationException("actor id must matched source id or dest id");
-
-                var actor = dbContext.Set<Region>().First(r => r.ID == actorID);
-                var source = dbContext.Set<Region>().First(r => r.ID == sourceID);
-                var destination = dbContext.Set<Region>().First(r => r.ID == destID);
+                var actor = dbContext.Set<Region>().First(r => r.ID == transaction.fkActorID);
+                var source = dbContext.Set<Region>().First(r => r.ID == transaction.fkSourceID.Value);
+                var destination = dbContext.Set<Region>().First(r => r.ID == transaction.fkDestinationID.Value);
 
                 long? accountID = null;
-                if (actorID == destID)
+                if (transaction.fkActorID == transaction.fkDestinationID)
                 {
-                    var targetSource = sourceID == 0 ? "apbn" : "add";
-                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.APBDes.fkRegionID == destID).ID;
+                    var targetSource = transaction.fkSourceID == 0 ? "apbn" : "add";
+                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.APBDes.fkRegionID == transaction.fkDestinationID).ID;
                 }
 
                 string roleRequired = null;
@@ -102,9 +82,9 @@ namespace App.Controllers
                     throw new ApplicationException("Principal is not in role");
 
                 long? blobID = null;
-                if (res.Files.Count > 0)
+                if (uploader.Files.Count > 0)
                 {
-                    var fileResult = res.Files[0];
+                    var fileResult = uploader.Files[0];
                     var blob = new Blob(fileResult);
                     dbContext.Set<Blob>().Add(blob);
                     dbContext.SaveChanges();
@@ -112,27 +92,19 @@ namespace App.Controllers
                     blobID = blob.ID;
                 }
 
-                var transaction = new Transaction
-                {
-                    fkAPBNID = 1,
-                    fkSourceFileID = blobID,
-                    fkSourceID = sourceID,
-                    fkDestinationID = destID,
-                    fkActorID = actorID,
-                    fkAccountID = accountID,
-                    fkCreatedByID = user.Id,
-                    Amount = amount,
-                    Date = date,
-                    SourceURL = sourceURL,
-                    IsActivated = true
-                };
+                
+                transaction.fkSourceFileID = blobID;
+                transaction.IsActivated = true;
+                transaction.fkCreatedByID = user.Id;
+                transaction.fkAccountID = accountID;
+      
 
                 dbSet.Add(transaction);
                 dbContext.SaveChanges();
             }
             finally
             { 
-                res.DeleteUnmoved();
+                uploader.DeleteUnmoved();
             }
         }
 

@@ -19,7 +19,7 @@ namespace App.Controllers
 
         public async Task PostFile(Uploader uploader)
         {
-            var res = await uploader.PostFile();
+            var res = uploader;
 
             try
             {
