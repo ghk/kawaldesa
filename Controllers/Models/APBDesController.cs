@@ -35,20 +35,26 @@ namespace App.Controllers.Models
                 var fileResult = multipart.Files[0];
                 var blob = new Blob(fileResult);
 
-                var apbdes = dbSet.Find(apbdesID);
-                if (apbdes.IsCompleted)
+                var val = dbSet
+                    .Where(e => e.ID == apbdesID)
+                    .Select(s => new { s.IsCompleted, s.fkRegionID })
+                    .FirstOrDefault();
+                if (val.IsCompleted)
                     throw new ApplicationException("apbdes is completed");
-                KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
+
+                KawalDesaController.CheckRegionAllowed(dbContext, val.fkRegionID);
 
                 dbContext.Set<Blob>().Add(blob);
 
-                apbdes.SourceURL = sourceURL;
-                apbdes.fkSourceFileID = blob.ID;
-                dbContext.Entry(apbdes).State = EntityState.Modified;
+                var apbdes = new APBDes()
+                {
+                    ID = apbdesID,
+                    SourceURL = sourceURL,
+                    fkSourceFileID = blob.ID
+                };
 
+                dbContext.Update(apbdes, e => e.SourceURL, e => e.fkSourceFileID);
                 fileResult.Move(blob.FilePath);
-
-                dbContext.SaveChanges();
 
             }
             finally

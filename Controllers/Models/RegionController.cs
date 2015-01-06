@@ -36,12 +36,12 @@ namespace App.Controllers.Models
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
         public void UpdateWebsite(long regionID, String regionWebsite)
         {
-            var region = dbSet.Find(regionID);
             KawalDesaController.CheckRegionAllowed(dbContext, regionID);
-
-            region.Website = regionWebsite;
-            dbContext.Entry(region).State = EntityState.Modified;
-            dbContext.SaveChanges();
+            dbContext.Update(new Region
+            {
+                ID = regionID,
+                Website = regionWebsite
+            }, e => e.Website);
         }
     }
 }

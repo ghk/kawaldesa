@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace App.Models
 {
     public class DB : DbContext 
     {
-        public DB(): base("DefaultConnection") { }
+        public DB(): base("DefaultConnection") {
+            Database.Log = m => System.Diagnostics.Debug.WriteLine(m);
+        }
         public virtual IDbSet<Blob> Blobs { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserScope> UserScopes { get; set; }
@@ -51,6 +54,20 @@ namespace App.Models
                 entity.Entity.DateModified = DateTime.Now;                    
             }            
             return base.SaveChanges();
+        }
+    }
+
+    public static class DbContextExtensions
+    {
+        public static void Update<T>(this DbContext dbContext, T entity, params Expression<Func<T, object>>[] getUpdatedFields)
+            where T: class
+        {
+            if (getUpdatedFields.Length == 0)
+                return;
+            dbContext.Set<T>().Attach(entity);
+            foreach (var getUpdatedField in getUpdatedFields)
+                dbContext.Entry<T>(entity).Property(getUpdatedField).IsModified = true;
+            dbContext.SaveChanges();
         }
     }
 }
