@@ -13,7 +13,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Net;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class TransactionController: ReadOnlyController<Transaction, long>
     {

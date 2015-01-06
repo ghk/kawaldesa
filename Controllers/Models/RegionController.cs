@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class RegionController : ReadOnlyController<Region, long>
     {

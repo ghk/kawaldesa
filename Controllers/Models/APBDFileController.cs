@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class APBDFileController: BaseController<APBDFile, long>
     {

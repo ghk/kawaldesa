@@ -72,9 +72,9 @@ module App.Controllers {
                 forms: this.formTransactions[entity.RegionID],
                 files: this.formTransactions[entity.RegionID].File
             })).success(() => {
-                    ctrl.setFormExpanded(entity, null);
-                    ctrl.getRecapitulations(entity.ParentRegionID);
-                    ctrl.loadTransactions(entity.RegionID);
+                ctrl.setFormExpanded(entity, null);
+                ctrl.getRecapitulations(entity.ParentRegionID);
+                ctrl.loadTransactions(entity.RegionID);
             }).error(formErr => {
                 ctrl.formErrors[entity.RegionID] = {};
                 ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;

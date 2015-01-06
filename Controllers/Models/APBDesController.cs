@@ -12,7 +12,7 @@ using System.Net;
 using Scaffold.Validation;
 using Scaffold.ControllerExtensions;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class APBDesController : ReadOnlyController<APBDes, long>
     {

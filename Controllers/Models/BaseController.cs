@@ -13,7 +13,7 @@ using AuthorizeAttribute = System.Web.Http.AuthorizeAttribute;
 using System.Linq.Expressions;
 using log4net;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class BaseController<TModel, TId> : CRUDController<TModel, TId>
         where TModel : class, IModel<TId>, new()

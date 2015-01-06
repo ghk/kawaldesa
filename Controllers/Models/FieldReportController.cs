@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class FieldReportController : ReadOnlyController<FieldReport, long>
     {

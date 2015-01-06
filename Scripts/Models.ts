@@ -271,7 +271,7 @@ module App.Models {
             super(data);
         }
 
-        /* App.Controllers.AccountRecapitulationController */
+        /* App.Controllers.Models.AccountRecapitulationController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<AccountRecapitulation>> {
             var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
@@ -313,7 +313,7 @@ module App.Models {
             super(data);
         }
 
-        /* App.Controllers.FrozenAccountRecapitulationController */
+        /* App.Controllers.Models.FrozenAccountRecapitulationController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<FrozenAccountRecapitulation>> {
             var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
@@ -438,7 +438,7 @@ module App.Models {
             this.Accounts = data ? data.Accounts : null;
         }
 
-        /* App.Controllers.APBDesController */
+        /* App.Controllers.Models.APBDesController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<APBDes>> {
             var res = $.ajax(APBDes.ajaxSettings.build({
@@ -534,7 +534,7 @@ module App.Models {
             this.TotalDBH = data ? data.TotalDBH : null;
         }
 
-        /* App.Controllers.APBDFileController */
+        /* App.Controllers.Models.APBDFileController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<APBDFile>> {
             var res = $.ajax(APBDFile.ajaxSettings.build({
@@ -618,7 +618,7 @@ module App.Models {
             this.Year = data ? data.Year : null;
         }
 
-        /* App.Controllers.APBNController */
+        /* App.Controllers.Models.APBNController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<APBN>> {
             var res = $.ajax(APBN.ajaxSettings.build({
@@ -741,7 +741,7 @@ module App.Models {
             this.Pictures = data ? data.Pictures : null;
         }
 
-        /* App.Controllers.FieldReportController */
+        /* App.Controllers.Models.FieldReportController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<FieldReport>> {
             var res = $.ajax(FieldReport.ajaxSettings.build({
@@ -809,7 +809,7 @@ module App.Models {
             this.CreatedBy = data ? data.CreatedBy : null;
         }
 
-        /* App.Controllers.RealizationController */
+        /* App.Controllers.Models.RealizationController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<Realization>> {
             var res = $.ajax(Realization.ajaxSettings.build({
@@ -875,7 +875,7 @@ module App.Models {
             this.Parent = data ? data.Parent : null;
         }
 
-        /* App.Controllers.RegionController */
+        /* App.Controllers.Models.RegionController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<Region>> {
             var res = $.ajax(Region.ajaxSettings.build({
@@ -1004,7 +1004,7 @@ module App.Models {
             super(data);
         }
 
-        /* App.Controllers.TransactionController */
+        /* App.Controllers.Models.TransactionController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<Transaction>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
@@ -1040,7 +1040,7 @@ module App.Models {
             return res;
         }
 
-        static GetTransferTransactions(regionID: number): JQueryPromise<Array</** App.Controllers.TransferTransactionRow **/ any>> {
+        static GetTransferTransactions(regionID: number): JQueryPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
                 type: 'GET',
                 url: '/api/Transaction/GetTransferTransactions?regionID='+regionID+'',
@@ -1056,7 +1056,7 @@ module App.Models {
             return res;
         }
 
-        static GetRealizationTransactions(accountID: number): JQueryPromise<Array</** App.Controllers.RealizationTransactionRow **/ any>> {
+        static GetRealizationTransactions(accountID: number): JQueryPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
             var res = $.ajax(Transaction.ajaxSettings.build({
                 type: 'GET',
                 url: '/api/Transaction/GetRealizationTransactions?accountID='+accountID+'',
@@ -1121,7 +1121,7 @@ module App.Models {
             super(data);
         }
 
-        /* App.Controllers.TransferRecapitulationController */
+        /* App.Controllers.Models.TransferRecapitulationController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<TransferRecapitulation>> {
             var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
@@ -1163,7 +1163,7 @@ module App.Models {
             super(data);
         }
 
-        /* App.Controllers.FrozenTransferRecapitulationController */
+        /* App.Controllers.Models.FrozenTransferRecapitulationController */
 
         static GetAll(query?: IQuery): JQueryPromise<Array<FrozenTransferRecapitulation>> {
             var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({

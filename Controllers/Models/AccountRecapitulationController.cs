@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace App.Controllers
+namespace App.Controllers.Models
 {
     public class BaseAccountRecapitulationController<TRecapitulation> : ReadOnlyController<TRecapitulation, long>
         where TRecapitulation: BaseAccountRecapitulation, new()
