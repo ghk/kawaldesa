@@ -16,6 +16,9 @@ module App.Controllers {
         apbdes: Models.APBDes;
         formErrors: {}
         rootAccounts: Models.Account[];
+        expenseTypeAccount: number = Models.AccountType.EXPENSE;
+        accountTypeSelect = Models.AccountType;
+        sectorSelect = Models.Sector;
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
 
         websiteText: string;

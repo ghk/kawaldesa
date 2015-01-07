@@ -199,44 +199,60 @@
                         <div style="float:right">{{entity.BudgetedTotal | number:0}} </div>
                         <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.BudgetedTotal)"> </div>
                     </td>
-                    <td class="money"> {{entity.TransferredTotal | number:0}} </td>
                     <td class="money">
-                        <div style="text-align:right; float:right; z-index:100" >40000{{entity.AcknowledgedTotal | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, 4000000000)"> </div>
+                        <div style="float:right;">{{entity.TransferredTotal | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.TransferredTotal)"> </div>
                     </td>
-                    <td class="money"> {{entity.BudgetedAPBN | number:0}} </td>
+                    <td class="money">
+                        <div style="float:right;" >{{entity.AcknowledgedTotal | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.AcknowledgedTotal)"> </div>
+                    </td>
+                    <td class="money">
+                        <div style="float:right;">{{entity.BudgetedAPBN | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.BudgetedAPBN)"> </div>
+                    </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
-                            {{entity.TransferredAPBN | number:0}}
+                            <div style="float:right;">{{entity.TransferredAPBN | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                         </span>
                         <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            {{entity.TransferredAPBN | number:0}}
+                            <div style="float:right;">{{entity.TransferredAPBN | number:0}}</div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                         </a>
                     </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
-                            {{entity.AcknowledgedAPBN | number:0}}
+                            <div style="float:right;">{{entity.AcknowledgedAPBN | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                         </span>
                         <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            {{entity.AcknowledgedAPBN | number:0}}
-                        </a>
-                    </td>
-
-                    <td class="money"> {{entity.BudgetedADD | number:0}} </td>
-                    <td class="money">
-                        <span ng-if="indexCtrl.region.Type < 3">
-                            {{entity.TransferredADD | number:0}}
-                        </span>
-                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            {{entity.TransferredADD | number:0}}
+                            <div style="float:right;">{{entity.AcknowledgedAPBN | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                         </a>
                     </td>
                     <td class="money">
+                        <div style="float:right;">{{entity.BudgetedADD | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.BudgetedADD)"> </div>
+                    </td>
+                    <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
-                            {{entity.AcknowledgedADD | number:0}}
+                            <div style="float:right;">{{entity.TransferredADD | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
                         </span>
                         <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            {{entity.AcknowledgedADD | number:0}}
+                            <div style="float:right;">{{entity.TransferredADD | number:0}}</div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
+                        </a>
+                    </td>
+                    <td class="money">
+                        <span ng-if="indexCtrl.region.Type < 3">
+                            <div style="float:right;">{{entity.AcknowledgedADD | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.AcknowledgedADD)"> </div>
+                        </span>
+                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
+                            <div style="float:right;">{{entity.AcknowledgedADD | number:0}} </div>
+                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.AcknowledgedADD)"> </div>
                         </a>
                     </td>
                 </tr>
