@@ -14,19 +14,21 @@ module App.Controllers {
 
         indexCtrl: IndexCtrl;
         apbdes: Models.APBDes;
-        formErrors: {}
         rootAccounts: Models.Account[];
         expenseTypeAccount: number = Models.AccountType.EXPENSE;
-        accountTypeSelect = Models.AccountType;
-        sectorSelect = Models.Sector;
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
+
+        formErrors: {};
+        filteredExpenses = [];
+        filteredSector = [];
 
         websiteText: string;
         linktWebsiteShow: boolean = true;
+        inputWebsiteShow: boolean = false;
         buttontWebsiteShow: boolean = true;
-        inputtWebsiteShow: boolean = false;
+        buttonSearchFileShow: boolean = true;
+        buttonCompleteShow: boolean = true;
         isCompleteStatus: string = "belum";
-
 
         constructor(public $scope, public $upload) {
             var ctrl = this;
@@ -34,6 +36,7 @@ module App.Controllers {
 
             this.formErrors = {};
             this.websiteText = this.indexCtrl.region.Website;
+            this.onRoleVolunteer(this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.ID));
 
             if (!this.indexCtrl.region.Website) {
                 this.onWebsiteShowInput();
@@ -46,9 +49,11 @@ module App.Controllers {
 
         addNewAccount(rootAccountID: number) {
             this.newAccounts[rootAccountID].push(new Models.Account());
+            this.filteredExpenses = this.filterObject(Models.AccountType);
+            this.filteredSector = this.filterObject(Models.Sector);
         }
 
-        deleteNewAccount( accounts: any, index: number) {
+        deleteNewAccount(accounts: any, index: number) {
             accounts.splice(index, 1);
         }
 
@@ -81,22 +86,43 @@ module App.Controllers {
                 });
         }
 
+        filterObject(object: any) {
+            var keys = Object.keys(object);
+            var filteredObject = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                if (!isNaN(parseInt(keys[i]))) {
+                    var item = object[keys[i]];
+
+                    filteredObject.push(item);
+                }
+            }
+
+            return filteredObject;
+        }
+
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
                 this.getAPBDes(this.indexCtrl.region.ID);
             }
         }
 
+        onRoleVolunteer(roleAccepted: boolean) {
+            this.buttontWebsiteShow = roleAccepted;
+            this.buttonSearchFileShow = roleAccepted;
+            this.buttonCompleteShow = roleAccepted;
+        }
+
         onWebsiteShowInput() {
             this.linktWebsiteShow = false;
             this.buttontWebsiteShow = false;
-            this.inputtWebsiteShow = true;
+            this.inputWebsiteShow = true;
         }
 
         onWebsiteShowLink() {
             this.linktWebsiteShow = true;
             this.buttontWebsiteShow = true;
-            this.inputtWebsiteShow = false;
+            this.inputWebsiteShow = false;
         }
 
         onSubmittingWebsite() {
@@ -109,8 +135,8 @@ module App.Controllers {
                         });
                     })
                 else {
-                    this.websiteText = this.indexCtrl.region.Website;
-                    this.onWebsiteShowLink();
+                this.websiteText = this.indexCtrl.region.Website;
+                this.onWebsiteShowLink();
             }
         }
 
@@ -120,8 +146,17 @@ module App.Controllers {
                 .done(() => {
                     ctrl.$scope.$apply(() => {
                         this.isCompleteStatus = "sudah";
+                        this.buttonCompleteShow = false;
                     });
                 })
+        }
+
+        onRedirectWebsite(website: string) {
+            var websiteProtocol = website.substring(0, website.indexOf(':'));
+            if (websiteProtocol != 'http')
+                window.open("http://" + website);
+            else
+                window.open(website);
         }
 
         getAPBDes(regionID: number) {
@@ -145,8 +180,10 @@ module App.Controllers {
                         ctrl.newAccounts[root.ID] = [];
                     }
 
-                    if (apbdes.IsCompleted)
+                    if (apbdes.IsCompleted) {
                         this.isCompleteStatus = "sudah";
+                        this.buttonCompleteShow = false;
+                    }
                 });
             });
         }

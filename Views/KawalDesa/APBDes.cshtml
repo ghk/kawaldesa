@@ -5,10 +5,10 @@
                 <div class="sidebar">
                     <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.onSubmittingWebsite()">
                         Website Desa<br />
-                        <a href="{{indexCtrl.region.Website}}" ng-if="apbdesCtrl.linktWebsiteShow">{{apbdesCtrl.websiteText}}</a>
+                        <a href="" ng-click="apbdesCtrl.onRedirectWebsite(apbdesCtrl.websiteText)" ng-if="apbdesCtrl.linktWebsiteShow">{{apbdesCtrl.websiteText}}</a>
                         <input type="text" placeholder="Masukkan nama website desanya"
                                ng-model="apbdesCtrl.websiteText"
-                               ng-if="apbdesCtrl.inputtWebsiteShow" />
+                               ng-if="apbdesCtrl.inputWebsiteShow" />
                         <input type="button" class="btn btn-xs" value="Edit"
                                ng-click="apbdesCtrl.onWebsiteShowInput()"
                                ng-if="apbdesCtrl.buttontWebsiteShow" />
@@ -20,7 +20,7 @@
                         APBDes {{apbdesCtrl.isCompleteStatus}} selesai <br />
                         <input type="button" class="btn btn-xs" value="Selesaikan"
                                ng-click="apbdesCtrl.onComplete()"
-                               ng-if="apbdesCtrl.isCompleteStatus == 'belum';" />
+                               ng-if="apbdesCtrl.buttonCompleteShow" />
                     </form>
                 </div>
                 <div class="sidebar">
@@ -28,7 +28,9 @@
                         Sumber APBDes <br />
                         <input type="text" placeholder="Sumber APBDes" />
                         <div class="col-sm-10" style="margin-top:5px">
-                            <input type="file" ng-file-select ng-model="file" />
+                            <input type="file" ng-file-select
+                                   ng-model="file"
+                                   ng-if="apbdesCtrl.buttonSearchFileShow" />
                         </div>
                     </form>
                 </div>
@@ -103,13 +105,14 @@
                                         </span>
                                     </td>
                                     <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
-                                        <select ng-model="accountType" ng-options="key as value for (key, value) in apbdesCtrl.accountTypeSelect | filter:{ key : 1 }">
+                                        <select ng-model="accountType" ng-options="key as value for (key, value) in apbdesCtrl.filteredSector">
                                             <option value="">Pilih salah satu</option>
                                         </select>
                                     </td>
                                     <td colspan="3" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
-                                        <select ng-model="sector" ng-options="key as value for (key, value) in apbdesCtrl.sectorSelect | filter: 1">
+                                        <select ng-model="sector" ng-options="key as value for (key, value) in apbdesCtrl.filteredExpenses">
                                             <option value="">Pilih salah satu</option>
+                                          
                                         </select>
                                         <button type="button" class="close" ng-click="apbdesCtrl.deleteNewAccount(apbdesCtrl.newAccounts[rootAccount.ID], $index)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     </td>
