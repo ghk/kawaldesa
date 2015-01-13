@@ -21,7 +21,6 @@ module App.Controllers {
         constructor(public $scope, public $upload) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
-
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });

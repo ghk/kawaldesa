@@ -86,5 +86,14 @@ namespace App.Models
                 return null;
             }
         }
+
+        [NotMapped]
+        public decimal TotalRealization
+        {
+            get
+            {
+                return new DB().Transactions.Where(e => e.fkAccountID == ID).ToList().Sum(e => e.Amount);
+            }
+        }
     }
 }

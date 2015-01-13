@@ -36,7 +36,6 @@
                 </div>
             </td>
             <td width="86%" valign="top">
-
                 <div ng-repeat="rootAccount in apbdesCtrl.rootAccounts">
                     <div class="meter">
                         <span style="width: 25%"></span>
@@ -59,25 +58,116 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="account in rootAccount.ChildAccounts" ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null,
+                                <tr ng-repeat-start="account in rootAccount.ChildAccounts"></tr>
+                                <tr ng-if="apbdesCtrl.isExpanded(account)
+                                    && apbdesCtrl.isFormExpanded(account)">
+                                    <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
+                                    <td colspan="6" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
+                                        <div class="container-fluid">
+                                            <form class="form-horizontal" role="form" ng-submit="">
+                                                <h5 style="text-align: center; width: 100%">FORM ACCOUNT</h5>
+                                                <div class="form-group input-sm">
+                                                    <label for="date" class="col-sm-2 control-label">Deskripsi</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="description" placeholder="Deskripsi"
+                                                               ng-model="apbdesCtrl.formRealization[account.ID].Description" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group input-sm">
+                                                    <label for="date" class="col-sm-2 control-label">Tanggal</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="date" placeholder="dd-mm-yyyy"
+                                                               ng-model="apbdesCtrl.formRealization[account.ID].Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group input-sm">
+                                                    <label for="amount" class="col-sm-2 control-label">Jumlah</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" class="form-control" id="amount" placeholder="Jumlah"
+                                                               ng-model="apbdesCtrl.formRealization[account.ID].Amount" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group input-sm">
+                                                    <label for="proof" class="col-sm-2 control-label">Lampiran</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" ng-file-select id="proof" 
+                                                               ng-model="apbdesCtrl.formRealization[account.ID].Proof" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div style="width: 100%; text-align: center;">
+                                                        <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
+                                                        <button class="btn btn-xs btn-danger" ng-click="apbdesCtrl.setFormAccount(account.ID, false)">Batal</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)
+                                    && !apbdesCtrl.isFormExpanded(account)
+                                    && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
+                                    && indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormAccount(account.ID, true)">
+                                            Tambah
+                                        </button>
+                                    </td>
+                                    <td colspan="3" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
+                                    <td colspan="5" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                </tr>
+
+                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)" ng-repeat="realization in apbdesCtrl.realizations[account.ID]">
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td>
+                                        {{realization.Realization.Description}}
+                                    </td>
+                                    <td class="money">
+                                        {{realization.Transaction.Amount | number:0}}
+                                    </td>
+                                    <td colspan="2" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
+                                    <td colspan="4" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                </tr>
+
+                                <tr class="detail-sum" ng-if="apbdesCtrl.isExpanded(account)
+                                    && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                    <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr ng-repeat-end="" ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null,
                                     'account-tab' : account.ParentAccount.fkParentAccountID != null }">
                                     <td>
-                                        <a href=" #" ng-click="">
+                                        <a href=" #" ng-click="" ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{account.Code}}
                                         </a>
+                                        <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{account.Code}}
+                                        </span>
                                     </td>
                                     <td>
-                                        <a href="#" ng-click="">
+                                        <a href="#" ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)"
+                                           ng-click="apbdesCtrl.toggleAccountExpander(account.ID, $event)">
                                             {{account.Name}}
                                         </a>
+                                        <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{account.Name}}
+                                        </span>
                                     </td>
-
                                     <td class="money"> {{( account.Target | number:0 ) || "0"}} </td>
                                     <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"> {{account.ExpenseGroup || "Others"}} </td>
                                     <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"> {{account.ExpenseGroup || "Others"}} </td>
-                                    <td class="money"> {{0 | number:0}} </td>
-                                    <td class="money"> {{0 | number:0}} </td>
+                                    <td class="money"> {{account.TotalRealization | number:0}} </td>
+                                    <td class="money"> {{(account.TotalRealization / account.Target) * 100 | number:0}} </td>
                                 </tr>
+
                                 <tr ng-repeat="newAccount in apbdesCtrl.newAccounts[rootAccount.ID]">
                                     <td>
                                         <input type="text" placeholder="Kode" ng-model="newAccount.Code" />
@@ -112,11 +202,12 @@
                                     <td colspan="3" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
                                         <select ng-model="sector" ng-options="key as value for (key, value) in apbdesCtrl.filteredExpenses">
                                             <option value="">Pilih salah satu</option>
-                                          
+
                                         </select>
                                         <button type="button" class="close" ng-click="apbdesCtrl.deleteNewAccount(apbdesCtrl.newAccounts[rootAccount.ID], $index)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     </td>
                                 </tr>
+
                                 <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
                                     <td colspan="2">
                                         <button class="btn btn-xs"
@@ -125,6 +216,7 @@
                                         </button>
                                     </td>
                                 </tr>
+
                                 <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
                                     <td colspan="2">
                                         <button class="btn btn-primary btn-xs"

@@ -18,6 +18,7 @@ namespace App.Controllers.Models
     public class TransactionController: ReadOnlyController<Transaction, long>
     {
         public TransactionController(DB dbContext) : base(dbContext) {
+            dbContext.Configuration.ProxyCreationEnabled = false;
             AllowGetAll = false;
         }
 
@@ -170,7 +171,7 @@ namespace App.Controllers.Models
             return dbSet.Where(t => t.fkAccountID == accountID)
                 .Select(t => new RealizationTransactionRow
                 {
-                    Realization = realizationSet.First(a => a.fkTransactionID == t.ID),
+                    Realization = realizationSet.FirstOrDefault(a => a.fkTransactionID == t.ID),
                     Transaction = t
                 });
         }

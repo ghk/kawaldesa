@@ -168,6 +168,7 @@ module App.Models {
         DeactivatedBy: /** App.Models.User **/ any;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
+        TotalRealization: number;
     }
     
     export class Account extends BaseEntity {
@@ -194,6 +195,7 @@ module App.Models {
         DeactivatedBy: /** App.Models.User **/ any;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
+        TotalRealization: number;
         
         constructor(data?: IAccount) {
             super(data);
@@ -218,6 +220,7 @@ module App.Models {
             this.DeactivatedBy = data ? data.DeactivatedBy : null;
             this.ChildAccounts = data ? data.ChildAccounts : null;
             this.ParentCode = data ? data.ParentCode : null;
+            this.TotalRealization = data ? data.TotalRealization : null;
         }
         
     }

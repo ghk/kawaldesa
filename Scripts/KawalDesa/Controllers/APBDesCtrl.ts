@@ -15,20 +15,26 @@ module App.Controllers {
         indexCtrl: IndexCtrl;
         apbdes: Models.APBDes;
         rootAccounts: Models.Account[];
-        expenseTypeAccount: number = Models.AccountType.EXPENSE;
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
+        expenseTypeAccount: number = Models.AccountType.EXPENSE;
 
         formErrors: {};
+        realizations = {};
+        formRealization = {};
+        expandedStates = {};
+        expandedFormStates = {};
         filteredExpenses = [];
         filteredSector = [];
 
         websiteText: string;
+        isCompleteStatus: string = "belum";
+        totalRealizationAmount = {};
+
         linktWebsiteShow: boolean = true;
         inputWebsiteShow: boolean = false;
         buttontWebsiteShow: boolean = true;
         buttonSearchFileShow: boolean = true;
         buttonCompleteShow: boolean = true;
-        isCompleteStatus: string = "belum";
 
         constructor(public $scope, public $upload) {
             var ctrl = this;
@@ -53,7 +59,7 @@ module App.Controllers {
             this.filteredSector = this.filterObject(Models.Sector);
         }
 
-        deleteNewAccount(accounts: any, index: number) {
+        deleteNewAccount(accounts, index: number) {
             accounts.splice(index, 1);
         }
 
@@ -86,7 +92,7 @@ module App.Controllers {
                 });
         }
 
-        filterObject(object: any) {
+        filterObject(object) {
             var keys = Object.keys(object);
             var filteredObject = [];
 
@@ -101,9 +107,39 @@ module App.Controllers {
             return filteredObject;
         }
 
+        isExpanded(entity) {
+            var result = this.expandedStates[entity.ID];
+            return result;
+        }
+
+        isFormExpanded(entity) {
+            return this.formRealization[entity.ID];
+        }
+
+        toggleAccountExpander(accountID, ev) {
+            ev.preventDefault();
+            this.expandedStates[accountID] = !this.expandedStates[accountID];
+            this.loadRealization(accountID);
+        }
+
+        setFormAccount(accountID, state) {
+            if (state)
+                this.formRealization[accountID] = {};
+            else
+                delete this.formRealization[accountID];
+        }
+
+        isRootAccount(parentAccountID) {
+            if (parentAccountID != null)
+                return true;
+            return false;
+        }
+
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
                 this.getAPBDes(this.indexCtrl.region.ID);
+                this.formRealization = {};
+                this.realizations = {};
             }
         }
 
@@ -157,6 +193,26 @@ module App.Controllers {
                 window.open("http://" + website);
             else
                 window.open(website);
+        }
+
+        loadRealization(accountID) {
+            var totalObj = 0;
+            var ctrl = this;
+            if (this.expandedStates[accountID]) {
+                Models.Transaction.GetRealizationTransactions(accountID).done(details => {
+                    ctrl.$scope.$apply(() => {
+                        ctrl.realizations[accountID] = details;
+
+                        for (var i = 0; i < ctrl.realizations[accountID].length; i++) {
+                            var obj = ctrl.realizations[accountID][i].Transaction.Amount;
+                            totalObj += obj;
+                        }
+
+                        ctrl.totalRealizationAmount[accountID]= totalObj;
+                        console.log(ctrl.totalRealizationAmount[accountID]);
+                    });
+                });
+            }
         }
 
         getAPBDes(regionID: number) {
