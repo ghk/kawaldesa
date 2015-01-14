@@ -28,6 +28,7 @@ module App.Controllers {
 
         websiteText: string;
         isCompleteStatus: string = "belum";
+        totalTargetAmount = {};
         totalRealizationAmount = {};
 
         linktWebsiteShow: boolean = true;
@@ -196,20 +197,11 @@ module App.Controllers {
         }
 
         loadRealization(accountID) {
-            var totalObj = 0;
             var ctrl = this;
             if (this.expandedStates[accountID]) {
                 Models.Transaction.GetRealizationTransactions(accountID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountID] = details;
-
-                        for (var i = 0; i < ctrl.realizations[accountID].length; i++) {
-                            var obj = ctrl.realizations[accountID][i].Transaction.Amount;
-                            totalObj += obj;
-                        }
-
-                        ctrl.totalRealizationAmount[accountID]= totalObj;
-                        console.log(ctrl.totalRealizationAmount[accountID]);
                     });
                 });
             }
@@ -224,10 +216,30 @@ module App.Controllers {
                     ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountID == null);
                     ctrl.rootAccounts.sort((a, b) => a.Type - b.Type);
                     for (var i = 0; i < ctrl.rootAccounts.length; i++) {
+                        var totalRootObj = 0;
+                        var totalRootRealizationObj = 0;
                         var root = ctrl.rootAccounts[i];
                         root.ChildAccounts = apbdes.Accounts
                             .filter(a => a.Type == root.Type && a.fkParentAccountID != null);
                         root.ChildAccounts.sort((a, b) => a.Code.localeCompare(b.Code));
+
+                        for (var j = 0; j < root.ChildAccounts.length; j++) {
+                            var totalObj = 0;
+                            var totalRealizationObj = 0;
+
+                            for (var k = 0; k < root.ChildAccounts[j].ChildAccounts.length; k++) {
+                                var obj = root.ChildAccounts[j].ChildAccounts[k].Target;
+                                var realizationObj = root.ChildAccounts[j].ChildAccounts[k].TotalRealizationPerAccount;
+
+                                totalObj += obj;
+                                totalRealizationObj += realizationObj;
+                            }
+
+                            if (root.ChildAccounts[j].ChildAccounts.length > 0) {
+                                ctrl.totalTargetAmount[root.ChildAccounts[j].ID] = totalObj;
+                                ctrl.totalRealizationAmount[root.ChildAccounts[j].ID] = totalRealizationObj;
+                            }
+                        }
                     }
 
                     ctrl.newAccounts = {};

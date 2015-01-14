@@ -90,7 +90,7 @@
                                                 <div class="form-group input-sm">
                                                     <label for="proof" class="col-sm-2 control-label">Lampiran</label>
                                                     <div class="col-sm-10">
-                                                        <input type="file" ng-file-select id="proof" 
+                                                        <input type="file" ng-file-select id="proof"
                                                                ng-model="apbdesCtrl.formRealization[account.ID].Proof" />
                                                     </div>
                                                 </div>
@@ -161,11 +161,40 @@
                                             {{account.Name}}
                                         </span>
                                     </td>
-                                    <td class="money"> {{( account.Target | number:0 ) || "0"}} </td>
-                                    <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"> {{account.ExpenseGroup || "Others"}} </td>
-                                    <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"> {{account.ExpenseGroup || "Others"}} </td>
-                                    <td class="money"> {{account.TotalRealization | number:0}} </td>
-                                    <td class="money"> {{(account.TotalRealization / account.Target) * 100 | number:0}} </td>
+                                    <td class="money">
+                                        <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{( account.Target | number:0 ) || "0"}}
+                                        </span>
+                                        <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{apbdesCtrl.totalTargetAmount[account.ID] | number:0}}
+                                        </span>
+                                    </td>
+                                    <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
+                                        <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{account.ExpenseGroup || "Others"}}
+                                        </span>
+                                    </td>
+                                    <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
+                                        <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{account.ExpenseGroup || "Others"}}
+                                        </span>
+                                    </td>
+                                    <td class="money">
+                                        <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{( account.TotalRealizationPerAccount | number:0 ) || "0"}}
+                                        </span>
+                                        <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{apbdesCtrl.totalRealizationAmount[account.ID] | number:0}}
+                                        </span>
+                                    </td>
+                                    <td class="money">
+                                        <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{((account.TotalRealizationPerAccount / account.Target) * 100 | number:0) || "0"}}
+                                        </span>
+                                        <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                            {{apbdesCtrl.totalTargetAmount[account.ID] == null || apbdesCtrl.totalRealizationAmount[account.ID] == null || apbdesCtrl.totalTargetAmount[account.ID] === 0 ? null : ((apbdesCtrl.totalRealizationAmount[account.ID] / apbdesCtrl.totalTargetAmount[account.ID]) * 100).toFixed(0)}}
+                                        </span>
+                                    </td>
                                 </tr>
 
                                 <tr ng-repeat="newAccount in apbdesCtrl.newAccounts[rootAccount.ID]">

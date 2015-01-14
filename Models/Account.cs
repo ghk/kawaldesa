@@ -88,12 +88,32 @@ namespace App.Models
         }
 
         [NotMapped]
-        public decimal TotalRealization
+        public decimal TotalRealizationPerAccount
         {
             get
             {
                 return new DB().Transactions.Where(e => e.fkAccountID == ID).ToList().Sum(e => e.Amount);
             }
         }
+
+        //[NotMapped]
+        //public decimal TotalRealizationPerRootAccount
+        //{
+        //    get
+        //    {
+        //        var db = new DB();
+        //        var childs = db.Accounts.Where(e => e.ID == this.ID).SelectMany(e => e.ChildAccounts).ToList();
+        //        decimal total = 0;
+                
+        //        foreach(var child in childs){
+        //            IEnumerable<Transaction> transactions = db.Transactions.Where(e => e.fkAccountID == child.ID);
+
+        //            total += transactions.Any() 
+        //                ? transactions.Select(e => e.Amount).ToList().Sum() : 0;
+        //        }
+
+        //        return total;
+        //    }
+        //}
     }
 }
