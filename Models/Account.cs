@@ -18,12 +18,12 @@ namespace App.Models
             {AccountType.EXPENSE, "B"}
         };
 
-        [Required(ErrorMessage="Kode harus diisi")]
+        [Required(ErrorMessage = "Kode harus diisi")]
         [RegularExpression(@"[a-zA-Z0-9\.]+", ErrorMessage = "Kode harus berupa digit atau titik")]
         [Index("IX_Code_Type_fkAPBDesID", 1, IsUnique = true)]
         public String Code { get; set; }
 
-        [Required(ErrorMessage="Nama harus diisi")]
+        [Required(ErrorMessage = "Nama harus diisi")]
         public String Name { get; set; }
 
         [Index("IX_Code_Type_fkAPBDesID", 2, IsUnique = true)]
@@ -101,17 +101,21 @@ namespace App.Models
         //{
         //    get
         //    {
+
         //        var db = new DB();
-        //        var childs = db.Accounts.Where(e => e.ID == this.ID).SelectMany(e => e.ChildAccounts).ToList();
+        //        var childs = db.Accounts.Where(e => e.fkAPBDesID == this.fkAPBDesID &&
+        //            e.fkParentAccountID != null &&
+        //            e.ParentAccount.fkParentAccountID == null).SelectMany(e => e.ChildAccounts).ToList();
+
         //        decimal total = 0;
-                
-        //        foreach(var child in childs){
+
+        //        foreach (var child in childs)
+        //        {
         //            IEnumerable<Transaction> transactions = db.Transactions.Where(e => e.fkAccountID == child.ID);
 
-        //            total += transactions.Any() 
+        //            total += transactions.Any()
         //                ? transactions.Select(e => e.Amount).ToList().Sum() : 0;
         //        }
-
         //        return total;
         //    }
         //}

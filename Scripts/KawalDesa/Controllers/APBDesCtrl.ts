@@ -30,6 +30,8 @@ module App.Controllers {
         isCompleteStatus: string = "belum";
         totalTargetAmount = {};
         totalRealizationAmount = {};
+        totalRootTargetAmount = {};
+        totalRootRealizationAmount = {};
 
         linktWebsiteShow: boolean = true;
         inputWebsiteShow: boolean = false;
@@ -238,8 +240,14 @@ module App.Controllers {
                             if (root.ChildAccounts[j].ChildAccounts.length > 0) {
                                 ctrl.totalTargetAmount[root.ChildAccounts[j].ID] = totalObj;
                                 ctrl.totalRealizationAmount[root.ChildAccounts[j].ID] = totalRealizationObj;
+
+                                totalRootObj += totalObj;
+                                totalRootRealizationObj += totalRealizationObj;
                             }
                         }
+
+                        ctrl.totalRootTargetAmount[ctrl.rootAccounts[i].ID] = totalRootObj;
+                        ctrl.totalRootRealizationAmount[ctrl.rootAccounts[i].ID] = totalRootRealizationObj;
                     }
 
                     ctrl.newAccounts = {};

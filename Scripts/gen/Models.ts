@@ -223,6 +223,37 @@ module App.Models {
             this.TotalRealizationPerAccount = data ? data.TotalRealizationPerAccount : null;
         }
         
+        /* App.Controllers.Models.AccountController */
+        
+        static GetAll(query?: IQuery): JQueryPromise<Array<Account>> {
+            var res = $.ajax(Account.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Account/GetAll',
+				data: query,
+            })).then((models) => {
+                return models.map((model) => new Account(model));
+            });
+            return res;
+        }
+
+        static Get(id: number): JQueryPromise<Account> {
+            var res = $.ajax(Account.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Account/Get/'+id,
+            })).then((model) => new Account(model));
+            return res;
+        }
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+            var res = $.ajax(Account.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/Account/GetCount',
+				data: query,
+            }));
+            return res;
+        }
+
+                        
     }
     
     

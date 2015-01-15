@@ -259,11 +259,13 @@
                             <tfoot ng-show="rootAccount.ChildAccounts.length > 0">
                                 <tr class="success">
                                     <td colspan="2"><a href="">Total</a></td>
-                                    <td class="money"> {{(0 | number:0) }} </td>
+                                    <td class="money"> {{(apbdesCtrl.totalRootTargetAmount[rootAccount.ID] | number:0) }} </td>
                                     <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
                                     <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
-                                    <td class="money"> {{(0 | number:0) }} </td>
-                                    <td class="money"> {{(0 | number:0) }} </td>
+                                    <td class="money"> {{(apbdesCtrl.totalRootRealizationAmount[rootAccount.ID] | number:0) }} </td>
+                                    <td class="money">
+                                        {{apbdesCtrl.totalRootTargetAmount[rootAccount.ID] == null || apbdesCtrl.totalRootRealizationAmount[rootAccount.ID] == null || apbdesCtrl.totalRootTargetAmount[rootAccount.ID] === 0 ? null : ((apbdesCtrl.totalRootRealizationAmount[rootAccount.ID] / apbdesCtrl.totalRootTargetAmount[rootAccount.ID]) * 100).toFixed(0)}}
+                                    </td>
                                 </tr>
                             </tfoot>
                         </table>
