@@ -17,6 +17,8 @@ module App.Controllers {
         rootAccounts: Models.Account[];
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
         expenseTypeAccount: number = Models.AccountType.EXPENSE;
+        expenseGroup = Models.ExpenseGroup;
+        sector = Models.Sector;
 
         formErrors: {};
         realizations = {};
@@ -58,7 +60,7 @@ module App.Controllers {
 
         addNewAccount(rootAccountID: number) {
             this.newAccounts[rootAccountID].push(new Models.Account());
-            this.filteredExpenses = this.filterObject(Models.AccountType);
+            this.filteredExpenses = this.filterObject(Models.ExpenseGroup);
             this.filteredSector = this.filterObject(Models.Sector);
         }
 

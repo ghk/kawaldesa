@@ -171,17 +171,17 @@
                                     </td>
                                     <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{account.ExpenseGroup || "Others"}}
+                                            {{apbdesCtrl.Sector[account.Sector] || "Others"}}
                                         </span>
                                     </td>
                                     <td class="money" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{account.ExpenseGroup || "Others"}}
+                                            {{apbdesCtrl.expenseGroup[account.ExpenseGroup]  || "Others"}}
                                         </span>
                                     </td>
                                     <td class="money">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{( account.TotalRealizationPerAccount | number:0 ) || "0"}}
+                                            {{(account.TotalRealizationPerAccount | number:0 ) || "0"}}
                                         </span>
                                         <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{apbdesCtrl.totalRealizationAmount[account.ID] | number:0}}
@@ -224,14 +224,13 @@
                                         </span>
                                     </td>
                                     <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
-                                        <select ng-model="accountType" ng-options="key as value for (key, value) in apbdesCtrl.filteredSector">
+                                        <select ng-model="sector" ng-options="key as value for (key, value) in apbdesCtrl.filteredSector">
                                             <option value="">Pilih salah satu</option>
                                         </select>
                                     </td>
                                     <td colspan="3" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
-                                        <select ng-model="sector" ng-options="key as value for (key, value) in apbdesCtrl.filteredExpenses">
+                                        <select ng-model="newAccount.ExpenseGroup" ng-options="key as value for (key, value) in apbdesCtrl.filteredExpenses">
                                             <option value="">Pilih salah satu</option>
-
                                         </select>
                                         <button type="button" class="close" ng-click="apbdesCtrl.deleteNewAccount(apbdesCtrl.newAccounts[rootAccount.ID], $index)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     </td>
