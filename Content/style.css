@@ -107,8 +107,8 @@ td.sidebar {
 
 .sidebar {
     color: -webkit-text;
-    font: bold 12px sans-serif;
-    padding: 10px 20px 10px 10px;
+    font: 12px sans-serif;
+    padding: 0 20px 10px 10px;
 }
 
 .table.table-bordered th {

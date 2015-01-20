@@ -59,21 +59,25 @@ namespace App.Controllers
         }
         public ActionResult Login()
         {
-            if(System.Web.HttpContext.Current.IsDebuggingEnabled)
+            var referrer = Request.ServerVariables["HTTP_REFERER"] as String;
+
+            if (System.Web.HttpContext.Current.IsDebuggingEnabled)
             {
                 var useInDebugStr = ConfigurationManager.AppSettings[FacebookUseInDebugConfig];
-                if(useInDebugStr != null)
+                if (useInDebugStr != null)
                 {
                     bool useInDebug;
                     if (bool.TryParse(useInDebugStr, out useInDebug) && !useInDebug)
+                    {
+                        ViewData["Referrer"] = referrer;
                         return View();
+                    }
                 }
             }
 
             var redirectHost = GetRedirectHost();
             var redirectUrl = redirectHost + "/FacebookRedirect";
 
-            var referrer = Request.ServerVariables["HTTP_REFERER"] as String;
             if (referrer != null && (!referrer.StartsWith(redirectHost) || referrer.ToLower().EndsWith("login")))
                 referrer = null;
 

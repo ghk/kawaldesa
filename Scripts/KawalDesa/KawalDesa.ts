@@ -7,7 +7,7 @@ module App {
         'angularFileUpload'
     ]);
 
-    kawaldesa.run(['$location','$rootElement', function ($location, $rootElement) {
+    kawaldesa.run(['$location', '$rootElement', function ($location, $rootElement) {        
         $rootElement.off('click');
     }]);
 

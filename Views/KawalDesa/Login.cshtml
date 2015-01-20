@@ -3,7 +3,7 @@
 }
 
 <div ng-controller="LoginCtrl as loginCtrl" ng-if="indexCtrl.type == 'login'">
-
+    <script type="text/javascript">window.Referrer = '@Html.Raw(ViewData["Referrer"])';</script>
     <div class="content-header">
         Login
     </div>

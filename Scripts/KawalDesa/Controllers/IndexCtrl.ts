@@ -43,6 +43,7 @@ module App.Controllers {
 
         constructor(public $scope, public $location){
             var ctrl = this;
+            var scope = this.$scope;
             this.currentUser = window.CurrentUser;
 
             $scope.$on('$locationChangeSuccess', function () {
@@ -50,6 +51,7 @@ module App.Controllers {
                     ctrl.onLocationChange();
                 ctrl.isPathReplacing = false;
             });
+
         }
 
         onLocationChange() {

@@ -8,6 +8,8 @@ module App.Controllers {
 
     import Models = App.Models;
 
+    declare var Referrer;
+
     class LoginCtrl {
 
         static $inject = ["$scope"];
@@ -20,7 +22,7 @@ module App.Controllers {
             var model = new Models.User(this.$scope.model);
 
             model.Login().done(data => {
-                window.open("/", "_self");
+                window.location.href = Referrer;
             }).fail(response => {
                     var resp: any = response;
                     scope.formMessage = {

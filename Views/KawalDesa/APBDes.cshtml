@@ -1,12 +1,13 @@
 ﻿<div ng-controller="APBDesCtrl as apbdesCtrl" ng-if="indexCtrl.region.Type == 4">
-    <table style="width:100%; height:100%">
+    <table style="width:100%;">
         <tr>
             <td width="14%" class="sidebar" valign="top">
                 <div class="sidebar">
                     <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.onSubmittingWebsite()">
                         Website Desa<br />
                         <a href="" ng-click="apbdesCtrl.onRedirectWebsite(apbdesCtrl.websiteText)" ng-if="apbdesCtrl.linktWebsiteShow">{{apbdesCtrl.websiteText}}</a>
-                        <input type="text" placeholder="Masukkan nama website desanya"
+                        <input type="text" placeholder="Masukkan nama website desa"
+                               style="width:100%"
                                ng-model="apbdesCtrl.websiteText"
                                ng-if="apbdesCtrl.inputWebsiteShow" />
                         <input type="button" class="btn btn-xs" value="Edit"
@@ -15,7 +16,6 @@
                     </form>
                 </div>
                 <div class="sidebar">
-
                     <form class="form-horizontal" role="form">
                         APBDes {{apbdesCtrl.isCompleteStatus}} selesai <br />
                         <input type="button" class="btn btn-xs" value="Selesaikan"
@@ -26,8 +26,9 @@
                 <div class="sidebar">
                     <form class="form-horizontal" role="form">
                         Sumber APBDes <br />
-                        <input type="text" placeholder="Sumber APBDes" />
-                        <div class="col-sm-10" style="margin-top:5px">
+                        <input type="text" placeholder="URL"
+                               ng-if="apbdesCtrl.inputUrlShow" />
+                        <div style="margin-top:5px">
                             <input type="file" ng-file-select
                                    ng-model="file"
                                    ng-if="apbdesCtrl.buttonSearchFileShow" />
@@ -50,54 +51,57 @@
                                 <tr>
                                     <th style="text-align: center;">Kode Anggaran</th>
                                     <th style="text-align: center;">Nama Anggaran</th>
-                                    <th style="text-align: center;">Target</th>
-                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">Sector</th>
-                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">ExpenseGroup</th>
-                                    <th style="text-align: center;">Realisasi</th>
-                                    <th style="text-align: center;">% Realisasi</th>
+                                    <th style="text-align: center;">Target<sup><a href="#help-target">?</a></sup></th>
+                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">Sector<sup><a href="#help-sector">?</a></sup></th>
+                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">ExpenseGroup<sup><a href="#help-expenseGroup">?</a></sup></th>
+                                    <th style="text-align: center;">Realisasi<sup><a href="#help-realization">?</a></sup></th>
+                                    <th style="text-align: center;">% Realisasi<sup><a href="#help-realizationPercentage">?</a></sup></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat-start="account in rootAccount.ChildAccounts"></tr>
+                                <tr class="detail-padding" ng-if="apbdesCtrl.isExpanded(account)">
+                                    <td colspan="10"></td>
+                                </tr>
                                 <tr ng-if="apbdesCtrl.isExpanded(account)
                                     && apbdesCtrl.isFormExpanded(account)">
                                     <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
                                     <td colspan="6" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
                                         <div class="container-fluid">
-                                            <form class="form-horizontal" role="form" ng-submit="">
+                                            <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.saveNewRealization(account.ID)">
                                                 <h5 style="text-align: center; width: 100%">FORM ACCOUNT</h5>
                                                 <div class="form-group input-sm">
                                                     <label for="date" class="col-sm-2 control-label">Deskripsi</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" class="form-control" id="description" placeholder="Deskripsi"
-                                                               ng-model="apbdesCtrl.formRealization[account.ID].Description" />
+                                                               ng-model="apbdesCtrl.formTransactionRealization[account.ID].Description" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-sm">
                                                     <label for="date" class="col-sm-2 control-label">Tanggal</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" class="form-control" id="date" placeholder="dd-mm-yyyy"
-                                                               ng-model="apbdesCtrl.formRealization[account.ID].Date" />
+                                                               ng-model="apbdesCtrl.formTransactionRealization[account.ID].Date" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-sm">
                                                     <label for="amount" class="col-sm-2 control-label">Jumlah</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" class="form-control" id="amount" placeholder="Jumlah"
-                                                               ng-model="apbdesCtrl.formRealization[account.ID].Amount" />
+                                                               ng-model="apbdesCtrl.formTransactionRealization[account.ID].Amount" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-sm">
                                                     <label for="proof" class="col-sm-2 control-label">Lampiran</label>
                                                     <div class="col-sm-10">
                                                         <input type="file" ng-file-select id="proof"
-                                                               ng-model="apbdesCtrl.formRealization[account.ID].Proof" />
+                                                               ng-model="apbdesCtrl.formTransactionRealization[account.ID].Proof" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div style="width: 100%; text-align: center;">
                                                         <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
-                                                        <button class="btn btn-xs btn-danger" ng-click="apbdesCtrl.setFormAccount(account.ID, false)">Batal</button>
+                                                        <button class="btn btn-xs btn-danger" ng-click="apbdesCtrl.setFormAccount(account.ID, 0, false)">Batal</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -110,8 +114,8 @@
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
                                     && indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
                                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
-                                    <td style="text-align: right;">
-                                        <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormAccount(account.ID, true)">
+                                    <td style="text-align: left;">
+                                        <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormAccount(account.ID, account.fkParentAccountID, true)">
                                             Tambah
                                         </button>
                                     </td>
@@ -122,14 +126,37 @@
                                 <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)" ng-repeat="realization in apbdesCtrl.realizations[account.ID]">
                                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                                     <td>
-                                        {{realization.Realization.Description}}
+                                        <a href="#">
+                                            {{realization.Realization.Description}}
+                                        </a>
+                                    </td>
+                                    <td class="money" colspan="2" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount">
+                                        {{realization.Transaction.Amount | number:0}}
+                                    </td>
+                                    <td class="money" colspan="4" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">
+                                        {{realization.Transaction.Amount | number:0}}
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                @*<tr class="detail" ng-if="apbdesCtrl.uploadExpandedStates(account)" ng-repeat="realization in apbdesCtrl.realizations[account.ID]">
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td>
+                                        <a href="#">
+                                            {{realization.Realization.Description}}
+                                        </a>
+                                        <div style="float:right;">
+                                            <button class="btn btn-xs">
+                                                Unggah foto
+                                            </button>
+                                        </div>
                                     </td>
                                     <td class="money">
                                         {{realization.Transaction.Amount | number:0}}
                                     </td>
                                     <td colspan="2" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
                                     <td colspan="4" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
-                                </tr>
+                                </tr>*@
 
                                 <tr class="detail-sum" ng-if="apbdesCtrl.isExpanded(account)
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">
@@ -245,7 +272,7 @@
                                     </td>
                                 </tr>
 
-                                <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                                <tr class="" ng-if="apbdesCtrl.buttonAddAccountShow">
                                     <td colspan="2">
                                         <button class="btn btn-primary btn-xs"
                                                 ng-click="apbdesCtrl.saveNewAccounts(rootAccount.ID)">
@@ -274,4 +301,23 @@
             </td>
         </tr>
     </table>
+    <div class="container-fluid well help">
+        <ul>
+            <li id="help-target">
+                Jumlah bantuan akan diterima ke tiap Desa.
+            </li>
+            <li id="help-sector">
+                Lingkungan tempat dimana bantuan dialokasikan.
+            </li>
+            <li id="help-expenseGroup">
+                Kelompok kerja yang bertugas mengalokasikan bantuan yang diberikan.
+            </li>
+            <li id="help-realization">
+                Jumlah bantuan yang sudah diterima.
+            </li>
+            <li id="help-realizationPercentage">
+                Merupakan persentase bantuan yang diterima dari jumlah yang telah ditentukan.
+            </li>
+        </ul>
+    </div>
 </div>

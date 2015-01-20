@@ -1047,11 +1047,8 @@ module App.Models {
             return res;
         }
         
-        static AddAccountTransaction(transaction: App.Models.ITransaction, realization: App.Models.IRealization): JQueryPromise<void> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/Transaction/AddAccountTransaction?transaction='+transaction+'&realization='+realization+'',
-            }));
+        static AddAccountTransaction(multipart: Scaffold.Multipart): any  {
+            var res = multipart.upload('/api/Transaction/AddAccountTransaction');
             return res;
         }
         

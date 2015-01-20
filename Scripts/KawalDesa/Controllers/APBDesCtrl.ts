@@ -22,8 +22,10 @@ module App.Controllers {
 
         formErrors: {};
         realizations = {};
-        formRealization = {};
+        realizationFiles = {};
+        formTransactionRealization: { [key: number]: any } = {}
         expandedStates = {};
+        uploadExpandedStates = {};
         expandedFormStates = {};
         filteredExpenses = [];
         filteredSector = [];
@@ -35,11 +37,13 @@ module App.Controllers {
         totalRootTargetAmount = {};
         totalRootRealizationAmount = {};
 
-        linktWebsiteShow: boolean = true;
+        linktWebsiteShow: boolean = false;
+        inputUrlShow: boolean = false;
         inputWebsiteShow: boolean = false;
         buttontWebsiteShow: boolean = true;
         buttonSearchFileShow: boolean = true;
         buttonCompleteShow: boolean = true;
+        buttonAddAccountShow: boolean = false;
 
         constructor(public $scope, public $upload) {
             var ctrl = this;
@@ -48,10 +52,6 @@ module App.Controllers {
             this.formErrors = {};
             this.websiteText = this.indexCtrl.region.Website;
             this.onRoleVolunteer(this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.ID));
-
-            if (!this.indexCtrl.region.Website) {
-                this.onWebsiteShowInput();
-            }
 
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
@@ -62,15 +62,19 @@ module App.Controllers {
             this.newAccounts[rootAccountID].push(new Models.Account());
             this.filteredExpenses = this.filterObject(Models.ExpenseGroup);
             this.filteredSector = this.filterObject(Models.Sector);
+            this.buttonAddAccountShow = true;
         }
 
         deleteNewAccount(accounts, index: number) {
             accounts.splice(index, 1);
+            if (accounts.length == 0) {
+                this.buttonAddAccountShow = false;
+            }
         }
 
         saveNewAccounts(rootAccountID: number) {
             var ctrl = this;
-            ctrl.formErrors[rootAccountID] = {};
+            this.formErrors[rootAccountID] = {};
             Models.APBDes.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
                 .done(() => {
                     ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
@@ -97,6 +101,18 @@ module App.Controllers {
                 });
         }
 
+        saveNewRealization(accountID: number) {
+            var ctrl = this;
+
+            Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
+                forms: this.formTransactionRealization[accountID]
+            }))
+                .success(() => {
+                    ctrl.setFormAccount(accountID, 0, false);
+                    ctrl.loadRealization(accountID);
+                });
+        }
+
         filterObject(object) {
             var keys = Object.keys(object);
             var filteredObject = [];
@@ -117,8 +133,13 @@ module App.Controllers {
             return result;
         }
 
+        isUploadExpanded(entity) {
+            var result = this.uploadExpandedStates[entity.ID];
+            return result;
+        }
+
         isFormExpanded(entity) {
-            return this.formRealization[entity.ID];
+            return this.formTransactionRealization[entity.ID];
         }
 
         toggleAccountExpander(accountID, ev) {
@@ -127,11 +148,13 @@ module App.Controllers {
             this.loadRealization(accountID);
         }
 
-        setFormAccount(accountID, state) {
+        setFormAccount(accountID, rootAccountID, state) {
             if (state)
-                this.formRealization[accountID] = {};
-            else
-                delete this.formRealization[accountID];
+                this.formTransactionRealization[accountID] = {
+                    fkAccountID: accountID
+                };
+            else 
+                delete this.formTransactionRealization[accountID];
         }
 
         isRootAccount(parentAccountID) {
@@ -143,7 +166,7 @@ module App.Controllers {
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
                 this.getAPBDes(this.indexCtrl.region.ID);
-                this.formRealization = {};
+                this.formTransactionRealization = {};
                 this.realizations = {};
             }
         }
@@ -152,6 +175,11 @@ module App.Controllers {
             this.buttontWebsiteShow = roleAccepted;
             this.buttonSearchFileShow = roleAccepted;
             this.buttonCompleteShow = roleAccepted;
+            this.inputUrlShow = roleAccepted;
+            if (this.indexCtrl.region.Website) {
+                this.linktWebsiteShow = true;
+                this.inputWebsiteShow = false;
+            }
         }
 
         onWebsiteShowInput() {

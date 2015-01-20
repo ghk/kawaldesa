@@ -15,15 +15,17 @@ using System.Net;
 
 namespace App.Controllers.Models
 {
-    public class TransactionController: ReadOnlyController<Transaction, long>
+    public class TransactionController : ReadOnlyController<Transaction, long>
     {
-        public TransactionController(DB dbContext) : base(dbContext) {
+        public TransactionController(DB dbContext)
+            : base(dbContext)
+        {
             dbContext.Configuration.ProxyCreationEnabled = false;
             AllowGetAll = false;
         }
 
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER)]
+        [Authorize(Roles = Role.VOLUNTEER)]
         public void AddTransferTransaction(Multipart<Transaction> multipart)
         {
             Validate(multipart.Entity);
@@ -32,14 +34,14 @@ namespace App.Controllers.Models
 
             var context = HttpContext.Current;
             var principal = HttpContext.Current.User;
-            
+
             try
             {
                 var user = (principal.Identity as KawalDesaIdentity).User;
-                
+
                 var transaction = multipart.Entity;
 
-                KawalDesaController.CheckRegionAllowed(principal,dbContext, transaction.fkDestinationID.Value);
+                KawalDesaController.CheckRegionAllowed(principal, dbContext, transaction.fkDestinationID.Value);
 
                 var actor = dbContext.Set<Region>().First(r => r.ID == transaction.fkActorID);
                 var source = dbContext.Set<Region>().First(r => r.ID == transaction.fkSourceID.Value);
@@ -83,18 +85,18 @@ namespace App.Controllers.Models
                     blobID = blob.ID;
                 }
 
-                
+
                 transaction.fkSourceFileID = blobID;
                 transaction.IsActivated = true;
                 transaction.fkCreatedByID = user.Id;
                 transaction.fkAccountID = accountID;
-      
+
 
                 dbSet.Add(transaction);
                 dbContext.SaveChanges();
             }
             finally
-            { 
+            {
                 multipart.DeleteUnmoved();
             }
         }
@@ -129,15 +131,15 @@ namespace App.Controllers.Models
             {
                 results.Add(new TransferTransactionRow
                 {
-                    APBN = apbn[i], 
+                    APBN = apbn[i],
                     ADD = add[i]
                 });
             }
             return results;
         }
 
-        private void Pad<T>(List<T> list, int padCount) 
-            where T: class
+        private void Pad<T>(List<T> list, int padCount)
+            where T : class
         {
             for (var i = 0; i < padCount; i++)
             {
@@ -146,9 +148,21 @@ namespace App.Controllers.Models
         }
 
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER_DESA)]
-        public void AddAccountTransaction(Transaction transaction, Realization realization)
+        [Authorize(Roles = Role.VOLUNTEER_DESA)]
+        public void AddAccountTransaction(Multipart multipart)
         {
+            Transaction transaction = new Transaction
+            {
+                Amount = long.Parse(multipart.Forms["Amount"]),
+                fkAccountID = long.Parse(multipart.Forms["fkAccountID"]),
+                Date = Convert.ToDateTime(multipart.Forms["Date"])
+            };
+
+            Realization realization = new Realization
+            {
+                Description = multipart.Forms["Description"]
+            };
+
             if (transaction.Amount == 0)
                 throw new ApplicationException(" amount must > 0");
             var account = dbContext.Set<Account>()
@@ -160,9 +174,22 @@ namespace App.Controllers.Models
             transaction.fkActorID = account.APBDes.fkRegionID;
             transaction.fkAPBNID = account.APBDes.fkAPBNID;
             dbSet.Add(transaction);
+            dbContext.SaveChanges();
 
             realization.fkTransactionID = transaction.ID;
             dbContext.Set<Realization>().Add(realization);
+            dbContext.SaveChanges();
+
+            var fileResult = multipart.Files[0];
+            var blob = new Blob(fileResult);
+            dbContext.Set<Blob>().Add(blob);
+
+            //Update(apbdesID)
+            //    .Set(e => e.SourceURL, sourceURL)
+            //    .Set(e => e.fkSourceFileID, blob.ID)
+            //    .Save();
+
+            fileResult.Move(blob.FilePath);
         }
 
         public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountID)
@@ -188,24 +215,24 @@ namespace App.Controllers.Models
 
     public class TransferTransaction
     {
-        public String TransferredDate { get; set;  }
-        public decimal TransferredAmount {get; set; }
+        public String TransferredDate { get; set; }
+        public decimal TransferredAmount { get; set; }
         public String TransferredProofID { get; set; }
 
         public String AcknowledgedDate { get; set; }
         public decimal AcknowledgedAmount { get; set; }
         public String AcknowledgedProofID { get; set; }
 
-        public TransferTransaction (Transaction transferred, Transaction acknowledged)
+        public TransferTransaction(Transaction transferred, Transaction acknowledged)
         {
-            if(transferred != null)
+            if (transferred != null)
             {
                 TransferredDate = transferred.Date.ToString("dd-MM-yyyy");
                 TransferredAmount = transferred.Amount;
-                if(transferred.SourceFile != null)
+                if (transferred.SourceFile != null)
                     TransferredProofID = transferred.SourceFile.RelativeFileName;
             }
-            if(acknowledged != null)
+            if (acknowledged != null)
             {
 
                 AcknowledgedDate = acknowledged.Date.ToString("dd-MM-yyyy");
