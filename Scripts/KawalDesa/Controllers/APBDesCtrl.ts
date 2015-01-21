@@ -101,16 +101,19 @@ module App.Controllers {
                 });
         }
 
-        saveNewRealization(accountID: number) {
+        saveNewRealization(accountID) {
             var ctrl = this;
+            console.log(ctrl.totalRealizationAmount[accountID[1]] + this.formTransactionRealization[accountID[0]].Amount);
+            console.log(ctrl.totalRootRealizationAmount[accountID[2]] + this.formTransactionRealization[accountID[0]].Amount);
 
-            Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
-                forms: this.formTransactionRealization[accountID]
-            }))
-                .success(() => {
-                    ctrl.setFormAccount(accountID, 0, false);
-                    ctrl.loadRealization(accountID);
-                });
+            //Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
+            //    forms: this.formTransactionRealization[accountID],
+            //    files: this.formTransactionRealization[accountID].Proof
+            //}))
+            //    .success(() => {
+            //        ctrl.setFormAccount(accountID, 0, false);
+            //        ctrl.loadRealization(accountID);
+            //    });
         }
 
         filterObject(object) {

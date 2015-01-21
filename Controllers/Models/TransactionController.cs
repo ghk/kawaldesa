@@ -151,45 +151,54 @@ namespace App.Controllers.Models
         [Authorize(Roles = Role.VOLUNTEER_DESA)]
         public void AddAccountTransaction(Multipart multipart)
         {
-            Transaction transaction = new Transaction
+            try
             {
-                Amount = long.Parse(multipart.Forms["Amount"]),
-                fkAccountID = long.Parse(multipart.Forms["fkAccountID"]),
-                Date = Convert.ToDateTime(multipart.Forms["Date"])
-            };
+                var fileResult = multipart.Files[0];
+                var blob = new Blob(fileResult);
+                dbContext.Set<Blob>().Add(blob);
 
-            Realization realization = new Realization
+                Transaction transaction = new Transaction
+                {
+                    Amount = long.Parse(multipart.Forms["Amount"]),
+                    fkAccountID = long.Parse(multipart.Forms["fkAccountID"]),
+                    Date = Convert.ToDateTime(multipart.Forms["Date"])
+                };
+
+                Realization realization = new Realization
+                {
+                    Description = multipart.Forms["Description"]
+                };
+
+                TransactionFile transactionFile = new TransactionFile()
+                {
+                    FileName = blob.Name,
+                    fkFileID = blob.ID,
+                    IsActivated = true,
+                };
+                dbContext.Set<TransactionFile>().Add(transactionFile);
+
+                if (transaction.Amount == 0)
+                    throw new ApplicationException(" amount must > 0");
+                var account = dbContext.Set<Account>()
+                    .Include(a => a.APBDes)
+                    .First(a => a.ID == transaction.fkAccountID);
+
+                KawalDesaController.CheckRegionAllowed(dbContext, account.APBDes.fkRegionID);
+
+                transaction.fkActorID = account.APBDes.fkRegionID;
+                transaction.fkAPBNID = account.APBDes.fkAPBNID;
+                dbContext.Set<Transaction>().Add(transaction);
+
+                realization.fkTransactionID = transaction.ID;
+                dbContext.Set<Realization>().Add(realization);
+
+                fileResult.Move(blob.FilePath);
+                dbContext.SaveChanges();
+            }
+            finally
             {
-                Description = multipart.Forms["Description"]
-            };
-
-            if (transaction.Amount == 0)
-                throw new ApplicationException(" amount must > 0");
-            var account = dbContext.Set<Account>()
-                .Include(a => a.APBDes)
-                .First(a => a.ID == transaction.fkAccountID);
-
-            KawalDesaController.CheckRegionAllowed(dbContext, account.APBDes.fkRegionID);
-
-            transaction.fkActorID = account.APBDes.fkRegionID;
-            transaction.fkAPBNID = account.APBDes.fkAPBNID;
-            dbSet.Add(transaction);
-            dbContext.SaveChanges();
-
-            realization.fkTransactionID = transaction.ID;
-            dbContext.Set<Realization>().Add(realization);
-            dbContext.SaveChanges();
-
-            var fileResult = multipart.Files[0];
-            var blob = new Blob(fileResult);
-            dbContext.Set<Blob>().Add(blob);
-
-            //Update(apbdesID)
-            //    .Set(e => e.SourceURL, sourceURL)
-            //    .Set(e => e.fkSourceFileID, blob.ID)
-            //    .Save();
-
-            fileResult.Move(blob.FilePath);
+                multipart.DeleteUnmoved();
+            }
         }
 
         public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountID)

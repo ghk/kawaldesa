@@ -68,7 +68,7 @@
                                     <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
                                     <td colspan="6" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
                                         <div class="container-fluid">
-                                            <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.saveNewRealization(account.ID)">
+                                            <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.saveNewRealization([account.ID, account.fkParentAccountID, rootAccount.ID] )">
                                                 <h5 style="text-align: center; width: 100%">FORM ACCOUNT</h5>
                                                 <div class="form-group input-sm">
                                                     <label for="date" class="col-sm-2 control-label">Deskripsi</label>
@@ -80,7 +80,7 @@
                                                 <div class="form-group input-sm">
                                                     <label for="date" class="col-sm-2 control-label">Tanggal</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="date" placeholder="dd-mm-yyyy"
+                                                        <input type="text" class="form-control" id="date" placeholder="mm-dd-yyyy"
                                                                ng-model="apbdesCtrl.formTransactionRealization[account.ID].Date" />
                                                     </div>
                                                 </div>
