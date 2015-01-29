@@ -764,6 +764,14 @@ module App.Models {
             return res;
         }
         
+        static GetPicture(realizationID: number): JQueryPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
+            var res = $.ajax(FieldReport.ajaxSettings.build({
+                type: 'GET',
+                url: '/api/FieldReport/GetPicture?realizationID='+realizationID+'',
+            }));
+            return res;
+        }
+        
     }
     
     

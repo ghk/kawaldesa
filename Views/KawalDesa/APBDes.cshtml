@@ -123,10 +123,46 @@
                                     <td colspan="5" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
                                 </tr>
 
-                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)" ng-repeat="realization in apbdesCtrl.realizations[account.ID]">
+                                <tr ng-repeat-start="realization in apbdesCtrl.realizations[account.ID]"></tr>
+                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)
+                                    && !apbdesCtrl.isFormExpanded(account)
+                                    && apbdesCtrl.isRealizationExpanded(realization)
+                                    && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
+                                    && indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td style="text-align: left;">
+                                        <div style="position:relative">
+                                            <input type="file" ng-file-select id="report"
+                                                   ng-model="oyee" />
+                                        </div>
+                                    </td>
+                                    <td colspan="3" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
+                                    <td colspan="5" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                </tr>
+
+                                <tr class="detail" ng-if="apbdesCtrl.isRealizationExpanded(realization)" ng-repeat="fieldReport in apbdesCtrl.fieldReport[realization.Realization.ID]">
                                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                                     <td>
-                                        <a href="#">
+                                        {{fieldReport}}
+                                    </td>
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);" colspan="3" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);" colspan="5" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                </tr>
+
+                                <tr class="detail-sum" ng-if="apbdesCtrl.isRealizationExpanded(realization)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                    <td ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)" ng-repeat-end="">
+                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td>
+                                        <a href="#" ng-click="apbdesCtrl.toggleRealizationExpander(realization.Realization.ID, $event)">
                                             {{realization.Realization.Description}}
                                         </a>
                                     </td>
@@ -138,25 +174,6 @@
                                     </td>
                                     <td></td>
                                 </tr>
-
-                                @*<tr class="detail" ng-if="apbdesCtrl.uploadExpandedStates(account)" ng-repeat="realization in apbdesCtrl.realizations[account.ID]">
-                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
-                                    <td>
-                                        <a href="#">
-                                            {{realization.Realization.Description}}
-                                        </a>
-                                        <div style="float:right;">
-                                            <button class="btn btn-xs">
-                                                Unggah foto
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="money">
-                                        {{realization.Transaction.Amount | number:0}}
-                                    </td>
-                                    <td colspan="2" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
-                                    <td colspan="4" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>
-                                </tr>*@
 
                                 <tr class="detail-sum" ng-if="apbdesCtrl.isExpanded(account)
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">

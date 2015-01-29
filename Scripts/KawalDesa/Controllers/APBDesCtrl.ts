@@ -16,17 +16,15 @@ module App.Controllers {
         apbdes: Models.APBDes;
         rootAccounts: Models.Account[];
         newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
-        expenseTypeAccount: number = Models.AccountType.EXPENSE;
         expenseGroup = Models.ExpenseGroup;
         sector = Models.Sector;
 
         formErrors: {};
         realizations = {};
-        realizationFiles = {};
+        fieldReport = {};
         formTransactionRealization: { [key: number]: any } = {}
         expandedStates = {};
-        uploadExpandedStates = {};
-        expandedFormStates = {};
+        realizationExpandedStates = {};
         filteredExpenses = [];
         filteredSector = [];
 
@@ -103,17 +101,17 @@ module App.Controllers {
 
         saveNewRealization(accountID) {
             var ctrl = this;
-            console.log(ctrl.totalRealizationAmount[accountID[1]] + this.formTransactionRealization[accountID[0]].Amount);
-            console.log(ctrl.totalRootRealizationAmount[accountID[2]] + this.formTransactionRealization[accountID[0]].Amount);
 
-            //Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
-            //    forms: this.formTransactionRealization[accountID],
-            //    files: this.formTransactionRealization[accountID].Proof
-            //}))
-            //    .success(() => {
-            //        ctrl.setFormAccount(accountID, 0, false);
-            //        ctrl.loadRealization(accountID);
-            //    });
+            Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
+                forms: this.formTransactionRealization[accountID[0]],
+                files: this.formTransactionRealization[accountID[0]].Proof
+            }))
+                .success(() => {
+                    ctrl.totalRealizationAmount[accountID[1]] += this.formTransactionRealization[accountID[0]].Amount;
+                    ctrl.totalRootRealizationAmount[accountID[2]] += this.formTransactionRealization[accountID[0]].Amount
+                    ctrl.setFormAccount(accountID[0], 0, false);
+                    ctrl.loadRealization(accountID[0]);
+                });
         }
 
         filterObject(object) {
@@ -136,8 +134,8 @@ module App.Controllers {
             return result;
         }
 
-        isUploadExpanded(entity) {
-            var result = this.uploadExpandedStates[entity.ID];
+        isRealizationExpanded(entity) {
+            var result = this.realizationExpandedStates[entity.Realization.ID];
             return result;
         }
 
@@ -149,6 +147,12 @@ module App.Controllers {
             ev.preventDefault();
             this.expandedStates[accountID] = !this.expandedStates[accountID];
             this.loadRealization(accountID);
+        }
+
+        toggleRealizationExpander(realizationID, ev) {
+            ev.preventDefault();
+            this.realizationExpandedStates[realizationID] = !this.realizationExpandedStates[realizationID];
+            //this.loadFieldReport(realizationID);
         }
 
         setFormAccount(accountID, rootAccountID, state) {
@@ -171,6 +175,7 @@ module App.Controllers {
                 this.getAPBDes(this.indexCtrl.region.ID);
                 this.formTransactionRealization = {};
                 this.realizations = {};
+                this.fieldReport = {};
             }
         }
 
@@ -237,6 +242,18 @@ module App.Controllers {
                 Models.Transaction.GetRealizationTransactions(accountID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountID] = details;
+                    });
+                });
+            }
+        }
+
+        loadFieldReport(realizationID) {
+            var ctrl = this;
+            if (this.realizationExpandedStates[realizationID]) {
+                Models.FieldReport.GetPicture(realizationID).done(details => {
+                    console.log(details);
+                    ctrl.$scope.$apply(() => {
+                        ctrl.fieldReport[realizationID] = details;
                     });
                 });
             }

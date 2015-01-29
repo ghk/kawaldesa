@@ -192,8 +192,8 @@ namespace App.Controllers.Models
                 realization.fkTransactionID = transaction.ID;
                 dbContext.Set<Realization>().Add(realization);
 
-                fileResult.Move(blob.FilePath);
-                dbContext.SaveChanges();
+                //fileResult.Move(blob.FilePath);
+                //dbContext.SaveChanges();
             }
             finally
             {
@@ -211,7 +211,6 @@ namespace App.Controllers.Models
                     Transaction = t
                 });
         }
-
     }
 
     public class TransferTransactionRow

@@ -55,5 +55,11 @@ namespace App.Controllers.Models
                 uploader.DeleteUnmoved();
             }
         }
+
+        public IQueryable<List<Blob>> GetPicture(long realizationID)
+        {
+            return dbSet.Where(t => t.fkRealizationID == realizationID)
+                .Select(t => t.Pictures);
+        }
     }
 }
