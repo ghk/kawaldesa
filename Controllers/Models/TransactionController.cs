@@ -161,7 +161,7 @@ namespace App.Controllers.Models
                 {
                     Amount = long.Parse(multipart.Forms["Amount"]),
                     fkAccountID = long.Parse(multipart.Forms["fkAccountID"]),
-                    Date = Convert.ToDateTime(multipart.Forms["Date"])
+                    Date = DateTime.ParseExact(multipart.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 };
 
                 Realization realization = new Realization
@@ -173,7 +173,7 @@ namespace App.Controllers.Models
                 {
                     FileName = blob.Name,
                     fkFileID = blob.ID,
-                    IsActivated = true,
+                    IsActivated = true
                 };
                 dbContext.Set<TransactionFile>().Add(transactionFile);
 
@@ -192,8 +192,8 @@ namespace App.Controllers.Models
                 realization.fkTransactionID = transaction.ID;
                 dbContext.Set<Realization>().Add(realization);
 
-                //fileResult.Move(blob.FilePath);
-                //dbContext.SaveChanges();
+                fileResult.Move(blob.FilePath);
+                dbContext.SaveChanges();
             }
             finally
             {

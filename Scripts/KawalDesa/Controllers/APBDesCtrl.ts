@@ -22,6 +22,7 @@ module App.Controllers {
         formErrors: {};
         realizations = {};
         fieldReport = {};
+        formFieldReport = {};
         formTransactionRealization: { [key: number]: any } = {}
         expandedStates = {};
         realizationExpandedStates = {};
@@ -114,6 +115,19 @@ module App.Controllers {
                 });
         }
 
+        saveNewFieldReport(realizationID) {
+            var ctrl = this;
+
+            console.log(this.formFieldReport[realizationID]);
+            Models.FieldReport.AddFieldReport(new Scaffold.Multipart({
+                forms: this.formFieldReport[realizationID],
+                files: this.formFieldReport[realizationID].Report
+            }))
+                //.success(() => {
+                //    ctrl.loadFieldReport(realizationID);
+                //});
+        }
+
         filterObject(object) {
             var keys = Object.keys(object);
             var filteredObject = [];
@@ -143,6 +157,10 @@ module App.Controllers {
             return this.formTransactionRealization[entity.ID];
         }
 
+        isFormRealizationExpanded(entity) {
+            return this.formFieldReport[entity.Realization.ID];
+        }
+
         toggleAccountExpander(accountID, ev) {
             ev.preventDefault();
             this.expandedStates[accountID] = !this.expandedStates[accountID];
@@ -164,6 +182,15 @@ module App.Controllers {
                 delete this.formTransactionRealization[accountID];
         }
 
+        setFormFieldReport(realizationID, state) {
+            if (state)
+                this.formFieldReport[realizationID] = {
+                    RealizationID: realizationID
+                };
+            else
+                delete this.formFieldReport[realizationID];
+        }
+
         isRootAccount(parentAccountID) {
             if (parentAccountID != null)
                 return true;
@@ -174,6 +201,7 @@ module App.Controllers {
             if (this.indexCtrl.region.Type == 4) {
                 this.getAPBDes(this.indexCtrl.region.ID);
                 this.formTransactionRealization = {};
+                this.formFieldReport = {};
                 this.realizations = {};
                 this.fieldReport = {};
             }

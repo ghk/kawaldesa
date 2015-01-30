@@ -17,6 +17,7 @@ namespace App.Models
             Database.Log = m => System.Diagnostics.Debug.WriteLine(m);
         }
         public virtual IDbSet<Blob> Blobs { get; set; }
+        public virtual IDbSet<FieldReport> FieldReport { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserScope> UserScopes { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }

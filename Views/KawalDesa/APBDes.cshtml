@@ -80,7 +80,7 @@
                                                 <div class="form-group input-sm">
                                                     <label for="date" class="col-sm-2 control-label">Tanggal</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="date" placeholder="mm-dd-yyyy"
+                                                        <input type="text" class="form-control" id="date" placeholder="dd-mm-yyyy"
                                                                ng-model="apbdesCtrl.formTransactionRealization[account.ID].Date" />
                                                     </div>
                                                 </div>
@@ -116,7 +116,7 @@
                                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                                     <td style="text-align: left;">
                                         <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormAccount(account.ID, account.fkParentAccountID, true)">
-                                            Tambah
+                                            Tambah Realisasi
                                         </button>
                                     </td>
                                     <td colspan="3" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
@@ -124,17 +124,56 @@
                                 </tr>
 
                                 <tr ng-repeat-start="realization in apbdesCtrl.realizations[account.ID]"></tr>
-                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)
-                                    && !apbdesCtrl.isFormExpanded(account)
-                                    && apbdesCtrl.isRealizationExpanded(realization)
+
+                                <tr ng-if="apbdesCtrl.isFormRealizationExpanded(realization)
+                                    && apbdesCtrl.isRealizationExpanded(realization) ">
+                                    <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
+                                    <td colspan="6" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
+                                        <div class="container-fluid">
+                                            <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.saveNewFieldReport(realization.Realization.ID)">
+                                                <h5 style="text-align: center; width: 100%">FORM REPORT</h5>
+                                                <div class="form-group input-sm">
+                                                    <label for="date" class="col-sm-2 control-label">Notes</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="notes" placeholder="Notes"
+                                                               ng-model="apbdesCtrl.formFieldReport[realization.Realization.ID].Notes" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group input-sm">
+                                                    <label for="date" class="col-sm-2 control-label">Tanggal</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="date" placeholder="dd-mm-yyyy"
+                                                               ng-model="apbdesCtrl.formFieldReport[realization.Realization.ID].Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group input-sm">
+                                                    <label for="proof" class="col-sm-2 control-label">Lampiran</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" ng-file-select id="report"
+                                                               ng-model="apbdesCtrl.formFieldReport[realization.Realization.ID].Report"
+                                                               ng-multiple="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div style="width: 100%; text-align: center;">
+                                                        <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
+                                                        <button class="btn btn-xs btn-danger" ng-click="apbdesCtrl.setFormFieldReport(realization.Realization.ID, false)">Batal</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="detail" ng-if="apbdesCtrl.isRealizationExpanded(realization)
+                                    && !apbdesCtrl.isFormRealizationExpanded(realization)
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
-                                    && indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
+                                    && indexCtrl.isInRoleAndScope('volunteer_realization', entity.RegionID)">
                                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                                     <td style="text-align: left;">
-                                        <div style="position:relative">
-                                            <input type="file" ng-file-select id="report"
-                                                   ng-model="oyee" />
-                                        </div>
+                                        <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormFieldReport(realization.Realization.ID, true)">
+                                            Tambah Field Report
+                                        </button>
                                     </td>
                                     <td colspan="3" ng-if="rootAccount.Type != apbdesCtrl.expenseTypeAccount"></td>
                                     <td colspan="5" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount"></td>

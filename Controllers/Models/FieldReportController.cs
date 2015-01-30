@@ -39,7 +39,7 @@ namespace App.Controllers.Models
                     IsActivated = true,
                     Notes = uploader.Forms["Notes"],
                     Date = DateTime.ParseExact(uploader.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture),
-                    Pictures = new List<Blob>(),
+                    Pictures = new List<Blob>()
                 };
                 foreach (var file in uploader.Files)
                 {
