@@ -29,12 +29,13 @@ module App.Controllers {
         filteredExpenses = [];
         filteredSector = [];
 
-        websiteText: string;
         isCompleteStatus: string = "belum";
         totalTargetAmount = {};
         totalRealizationAmount = {};
         totalRootTargetAmount = {};
         totalRootRealizationAmount = {};
+
+        isVolunteer: boolean = false;
 
         linktWebsiteShow: boolean = false;
         inputUrlShow: boolean = false;
@@ -49,8 +50,7 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
 
             this.formErrors = {};
-            this.websiteText = this.indexCtrl.region.Website;
-            this.onRoleVolunteer(this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.ID));
+            this.isVolunteer = this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.ID);
 
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
@@ -232,17 +232,12 @@ module App.Controllers {
 
         onSubmittingWebsite() {
             var ctrl = this;
-            if (this.websiteText)
-                Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.websiteText)
+            Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.indexCtrl.region.Website)
                     .done(() => {
                         ctrl.$scope.$apply(() => {
                             this.onWebsiteShowLink();
                         });
                     })
-                else {
-                this.websiteText = this.indexCtrl.region.Website;
-                this.onWebsiteShowLink();
-            }
         }
 
         onComplete() {

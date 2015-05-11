@@ -4,21 +4,20 @@
             <td width="14%" class="sidebar" valign="top">
                 <div class="sidebar">
                     <form class="form-horizontal" role="form" ng-submit="apbdesCtrl.onSubmittingWebsite()">
-                        Website Desa<br />
-                        <a href="" ng-click="apbdesCtrl.onRedirectWebsite(apbdesCtrl.websiteText)" ng-if="apbdesCtrl.linktWebsiteShow">{{apbdesCtrl.websiteText}}</a>
+                        <a href="" ng-click="apbdesCtrl.onRedirectWebsite(indexCtrl.region.Website)" ng-if="indexCtrl.region.Website!= null && indexCtrl.region.Website != ''">{{indexCtrl.region.Website}}</a>
                         <input type="text" placeholder="Masukkan nama website desa"
                                style="width:100%"
-                               ng-model="apbdesCtrl.websiteText"
-                               ng-if="apbdesCtrl.inputWebsiteShow" />
+                               ng-model="indexCtrl.region.Website"
+                               ng-if="apbdesCtrl.isVolunteer && (apbdesCtrl.inputWebsiteShow || indexCtrl.region.Website == null || indexCtrl.region.Website == '')" />
                         <input type="button" class="btn btn-xs" value="Edit"
                                ng-click="apbdesCtrl.onWebsiteShowInput()"
-                               ng-if="apbdesCtrl.buttontWebsiteShow" />
+                               ng-if="apbdesCtrl.isVolunteer && !apbdesCtrl.inputWebsiteShow && indexCtrl.region.Website!= null && indexCtrl.region.Website != ''" />
                     </form>
                 </div>
                 <div class="sidebar">
                     <form class="form-horizontal" role="form">
                         APBDes {{apbdesCtrl.isCompleteStatus}} selesai <br />
-                        <input type="button" class="btn btn-xs" value="Selesaikan"
+                        <input type="button" class="btn btn-primary btn-xs" value="Selesaikan"
                                ng-click="apbdesCtrl.onComplete()"
                                ng-if="apbdesCtrl.buttonCompleteShow" />
                     </form>
@@ -27,11 +26,11 @@
                     <form class="form-horizontal" role="form">
                         Sumber APBDes <br />
                         <input type="text" placeholder="URL"
-                               ng-if="apbdesCtrl.inputUrlShow" />
+                               ng-if="apbdesCtrl.isVolunteer" style="width: 100%;"/>
                         <div style="margin-top:5px">
                             <input type="file" ng-file-select
                                    ng-model="file"
-                                   ng-if="apbdesCtrl.buttonSearchFileShow" />
+                                   ng-if="apbdesCtrl.isVolunteer" />
                         </div>
                     </form>
                 </div>
@@ -321,7 +320,7 @@
 
                                 <tr class="" ng-if="indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
                                     <td colspan="2">
-                                        <button class="btn btn-xs"
+                                        <button class="btn btn-primary btn-xs"
                                                 ng-click="apbdesCtrl.addNewAccount(rootAccount.ID)">
                                             Tambah {{rootAccount.Name}}
                                         </button>
@@ -330,7 +329,7 @@
 
                                 <tr class="" ng-if="apbdesCtrl.buttonAddAccountShow">
                                     <td colspan="2">
-                                        <button class="btn btn-primary btn-xs"
+                                        <button class="btn btn-success btn-xs"
                                                 ng-click="apbdesCtrl.saveNewAccounts(rootAccount.ID)">
                                             Simpan
                                         </button>
