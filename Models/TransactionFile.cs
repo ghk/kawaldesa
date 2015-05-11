@@ -11,7 +11,6 @@ namespace App.Models
         public String FileName { get; set; }
 
         public bool IsActivated { get; set; }
-
         
         [ForeignKey("File")]
         public long fkFileID { get; set; } 

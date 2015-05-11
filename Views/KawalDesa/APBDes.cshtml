@@ -48,19 +48,20 @@
                         <table class="table table-condensed table-responsive table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;">Kode Anggaran</th>
-                                    <th style="text-align: center;">Nama Anggaran</th>
-                                    <th style="text-align: center;">Target<sup><a href="#help-target">?</a></sup></th>
-                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">Sector<sup><a href="#help-sector">?</a></sup></th>
-                                    <th style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">ExpenseGroup<sup><a href="#help-expenseGroup">?</a></sup></th>
-                                    <th style="text-align: center;">Realisasi<sup><a href="#help-realization">?</a></sup></th>
-                                    <th style="text-align: center;">% Realisasi<sup><a href="#help-realizationPercentage">?</a></sup></th>
+                                    <th width="10%" style="text-align: center;">Kode Anggaran</th>
+                                    <th width="45%" style="text-align: center;">Nama Anggaran</th>
+                                    <th width="15%" style="text-align: center;">Target<sup><a href="#help-target">?</a></sup></th>
+                                    <th width="10%" style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">Sector<sup><a href="#help-sector">?</a></sup></th>
+                                    <th width="10%" style="text-align: center;" ng-if="rootAccount.Type == apbdesCtrl.expenseTypeAccount">ExpenseGroup<sup><a href="#help-expenseGroup">?</a></sup></th>
+                                    <th width="15%" style="text-align: center;">Realisasi<sup><a href="#help-realization">?</a></sup></th>
+                                    <th width="15%" style="text-align: center;">% Realisasi<sup><a href="#help-realizationPercentage">?</a></sup></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat-start="account in rootAccount.ChildAccounts"></tr>
                                 <tr class="detail-padding" ng-if="apbdesCtrl.isExpanded(account)">
-                                    <td colspan="10"></td>
+                                    <td></td>
+                                    <td colspan="9" style="border-left: 1px solid #ddd"></td>
                                 </tr>
                                 <tr ng-if="apbdesCtrl.isExpanded(account)
                                     && apbdesCtrl.isFormExpanded(account)">
@@ -112,7 +113,7 @@
                                     && !apbdesCtrl.isFormExpanded(account)
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
                                     && indexCtrl.isInRoleAndScope('volunteer_account', entity.RegionID)">
-                                    <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
+                                    <td></td>
                                     <td style="text-align: left;">
                                         <button class="btn btn-primary btn-xs" ng-click="apbdesCtrl.setFormAccount(account.ID, account.fkParentAccountID, true)">
                                             Tambah Realisasi
@@ -164,7 +165,8 @@
                                     </td>
                                 </tr>
 
-                                <tr class="detail" ng-if="apbdesCtrl.isRealizationExpanded(realization)
+                                <tr class="detail" ng-if="apbdesCtrl.isExpanded(account)
+                                    && apbdesCtrl.isRealizationExpanded(realization)
                                     && !apbdesCtrl.isFormRealizationExpanded(realization)
                                     && apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)
                                     && indexCtrl.isInRoleAndScope('volunteer_realization', entity.RegionID)">
@@ -224,17 +226,18 @@
                                     <td></td>
                                 </tr>
 
-                                <tr ng-repeat-end="" ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null,
+                                <tr ng-repeat-end="">
+                                    <td ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null,
                                     'account-tab' : account.ParentAccount.fkParentAccountID != null }">
-                                    <td>
-                                        <a href=" #" ng-click="" ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
+                                        <a href="#" ng-click="" ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{account.Code}}
                                         </a>
                                         <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{account.Code}}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td ng-class="{ 'account-head' : account.ParentAccount.fkParentAccountID == null,
+                                    'account-tab' : account.ParentAccount.fkParentAccountID != null }">
                                         <a href="#" ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)"
                                            ng-click="apbdesCtrl.toggleAccountExpander(account.ID, $event)">
                                             {{account.Name}}
@@ -245,7 +248,7 @@
                                     </td>
                                     <td class="money">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{( account.Target | number:0 ) || "0"}}
+                                            {{(account.Target | number:0) || "0"}}
                                         </span>
                                         <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{apbdesCtrl.totalTargetAmount[account.ID] | number:0}}
@@ -263,7 +266,7 @@
                                     </td>
                                     <td class="money">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{(account.TotalRealizationPerAccount | number:0 ) || "0"}}
+                                            {{(account.TotalRealizationPerAccount | number:0) || "0"}}
                                         </span>
                                         <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
                                             {{apbdesCtrl.totalRealizationAmount[account.ID] | number:0}}
@@ -271,10 +274,10 @@
                                     </td>
                                     <td class="money">
                                         <span ng-if="apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{((account.TotalRealizationPerAccount / account.Target) * 100 | number:0) || "0"}}
+                                            {{((account.TotalRealizationPerAccount / account.Target) * 100 | number:1) || "0"}}
                                         </span>
                                         <span ng-if="!apbdesCtrl.isRootAccount(account.ParentAccount.fkParentAccountID)">
-                                            {{apbdesCtrl.totalTargetAmount[account.ID] == null || apbdesCtrl.totalRealizationAmount[account.ID] == null || apbdesCtrl.totalTargetAmount[account.ID] === 0 ? null : ((apbdesCtrl.totalRealizationAmount[account.ID] / apbdesCtrl.totalTargetAmount[account.ID]) * 100).toFixed(0)}}
+                                            {{apbdesCtrl.totalTargetAmount[account.ID] == null || apbdesCtrl.totalRealizationAmount[account.ID] == null || apbdesCtrl.totalTargetAmount[account.ID] === 0 ? null : (((apbdesCtrl.totalRealizationAmount[account.ID] / apbdesCtrl.totalTargetAmount[account.ID]) * 100 | number:1) || "0")}}
                                         </span>
                                     </td>
                                 </tr>

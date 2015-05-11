@@ -37,14 +37,14 @@ module App.Controllers {
 
         isVolunteer: boolean = false;
 
-        linktWebsiteShow: boolean = false;
+        linkWebsiteShow: boolean = false;
         inputUrlShow: boolean = false;
         inputWebsiteShow: boolean = false;
-        buttontWebsiteShow: boolean = true;
+        buttonWebsiteShow: boolean = true;
         buttonSearchFileShow: boolean = true;
         buttonCompleteShow: boolean = true;
         buttonAddAccountShow: boolean = false;
-
+        
         constructor(public $scope, public $upload) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
@@ -102,17 +102,16 @@ module App.Controllers {
 
         saveNewRealization(accountID) {
             var ctrl = this;
-
+            
             Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
                 forms: this.formTransactionRealization[accountID[0]],
                 files: this.formTransactionRealization[accountID[0]].Proof
-            }))
-                .success(() => {
-                    ctrl.totalRealizationAmount[accountID[1]] += this.formTransactionRealization[accountID[0]].Amount;
-                    ctrl.totalRootRealizationAmount[accountID[2]] += this.formTransactionRealization[accountID[0]].Amount
-                    ctrl.setFormAccount(accountID[0], 0, false);
-                    ctrl.loadRealization(accountID[0]);
-                });
+            })).success(() => {
+                ctrl.totalRealizationAmount[accountID[1]] += this.formTransactionRealization[accountID[0]].Amount;
+                ctrl.totalRootRealizationAmount[accountID[2]] += this.formTransactionRealization[accountID[0]].Amount
+                ctrl.setFormAccount(accountID[0], 0, false);
+                ctrl.loadRealization(accountID[0]);
+            });
         }
 
         saveNewFieldReport(realizationID) {
@@ -171,7 +170,7 @@ module App.Controllers {
             ev.preventDefault();
             this.realizationExpandedStates[realizationID] = !this.realizationExpandedStates[realizationID];
             //this.loadFieldReport(realizationID);
-        }
+        }       
 
         setFormAccount(accountID, rootAccountID, state) {
             if (state)
@@ -208,25 +207,25 @@ module App.Controllers {
         }
 
         onRoleVolunteer(roleAccepted: boolean) {
-            this.buttontWebsiteShow = roleAccepted;
+            this.buttonWebsiteShow = roleAccepted;
             this.buttonSearchFileShow = roleAccepted;
             this.buttonCompleteShow = roleAccepted;
             this.inputUrlShow = roleAccepted;
             if (this.indexCtrl.region.Website) {
-                this.linktWebsiteShow = true;
+                this.linkWebsiteShow = true;
                 this.inputWebsiteShow = false;
             }
         }
 
         onWebsiteShowInput() {
-            this.linktWebsiteShow = false;
-            this.buttontWebsiteShow = false;
+            this.linkWebsiteShow = false;
+            this.buttonWebsiteShow = false;
             this.inputWebsiteShow = true;
         }
 
         onWebsiteShowLink() {
-            this.linktWebsiteShow = true;
-            this.buttontWebsiteShow = true;
+            this.linkWebsiteShow = true;
+            this.buttonWebsiteShow = true;
             this.inputWebsiteShow = false;
         }
 

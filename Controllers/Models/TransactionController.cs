@@ -85,7 +85,6 @@ namespace App.Controllers.Models
                     blobID = blob.ID;
                 }
 
-
                 transaction.fkSourceFileID = blobID;
                 transaction.IsActivated = true;
                 transaction.fkCreatedByID = user.Id;
@@ -152,33 +151,24 @@ namespace App.Controllers.Models
         public void AddAccountTransaction(Multipart multipart)
         {
             try
-            {
-                var fileResult = multipart.Files[0];
-                var blob = new Blob(fileResult);
-                dbContext.Set<Blob>().Add(blob);
-
+            {                
+                if(multipart.GetForm("Amount") != null && long.Parse(multipart.GetForm("Amount")) < 0)
+                    throw new ApplicationException("Amount must be greater than 0");
+                if(multipart.GetForm("Description") == null)
+                    throw new ApplicationException("Description cannot be empty");
+                
                 Transaction transaction = new Transaction
                 {
-                    Amount = long.Parse(multipart.Forms["Amount"]),
-                    fkAccountID = long.Parse(multipart.Forms["fkAccountID"]),
-                    Date = DateTime.ParseExact(multipart.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture)
+                    Amount = long.Parse(multipart.GetForm("Amount")),
+                    fkAccountID = long.Parse(multipart.GetForm("fkAccountID")),
+                    Date = DateTime.ParseExact(multipart.GetForm("Date"), "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 };
 
                 Realization realization = new Realization
                 {
-                    Description = multipart.Forms["Description"]
-                };
-
-                TransactionFile transactionFile = new TransactionFile()
-                {
-                    FileName = blob.Name,
-                    fkFileID = blob.ID,
-                    IsActivated = true
-                };
-                dbContext.Set<TransactionFile>().Add(transactionFile);
-
-                if (transaction.Amount == 0)
-                    throw new ApplicationException(" amount must > 0");
+                    Description = multipart.GetForm("Description")
+                };               
+             
                 var account = dbContext.Set<Account>()
                     .Include(a => a.APBDes)
                     .First(a => a.ID == transaction.fkAccountID);
@@ -192,7 +182,21 @@ namespace App.Controllers.Models
                 realization.fkTransactionID = transaction.ID;
                 dbContext.Set<Realization>().Add(realization);
 
-                fileResult.Move(blob.FilePath);
+                if (multipart.Files.Count > 0)
+                {
+                    var fileResult = multipart.Files[0];
+                    var blob = new Blob(fileResult);
+                    dbContext.Set<Blob>().Add(blob);
+                    TransactionFile transactionFile = new TransactionFile()
+                    {
+                        FileName = blob.Name,
+                        fkFileID = blob.ID,
+                        IsActivated = true
+                    };
+                    dbContext.Set<TransactionFile>().Add(transactionFile);
+                    fileResult.Move(blob.FilePath);
+                }                
+                
                 dbContext.SaveChanges();
             }
             finally
