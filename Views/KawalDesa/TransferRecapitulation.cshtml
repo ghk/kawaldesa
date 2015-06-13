@@ -197,7 +197,6 @@
                     </td>
                     <td class="money">
                         <div style="float:right">{{entity.BudgetedTotal | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.BudgetedTotal)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.TransferredTotal | number:0}} </div>
@@ -209,7 +208,6 @@
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedAPBN | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.BudgetedAPBN)"> </div>
                     </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
@@ -233,7 +231,6 @@
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedADD | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.BudgetedADD)"> </div>
                     </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
