@@ -7,6 +7,7 @@
 module App.Controllers {
 
     import Models = App.Models;
+    import Controllers = App.Controllers.Models;
 
     class TransferRecapitulationCtrl {
 
@@ -76,7 +77,7 @@ module App.Controllers {
             formData["Date"] = date;
 
             ctrl.formSavingStates[entity.RegionID] = true;
-            Models.Transaction.AddTransferTransaction(new Scaffold.Multipart({
+            Controllers.TransactionController.AddTransferTransaction(new Scaffold.Multipart({
                 forms: formData,
                 files: this.formTransactions[entity.RegionID].File
             })).success(() => {
@@ -104,9 +105,9 @@ module App.Controllers {
                 "SortOrder": "ASC",
                 "ParentID": parentID
             }
-            var type = Models.FrozenTransferRecapitulation;
+            var type = Controllers.FrozenTransferRecapitulationController;
             if (this.indexCtrl.currentUser) {
-                type = Models.TransferRecapitulation;
+                type = Controllers.TransferRecapitulationController;
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
@@ -119,7 +120,7 @@ module App.Controllers {
         loadTransactions(entityID) {
             var ctrl = this;
             if (this.expandedStates[entityID]) {
-                Models.Transaction.GetTransferTransactions(entityID).done(details => {
+                Controllers.TransactionController.GetTransferTransactions(entityID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.transactions[entityID] = details;
                     });

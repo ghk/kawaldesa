@@ -1,0 +1,255 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".ts" #>
+<#@include file="T4Utils.t4" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+/// WARNING: T4 generated file 
+/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+
+<#
+	ModelNamespaces = new String[]{"App.Models"};
+    var namespaces = new []{"App.Controllers.Models", "App.Controllers.Services"};
+    foreach(var _namespace in namespaces)
+    {
+#>
+module <#= _namespace #> {
+	import IQuery = Scaffold.IQuery;
+	import Models = App.Models;
+
+<#
+		
+		var controllers = EnumerateControllers(_namespace).ToList();
+		foreach(var _controller in controllers)
+        {
+			CodeClass modelClass = GetModel(_controller);
+			Indent(1);
+			println("export class {0}", _controller.Name);
+			println("{");
+
+			Indent(2);
+			println("public static ajaxSettings = new Scaffold.AjaxSettings();", _controller.Name);
+			var idType  = "number";
+			if(modelClass != null)
+            {
+				println("public dataModel : Models.I{0} = null;", modelClass.Name);
+				println();
+				print("constructor(data?: Models.I{0})", modelClass.Name); 
+				println(" {");
+				Indent(3);
+				println("this.dataModel = data;");
+				Indent(2);
+				println("}");
+			    idType = GetModelIdType(modelClass);
+            }
+						
+			if(modelClass != null && IsReadOnlyController(_controller))
+            {			
+	#>
+		static GetAll(query?: IQuery): JQueryPromise<Array<<#= "Models.I" + modelClass.Name #>>> {
+			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/<#= GetRouteName(_controller.Name) #>/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new <#= "Models." + modelClass.Name #>(model));
+			});
+			return res;
+		}
+
+		static Get(id: <#= idType #>): JQueryPromise<<#= "Models.I" + modelClass.Name #>> {
+			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/<#= GetRouteName(_controller.Name) #>/Get/'+id,
+			})).then((model) => new <#= "Models." + modelClass.Name #>(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/<#= GetRouteName(_controller.Name) #>/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+	<#
+            }
+
+
+			if(modelClass != null && IsCrudController(_controller))
+            {				
+	#>	
+		static Save(model: <#= "Models.I" + modelClass.Name #>): JQueryPromise<void> {
+			var isNew = model.ID == null;
+            var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+                 type: isNew ? 'POST' : 'PUT',
+				 url: '/api/<#= GetRouteName(_controller.Name) #>/'+(isNew ? 'Post' : 'Put'),
+				 data: JSON.stringify(model)
+            })).then((id) => {
+				if(isNew) {
+					model.ID = id;
+				}
+			});
+            return res;
+        }
+
+		static Delete(id: <#= idType #>): JQueryPromise<void> {
+				var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+					type: 'GET',
+					url: '/api/<#= GetRouteName(_controller.Name) #>/Delete/'+id,
+				}));
+				return res;
+		}
+	<#
+            }
+
+			foreach(var member in EnumerateTSMembers(_controller)
+                .Where(x => x.Kind == vsCMElement.vsCMElementFunction)) 
+            {
+				if(member.Name == _controller.Name)
+                    continue;
+
+				var fct = (CodeFunction)member;
+				var tresult = GetReturnType(fct, true);
+				var method = GetMethod((CodeElement)member, true);
+				var isMultipart = false;
+				var multipartName = "multipart";
+				var url = string.Format("/api/{0}/{1}", GetRouteName(_controller.Name), member.Name);
+                var sb = new StringBuilder("");
+				bool first = true;
+
+					for(int i = 0; i<fct.Parameters.Count; i++)
+                    {
+						var p = (CodeParameter)fct.Parameters.Item(i+1);
+						
+						if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody"))
+							continue;
+
+						var pt = GetTSType(p);
+						
+						if(pt == "Scaffold.Multipart")
+						{
+							isMultipart = true;
+							multipartName = p.Name;
+							continue;
+						}
+
+						sb.Append(first ? "?" : "&");
+						first = false;
+						
+						if (pt == "string")
+							sb.AppendFormat("{0}='+encodeURI({0})+'", p.Name);
+
+						else
+							sb.AppendFormat("{0}='+{0}+'", p.Name);
+
+					}
+
+				url += sb.ToString();
+				println("");
+				var hasFromBodyAndSameClass = false;
+				for (int i = 0; i<fct.Parameters.Count; i++) 
+                {
+					var p = (CodeParameter)fct.Parameters.Item(i+1);
+                    if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        var pt = GetTSType(p);
+                        if(p.Type.AsString == _controller.FullName)
+                            hasFromBodyAndSameClass = true;
+                    }
+                }
+
+				if(!hasFromBodyAndSameClass)
+                {
+					Indent(2);
+                    print("static ");
+                }
+
+				print("{0}(", fct.Name); 
+				for (int i = 0; i<fct.Parameters.Count; i++) 
+                {
+					var p = (CodeParameter)fct.Parameters.Item(i+1);
+					if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        if(hasFromBodyAndSameClass)
+                            continue;
+                    }
+
+					if (i>0)
+                        print(", ");
+
+					if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) {
+                        if(hasFromBodyAndSameClass)
+                            continue;
+
+                        print("/** [FromBody] **/");
+                    }
+
+					var pt = GetTSType(p);
+                    print("{0}: {1}", p.Name, pt);
+                }
+
+				if(!isMultipart)
+				{
+					print("): JQueryPromise<{0}> ", tresult); 
+					println("{");
+	#>
+			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
+			type: '<#= method #>',
+			url: '<#= url #>',
+	<# 
+					for (int i = 0; i<fct.Parameters.Count; i++) 
+                    {
+						var p = (CodeParameter)fct.Parameters.Item(i+1);
+						if (HasAttribute((CodeElement)p, xa => xa.Name == "FromBody")) 
+                        {
+							if (method == "GET") {
+                                println("error: GET methods don't support FromBody parameters.");
+                            }
+
+							else {
+                                Indent(3);
+                                print("data: JSON.stringify(");
+                                if(hasFromBodyAndSameClass)
+                                {
+                                    print("this");
+                                }
+                                else 
+                                {
+                                    print(p.Name);
+                                }
+                                println("),");
+                            }
+
+							break;
+                        }
+                    }
+	#>
+			}));
+	<#
+                }
+
+				else
+				{
+					println("): any  {");
+	#>
+			var res = <#= multipartName #>.upload('<#= url #>');
+	<#
+                }
+
+	#>
+		   return res;
+	<#
+				Indent(1); 
+				println("}");
+            }
+
+			
+#>
+	}
+<#
+			println();
+        }
+#>
+}
+<#
+}
+#>

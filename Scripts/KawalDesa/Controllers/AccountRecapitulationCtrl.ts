@@ -7,6 +7,7 @@
 module App.Controllers {
 
     import Models = App.Models;
+    import Controllers = App.Controllers.Models;
 
     class AccountRecapitulationCtrl {
 
@@ -36,9 +37,10 @@ module App.Controllers {
                 "SortOrder": "ASC",
                 "ParentID": parentID
             }
-            var type = Models.FrozenAccountRecapitulation;
+            var type = Controllers.FrozenAccountRecapitulationController;
             if (this.indexCtrl.currentUser) {
-                type = Models.FrozenAccountRecapitulation;
+                // TODO: HUH?
+                type = Controllers.FrozenAccountRecapitulationController;
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {

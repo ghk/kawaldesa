@@ -7,6 +7,7 @@
 module App.Controllers {
 
     import Models = App.Models;
+    import Controllers = App.Controllers.Models;
 
     class APBDesCtrl {
 
@@ -74,7 +75,7 @@ module App.Controllers {
         saveNewAccounts(rootAccountID: number) {
             var ctrl = this;
             this.formErrors[rootAccountID] = {};
-            Models.APBDes.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
+            Controllers.APBDesController.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
                 .done(() => {
                     ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
                 })
@@ -103,7 +104,7 @@ module App.Controllers {
         saveNewRealization(accountID) {
             var ctrl = this;
             
-            Models.Transaction.AddAccountTransaction(new Scaffold.Multipart({
+            Controllers.TransactionController.AddAccountTransaction(new Scaffold.Multipart({
                 forms: this.formTransactionRealization[accountID[0]],
                 files: this.formTransactionRealization[accountID[0]].Proof
             })).success(() => {
@@ -118,7 +119,7 @@ module App.Controllers {
             var ctrl = this;
 
             console.log(this.formFieldReport[realizationID]);
-            Models.FieldReport.AddFieldReport(new Scaffold.Multipart({
+            Controllers.FieldReportController.AddFieldReport(new Scaffold.Multipart({
                 forms: this.formFieldReport[realizationID],
                 files: this.formFieldReport[realizationID].Report
             }))
@@ -231,7 +232,8 @@ module App.Controllers {
 
         onSubmittingWebsite() {
             var ctrl = this;
-            Models.Region.UpdateWebsite(this.indexCtrl.region.ID, this.indexCtrl.region.Website)
+            
+            Controllers.RegionController.UpdateWebsite(this.indexCtrl.region.ID, this.indexCtrl.region.Website)
                     .done(() => {
                         ctrl.$scope.$apply(() => {
                             this.onWebsiteShowLink();
@@ -241,7 +243,7 @@ module App.Controllers {
 
         onComplete() {
             var ctrl = this;
-            Models.APBDes.Complete(this.apbdes.ID)
+            Controllers.APBDesController.Complete(this.apbdes.ID)
                 .done(() => {
                     ctrl.$scope.$apply(() => {
                         this.isCompleteStatus = "sudah";
@@ -261,7 +263,7 @@ module App.Controllers {
         loadRealization(accountID) {
             var ctrl = this;
             if (this.expandedStates[accountID]) {
-                Models.Transaction.GetRealizationTransactions(accountID).done(details => {
+                Controllers.TransactionController.GetRealizationTransactions(accountID).done(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountID] = details;
                     });
@@ -272,7 +274,7 @@ module App.Controllers {
         loadFieldReport(realizationID) {
             var ctrl = this;
             if (this.realizationExpandedStates[realizationID]) {
-                Models.FieldReport.GetPicture(realizationID).done(details => {
+                Controllers.FieldReportController.GetPicture(realizationID).done(details => {
                     console.log(details);
                     ctrl.$scope.$apply(() => {
                         ctrl.fieldReport[realizationID] = details;
@@ -284,7 +286,7 @@ module App.Controllers {
         getAPBDes(regionID: number) {
             var ctrl = this;
             var scope = this.$scope;
-            Models.APBDes.GetByRegionID(regionID).done((apbdes) => {
+            Controllers.APBDesController.GetByRegionID(regionID).done((apbdes) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.apbdes = apbdes;
                     ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountID == null);

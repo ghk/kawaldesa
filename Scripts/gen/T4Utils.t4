@@ -7,6 +7,7 @@
 <#@ import namespace="EnvDTE" #><#+
 	DTE DTE { get { return (DTE)((IServiceProvider)this.Host).GetService(typeof(DTE)); } }
 	Project ActiveProject { get { return DTE.ActiveDocument.ProjectItem.ContainingProject; } }
+	string[] ModelNamespaces {get; set;}
 
 	IEnumerable<ProjectItem> EnumerateProjectItem(ProjectItem p)
 	{
@@ -114,6 +115,10 @@
 			 foreach (var i in GetParentInterfaces(p))
 				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold")
 					return true;
+
+		if(HasAttribute ((CodeElement) _class, xa => xa.FullName.EndsWith("ViewModelAttribute")))
+			return true;
+
 		return false;
     }
 
@@ -160,6 +165,20 @@
 		if(validator == null)
 			return false;
 		return validator.FullName.Split('<','>')[1].Split(',')[0].Trim() == _modelClass.FullName;
+    }
+
+	bool IsController(CodeClass _class)
+    {
+         foreach (var p in GetParents(_class))
+         {
+			if ((p.Name == "ModelController" && p.Namespace.Name == "Scaffold")) 
+				return true;
+         }
+        
+		if(HasAttribute ((CodeElement) _class, xa => xa.FullName.EndsWith("ServiceAttribute")))
+			return true;
+
+        return false;    
     }
 
 	bool IsCrudController(CodeClass _class)
@@ -215,13 +234,22 @@
             {
                 return "string";
             }
+			case "DateTime":
+            {
+				return "Date";
+            }
+			
 			default: 
 				if(type.StartsWith("Scaffold.Multipart"))
 					return "Scaffold.Multipart";
-                if (EnumerateModels("App.Models").Select(x => x.FullName).Contains(type))
-                    return "App.Models.I" + ShortName(type);
-                if (EnumerateEnums("App.Models").Select(x => x.FullName).Contains(type))
-                    return "App.Models."+ShortName(type);
+
+				foreach(var n in ModelNamespaces){
+					if (EnumerateModels(n).Select(x => x.FullName).Contains(type))
+						return n+".I" + ShortName(type);
+				
+					if (EnumerateEnums(n).Select(x => x.FullName).Contains(type))
+						return n+"."+ShortName(type);
+                }
 				var a = GetListType(type);
 				if (a != null)
                 {
@@ -229,6 +257,7 @@
                 }
 				break;
 		}
+
 		return string.Format("/** {0} **/ any", type);
 	}
 	string ShortName(string type)
@@ -276,6 +305,29 @@
 		return null;
     }
 
+	CodeClass GetModel(CodeClass controller)
+	{
+		CodeClass model = null;
+		foreach (var item in controller.Bases.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementClass).Cast<CodeClass>())
+		{
+				string[] names = item.FullName.Split('<','>');
+				if(names.Length > 1)
+                {
+					string modelName = names[1].Split(',')[0];
+					foreach(var modelCls in AllClasses.Where(m => IsModel(m) && m.FullName == modelName))
+                    {
+						if(modelCls != null)
+                        {
+							model = modelCls;
+							break;
+                        }	
+                    }
+                }
+		}	
+
+		return model;
+    }
+
 	IEnumerable<CodeClass> GetParents(CodeClass cs)
     {
         foreach (var item in cs.Bases.Cast<CodeElement>().Where(x => x.Kind == vsCMElement.vsCMElementClass).Cast<CodeClass>())
@@ -314,12 +366,23 @@
 	}
 	
 	IEnumerable<CodeClass> EnumerateControllers(CodeClass codeClass)
-	{
+    {
+   
 		foreach (var _class in AllClasses
 								.Where(c => IsControllerForModel(c, codeClass))
 				) 
 			yield return _class;
-	}
+    }
+
+	IEnumerable<CodeClass> EnumerateControllers(string _namespace)
+    {
+		foreach(var _class in AllClasses
+                                .Where(c => IsController(c) && c.Namespace.Name == _namespace)
+            ){
+            yield return _class;
+        }
+
+    }
 	
 	IEnumerable<CodeEnum> EnumerateEnums(string _namespace)
 	{

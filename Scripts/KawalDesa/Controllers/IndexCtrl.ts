@@ -20,6 +20,7 @@ module App.Controllers {
     declare var window: MyWindow;
 
     import Models = App.Models;
+    import Controllers = App.Controllers.Models;
 
     var CHILD_NAMES = [
         "Daerah",
@@ -134,9 +135,9 @@ module App.Controllers {
 
             var promise = null;
             if (parentID != -1)
-                promise = Models.Region.Get(parentID);
+                promise = Controllers.RegionController.Get(parentID);
             else if (parentKey)
-                promise = Models.Region.GetByURLKey(parentKey);
+                promise = Controllers.RegionController.GetByURLKey(parentKey);
 
             promise.done((region: Models.Region) => {
                 ctrl.$scope.$apply(() => {

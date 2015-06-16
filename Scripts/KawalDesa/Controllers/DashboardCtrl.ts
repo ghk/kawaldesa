@@ -3,6 +3,7 @@
 
 module App.Controllers {
     import Models = App.Models;
+    import Controllers = App.Controllers.Models;
 
     function safeApply(scope, fn) {
         (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
@@ -35,18 +36,18 @@ module App.Controllers {
             var indexCtrl = this.indexCtrl;
 
             if (indexCtrl.isInRole("admin")) {
-                Models.APBN.GetAll().done(apbns => {
+                Controllers.APBNController.GetAll().done(apbns => {
                     $scope.$apply(() => {
                         $scope.apbns = apbns;
                     });
                 });
-                Models.APBDFile.GetAll().done(apbdFiles => {
+                Controllers.APBDFileController.GetAll().done(apbdFiles => {
                     $scope.$apply(() => {
                         $scope.apbdFiles = apbdFiles;
                     });
                 });
             }
-            Models.Region.Get(0).done(region => {
+            Controllers.RegionController.Get(0).done(region => {
                 $scope.$apply(() => {
                     ctrl.national = region;
                 });
@@ -101,7 +102,7 @@ module App.Controllers {
                 return this.regionChildren[id];
 
             this.regionChildren[id] = [];
-            Models.Region.GetAll({ "ParentID": id }).done(regions => {
+            Controllers.RegionController.GetAll({ "ParentID": id }).done(regions => {
                 ctrl.$scope.$apply(() => {
                     for (var i = 0; i < regions.length; i++) {
                         ctrl.regionChildren[id].push(regions[i]);
@@ -169,8 +170,8 @@ module App.Controllers {
             var apbns : Models.APBN[] = this.$scope.apbns;
             this.savingStates["apbn"] = true;
             for (var i = 0, len = apbns.length; i < len; i++) {
-                var apbn = apbns[i];
-                apbn.Save().done(() => {
+                var apbn = apbns[i];                                                              
+                Controllers.APBNController.Save(apbn).done(() => {
                     ctrl.$scope.$apply(() => {
                         ctrl.savingStates["apbn"] = false;
                     });

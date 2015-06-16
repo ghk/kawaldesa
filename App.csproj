@@ -287,6 +287,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Enums.ts</LastGenOutput>
     </Content>
+    <Content Include="Scripts\gen\Controllers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controllers.ts</LastGenOutput>
+    </Content>
     <None Include="Scripts\gen\T4Utils.t4" />
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
@@ -316,6 +320,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\gen\Controllers.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controllers.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\gen\Enums.ts">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

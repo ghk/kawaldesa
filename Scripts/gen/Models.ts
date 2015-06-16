@@ -1,5 +1,17 @@
-﻿/// WARNING: T4 generated file 
+﻿
+
+
+
+
+
+
+
+
+
+
+/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+
 
 module App.Models {
 
@@ -237,37 +249,6 @@ module App.Models {
             super(data);
         }
         
-        /* App.Controllers.Models.AccountRecapitulationController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<AccountRecapitulation>> {
-            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/AccountRecapitulation/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new AccountRecapitulation(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<AccountRecapitulation> {
-            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/AccountRecapitulation/Get/'+id,
-            })).then((model) => new AccountRecapitulation(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(AccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/AccountRecapitulation/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
     }
     
     
@@ -282,37 +263,6 @@ module App.Models {
             super(data);
         }
         
-        /* App.Controllers.Models.FrozenAccountRecapitulationController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<FrozenAccountRecapitulation>> {
-            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenAccountRecapitulation/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new FrozenAccountRecapitulation(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<FrozenAccountRecapitulation> {
-            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenAccountRecapitulation/Get/'+id,
-            })).then((model) => new FrozenAccountRecapitulation(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(FrozenAccountRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenAccountRecapitulation/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
     }
     
     
@@ -413,67 +363,6 @@ module App.Models {
             this.Accounts = data ? data.Accounts : null;
         }
         
-        /* App.Controllers.Models.APBDesController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<APBDes>> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDes/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new APBDes(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<APBDes> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDes/Get/'+id,
-            })).then((model) => new APBDes(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDes/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
-        static UpdateSources(multipart: Scaffold.Multipart): any  {
-            var res = multipart.upload('/api/APBDes/UpdateSources');
-            return res;
-        }
-        
-        static Complete(apbdesID: number): JQueryPromise<void> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/APBDes/Complete?apbdesID='+apbdesID+'',
-            }));
-            return res;
-        }
-        
-        static AddAccounts(apbdesID: number, rootAccountID: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&rootAccountID='+rootAccountID+'',
-                data: JSON.stringify(accounts),
-            }));
-            return res;
-        }
-        
-        static GetByRegionID(regionID: number): JQueryPromise<App.Models.IAPBDes> {
-            var res = $.ajax(APBDes.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDes/GetByRegionID?regionID='+regionID+'',
-            }));
-            return res;
-        }
-        
     }
     
     
@@ -512,73 +401,6 @@ module App.Models {
             this.TotalDBH = data ? data.TotalDBH : null;
         }
         
-        /* App.Controllers.Models.APBDFileController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<APBDFile>> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDFile/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new APBDFile(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<APBDFile> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDFile/Get/'+id,
-            })).then((model) => new APBDFile(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDFile/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                
-        Save(): JQueryPromise<void> {
-            var isNew = this.ID == null;
-            var model = this;
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: isNew ? 'POST' : 'PUT',
-                url: '/api/APBDFile/'+(isNew ? 'Post' : 'Put'),
-                data: JSON.stringify(this)
-            })).then((id) => {
-                if(isNew){
-                    this.ID = id;
-                }
-            });
-            return res;
-        }
-
-        Delete(): JQueryPromise<void> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'DELETE',
-                url: '/api/APBDFile/Delete/'+this.ID,
-            }));
-            return res;
-        }
-
-        static Delete(id: number): JQueryPromise<void> {
-            var res = $.ajax(APBDFile.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBDFile/Delete/'+id,
-            }));
-            return res;
-        }
-                        
-        static PostFile(multipart: Scaffold.Multipart): any  {
-            var res = multipart.upload('/api/APBDFile/PostFile');
-            return res;
-        }
-        
     }
     
     
@@ -599,68 +421,6 @@ module App.Models {
             this.Year = data ? data.Year : null;
         }
         
-        /* App.Controllers.Models.APBNController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<APBN>> {
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBN/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new APBN(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<APBN> {
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBN/Get/'+id,
-            })).then((model) => new APBN(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBN/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                
-        Save(): JQueryPromise<void> {
-            var isNew = this.ID == null;
-            var model = this;
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: isNew ? 'POST' : 'PUT',
-                url: '/api/APBN/'+(isNew ? 'Post' : 'Put'),
-                data: JSON.stringify(this)
-            })).then((id) => {
-                if(isNew){
-                    this.ID = id;
-                }
-            });
-            return res;
-        }
-
-        Delete(): JQueryPromise<void> {
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: 'DELETE',
-                url: '/api/APBN/Delete/'+this.ID,
-            }));
-            return res;
-        }
-
-        static Delete(id: number): JQueryPromise<void> {
-            var res = $.ajax(APBN.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/APBN/Delete/'+id,
-            }));
-            return res;
-        }
-                        
     }
     
     
@@ -728,50 +488,6 @@ module App.Models {
             this.Pictures = data ? data.Pictures : null;
         }
         
-        /* App.Controllers.Models.FieldReportController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<FieldReport>> {
-            var res = $.ajax(FieldReport.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FieldReport/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new FieldReport(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<FieldReport> {
-            var res = $.ajax(FieldReport.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FieldReport/Get/'+id,
-            })).then((model) => new FieldReport(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(FieldReport.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FieldReport/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
-        static AddFieldReport(uploader: Scaffold.Multipart): any  {
-            var res = uploader.upload('/api/FieldReport/AddFieldReport');
-            return res;
-        }
-        
-        static GetPicture(realizationID: number): JQueryPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
-            var res = $.ajax(FieldReport.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FieldReport/GetPicture?realizationID='+realizationID+'',
-            }));
-            return res;
-        }
-        
     }
     
     
@@ -807,37 +523,6 @@ module App.Models {
             this.CreatedBy = data ? data.CreatedBy : null;
         }
         
-        /* App.Controllers.Models.RealizationController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<Realization>> {
-            var res = $.ajax(Realization.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Realization/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new Realization(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<Realization> {
-            var res = $.ajax(Realization.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Realization/Get/'+id,
-            })).then((model) => new Realization(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(Realization.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Realization/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
     }
     
     
@@ -874,53 +559,6 @@ module App.Models {
             this.UrlKey = data ? data.UrlKey : null;
             this.fkParentID = data ? data.fkParentID : null;
             this.Parent = data ? data.Parent : null;
-        }
-        
-        /* App.Controllers.Models.RegionController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<Region>> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Region/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new Region(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<Region> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Region/Get/'+id,
-            })).then((model) => new Region(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Region/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
-        static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IRegion> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Region/GetByURLKey?urlKey='+encodeURI(urlKey)+'',
-            }));
-            return res;
-        }
-        
-        static UpdateWebsite(regionID: number, regionWebsite: string): JQueryPromise<void> {
-            var res = $.ajax(Region.ajaxSettings.build({
-                type: 'POST',
-                url: '/api/Region/UpdateWebsite?regionID='+regionID+'&regionWebsite='+encodeURI(regionWebsite)+'',
-            }));
-            return res;
         }
         
     }
@@ -1011,63 +649,6 @@ module App.Models {
             super(data);
         }
         
-        /* App.Controllers.Models.TransactionController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<Transaction>> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new Transaction(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<Transaction> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/Get/'+id,
-            })).then((model) => new Transaction(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
-        static AddTransferTransaction(multipart: Scaffold.Multipart): any  {
-            var res = multipart.upload('/api/Transaction/AddTransferTransaction');
-            return res;
-        }
-        
-        static GetTransferTransactions(regionID: number): JQueryPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/GetTransferTransactions?regionID='+regionID+'',
-            }));
-            return res;
-        }
-        
-        static AddAccountTransaction(multipart: Scaffold.Multipart): any  {
-            var res = multipart.upload('/api/Transaction/AddAccountTransaction');
-            return res;
-        }
-        
-        static GetRealizationTransactions(accountID: number): JQueryPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
-            var res = $.ajax(Transaction.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/Transaction/GetRealizationTransactions?accountID='+accountID+'',
-            }));
-            return res;
-        }
-        
     }
     
     
@@ -1134,37 +715,6 @@ module App.Models {
             super(data);
         }
         
-        /* App.Controllers.Models.TransferRecapitulationController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<TransferRecapitulation>> {
-            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/TransferRecapitulation/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new TransferRecapitulation(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<TransferRecapitulation> {
-            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/TransferRecapitulation/Get/'+id,
-            })).then((model) => new TransferRecapitulation(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(TransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/TransferRecapitulation/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
     }
     
     
@@ -1179,37 +729,6 @@ module App.Models {
             super(data);
         }
         
-        /* App.Controllers.Models.FrozenTransferRecapitulationController */
-        
-        static GetAll(query?: IQuery): JQueryPromise<Array<FrozenTransferRecapitulation>> {
-            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenTransferRecapitulation/GetAll',
-				data: query,
-            })).then((models) => {
-                return models.map((model) => new FrozenTransferRecapitulation(model));
-            });
-            return res;
-        }
-
-        static Get(id: number): JQueryPromise<FrozenTransferRecapitulation> {
-            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenTransferRecapitulation/Get/'+id,
-            })).then((model) => new FrozenTransferRecapitulation(model));
-            return res;
-        }
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-            var res = $.ajax(FrozenTransferRecapitulation.ajaxSettings.build({
-                type: 'GET',
-                url: '/api/FrozenTransferRecapitulation/GetCount',
-				data: query,
-            }));
-            return res;
-        }
-
-                        
     }
     
     
@@ -1238,4 +757,6 @@ module App.Models {
         
     }
     
+
 }
+
