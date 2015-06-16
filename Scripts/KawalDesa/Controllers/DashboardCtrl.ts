@@ -138,7 +138,9 @@ module App.Controllers {
             this.savingStates["scopes"] = true;
             Models.User.SetScopes(selectedRegions).done(() => {
                 ctrl.loadUser();
-                this.savingStates["scopes"] = false;
+                ctrl.$scope.$apply(() => {
+                    ctrl.savingStates["scopes"] = false;
+                });
             });
         }
 
@@ -150,6 +152,7 @@ module App.Controllers {
             var ctrl = this;
             var res = null;
 
+            this.savingStates["apbd"] = true;
             var res = ctrl.$upload.upload({
                 type: 'POST',
                 url: '/api/APBDFile/PostFile',
@@ -157,7 +160,22 @@ module App.Controllers {
             }).success(() => {
                 var modal: any = $("#apbnFileModal");
                 modal.modal("hide");
+                this.savingStates["apbd"] = false;
             });
+        }
+
+        saveAPBNs() {
+            var ctrl = this;
+            var apbns : Models.APBN[] = this.$scope.apbns;
+            this.savingStates["apbn"] = true;
+            for (var i = 0, len = apbns.length; i < len; i++) {
+                var apbn = apbns[i];
+                apbn.Save().done(() => {
+                    ctrl.$scope.$apply(() => {
+                        ctrl.savingStates["apbn"] = false;
+                    });
+                });
+            }
         }
 
     }

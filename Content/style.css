@@ -85,16 +85,16 @@ table.table > tfoot > tr > td {
 }
 
 .account-head {
-    font-weight: bold;
-    font-size: 14px;
+
 }
 
-.content-header {
+.content-header, tr.content-header {
     border-top: 1px solid #337ab7;
     border-bottom: 1px solid #337ab7;
     color: #337ab7;
     text-transform: uppercase;
     padding: 0 0 0 20px;
+    font-size: 14px;
 }
 
 td.sidebar {

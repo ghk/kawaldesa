@@ -37,6 +37,13 @@ namespace App.Controllers
         }
 
         [KawalDesaAuthorize]
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return new RedirectResult("/");
+        }
+
+        [KawalDesaAuthorize]
         public ActionResult Dashboard()
         {
             var user = GetUserDictFromSession();

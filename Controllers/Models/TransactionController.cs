@@ -89,6 +89,7 @@ namespace App.Controllers.Models
                 transaction.IsActivated = true;
                 transaction.fkCreatedByID = user.Id;
                 transaction.fkAccountID = accountID;
+                transaction.fkAPBNID = 1; //TODO
 
 
                 dbSet.Add(transaction);

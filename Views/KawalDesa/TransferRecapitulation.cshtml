@@ -46,7 +46,7 @@
                                     {{recapitulationCtrl.formTransactions[entity.RegionID].fkActorID == entity.RegionID ? 'Terima Transfer' : 'Transfer'}}
                                     {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'APBN' : 'ADD'}}
                                     (
-                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'Pusat' : regionTree[2].Name}}
+                                    {{recapitulationCtrl.formTransactions[entity.RegionID].fkSourceID == 0 ? 'Pusat' : indexCtrl.regionTree[2].Name}}
                                     -> Desa {{entity.RegionName}})
                                 </h5>
                                 <div class="form-group input-sm">
@@ -88,9 +88,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div style="width: 100%; text-align: center;">
+                                    <div style="width: 100%; text-align: center;" ng-hide="recapitulationCtrl.formSavingStates[entity.RegionID]">
                                         <button type="submit" class="btn btn-xs btn-primary">Simpan</button>
                                         <button class="btn btn-xs btn-danger" ng-click="recapitulationCtrl.setFormExpanded(entity, false)">Batal</button>
+                                    </div>
+                                    <div style="width: 100%; text-align: center;" ng-show="recapitulationCtrl.formSavingStates[entity.RegionID]">
+                                        Menyimpan...
                                     </div>
                                 </div>
                             </form>
@@ -122,14 +125,14 @@
                     <td></td>
                     <td style="text-align: right;">
                         <button class="btn btn-primary btn-xs"
-                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, regionTree[2].ID])"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [indexCtrl.regionTree[2].ID, entity.RegionID, indexCtrl.regionTree[2].ID])"
                                 ng-if="indexCtrl.isInRoleAndScope('volunteer_add', entity.RegionID)">
                             Tambah
                         </button>
                     </td>
                     <td style="text-align: right;">
                         <button class="btn btn-primary btn-xs"
-                                ng-click="recapitulationCtrl.setFormExpanded(entity, [regionTree[2].ID, entity.RegionID, entity.RegionID])"
+                                ng-click="recapitulationCtrl.setFormExpanded(entity, [indexCtrl.regionTree[2].ID, entity.RegionID, entity.RegionID])"
                                 ng-if="indexCtrl.isInRoleAndScope('volunteer_desa', entity.RegionID)">
                             Tambah
                         </button>

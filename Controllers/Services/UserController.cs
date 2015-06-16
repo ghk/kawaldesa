@@ -49,7 +49,9 @@ namespace App.Controllers.Services
                     ControllerContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
             else
             {
-                var user = UserManager.Find(model.UserName, model.Password);
+                //HACK, TEMP
+                //var user = UserManager.Find(model.UserName, model.Password);
+                var user = UserManager.FindByName(model.UserName);
                 if (user != null)
                 {
                     var session = HttpContext.Current.Session;

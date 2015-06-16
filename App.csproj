@@ -266,7 +266,7 @@
     </Content>
     <Content Include="refresh-mv.psql" />
     <Content Include="refresh-mv.bat" />
-    <None Include="appSettings.config" />
+    <Content Include="appSettings.config" />
     <Content Include="Scripts\angular-file-upload.min.js" />
     <Compile Include="Security\KawalDesaHeaders.cs" />
     <Content Include="Scripts\loading-bar.js" />

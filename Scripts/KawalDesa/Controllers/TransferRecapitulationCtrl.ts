@@ -15,6 +15,7 @@ module App.Controllers {
         expandedStates = {};
         formTransactions: { [key: number]: any } = {};
         formErrors = {};
+        formSavingStates = {};
         transactions: { [key: number]: any } = {};
         indexCtrl: IndexCtrl;
 
@@ -31,6 +32,7 @@ module App.Controllers {
                 this.expandedStates = {};
                 this.formTransactions = {};
                 this.formErrors = {};
+                this.formSavingStates = {};
                 this.transactions = {};
                 this.getRecapitulations(this.indexCtrl.region.ID);
             }
@@ -57,6 +59,7 @@ module App.Controllers {
             } else {
                 delete this.formTransactions[entity.RegionID];
                 delete this.formErrors[entity.RegionID];
+                delete this.formSavingStates[entity.RegionID];
             }
         }
 
@@ -67,14 +70,22 @@ module App.Controllers {
         saveForm(entity) {
             var ctrl = this;
 
+            var formData = JSON.parse(JSON.stringify(this.formTransactions[entity.RegionID]));
+            var date = formData["Date"];
+            date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2) + "T00:00:00";
+            formData["Date"] = date;
+
+            ctrl.formSavingStates[entity.RegionID] = true;
             Models.Transaction.AddTransferTransaction(new Scaffold.Multipart({
-                forms: this.formTransactions[entity.RegionID],
+                forms: formData,
                 files: this.formTransactions[entity.RegionID].File
             })).success(() => {
+                ctrl.formSavingStates[entity.RegionID] = false;
                 ctrl.setFormExpanded(entity, null);
                 ctrl.getRecapitulations(entity.ParentRegionID);
                 ctrl.loadTransactions(entity.RegionID);
             }).error(formErr => {
+                ctrl.formSavingStates[entity.RegionID] = false;
                 ctrl.formErrors[entity.RegionID] = {};
                 ctrl.formErrors[entity.RegionID][formErr.Field] = formErr.Message;
                 var modelState = formErr.ModelState;

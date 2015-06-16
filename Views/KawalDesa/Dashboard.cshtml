@@ -176,8 +176,11 @@
                 </tr>
             </tbody>
             <tfoot>
-                <tr class="">
+                <tr class="" ng-hide="dashboardCtrl.savingStates['apbn']">
                     <td colspan="2"><button class="btn btn-primary btn-xs" ng-click="dashboardCtrl.saveAPBNs()">Simpan APBN</button></td>
+                </tr>
+                <tr class="" ng-show="dashboardCtrl.savingStates['apbn']">
+                    <td colspan="2">menyimpan...</td>
                 </tr>
             </tfoot>
         </table>
@@ -208,7 +211,7 @@
                     <td class="money"> {{apbdFile.TotalDAU | currency:"":0}} </td>
                     <td class="money"> {{apbdFile.TotalDBH | currency:"":0}} </td>
                     <td> {{apbdFile.DateCreated}} </td>
-                    <td> {{apbdFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> {{apbdFile.IsActivated ? "Aktif" : "Tidak Aktif"}} </td>
                     <td> <a href="#">Unduh</a></td>
                 </tr>
             </tbody>

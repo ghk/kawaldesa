@@ -95,7 +95,7 @@ namespace App
                 url: "",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional }
             );
-            var appRoutes = new string[] { "Dashboard", "Login", "FacebookRedirect"};
+            var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect"};
             foreach (var appRoute in appRoutes)
             {
                 routes.MapRoute(
