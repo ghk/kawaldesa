@@ -13,32 +13,32 @@
             <thead>
                 <tr>
                     <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                    <th colspan="3" style="text-align: center; width: 25%;">Dana Desa (APBN + ADD) <sup><a href="#help-dana-desa">?</a></sup></th>
                     <th colspan="3" style="text-align: center; width: 25%;">APBN (Pusat → Desa) <sup><a href="#help-apbn">?</a></sup></th>
                     <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
+                    <th colspan="3" style="text-align: center; width: 25%;">Bagi hasil pajak (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
                 </tr>
                 <tr>
                     <th class="money" style="width: 8.3333%;">Anggaran <sup><a href="#help-anggaran">?</a></sup></th>
-                    <th class="money" style="width: 8.3333%;">Tertransfer <sup> <a href="#help-tertransfer">?</a></sup></th>
-                    <th class="money" style="width: 8.3333%;">Diterima <sup><a href="#help-diterima">?</a></sup></th>
+                    <th class="money" style="width: 8.3333%;">Target April (40%)<sup> <a href="#help-tertransfer">?</a></sup></th>
+                    <th class="money" style="width: 8.3333%;">Tersalurkan <sup><a href="#help-diterima">?</a></sup></th>
                     <th class="money" style="width: 8.3333%;">Anggaran</th>
-                    <th class="money" style="width: 8.3333%;">Tertransfer</th>
-                    <th class="money" style="width: 8.3333%;">Diterima</th>
+                    <th class="money" style="width: 8.3333%;">Target April (40%)</th>
+                    <th class="money" style="width: 8.3333%;">Tersalurkan</th>
                     <th class="money" style="width: 8.3333%;">Anggaran</th>
-                    <th class="money" style="width: 8.3333%;">Tertransfer</th>
-                    <th class="money" style="width: 8.3333%;">Diterima</th>
+                    <th class="money" style="width: 8.3333%;">Target Bulan Ini</th>
+                    <th class="money" style="width: 8.3333%;">Tersalurkan</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat-start="entity in entities"></tr>
                 <tr class="detail-padding" ng-if="recapitulationCtrl.isExpanded(entity)">
-                    <td colspan="10"></td>
+                    <td colspan="7"></td>
                 </tr>
                 <tr ng-if="recapitulationCtrl.isExpanded(entity)
                     && recapitulationCtrl.isFormExpanded(entity)
                     && indexCtrl.hasAnyVolunteerRoles()">
                     <td style="border-top: 1px solid #fff; border-bottom: 1px solid #fff"></td>
-                    <td colspan="9" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
+                    <td colspan="6" style="box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05);">
                         <div class="container-fluid">
                             <form class="form-horizontal" role="form" ng-submit="recapitulationCtrl.saveForm(entity)">
                                 <h5 style="text-align: center; width: 100%">
@@ -105,7 +105,7 @@
                     && !recapitulationCtrl.isFormExpanded(entity)
                     && indexCtrl.hasAnyVolunteerRoles()
                     && indexCtrl.isInScope(entity.RegionID)">
-                    <td colspan="4"></td>
+                    <td colspan="1"></td>
                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                     <td style="text-align: right;">
                         <button class="btn btn-primary btn-xs"
@@ -139,7 +139,7 @@
                     </td>
                 </tr>
                 <tr class="detail" ng-if="recapitulationCtrl.isExpanded(entity)" ng-repeat="transaction in recapitulationCtrl.transactions[entity.RegionID]">
-                    <td colspan="4"></td>
+                    <td colspan="1"></td>
                     <td style="box-shadow: -2px -1px 3px rgba(0, 0, 0, 0.06);"></td>
                     <td class="money">
                         <span class="info">
@@ -184,7 +184,7 @@
                     </td>
                 </tr>
                 <tr class="detail-sum" ng-if="recapitulationCtrl.isExpanded(entity)" style="box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.11)">
-                    <td colspan="4"></td>
+                    <td colspan="1"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -199,26 +199,15 @@
                         </a>
                     </td>
                     <td class="money">
-                        <div style="float:right">{{entity.BudgetedTotal | number:0}} </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.TransferredTotal | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.TransferredTotal)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;" >{{entity.AcknowledgedTotal | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedTotal, entity.AcknowledgedTotal)"> </div>
-                    </td>
-                    <td class="money">
                         <div style="float:right;">{{entity.BudgetedAPBN | number:0}} </div>
                     </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.TransferredAPBN | number:0}} </div>
+                            <div style="float:right;">{{entity.BudgetedAPBN * 0.4 | number:0}} </div>
                             <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                         </span>
                         <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.TransferredAPBN | number:0}}</div>
+                            <div style="float:right;">{{entity.BudgetedAPBN * 0.4 | number:0}}</div>
                             <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                         </a>
                     </td>
@@ -237,11 +226,11 @@
                     </td>
                     <td class="money">
                         <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.TransferredADD | number:0}} </div>
+                            <div style="float:right;">{{entity.BudgetedADD * 0.4 | number:0}} </div>
                             <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
                         </span>
                         <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.TransferredADD | number:0}}</div>
+                            <div style="float:right;">{{entity.BudgetedADD * 0.4 | number:0}}</div>
                             <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
                         </a>
                     </td>
@@ -255,29 +244,37 @@
                             <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.AcknowledgedADD)"> </div>
                         </a>
                     </td>
+                    <td class="money">
+                        <div style="float:right;">{{0 | number:0}} </div>
+                    </td>
+                    <td class="money">
+                        <div style="float:right;">{{0 | number:0}} </div>
+                    </td>
+                    <td class="money">
+                        <div style="float:right;">{{0 | number:0}} </div>
+                    </td>
                 </tr>
             </tbody>
 
             <tfoot ng-show="entities.length > 0">
                 <tr class="success">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgetedTotal | number:0}} </td>
-                    <td class="money"> {{total.TransferredTotal | number:0}} </td>
-                    <td class="money"> {{total.AcknowledgedTotal | number:0}} </td>
-
                     <td class="money"> {{total.BudgetedAPBN | number:0}} </td>
-                    <td class="money"> {{total.TransferredAPBN | number:0}} </td>
+                    <td class="money"> {{total.BudgetedAPBN * 0.4 | number:0}} </td>
                     <td class="money"> {{total.AcknowledgedAPBN | number:0}} </td>
 
                     <td class="money"> {{total.BudgetedADD | number:0}} </td>
-                    <td class="money"> {{total.TransferredADD | number:0}} </td>
+                    <td class="money"> {{total.BudgetedADD * 0.4 | number:0}} </td>
                     <td class="money"> {{total.AcknowledgedADD | number:0}} </td>
+                    <td class="money"> {{0 | number:0}} </td>
+                    <td class="money"> {{0 | number:0}} </td>
+                    <td class="money"> {{0 | number:0}} </td>
                 </tr>
             </tfoot>
 
             <tfoot ng-show="entities.length == 0">
                 <tr>
-                    <td colspan="10" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                    <td colspan="7" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
                 </tr>
             </tfoot>
 

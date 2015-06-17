@@ -33,6 +33,16 @@
                     <li>
                         <a href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
                     </li>
+                    <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'apbn' || indexCtrl.type == 'add' || indexCtrl.type == 'bhpr'}">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Alokasi
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/apbn/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('apbn', $event)">Dana Desa dari APBN</a></li>
+                            <li><a href="/add/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('add', $event)">ADD dari APBD</a></li>
+                            <li><a href="/bhpr/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('bhpr', $event)">Bagi Hasil Pajak &amp; Retribusi</a></li>
+                        </ul>
+                    </li>
                     <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
                         <a href="/p/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
                     </li>
@@ -53,11 +63,16 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
-                    <a style="padding-right: 20px;" href="/dashboard">
+                <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
+                    <a style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookID}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
                         {{indexCtrl.currentUser.Name}}
+                        <span class="caret"></span>
                     </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/dashboard">Konfigurasi</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
                 </li>
                 <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>
             </ul>

@@ -297,6 +297,9 @@
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\APBDes.cshtml" />
     <Content Include="Views\KawalDesa\Login.cshtml" />
+    <Content Include="Views\KawalDesa\APBNAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\ADDAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\BHPRAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -330,6 +333,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Enums.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BHPRAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\ADDAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBNAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBDesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />

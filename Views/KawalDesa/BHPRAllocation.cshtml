@@ -1,0 +1,84 @@
+﻿<div ng-controller="BHPRAllocationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'bhpr' && indexCtrl.region.Type < 4">
+    <div class="content-header">
+        Alokasi Bagi Hasil Pajak &amp; Retribusi Daerah
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr ng-if="indexCtrl.region.Type < 2">
+                    <th style="vertical-align: middle;">{{indexCtrl.childName}}</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Pajak Daerah</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Retribusi Daerah</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Bagi Hasil untuk Desa</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">% Total Bagi Hasil untuk Desa / Pajak + Retribusi Daerah</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Jumlah Desa</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Rata-rata Bagi Hasil per Desa</th>
+                </tr>
+                <tr ng-if="indexCtrl.region.Type >= 2">
+                    <th style="vertical-align: middle;" rowspan="2">{{indexCtrl.childName}}</th>
+                    <th style="vertical-align: middle;" class="money" rowspan="2">Alokasi Merata</th>
+                    <th colspan="4" style="text-align: center;">Alokasi Proporsional</th>
+                    <th style="vertical-align: middle;" class="money" rowspan="2" class="money" >Bagi Hasil Pajak yang Diterima Desa</th>
+                </tr>
+                <tr ng-if="indexCtrl.region.Type >= 2">
+                    <th class="money">Realisasi PDRD Desa</th>
+                    <th class="money">Realisasi PDRD Seluruh Desa</th>
+                    <th class="money">% Realisasi PDRD Desa / Seluruh Desa</th>
+                    <th class="money">Alokasi Proporsional</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type < 2">
+                    <td>
+                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                            {{entity.RegionName}}
+                        </a>
+                    </td>
+                    <td class="money"> {{entity.BudgetedIncome * 7 | number:0}} </td>
+                    <td class="money"> {{entity.BudgetedIncome * 3 | number:0}} </td>
+                    <td class="money"> {{entity.BudgetedIncome | number:0}}</td>
+                    <td class="money"> {{10 | number:0}} </td>
+                    <td class="money"> {{entity.TotalVillage | number:0}} </td>
+                    <td class="money"> {{entity.BudgetedIncome / entity.TotalVillage | number:0}} </td>
+                </tr>
+                <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
+                    <td>
+                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                            {{entity.RegionName}}
+                        </a>
+                    </td>
+                    <td class="money"> {{entity.BudgetedIncome  * 0.4| number:0}}</td>
+                    <td class="money"> {{entity.TotalVillage * 100000 | number:0}} </td>
+                    <td class="money"> {{total.TotalVillage * 100000 | number:0}} </td>
+                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 100 | number:2}} </td>
+                    <td class="money"> {{entity.BudgetedIncome  * 0.6| number:0}}</td>
+                    <td class="money"> {{entity.BudgetedIncome| number:0}}</td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-show="entities.length > 0">
+                <tr class="success" ng-if="indexCtrl.region.Type < 2">
+                    <td><a href="">Total</a></td>
+                    <td class="money"> {{total.BudgetedIncome | number:0}}</td>
+                    <td class="money"> {{total.TotalVillage | number:0}} </td>
+
+                    <td class="money"> {{total.BudgetedIncome / total.TotalVillage | number:0}} </td>
+                    <td class="money"> {{total.BudgetedIncome * 10 | number:0}} </td>
+                    <td class="money"> {{10 | number:0}} </td>
+                </tr>
+            </tfoot>
+
+            <tfoot ng-show="entities.length == 0">
+                <tr>
+                    <td colspan="6" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    <div class="container-fluid well help">
+        <ul>
+        </ul>
+    </div>
+</div>

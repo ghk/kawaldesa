@@ -68,6 +68,15 @@ module App.Controllers {
             } else if (path.indexOf("/r/") != -1) {
                 regionID = parseInt(this.$location.path().replace("/r/", ""));
                 this.type = "realization";
+            } else if (path.indexOf("/apbn/") != -1) {
+                regionID = parseInt(this.$location.path().replace("/apbn/", ""));
+                this.type = "apbn";
+            } else if (path.indexOf("/add/") != -1) {
+                regionID = parseInt(this.$location.path().replace("/add/", ""));
+                this.type = "add";
+            } else if (path.indexOf("/bhpr/") != -1) {
+                regionID = parseInt(this.$location.path().replace("/bhpr/", ""));
+                this.type = "bhpr";
             } else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
             } else if (path.indexOf("/login") != -1) {
@@ -91,6 +100,12 @@ module App.Controllers {
                 var t = "p"
                 if (type == "realization")
                     t = "r";
+                else if (type == "apbn")
+                    t = "apbn";
+                else if (type == "add")
+                    t = "add";
+                else if (type == "bhpr")
+                    t = "bhpr";
                 var path = "/" + t + "/" + this.region.ID;
                 this.$location.path(path);
             }
@@ -101,6 +116,12 @@ module App.Controllers {
             var t = "p"
             if (this.type == "realization")
                 t = "r";
+            else if (this.type == "apbn")
+                t = "apbn";
+            else if (this.type == "add")
+                t = "add";
+            else if (this.type == "bhpr")
+                t = "bhpr";
             var path = "/" + t + "/" + regionID;
             this.$location.path(path);
         }

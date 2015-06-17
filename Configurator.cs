@@ -70,6 +70,7 @@ namespace App
                 .Include("~/Scripts/gen/Scaffold.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
+                .Include("~/Scripts/gen/Controllers.js")
                 .Include("~/Scripts/KawalDesa/Models/*.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
@@ -88,6 +89,21 @@ namespace App
             routes.MapRoute(
                 name: "Default r",
                 url: "r/{id}",
+                defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Default apbn",
+                url: "apbn/{id}",
+                defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Default add",
+                url: "add/{id}",
+                defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Default bhpr",
+                url: "bhpr/{id}",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
             routes.MapRoute(
