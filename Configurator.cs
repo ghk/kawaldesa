@@ -56,6 +56,11 @@ namespace App
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
+            bundles.Add(new StyleBundle("~/css/kawaldesa-all")
+                .Include("~/Scaffold/Content/bootstrap/bootstrap.css")
+                .Include("~/Content/loading-bar.min.css")
+                .Include("~/Content/style.css"));
+
             // Script Bundles
 
             bundles.Add(new ScriptBundle("~/js/libs/jquery", "http://code.jquery.com/jquery-2.1.1.min.js")
@@ -76,6 +81,19 @@ namespace App
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
 
+            bundles.Add(new ScriptBundle("~/js/kawaldesa-all")
+                .Include("~/Scaffold/Scripts/jquery-2.1.1.js")
+                .Include("~/Scaffold/Scripts/bootstrap.js")
+                .Include("~/Scaffold/Scripts/angular.js")
+                .Include("~/Scripts/angular-file-upload.min.js")
+                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Enums.js")
+                .Include("~/Scripts/gen/Models.js")
+                .Include("~/Scripts/gen/Controllers.js")
+                .Include("~/Scripts/KawalDesa/Models/*.js")
+                .Include("~/Scripts/KawalDesa/KawalDesa.js")
+                .Include("~/Scripts/KawalDesa/Controllers/*.js")
+                );
         }
         private static void ConfigureRoutes(RouteCollection routes)
         {
