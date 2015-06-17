@@ -5,3 +5,5 @@ CREATE UNIQUE INDEX "FrozenTransferRecapitulations_IDX_ID"
   ON dbo."FrozenTransferRecapitulations" ("ID"); 
 CREATE INDEX "FrozenTransferRecapitulations_IDX_ParentRegionID"
   ON dbo."FrozenTransferRecapitulations" ("ParentRegionID");
+CREATE INDEX "FrozenTransferRecapitulations_IDX_RegionID"
+  ON dbo."FrozenTransferRecapitulations" ("RegionID");
