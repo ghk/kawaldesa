@@ -50,7 +50,7 @@
                 <ul class="nav navbar-nav nav-region">
 
                     <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
-                        <div class="gt">→</div>
+                        <div class="gt hidden-xs">→</div>
                     </li>
                     <li ng-repeat-end ng-class="{'active':$last}">
                         <a href="#" ng-click="indexCtrl.changeRegion(region.ID, $event)">
