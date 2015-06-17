@@ -22,6 +22,9 @@ module App.Controllers {
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });
+            $scope.$on('regionChangeBefore', function () {
+                $scope.entities = [];
+            });
         }
 
         onRegionChanged() {

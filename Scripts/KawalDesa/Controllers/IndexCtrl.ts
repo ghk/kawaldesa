@@ -121,6 +121,7 @@ module App.Controllers {
 
         changeRegion(regionID, $event) {
             $event.preventDefault();
+            this.$scope.$broadcast("regionChangeBefore");
             var t = "p"
             if (this.type == "realization")
                 t = "r";

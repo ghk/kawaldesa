@@ -26,6 +26,9 @@ module App.Controllers {
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });
+            $scope.$on('regionChangeBefore', function () {
+                $scope.entities = [];
+            });
         }
 
         onRegionChanged() {
@@ -109,6 +112,7 @@ module App.Controllers {
             if (this.indexCtrl.currentUser) {
                 type = Controllers.TransferRecapitulationController;
             }
+            scope.entities = [];
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
                     scope.entities = recapitulations.filter(r => r.RegionID != parentID);
