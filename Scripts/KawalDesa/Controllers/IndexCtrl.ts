@@ -39,6 +39,7 @@ module App.Controllers {
         currentUser: ICurrentUser;
         regionID: number;
         isPathReplacing = false;
+        currentPath = null;
 
         static $inject = ["$scope", "$location"];
 
@@ -46,6 +47,10 @@ module App.Controllers {
             var ctrl = this;
             var scope = this.$scope;
             this.currentUser = window.CurrentUser;
+
+            if(!ctrl.isPathReplacing)
+                ctrl.onLocationChange();
+            ctrl.isPathReplacing = false;
 
             $scope.$on('$locationChangeSuccess', function () {
                 if(!ctrl.isPathReplacing)
@@ -57,6 +62,8 @@ module App.Controllers {
 
         onLocationChange() {
             var path = this.$location.path();
+            if (path == this.currentPath)
+                return;
             var regionID = -1;
             var regionKey = null;
             if (path == "/" || path == "") {
@@ -92,6 +99,7 @@ module App.Controllers {
             if (regionID == -1 && !regionKey)
                 regionID = 0;
             this.regionID = regionID;
+            this.currentPath = path;
         }
 
         changeType(type, $event) {
