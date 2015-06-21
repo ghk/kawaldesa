@@ -1,0 +1,324 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+<div ng-controller="OrganizationIndex as organizationIndexCtrl" ng-if="indexCtrl.type == 'dashboard'">
+
+    <div class="content-header">
+        Daftar Organisasi
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Nama</th>
+                    <th style="text-align: left;">Deskripsi</th>
+                    <th style="text-align: left;" ng-if="indexCtrl.isInRole('admin')">Admin</th>
+                    <th style="text-align: left;" ng-if="indexCtrl.isInRole('admin')">Edit</th>
+                    <th style="text-align: left;" ng-if="indexCtrl.isInRole('admin')">Tambah Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="org in organizationIndexCtrl.organizations">
+                    <td style="text-align: left;">
+                        {{org.Name}}
+                    </td>
+                    <td style="text-align: left;">
+                        {{org.Description}}
+                    </td>
+                    <td style="text-align: left;">
+                        {{org.Description}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="2">
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('volunteer')">
+        Pilih sendiri lingkupan relawan Anda
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('volunteer')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th style=" width: 25%;">Propinsi</th>
+                    <th style=" width: 25%;">Kabupaten/Kota</th>
+                    <th style=" width: 25%;">Kecamatan</th>
+                    <th style=" width: 25%;">Desa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="regionPair in dashboardCtrl.regionPairs">
+                    <td ng-repeat="region in regionPair track by $index" ng-if="$index != 0">
+                        <select ng-model="regionPair[$index]"
+                                style="width: 100%;"
+                                ng-if="regionPair[$index - 1]"
+                                ng-change="dashboardCtrl.truncateRegionPair(regionPair, $index)"
+                                ng-options="r.Name for r in dashboardCtrl.getRegionChildren(regionPair[$index - 1].ID) track by r.ID">
+                            <option value="">Semua</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td colspan="4">
+                        <button class="btn btn-xs"
+                                ng-if="dashboardCtrl.national"
+                                ng-click="dashboardCtrl.regionPairs.push([dashboardCtrl.national, null, null, null, null])">
+                            Tambah Lingkupan
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="2">
+                        <button ng-if="!dashboardCtrl.savingStates['scopes']" 
+                                class="btn btn-primary btn-xs" 
+                                ng-click="dashboardCtrl.saveScopes()">Simpan Lingkupan</button>
+                        <span ng-if="dashboardCtrl.savingStates['scopes']">Menyimpan</span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('unimplemented')">
+        Data yang anda laporkan
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('unimplemented')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Jenis Dana</th>
+                    <th>Jenis Pelaporan</th>
+                    <th>Desa</th>
+                    <th>Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>25 Jan 2015</td>
+                    <td>APBN</td>
+                    <td>Transfer</td>
+                    <td>Kedungwinong → Nguter → Sukoharjo → Jawa Tengah</td>
+                    <th class="money">{{40000000 | number:0}}</th>
+                </tr>
+                <tr>
+                    <td>1 Feb 2015</td>
+                    <td>APBN</td>
+                    <td>Terima</td>
+                    <td>Keude Bakongan → Bakongan → Aceh Selatan → Aceh</td>
+                    <th class="money">{{20000000 | number:0}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('admin')">
+        Dana Per Desa Di APBN
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th class="money">Tahun</th>
+                    <th class="money">Dana Per Desa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apbn in apbns">
+                    <td>{{apbn.Year}}</td>
+                    <td class="money"><input type="number" ng-model="apbn.DanaPerDesa"></input></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="" ng-hide="dashboardCtrl.savingStates['apbn']">
+                    <td colspan="2"><button class="btn btn-primary btn-xs" ng-click="dashboardCtrl.saveAPBNs()">Simpan APBN</button></td>
+                </tr>
+                <tr class="" ng-show="dashboardCtrl.savingStates['apbn']">
+                    <td colspan="2">menyimpan...</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('admin')">
+        Unggah DAU & DBH Kabupaten/Kota
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah APBD</th>
+                    <th class="money">Total DAU</th>
+                    <th class="money">Total DBH</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apbdFile in apbdFiles">
+                    <td>{{apbdFile.FileName}}</td>
+                    <td class="money"> {{apbdFile.APBDCount}} </td>
+                    <td class="money"> {{apbdFile.TotalDAU | currency:"":0}} </td>
+                    <td class="money"> {{apbdFile.TotalDBH | currency:"":0}} </td>
+                    <td> {{apbdFile.DateCreated}} </td>
+                    <td> {{apbdFile.IsActivated ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" href="#" data-toggle="modal" data-target="#apbdModal">Unggah File DAU & DBH Baru</a></td>
+                    <td><a href="~/Content/APBD.xlsx">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('admin')">
+        Unggah Penyaluran Dana Desa Dari APBN
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah Transfer</th>
+                    <th class="money">Jumlah Desa</th>
+                    <th class="money">Total Nilai Transfer</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transactionFile in transactionFiles">
+                    <td>{{transactionFile.FileName}}</td>
+                    <td class="money"> {{transactionFile.TransactionCount}} </td>
+                    <td class="money"> {{transactionFile.DesaCount}} </td>
+                    <td class="money"> {{transactionFile.TotalAmount | currency:"":0}} </td>
+                    <td> {{transactionFile.DateCreated}} </td>
+                    <td> {{transactionFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" ng-click="dashboardCtrl.uploadAPBNTransactionFile()">Unggah File Penyaluran Dana Desa Dari APBN</a></td>
+                    <td><a href="#">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('admin')">
+        Unggah Penyaluran Dana Desa Dari ADD
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama File</th>
+                    <th class="money">Jumlah Transfer</th>
+                    <th class="money">Jumlah Desa</th>
+                    <th class="money">Total Nilai Transfer</th>
+                    <th>Tanggal Unggah</th>
+                    <th>Status</th>
+                    <th>Unduh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transactionFile in transactionFiles">
+                    <td>{{transactionFile.FileName}}</td>
+                    <td class="money"> {{transactionFile.TransactionCount}} </td>
+                    <td class="money"> {{transactionFile.DesaCount}} </td>
+                    <td class="money"> {{transactionFile.TotalAmount | currency:"":0}} </td>
+                    <td> {{transactionFile.DateCreated}} </td>
+                    <td> {{transactionFile.IsComitted ? "Aktif" : "Tidak Aktif"}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="6"><a class="btn btn-primary btn-xs" ng-click="dashboardCtrl.uploadADDTransactionFile()">Unggah File Penyaluran Dana Desa Dari ADD</a></td>
+                    <td><a href="#">Unduh File Contoh</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="content-header" ng-if="indexCtrl.isInRole('admin')">
+        Penerimaan Dana Desa
+    </div>
+
+    <div class="table-responsive" ng-if="indexCtrl.isInRole('admin')">
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Sumber</th>
+                    <th class="money">Nilai Transfer</th>
+                    <th>Bukti Penerimaan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transaction in transactions">
+                    <td>{{transaction.DateCreated}}</td>
+                    <td> {{transaction.fkSourceID == 0 ? "APBN" : "ADD"}} </td>
+                    <td class="money"> {{transaction.Amount | currency:"":0}} </td>
+                    <td> <a href="#">Unduh</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="">
+                    <td colspan="4"><a class="btn btn-primary btn-xs" ng-click="dashboardCtrl.insertTransaction()">Masukan Transaksi Baru</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="modal fade" id="apbdModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Unggah File DAU&DBH</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>File DAU & DBH</label>
+                            <input type="file" ng-file-select ng-model="file" placeholder="Pilih File">
+                        </div>
+                        <p>
+                            <a href="~/Content/APBD.xlsx">Unduh File Contoh</a>
+                        </p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="dashboardCtrl.uploadFile()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

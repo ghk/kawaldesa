@@ -320,6 +320,7 @@
     <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
+    <Content Include="Views\KawalDesa\OrganizationIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -355,6 +356,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BhprAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\OrganizationIndexCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DdAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\ApbdesCtrl.ts" />

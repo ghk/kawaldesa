@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace App.Controllers.Models
 {
-    public class OrganizationController : ReadOnlyController<Organization, long>
+    public class OrganizationController : BaseController<Organization, long>
     {
         public OrganizationController(DB dbContext)
             : base(dbContext)

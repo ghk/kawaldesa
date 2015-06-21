@@ -412,6 +412,28 @@ module App.Controllers.Models {
 			}));
 			return res;
 		}
+		
+		static Save(model: Models.IOrganization): JQueryPromise<void> {
+			var isNew = model.Id == null;
+            var res = $.ajax(OrganizationController.ajaxSettings.build({
+                 type: isNew ? 'POST' : 'PUT',
+				 url: '/api/Organization/'+(isNew ? 'Post' : 'Put'),
+				 data: JSON.stringify(model)
+            })).then((id) => {
+				if(isNew) {
+					model.Id = id;
+				}
+			});
+            return res;
+        }
+
+		static Delete(id: number): JQueryPromise<void> {
+				var res = $.ajax(OrganizationController.ajaxSettings.build({
+					type: 'GET',
+					url: '/api/Organization/Delete/'+id,
+				}));
+				return res;
+		}
 	        
         static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IOrganization> {
 			var res = $.ajax(OrganizationController.ajaxSettings.build({
@@ -752,7 +774,6 @@ module App.Controllers.Services {
 				}));
 			   return res;
 	    }
-    
     
         static SetScopes(regions: Array<App.Models.IRegion>): JQueryPromise<void> {
 			var res = $.ajax(UserController.ajaxSettings.build({
