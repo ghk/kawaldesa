@@ -1,4 +1,5 @@
-﻿using App.Models;
+﻿using App.Mailers;
+using App.Models;
 using Scaffold;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,7 @@ namespace App.Controllers.Models
             var roles = new List<string>{ Role.VOLUNTEER};
             User inviter = KawalDesaController.GetCurrentUser();
             var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>());
+            new UserMailer().Invitation(token).Deliver();
             return token.User;
         }
 
