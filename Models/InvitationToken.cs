@@ -21,11 +21,11 @@ namespace App.Models
         public bool IsUsed { get; set; }
 
         [ForeignKey("User")]
-        public string fkUserID { get; set; }
+        public string fkUserId { get; set; }
         public virtual User User { get; set; }
 
         [ForeignKey("Inviter")]
-        public string fkInviterID { get; set; }
+        public string fkInviterId { get; set; }
         public virtual User Inviter { get; set; }
 
         public static InvitationToken Create(DbContext db, String email, User inviter, 
@@ -40,7 +40,7 @@ namespace App.Models
             db.Set<User>().Add(user);
             db.SaveChanges();
 
-            result.fkUserID = user.Id;
+            result.fkUserId = user.Id;
             db.Set<InvitationToken>().Add(result);
             db.SaveChanges();
 
@@ -55,8 +55,8 @@ namespace App.Models
             {
                 var scope = new UserScope
                 {
-                    fkUserID = user.Id,
-                    fkRegionID = region.ID
+                    fkUserId = user.Id,
+                    fkRegionId = region.Id
                 };
                 db.Set<UserScope>().Add(scope);
             }

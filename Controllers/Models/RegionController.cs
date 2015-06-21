@@ -19,7 +19,7 @@ namespace App.Controllers.Models
         protected override IQueryable<Region> ApplyQuery(IQueryable<Region> query)
         {
             var parentID = GetQueryString<string>("ParentID");
-            return query.Where(r => r.fkParentID == parentID);
+            return query.Where(r => r.fkParentId == parentID);
         }
 
         public Region GetByURLKey(String urlKey)

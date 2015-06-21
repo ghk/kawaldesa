@@ -10,15 +10,15 @@ namespace App.Models
 {
     public class BaseAccountRecapitulation : IModel<long>
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
 
-        public string RegionID { get; set; }
+        public string RegionId { get; set; }
 
-        public long APBNID { get; set; }
+        public long ApbnId { get; set; }
 
-        public int APBNYear { get; set; }
+        public int ApbnYear { get; set; }
 
-        public string ParentRegionID { get; set; }
+        public string ParentRegionId { get; set; }
 
         public string RegionName { get; set; }
 

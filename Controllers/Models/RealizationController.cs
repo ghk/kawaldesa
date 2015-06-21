@@ -15,7 +15,7 @@ namespace App.Controllers.Models
         protected override IQueryable<Realization> ApplyQuery(IQueryable<Realization> query)
         {
             var accountID = GetQueryString<long?>("AccountID");
-            return query.Where(t => t.Transaction.fkAccountID == accountID.Value);
+            return query.Where(t => t.Transaction.fkAccountId == accountID.Value);
         }
     }
 }

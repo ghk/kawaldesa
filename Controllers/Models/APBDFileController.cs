@@ -10,7 +10,7 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class APBDFileController: BaseController<APBDFile, long>
+    public class APBDFileController: BaseController<ApbdFile, long>
     {
         public APBDFileController(DB dbContext)
             : base(dbContext)
@@ -25,27 +25,27 @@ namespace App.Controllers.Models
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
-                foreach(var existingAPBDFile in dbContext.Set<APBDFile>().Where(a => a.IsActivated))
+                foreach(var existingAPBDFile in dbContext.Set<ApbdFile>().Where(a => a.IsActivated))
                 {
                     existingAPBDFile.IsActivated = false;
                     dbContext.Entry(existingAPBDFile).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 
-                foreach(var existingAPBD in dbContext.Set<APBD>().Where(a => a.IsActivated))
+                foreach(var existingAPBD in dbContext.Set<Apbd>().Where(a => a.IsActivated))
                 {
                     existingAPBD.IsActivated = false;
                     dbContext.Entry(existingAPBD).State = System.Data.Entity.EntityState.Modified;
                 }
 
 
-                APBDFile apbdFile = new APBDFile()
+                ApbdFile apbdFile = new ApbdFile()
                 {
                     FileName = blob.Name,
-                    fkFileID = blob.ID,
+                    fkFileId = blob.Id,
                     IsActivated = true,
                 };
-                dbContext.Set<APBDFile>().Add(apbdFile);
+                dbContext.Set<ApbdFile>().Add(apbdFile);
 
                 var provinces = dbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
                 var kabupatens = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
@@ -53,7 +53,7 @@ namespace App.Controllers.Models
 
                 foreach(var apbd in apbds)
                 {
-                    dbContext.Set<APBD>().Add(apbd);
+                    dbContext.Set<Apbd>().Add(apbd);
                 }
 
                 fileResult.Move(blob.FilePath);
@@ -65,7 +65,7 @@ namespace App.Controllers.Models
             }
         }
 
-        private List<APBD> ParseAPBDExcel(FileInfo file, APBDFile apbdFile, List<Region> provinces, List<Region> kabupatens)
+        private List<Apbd> ParseAPBDExcel(FileInfo file, ApbdFile apbdFile, List<Region> provinces, List<Region> kabupatens)
         {
             ExcelPackage package = new ExcelPackage(file);
             ExcelWorkbook workbook = package.Workbook;
@@ -84,7 +84,7 @@ namespace App.Controllers.Models
                 throw new ApplicationException("Data is not found in column 4");
 
             Region province = null;
-            List<APBD> results = new List<APBD>();
+            List<Apbd> results = new List<Apbd>();
 
             for (int i = 2; i < end.Row; i++ )
             {
@@ -115,16 +115,16 @@ namespace App.Controllers.Models
                         throw new ApplicationException("No current province when iterating in row: " + i);
                     string cellText = worksheet.Cells[i, 2].Text;
                     var kabName = cellText.ToUpperInvariant().Replace("KABUPATEN ", "").Trim();
-                    var kab = kabupatens.FirstOrDefault(p => p.Name.Trim().ToLowerInvariant() == kabName.ToLowerInvariant() && p.fkParentID == province.ID);
+                    var kab = kabupatens.FirstOrDefault(p => p.Name.Trim().ToLowerInvariant() == kabName.ToLowerInvariant() && p.fkParentId == province.Id);
                     if (kab == null)
                         throw new ApplicationException("Cannot found kabupaten with name: " + cellText+" And province: "+province.Name);
-                    APBD apbd = new APBD();
-                    apbd.fkAPBDFileID = apbdFile.ID;
-                    apbd.fkAPBNID = 1;
+                    Apbd apbd = new Apbd();
+                    apbd.fkApbdFileId = apbdFile.Id;
+                    apbd.fkApbnId = 1;
                     apbd.IsActivated = true;
-                    apbd.fkRegionID = kab.ID;
-                    apbd.DBH = decimal.Parse(worksheet.Cells[i, 3].Text);
-                    apbd.DAU = decimal.Parse(worksheet.Cells[i, 4].Text);
+                    apbd.fkRegionId = kab.Id;
+                    apbd.Dbh = decimal.Parse(worksheet.Cells[i, 3].Text);
+                    apbd.Dau = decimal.Parse(worksheet.Cells[i, 4].Text);
                     results.Add(apbd);
                 }
             }

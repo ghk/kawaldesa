@@ -6,7 +6,7 @@ using System.Web;
 
 namespace App.Models
 {
-    public class APBDes : BaseEntity
+    public class Apbdes : BaseEntity
     {
         [Index]
         public bool IsActivated { get; set; }
@@ -16,30 +16,30 @@ namespace App.Models
 
         public DateTime? DateCompleted { get; set; }
 
-        public string SourceURL { get; set; }
+        public string SourceUrl { get; set; }
 
         [ForeignKey("SourceFile")]
-        public long? fkSourceFileID { get; set; }
+        public long? fkSourceFileId { get; set; }
         public virtual Blob SourceFile { get; set; }
         
-        [Index("IX_fkAPBNID_fkRegionID", 1, IsUnique=true)]
+        [Index("IX_fkApbnId_fkRegionId", 1, IsUnique=true)]
         [Index]
-        [ForeignKey("APBN")]
-        public long fkAPBNID { get; set; }
-        public virtual APBN APBN { get; set; }
+        [ForeignKey("Apbn")]
+        public long fkApbnId { get; set; }
+        public virtual Apbn Apbn { get; set; }
 
-        [Index("IX_fkAPBNID_fkRegionID", 2, IsUnique=true)]
+        [Index("IX_fkApbnID_fkRegionID", 2, IsUnique=true)]
         [Index]
         [ForeignKey("Region")]
-        public string fkRegionID { get; set; }
+        public string fkRegionId { get; set; }
         public virtual Region Region { get; set; }
 
         [ForeignKey("CompletedBy")]
-        public string fkCompletedByID { get; set; }
+        public string fkCompletedById { get; set; }
         public virtual User CompletedBy { get; set; }
 
         [ForeignKey("ModifiedBy")]
-        public string fkModifiedByID { get; set; }
+        public string fkModifiedById { get; set; }
         public virtual User ModifiedBy { get; set; }
         
         public virtual List<Account> Accounts { get; set; }

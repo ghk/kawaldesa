@@ -21,44 +21,44 @@ namespace App.Models
         [Index]
         public bool IsActivated { get; set; }
 
-        public string SourceURL { get; set; }
+        public string SourceUrl { get; set; }
 
         [ForeignKey("SourceFile")]
-        public long? fkSourceFileID { get; set; }
+        public long? fkSourceFileId { get; set; }
         public virtual Blob SourceFile { get; set; }
 
-        [ForeignKey("APBN")]
-        public long fkAPBNID { get; set; }
-        public virtual APBN APBN { get; set; }
+        [ForeignKey("Apbn")]
+        public long fkApbnId { get; set; }
+        public virtual Apbn Apbn { get; set; }
 
         [ForeignKey("Source")]
-        public string fkSourceID { get; set; }
+        public string fkSourceId { get; set; }
         public virtual Region Source { get; set; }
         
         [ForeignKey("Destination")]
-        public string fkDestinationID { get; set; }
+        public string fkDestinationId { get; set; }
         public virtual Region Destination { get; set; }
         
         [ForeignKey("Account")]
-        public long? fkAccountID { get; set; }
+        public long? fkAccountId { get; set; }
         public virtual Account Account { get; set; }
 
         [ForeignKey("Actor")]
-        public string fkActorID { get; set; }
+        public string fkActorId { get; set; }
         public virtual Region Actor { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public string fkCreatedByID { get; set; }
+        public string fkCreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
         [ForeignKey("TransactionFile")]
-        public long? fkTransactionFileID { get; set; }
+        public long? fkTransactionFileId { get; set; }
         public virtual TransactionFile TransactionFile { get; set; }
 
         [Validator]
         public IEnumerable<ModelValidationResult> Validate()
         {
-            if (fkSourceID != fkActorID && fkDestinationID != fkActorID)
+            if (fkSourceId != fkActorId && fkDestinationId != fkActorId)
                 yield return new Invalid("fkActorID", "fkActorID must matched either fkDestinationID or fkSourceID");
 
         }

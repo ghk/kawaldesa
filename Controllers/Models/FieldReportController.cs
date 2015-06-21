@@ -19,7 +19,7 @@ namespace App.Controllers.Models
         protected override IQueryable<FieldReport> ApplyQuery(IQueryable<FieldReport> query)
         {
             var realizationID = GetQueryString<long?>("RealizationID");
-            return query.Where(f => f.fkRealizationID == realizationID.Value);
+            return query.Where(f => f.fkRealizationId == realizationID.Value);
         }
 
         [HttpPost]
@@ -31,11 +31,11 @@ namespace App.Controllers.Models
                 var realizationID = long.Parse(uploader.Forms["RealizationID"]);
                 var realization = dbContext.Set<Realization>()
                     .Include(r => r.Transaction)
-                    .First(r => r.ID == realizationID);
-                KawalDesaController.CheckRegionAllowed(dbContext, realization.Transaction.fkActorID);
+                    .First(r => r.Id == realizationID);
+                KawalDesaController.CheckRegionAllowed(dbContext, realization.Transaction.fkActorId);
                 FieldReport fr = new FieldReport
                 {
-                    fkRealizationID = realizationID,
+                    fkRealizationId = realizationID,
                     IsActivated = true,
                     Notes = uploader.Forms["Notes"],
                     Date = DateTime.ParseExact(uploader.Forms["Date"], "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -58,7 +58,7 @@ namespace App.Controllers.Models
 
         public IQueryable<List<Blob>> GetPicture(long realizationID)
         {
-            return dbSet.Where(t => t.fkRealizationID == realizationID)
+            return dbSet.Where(t => t.fkRealizationId == realizationID)
                 .Select(t => t.Pictures);
         }
     }

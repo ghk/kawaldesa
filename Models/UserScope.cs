@@ -9,11 +9,11 @@ namespace App.Models
     public class UserScope : BaseEntity
     {
         [ForeignKey("User")]
-        public string fkUserID { get; set; }
+        public string fkUserId { get; set; }
         public virtual User User { get; set; }
 
         [ForeignKey("Region")]
-        public string fkRegionID { get; set; }
+        public string fkRegionId { get; set; }
         public virtual Region Region { get; set; }
 
     }

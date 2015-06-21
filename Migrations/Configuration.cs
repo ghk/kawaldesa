@@ -11,6 +11,7 @@ namespace App.Migrations
     using System.Data.Entity.Migrations;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Web.Helpers;
     using System.Web.Script.Serialization;
 
@@ -22,7 +23,6 @@ namespace App.Migrations
             AutomaticMigrationDataLossAllowed = true;
             SetSqlGenerator("Npgsql", new Npgsql.NpgsqlMigrationSqlGenerator());
         }
-
         protected override void Seed(App.Models.DB context)
         {
             var UserManager = new UserManager<User>(new UserStore<User>(context));
@@ -67,9 +67,9 @@ namespace App.Migrations
                 var result2 = UserManager.AddToRole(volunteer.Id, Role.VOLUNTEER);
             }
 
-            if(context.APBNs.Count() == 0)
+            if(context.Apbns.Count() == 0)
             {
-                context.APBNs.Add(new APBN
+                context.Apbns.Add(new Apbn
                 {
                     DanaPerDesa = 812404036,
                     Year = 2015

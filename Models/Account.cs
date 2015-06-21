@@ -20,13 +20,13 @@ namespace App.Models
 
         [Required(ErrorMessage = "Kode harus diisi")]
         [RegularExpression(@"[a-zA-Z0-9\.]+", ErrorMessage = "Kode harus berupa digit atau titik")]
-        [Index("IX_Code_Type_fkAPBDesID", 1, IsUnique = true)]
+        [Index("IX_Code_Type_fkApbdesId", 1, IsUnique = true)]
         public String Code { get; set; }
 
         [Required(ErrorMessage = "Nama harus diisi")]
         public String Name { get; set; }
 
-        [Index("IX_Code_Type_fkAPBDesID", 2, IsUnique = true)]
+        [Index("IX_Code_Type_fkApbdesId", 2, IsUnique = true)]
         [Index]
         public AccountType Type { get; set; }
 
@@ -42,30 +42,30 @@ namespace App.Models
 
         public DateTime? DateDeactivated { get; set; }
 
-        [Index("IX_TargetSource_fkAPBDesID", 1, IsUnique = true)]
+        [Index("IX_TargetSource_fkApbdesId", 1, IsUnique = true)]
         public String TargetSource { get; set; }
 
         [ForeignKey("ParentAccount")]
-        public long? fkParentAccountID { get; set; }
+        public long? fkParentAccountId { get; set; }
         public virtual Account ParentAccount { get; set; }
 
-        [Index("IX_TargetSource_fkAPBDesID", 2, IsUnique = true)]
-        [Index("IX_Code_Type_fkAPBDesID", 3, IsUnique = true)]
+        [Index("IX_TargetSource_fkApbdesId", 2, IsUnique = true)]
+        [Index("IX_Code_Type_fkpbdesId", 3, IsUnique = true)]
         [Index]
-        [ForeignKey("APBDes")]
-        public long fkAPBDesID { get; set; }
-        public virtual APBDes APBDes { get; set; }
+        [ForeignKey("Apbdes")]
+        public long fkApbdesId { get; set; }
+        public virtual Apbdes Apbdes { get; set; }
 
         [ForeignKey("CreatedBy")]
-        public string fkCreatedByID { get; set; }
+        public string fkCreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
         [ForeignKey("ModifiedBy")]
-        public string fkModifiedByID { get; set; }
+        public string fkModifiedById { get; set; }
         public virtual User ModifiedBy { get; set; }
 
         [ForeignKey("DeactivatedBy")]
-        public string fkDeactivatedByID { get; set; }
+        public string fkDeactivatedById { get; set; }
         public virtual User DeactivatedBy { get; set; }
 
         public virtual List<Account> ChildAccounts { get; set; }
@@ -92,7 +92,7 @@ namespace App.Models
         {
             get
             {
-                return new DB().Transactions.Where(e => e.fkAccountID == ID).ToList().Sum(e => e.Amount);
+                return new DB().Transactions.Where(e => e.fkAccountId == Id).ToList().Sum(e => e.Amount);
             }
         }
 

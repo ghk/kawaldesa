@@ -10,36 +10,36 @@ namespace App.Models
 {
     public class BaseTransferRecapitulation : IModel<long>
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
 
-        public string RegionID { get; set; }
+        public string RegionId { get; set; }
 
-        public long APBNID { get; set; }
+        public long ApbnId { get; set; }
 
-        public int APBNYear { get; set; }
+        public int ApbnYear { get; set; }
 
-        public string ParentRegionID { get; set; }
+        public string ParentRegionId { get; set; }
 
         public string RegionName { get; set; }
 
-        public decimal BudgetedAPBN { get; set; }
+        public decimal BudgetedApbn { get; set; }
 
-        public decimal TransferredAPBN { get; set; }
+        public decimal TransferredApbn { get; set; }
 
-        public decimal AcknowledgedAPBN { get; set; }
+        public decimal AcknowledgedApbn { get; set; }
 
-        public decimal BudgetedADD { get; set; }
+        public decimal BudgetedAdd { get; set; }
 
-        public decimal TransferredADD { get; set; }
+        public decimal TransferredAdd { get; set; }
 
-        public decimal AcknowledgedADD { get; set; }
+        public decimal AcknowledgedAdd { get; set; }
 
         [NotMapped]
         public decimal BudgetedTotal
         {
             get
             {
-                return BudgetedAPBN + BudgetedADD;
+                return BudgetedApbn + BudgetedAdd;
             }
         }
 
@@ -48,7 +48,7 @@ namespace App.Models
         {
             get
             {
-                return TransferredAPBN + TransferredADD;
+                return TransferredApbn + TransferredAdd;
             }
         }
 
@@ -57,7 +57,7 @@ namespace App.Models
         {
             get
             {
-                return AcknowledgedAPBN + AcknowledgedADD;
+                return AcknowledgedApbn + AcknowledgedAdd;
             }
         }
 

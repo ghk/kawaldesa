@@ -20,14 +20,14 @@ namespace App.Models
         }
         public string SecretKey { get; set; }
         public string Name { get; set; }
-        public string FacebookID { get; set; }
+        public string FacebookId { get; set; }
         public bool FacebookIsVerified { get; set; }
         public bool IsADuplicate { get; set; }
         public bool IsActive { get; set; }
         public string Email { get; set; }
 
         [ForeignKey("Organization")]
-        public long? fkOrganizationID { get; set; }
+        public long? fkOrganizationId { get; set; }
         public virtual Organization Organization { get; set; }
     }
 

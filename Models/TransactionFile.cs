@@ -13,7 +13,7 @@ namespace App.Models
         public bool IsActivated { get; set; }
         
         [ForeignKey("File")]
-        public long fkFileID { get; set; } 
+        public long fkFileId { get; set; } 
         public virtual Blob File { get; set; }
 
         public virtual List<Transaction> Transactions { get; set; }
@@ -23,7 +23,7 @@ namespace App.Models
         {
             get
             {
-                return new DB().Transactions.Where(e => e.fkTransactionFileID == ID).Count();
+                return new DB().Transactions.Where(e => e.fkTransactionFileId == Id).Count();
             }
         }
 
@@ -32,7 +32,7 @@ namespace App.Models
         {
             get
             {
-                return new DB().Transactions.Where(e => e.fkTransactionFileID == ID).Select(e => e.fkDestinationID).Distinct().Count();
+                return new DB().Transactions.Where(e => e.fkTransactionFileId == Id).Select(e => e.fkDestinationId).Distinct().Count();
             }
         }
 
@@ -41,7 +41,7 @@ namespace App.Models
         {
             get
             {
-                return new DB().Transactions.Where(e => e.fkTransactionFileID == ID).Sum(e => e.Amount);
+                return new DB().Transactions.Where(e => e.fkTransactionFileId == Id).Sum(e => e.Amount);
             }
         }
     }

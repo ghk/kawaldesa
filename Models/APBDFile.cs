@@ -6,42 +6,42 @@ using System.Web;
 
 namespace App.Models
 {
-    public class APBDFile : BaseEntity
+    public class ApbdFile : BaseEntity
     {
         public String FileName { get; set; }
 
         public bool IsActivated { get; set; }
         
-        public virtual List<APBD> APBDs { get; set; }
+        public virtual List<Apbd> Apbds { get; set; }
 
         [ForeignKey("File")]
-        public long fkFileID { get; set; }
+        public long fkFileId { get; set; }
         public virtual Blob File { get; set; }
         
         [NotMapped]
-        public int APBDCount 
+        public int ApbdCount 
         {
             get
             {
-                return new DB().APBDs.Count(e => e.fkAPBDFileID == ID && e.DAU > 0 && e.DBH > 0);
+                return new DB().Apbds.Count(e => e.fkApbdFileId == Id && e.Dau > 0 && e.Dbh > 0);
             }
         }
 
         [NotMapped]
-        public decimal TotalDAU
+        public decimal TotalDau
         {
             get
             {
-                return new DB().APBDs.Where(e => e.fkAPBDFileID == ID).Sum(e => e.DAU);
+                return new DB().Apbds.Where(e => e.fkApbdFileId == Id).Sum(e => e.Dau);
             }
         }
 
         [NotMapped]
-        public decimal TotalDBH
+        public decimal TotalDbh
         {
             get
             {
-                return new DB().APBDs.Where(e => e.fkAPBDFileID == ID).Sum(e => e.DBH);
+                return new DB().Apbds.Where(e => e.fkApbdFileId == Id).Sum(e => e.Dbh);
             }
         }
     }

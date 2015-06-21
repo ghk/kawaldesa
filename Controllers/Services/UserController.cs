@@ -222,9 +222,9 @@ namespace App.Controllers.Services
                 .Include(r => r.Region.Parent.Parent)
                 .Include(r => r.Region.Parent.Parent.Parent)
                 .Include(r => r.Region.Parent.Parent.Parent.Parent)
-                .Where(s => s.fkUserID == identity.User.Id)
+                .Where(s => s.fkUserId == identity.User.Id)
                 .ToList()
-                .OrderBy(s => s.ID)
+                .OrderBy(s => s.Id)
                 .Select(r => r.Region)
                 .ToList();
         }
@@ -235,7 +235,7 @@ namespace App.Controllers.Services
         {
             KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
             var currentScopes = dbContext.Set<UserScope>()
-                .Where(s => s.fkUserID == identity.User.Id)
+                .Where(s => s.fkUserId == identity.User.Id)
                 .ToList();
             foreach(var scope in currentScopes)
             {
@@ -245,8 +245,8 @@ namespace App.Controllers.Services
             {
                 var scope = new UserScope
                 {
-                    fkUserID = identity.User.Id,
-                    fkRegionID = region.ID
+                    fkUserId = identity.User.Id,
+                    fkRegionId = region.Id
                 };
                 dbContext.Set<UserScope>().Add(scope);
             }

@@ -178,7 +178,7 @@ namespace App.Controllers
                         invitationToken = db.InvitationTokens.FirstOrDefault(t => t.Token == token && !t.IsUsed);
                     }
 
-                    var user = db.Users.FirstOrDefault(u => u.FacebookID == facebookID && u.IsActive);
+                    var user = db.Users.FirstOrDefault(u => u.FacebookId == facebookID && u.IsActive);
                     if(invitationToken != null)
                     {
                         invitationToken.IsUsed = true;
@@ -191,7 +191,7 @@ namespace App.Controllers
                         }
                         user = invitationToken.User;
                         user.IsActive = true;
-                        user.FacebookID = facebookID;
+                        user.FacebookId = facebookID;
                         user.UserName = "fb"+facebookID;
                         user.Name = name;
 
@@ -203,7 +203,7 @@ namespace App.Controllers
                         var userManager = new UserManager<User>(new UserStore<User>(db));
                         user = new User
                         {
-                            FacebookID = facebookID,
+                            FacebookId = facebookID,
                             Name = name,
                             IsActive = true,
                             UserName = "fb" + facebookID,
@@ -231,10 +231,10 @@ namespace App.Controllers
                 var user = db.Users.FirstOrDefault(u => u.Id == userId);
                 result["ID"] = user.Id;
                 result["Name"] = user.Name;
-                result["FacebookID"] = user.FacebookID;
+                result["FacebookID"] = user.FacebookId;
                 result["Roles"] = userManager.GetRoles(user.Id);
-                result["Scopes"] = db.UserScopes.Where(s => s.fkUserID == user.Id)
-                    .Select(s => s.fkRegionID)
+                result["Scopes"] = db.UserScopes.Where(s => s.fkUserId == user.Id)
+                    .Select(s => s.fkRegionId)
                     .ToList();
                 return result;
             }
@@ -268,18 +268,18 @@ namespace App.Controllers
                 .Include(r => r.Parent.Parent)
                 .Include(r => r.Parent.Parent.Parent)
                 .Include(r => r.Parent.Parent.Parent.Parent)
-                .First(r => r.ID == regionID);
+                .First(r => r.Id == regionID);
 
             var regionIDs = new List<string>();
             var current = region;
             while(current != null)
             {
-                regionIDs.Add(current.ID);
+                regionIDs.Add(current.Id);
                 current = current.Parent;
             }
 
             var allowed = db.Set<UserScope>()
-                .Any(s => s.fkUserID == userID && regionIDs.Contains(s.fkRegionID));
+                .Any(s => s.fkUserId == userID && regionIDs.Contains(s.fkRegionId));
             if (!allowed)
                 throw new ApplicationException("region is not allowed for thee");
         }

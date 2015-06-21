@@ -8,6 +8,9 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq.Expressions;
 using System.Web;
+using System.Text.RegularExpressions;
+using System.Data.Entity.Infrastructure.Pluralization;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace App.Models
 {
@@ -22,10 +25,10 @@ namespace App.Models
         public virtual IDbSet<UserScope> UserScopes { get; set; }
         public virtual IDbSet<Organization> Organizations { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
-        public virtual IDbSet<APBN> APBNs { get; set; }
-        public virtual IDbSet<APBD> APBDs { get; set; }
-        public virtual IDbSet<APBDFile> APBDFiles { get; set; }
-        public virtual IDbSet<APBDes> APBDeses { get; set; }
+        public virtual IDbSet<Apbn> Apbns { get; set; }
+        public virtual IDbSet<Apbd> Apbds { get; set; }
+        public virtual IDbSet<ApbdFile> ApbdFiles { get; set; }
+        public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }
         public virtual IDbSet<Realization> Realizations { get; set; }
         public virtual IDbSet<Transaction> Transactions  { get; set; }
@@ -41,7 +44,40 @@ namespace App.Models
             modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey(i => i.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(i => new { i.RoleId, i.UserId });
+
+            modelBuilder.Types()
+            .Configure(c => c.ToTable(GetTableName(c.ClrType.Name), "public"));
+            modelBuilder.Conventions.Add<CustomKeyConvention>();
         }
+        public static string GetTableName(String typeName) 
+        {
+            var pluralizationService = (IPluralizationService) 
+                DbConfiguration.DependencyResolver.GetService(typeof(IPluralizationService), "plural");
+
+            var result = pluralizationService.Pluralize(typeName);
+
+            result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
+
+            return result.ToLower(); 
+        }
+        public static string GetColumnName(String typeName) 
+        {
+            var result = typeName;
+
+            result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
+
+            return result.ToLower(); 
+        }
+
+        public class CustomKeyConvention : Convention
+        {
+            public CustomKeyConvention()
+            {
+                Properties()
+                    .Configure(config => config.HasColumnName(DB.GetColumnName(config.ClrPropertyInfo.Name)));
+            }
+        }
+
 
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items) 
         {
@@ -83,7 +119,7 @@ namespace App.Models
         {
             return dbSet
                 .AsNoTracking()
-                .Where(e => e.ID == id)
+                .Where(e => e.Id == id)
                 .Select(select)
                 .FirstOrDefault();
         }

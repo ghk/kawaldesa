@@ -12,7 +12,7 @@ namespace App.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
         
@@ -26,7 +26,7 @@ namespace App.Models
         public String UrlKey { get; set; }
         
         [ForeignKey("Parent")]
-        public string fkParentID { get; set; }
+        public string fkParentId { get; set; }
         public virtual Region Parent { get; set; }
 
         public DateTime DateCreated { get; set; }

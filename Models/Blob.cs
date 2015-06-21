@@ -30,7 +30,7 @@ namespace App.Models
         {
             get
             {
-                var fileName = ID.ToString();
+                var fileName = Id.ToString();
                 if (Name != null)
                     fileName = fileName + Path.GetExtension(Name);
                 return fileName;

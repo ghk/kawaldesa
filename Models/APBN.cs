@@ -6,7 +6,7 @@ using System.Web;
 
 namespace App.Models
 {
-    public class APBN : BaseEntity
+    public class Apbn : BaseEntity
     {
         public decimal DanaPerDesa { get; set; }
 

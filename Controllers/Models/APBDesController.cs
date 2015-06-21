@@ -14,7 +14,7 @@ using Scaffold.ControllerExtensions;
 
 namespace App.Controllers.Models
 {
-    public class APBDesController : ReadOnlyController<APBDes, long>
+    public class APBDesController : ReadOnlyController<Apbdes, long>
     {
         public APBDesController(DB dbContext)
             : base(dbContext)
@@ -33,7 +33,7 @@ namespace App.Controllers.Models
                 var sourceURL = multipart.Forms["SourceURL"];
 
                 var apbdes = dbSet.SelectOne(apbdesID, 
-                    s => new { s.IsCompleted, s.fkRegionID });
+                    s => new { s.IsCompleted, fkRegionID = s.fkRegionId });
                 if (apbdes.IsCompleted)
                     throw new ApplicationException("apbdes is completed");
                 KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
@@ -43,8 +43,8 @@ namespace App.Controllers.Models
                 dbContext.Set<Blob>().Add(blob);
 
                 Update(apbdesID)
-                    .Set(e => e.SourceURL, sourceURL)
-                    .Set(e => e.fkSourceFileID, blob.ID)
+                    .Set(e => e.SourceUrl, sourceURL)
+                    .Set(e => e.fkSourceFileId, blob.Id)
                     .Save();
 
                 fileResult.Move(blob.FilePath);
@@ -62,7 +62,7 @@ namespace App.Controllers.Models
             var apbdes = dbSet.Find(apbdesID);
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
-            KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
+            KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
             apbdes.IsCompleted = true;
             dbContext.Entry(apbdes).State = EntityState.Modified;
@@ -77,7 +77,7 @@ namespace App.Controllers.Models
             var apbdes = Get(apbdesID);
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
-            KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
+            KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
             var rootAccount = dbContext.Set<Account>().Find(rootAccountID);
 
@@ -97,7 +97,7 @@ namespace App.Controllers.Models
                 {
                     account.Code = Regex.Replace(account.Code, @"\s+", "");
                     account.Type = rootAccount.Type;
-                    account.fkAPBDesID = apbdes.ID;
+                    account.fkApbdesId = apbdes.Id;
                 }
             }
 
@@ -136,7 +136,7 @@ namespace App.Controllers.Models
             foreach (var account in accounts.OrderBy(a => a.Code))
             {
                 var parentAccount = allAccounts.First(a => a.Code == account.ParentCode);
-                account.fkParentAccountID = parentAccount.ID;
+                account.fkParentAccountId = parentAccount.Id;
 
                 dbContext.Set<Account>().Add(account);
                 dbContext.SaveChanges();
@@ -154,9 +154,9 @@ namespace App.Controllers.Models
             }
         }
 
-        public APBDes GetByRegionID(string regionID)
+        public Apbdes GetByRegionID(string regionID)
         {
-            return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionID == regionID);
+            return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionId == regionID);
         }
 
     }

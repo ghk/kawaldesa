@@ -73,13 +73,13 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
       <HintPath>packages\EPPlus.4.0.1.1\lib\net20\EPPlus.dll</HintPath>
@@ -147,7 +147,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -247,16 +246,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\APBDes.cs" />
+    <Compile Include="Models\Apbdes.cs" />
     <Compile Include="Models\FieldReport.cs" />
     <Compile Include="Models\Realization.cs" />
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\APBD.cs" />
-    <Compile Include="Models\APBDFile.cs" />
+    <Compile Include="Models\Apbd.cs" />
+    <Compile Include="Models\ApbdFile.cs" />
     <Compile Include="Models\AccountRecapitulation.cs" />
     <Compile Include="Models\Sector.cs" />
     <Compile Include="Models\UserScope.cs" />
-    <Compile Include="Models\APBN.cs" />
+    <Compile Include="Models\Apbn.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Blob.cs" />
     <Compile Include="Models\AccountType.cs" />

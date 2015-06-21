@@ -15,11 +15,11 @@ namespace App.Models
         public bool IsActivated { get; set; }
 
         [ForeignKey("Realization")]
-        public long? fkRealizationID { get; set; }
+        public long? fkRealizationId { get; set; }
         public virtual Realization Realization { get; set; }
         
         [ForeignKey("CreatedBy")]
-        public string fkCreatedByID { get; set; }
+        public string fkCreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
         public virtual List<Blob> Pictures { get; set; }

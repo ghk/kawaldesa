@@ -41,17 +41,17 @@ namespace App.Controllers.Models
 
                 var transaction = multipart.Entity;
 
-                KawalDesaController.CheckRegionAllowed(principal, dbContext, transaction.fkDestinationID);
+                KawalDesaController.CheckRegionAllowed(principal, dbContext, transaction.fkDestinationId);
 
-                var actor = dbContext.Set<Region>().First(r => r.ID == transaction.fkActorID);
-                var source = dbContext.Set<Region>().First(r => r.ID == transaction.fkSourceID);
-                var destination = dbContext.Set<Region>().First(r => r.ID == transaction.fkDestinationID);
+                var actor = dbContext.Set<Region>().First(r => r.Id == transaction.fkActorId);
+                var source = dbContext.Set<Region>().First(r => r.Id == transaction.fkSourceId);
+                var destination = dbContext.Set<Region>().First(r => r.Id == transaction.fkDestinationId);
 
                 long? accountID = null;
-                if (transaction.fkActorID == transaction.fkDestinationID)
+                if (transaction.fkActorId == transaction.fkDestinationId)
                 {
-                    var targetSource = transaction.fkSourceID == "0" ? "apbn" : "add";
-                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.APBDes.fkRegionID == transaction.fkDestinationID).ID;
+                    var targetSource = transaction.fkSourceId == "0" ? "apbn" : "add";
+                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.Apbdes.fkRegionId == transaction.fkDestinationId).Id;
                 }
 
                 string roleRequired = null;
@@ -82,14 +82,14 @@ namespace App.Controllers.Models
                     dbContext.Set<Blob>().Add(blob);
                     dbContext.SaveChanges();
                     fileResult.Move(blob.FilePath);
-                    blobID = blob.ID;
+                    blobID = blob.Id;
                 }
 
-                transaction.fkSourceFileID = blobID;
+                transaction.fkSourceFileId = blobID;
                 transaction.IsActivated = true;
-                transaction.fkCreatedByID = user.Id;
-                transaction.fkAccountID = accountID;
-                transaction.fkAPBNID = 1; //TODO
+                transaction.fkCreatedById = user.Id;
+                transaction.fkAccountId = accountID;
+                transaction.fkApbnId = 1; //TODO
 
 
                 dbSet.Add(transaction);
@@ -104,12 +104,12 @@ namespace App.Controllers.Models
         public List<TransferTransactionRow> GetTransferTransactions(string regionID)
         {
             var transactions = dbSet.Include(t => t.SourceFile)
-                .Where(t => t.fkDestinationID == regionID && t.IsActivated).ToList();
+                .Where(t => t.fkDestinationId == regionID && t.IsActivated).ToList();
 
             Func<IEnumerable<Transaction>, List<TransferTransaction>> GetDetails = (tr) =>
             {
-                var transferreds = tr.Where(t => t.fkActorID != regionID).ToList();
-                var acknowledgeds = tr.Where(t => t.fkActorID == regionID).ToList();
+                var transferreds = tr.Where(t => t.fkActorId != regionID).ToList();
+                var acknowledgeds = tr.Where(t => t.fkActorId == regionID).ToList();
                 Pad(transferreds, acknowledgeds.Count - transferreds.Count);
                 Pad(acknowledgeds, transferreds.Count - acknowledgeds.Count);
 
@@ -121,8 +121,8 @@ namespace App.Controllers.Models
 
                 return details;
             };
-            var apbn = GetDetails(transactions.Where(t => t.fkSourceID == "0"));
-            var add = GetDetails(transactions.Where(t => t.fkSourceID != "0"));
+            var apbn = GetDetails(transactions.Where(t => t.fkSourceId == "0"));
+            var add = GetDetails(transactions.Where(t => t.fkSourceId != "0"));
             Pad(apbn, add.Count - apbn.Count);
             Pad(add, apbn.Count - add.Count);
 
@@ -161,7 +161,7 @@ namespace App.Controllers.Models
                 Transaction transaction = new Transaction
                 {
                     Amount = long.Parse(multipart.GetForm("Amount")),
-                    fkAccountID = long.Parse(multipart.GetForm("fkAccountID")),
+                    fkAccountId = long.Parse(multipart.GetForm("fkAccountID")),
                     Date = DateTime.ParseExact(multipart.GetForm("Date"), "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 };
 
@@ -171,16 +171,16 @@ namespace App.Controllers.Models
                 };               
              
                 var account = dbContext.Set<Account>()
-                    .Include(a => a.APBDes)
-                    .First(a => a.ID == transaction.fkAccountID);
+                    .Include(a => a.Apbdes)
+                    .First(a => a.Id == transaction.fkAccountId);
 
-                KawalDesaController.CheckRegionAllowed(dbContext, account.APBDes.fkRegionID);
+                KawalDesaController.CheckRegionAllowed(dbContext, account.Apbdes.fkRegionId);
 
-                transaction.fkActorID = account.APBDes.fkRegionID;
-                transaction.fkAPBNID = account.APBDes.fkAPBNID;
+                transaction.fkActorId = account.Apbdes.fkRegionId;
+                transaction.fkApbnId = account.Apbdes.fkApbnId;
                 dbContext.Set<Transaction>().Add(transaction);
 
-                realization.fkTransactionID = transaction.ID;
+                realization.fkTransactionId = transaction.Id;
                 dbContext.Set<Realization>().Add(realization);
 
                 if (multipart.Files.Count > 0)
@@ -191,7 +191,7 @@ namespace App.Controllers.Models
                     TransactionFile transactionFile = new TransactionFile()
                     {
                         FileName = blob.Name,
-                        fkFileID = blob.ID,
+                        fkFileId = blob.Id,
                         IsActivated = true
                     };
                     dbContext.Set<TransactionFile>().Add(transactionFile);
@@ -209,10 +209,10 @@ namespace App.Controllers.Models
         public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountID)
         {
             var realizationSet = dbContext.Set<Realization>();
-            return dbSet.Where(t => t.fkAccountID == accountID)
+            return dbSet.Where(t => t.fkAccountId == accountID)
                 .Select(t => new RealizationTransactionRow
                 {
-                    Realization = realizationSet.FirstOrDefault(a => a.fkTransactionID == t.ID),
+                    Realization = realizationSet.FirstOrDefault(a => a.fkTransactionId == t.Id),
                     Transaction = t
                 });
         }
