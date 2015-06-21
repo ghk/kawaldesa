@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scaffold;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,11 +8,11 @@ using System.Web;
 
 namespace App.Models
 {
-    public class Region : BaseEntity
+    public class Region : IModel<string>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override long ID { get; set; }
+        public string ID { get; set; }
 
         public string Name { get; set; }
         
@@ -25,9 +26,12 @@ namespace App.Models
         public String UrlKey { get; set; }
         
         [ForeignKey("Parent")]
-        public long? fkParentID { get; set; }
+        public string fkParentID { get; set; }
         public virtual Region Parent { get; set; }
 
+        public DateTime DateCreated { get; set; }
+ 
+        public DateTime DateModified { get; set; }
     }
 
 }

@@ -31,7 +31,7 @@ namespace App.Models
         [Index("IX_fkAPBNID_fkRegionID", 2, IsUnique=true)]
         [Index]
         [ForeignKey("Region")]
-        public long fkRegionID { get; set; }
+        public string fkRegionID { get; set; }
         public virtual Region Region { get; set; }
 
         [ForeignKey("CompletedBy")]

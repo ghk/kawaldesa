@@ -13,7 +13,7 @@ namespace App.Models
         public virtual User User { get; set; }
 
         [ForeignKey("Region")]
-        public long fkRegionID { get; set; }
+        public string fkRegionID { get; set; }
         public virtual Region Region { get; set; }
 
     }

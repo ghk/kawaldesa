@@ -154,7 +154,7 @@ namespace App.Controllers.Models
             }
         }
 
-        public APBDes GetByRegionID(long regionID)
+        public APBDes GetByRegionID(string regionID)
         {
             return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionID == regionID);
         }

@@ -220,12 +220,12 @@ namespace App.Controllers
 
             return identity.User;
         }
-        public static void CheckRegionAllowed(DbContext db, long regionID)
+        public static void CheckRegionAllowed(DbContext db, string regionID)
         {
             var principal = System.Web.HttpContext.Current.User;
             CheckRegionAllowed(principal, db, regionID);
         }
-        public static void CheckRegionAllowed(IPrincipal principal,DbContext db, long regionID)
+        public static void CheckRegionAllowed(IPrincipal principal,DbContext db, string regionID)
         {
             String userID = ((KawalDesaIdentity)principal.Identity).User.Id;
             if (userID == null)
@@ -239,7 +239,7 @@ namespace App.Controllers
                 .Include(r => r.Parent.Parent.Parent.Parent)
                 .First(r => r.ID == regionID);
 
-            var regionIDs = new List<long>();
+            var regionIDs = new List<string>();
             var current = region;
             while(current != null)
             {

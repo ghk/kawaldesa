@@ -41,16 +41,16 @@ namespace App.Controllers.Models
 
                 var transaction = multipart.Entity;
 
-                KawalDesaController.CheckRegionAllowed(principal, dbContext, transaction.fkDestinationID.Value);
+                KawalDesaController.CheckRegionAllowed(principal, dbContext, transaction.fkDestinationID);
 
                 var actor = dbContext.Set<Region>().First(r => r.ID == transaction.fkActorID);
-                var source = dbContext.Set<Region>().First(r => r.ID == transaction.fkSourceID.Value);
-                var destination = dbContext.Set<Region>().First(r => r.ID == transaction.fkDestinationID.Value);
+                var source = dbContext.Set<Region>().First(r => r.ID == transaction.fkSourceID);
+                var destination = dbContext.Set<Region>().First(r => r.ID == transaction.fkDestinationID);
 
                 long? accountID = null;
                 if (transaction.fkActorID == transaction.fkDestinationID)
                 {
-                    var targetSource = transaction.fkSourceID == 0 ? "apbn" : "add";
+                    var targetSource = transaction.fkSourceID == "0" ? "apbn" : "add";
                     accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.APBDes.fkRegionID == transaction.fkDestinationID).ID;
                 }
 
@@ -101,7 +101,7 @@ namespace App.Controllers.Models
             }
         }
 
-        public List<TransferTransactionRow> GetTransferTransactions(long regionID)
+        public List<TransferTransactionRow> GetTransferTransactions(string regionID)
         {
             var transactions = dbSet.Include(t => t.SourceFile)
                 .Where(t => t.fkDestinationID == regionID && t.IsActivated).ToList();
@@ -121,8 +121,8 @@ namespace App.Controllers.Models
 
                 return details;
             };
-            var apbn = GetDetails(transactions.Where(t => t.fkSourceID == 0));
-            var add = GetDetails(transactions.Where(t => t.fkSourceID != 0));
+            var apbn = GetDetails(transactions.Where(t => t.fkSourceID == "0"));
+            var add = GetDetails(transactions.Where(t => t.fkSourceID != "0"));
             Pad(apbn, add.Count - apbn.Count);
             Pad(add, apbn.Count - add.Count);
 

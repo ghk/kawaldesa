@@ -32,11 +32,11 @@ namespace App.Models
         public virtual APBN APBN { get; set; }
 
         [ForeignKey("Source")]
-        public long? fkSourceID { get; set; }
+        public string fkSourceID { get; set; }
         public virtual Region Source { get; set; }
         
         [ForeignKey("Destination")]
-        public long? fkDestinationID { get; set; }
+        public string fkDestinationID { get; set; }
         public virtual Region Destination { get; set; }
         
         [ForeignKey("Account")]
@@ -44,7 +44,7 @@ namespace App.Models
         public virtual Account Account { get; set; }
 
         [ForeignKey("Actor")]
-        public long fkActorID { get; set; }
+        public string fkActorID { get; set; }
         public virtual Region Actor { get; set; }
 
         [ForeignKey("CreatedBy")]

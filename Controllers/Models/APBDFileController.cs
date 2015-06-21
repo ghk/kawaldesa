@@ -115,7 +115,7 @@ namespace App.Controllers.Models
                         throw new ApplicationException("No current province when iterating in row: " + i);
                     string cellText = worksheet.Cells[i, 2].Text;
                     var kabName = cellText.ToUpperInvariant().Replace("KABUPATEN ", "").Trim();
-                    var kab = kabupatens.FirstOrDefault(p => p.Name.Trim() == kabName && p.fkParentID.HasValue && p.fkParentID.Value == province.ID);
+                    var kab = kabupatens.FirstOrDefault(p => p.Name.Trim() == kabName && p.fkParentID == province.ID);
                     if (kab == null)
                         throw new ApplicationException("Cannot found kabupaten with name: " + cellText+" And province: "+province.Name);
                     APBD apbd = new APBD();

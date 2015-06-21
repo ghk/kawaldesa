@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace App.Controllers.Models
 {
-    public class RegionController : ReadOnlyController<Region, long>
+    public class RegionController : ReadOnlyController<Region, string>
     {
         public RegionController(DB dbContext) : base(dbContext)
         {
@@ -18,7 +18,7 @@ namespace App.Controllers.Models
         }
         protected override IQueryable<Region> ApplyQuery(IQueryable<Region> query)
         {
-            var parentID = GetQueryString<long>("ParentID");
+            var parentID = GetQueryString<string>("ParentID");
             return query.Where(r => r.fkParentID == parentID);
         }
 
@@ -34,7 +34,7 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
-        public void UpdateWebsite(long regionID, String regionWebsite)
+        public void UpdateWebsite(string regionID, String regionWebsite)
         {
             KawalDesaController.CheckRegionAllowed(dbContext, regionID);
             Update(regionID)
