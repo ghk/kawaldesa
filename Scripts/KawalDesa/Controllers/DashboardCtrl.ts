@@ -102,7 +102,7 @@ module App.Controllers {
                 return this.regionChildren[id];
 
             this.regionChildren[id] = [];
-            Controllers.RegionController.GetAll({ "ParentID": id }).done(regions => {
+            Controllers.RegionController.GetAll({ "ParentId": id }).done(regions => {
                 ctrl.$scope.$apply(() => {
                     for (var i = 0; i < regions.length; i++) {
                         ctrl.regionChildren[id].push(regions[i]);
@@ -167,7 +167,7 @@ module App.Controllers {
 
         saveAPBNs() {
             var ctrl = this;
-            var apbns : Models.APBN[] = this.$scope.apbns;
+            var apbns : Models.Apbn[] = this.$scope.apbns;
             this.savingStates["apbn"] = true;
             for (var i = 0, len = apbns.length; i < len; i++) {
                 var apbn = apbns[i];                                                              

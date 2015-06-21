@@ -154,9 +154,9 @@ namespace App.Controllers.Models
             }
         }
 
-        public Apbdes GetByRegionID(string regionID)
+        public Apbdes GetByRegionId(string regionId)
         {
-            return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionId == regionID);
+            return dbSet.Include(e => e.Accounts).FirstOrDefault(e => e.fkRegionId == regionId);
         }
 
     }

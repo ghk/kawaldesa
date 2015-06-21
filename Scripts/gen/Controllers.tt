@@ -80,14 +80,14 @@ module <#= _namespace #> {
             {				
 	#>	
 		static Save(model: <#= "Models.I" + modelClass.Name #>): JQueryPromise<void> {
-			var isNew = model.ID == null;
+			var isNew = model.Id == null;
             var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
 				 url: '/api/<#= GetRouteName(_controller.Name) #>/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
-					model.ID = id;
+					model.Id = id;
 				}
 			});
             return res;

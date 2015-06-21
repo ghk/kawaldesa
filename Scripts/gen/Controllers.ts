@@ -87,27 +87,27 @@ module App.Controllers.Models {
     export class APBDesController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IAPBDes = null;
+        public dataModel : Models.IApbdes = null;
         
-        constructor(data?: Models.IAPBDes) {
+        constructor(data?: Models.IApbdes) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IAPBDes>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdes>> {
 			var res = $.ajax(APBDesController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/APBDes/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.APBDes(model));
+				return models.map((model) => new Models.Apbdes(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IAPBDes> {
+		static Get(id: number): JQueryPromise<Models.IApbdes> {
 			var res = $.ajax(APBDesController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/APBDes/Get/'+id,
-			})).then((model) => new Models.APBDes(model));
+			})).then((model) => new Models.Apbdes(model));
 			return res;
 		}
 
@@ -142,10 +142,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetByRegionID(regionID: string): JQueryPromise<App.Models.IAPBDes> {
+        static GetByRegionId(regionId: string): JQueryPromise<App.Models.IApbdes> {
 			var res = $.ajax(APBDesController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/APBDes/GetByRegionID?regionID='+encodeURI(regionID)+'',
+			url: '/api/APBDes/GetByRegionId?regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
 	    }
@@ -154,27 +154,27 @@ module App.Controllers.Models {
     export class APBDFileController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IAPBDFile = null;
+        public dataModel : Models.IApbdFile = null;
         
-        constructor(data?: Models.IAPBDFile) {
+        constructor(data?: Models.IApbdFile) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IAPBDFile>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdFile>> {
 			var res = $.ajax(APBDFileController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/APBDFile/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.APBDFile(model));
+				return models.map((model) => new Models.ApbdFile(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IAPBDFile> {
+		static Get(id: number): JQueryPromise<Models.IApbdFile> {
 			var res = $.ajax(APBDFileController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/APBDFile/Get/'+id,
-			})).then((model) => new Models.APBDFile(model));
+			})).then((model) => new Models.ApbdFile(model));
 			return res;
 		}
 
@@ -187,15 +187,15 @@ module App.Controllers.Models {
 			return res;
 		}
 		
-		static Save(model: Models.IAPBDFile): JQueryPromise<void> {
-			var isNew = model.ID == null;
+		static Save(model: Models.IApbdFile): JQueryPromise<void> {
+			var isNew = model.Id == null;
             var res = $.ajax(APBDFileController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
 				 url: '/api/APBDFile/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
-					model.ID = id;
+					model.Id = id;
 				}
 			});
             return res;
@@ -218,27 +218,27 @@ module App.Controllers.Models {
     export class APBNController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IAPBN = null;
+        public dataModel : Models.IApbn = null;
         
-        constructor(data?: Models.IAPBN) {
+        constructor(data?: Models.IApbn) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IAPBN>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbn>> {
 			var res = $.ajax(APBNController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/APBN/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.APBN(model));
+				return models.map((model) => new Models.Apbn(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IAPBN> {
+		static Get(id: number): JQueryPromise<Models.IApbn> {
 			var res = $.ajax(APBNController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/APBN/Get/'+id,
-			})).then((model) => new Models.APBN(model));
+			})).then((model) => new Models.Apbn(model));
 			return res;
 		}
 
@@ -251,15 +251,15 @@ module App.Controllers.Models {
 			return res;
 		}
 		
-		static Save(model: Models.IAPBN): JQueryPromise<void> {
-			var isNew = model.ID == null;
+		static Save(model: Models.IApbn): JQueryPromise<void> {
+			var isNew = model.Id == null;
             var res = $.ajax(APBNController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
 				 url: '/api/APBN/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
-					model.ID = id;
+					model.Id = id;
 				}
 			});
             return res;
@@ -372,6 +372,75 @@ module App.Controllers.Models {
 			var res = $.ajax(FieldReportController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/FieldReport/GetPicture?realizationID='+realizationID+'',
+				}));
+			   return res;
+	    }
+	}
+    
+    export class OrganizationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : Models.IOrganization = null;
+        
+        constructor(data?: Models.IOrganization) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IOrganization>> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/Organization/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new Models.Organization(model));
+			});
+			return res;
+		}
+
+		static Get(id: number): JQueryPromise<Models.IOrganization> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/Organization/Get/'+id,
+			})).then((model) => new Models.Organization(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/Organization/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+	        
+        static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IOrganization> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/Organization/GetByURLKey?urlKey='+encodeURI(urlKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static AddOrgAdmin(id: number, email: string): JQueryPromise</** App.Models.User **/ any> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+			type: 'POST',
+			url: '/api/Organization/AddOrgAdmin?id='+id+'&email='+encodeURI(email)+'',
+				}));
+			   return res;
+	    }
+    
+        static AddOrgVolunteer(id: number, email: string): JQueryPromise</** App.Models.User **/ any> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+			type: 'POST',
+			url: '/api/Organization/AddOrgVolunteer?id='+id+'&email='+encodeURI(email)+'',
+				}));
+			   return res;
+	    }
+    
+        static UpdateWebsite(id: number, regionWebsite: string): JQueryPromise<void> {
+			var res = $.ajax(OrganizationController.ajaxSettings.build({
+			type: 'POST',
+			url: '/api/Organization/UpdateWebsite?id='+id+'&regionWebsite='+encodeURI(regionWebsite)+'',
 				}));
 			   return res;
 	    }

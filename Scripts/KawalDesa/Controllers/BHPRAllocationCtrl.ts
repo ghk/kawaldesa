@@ -26,16 +26,16 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.type == "bhpr") {
-                this.getRecapitulations(this.indexCtrl.region.ID);
+                this.getRecapitulations(this.indexCtrl.region.Id);
             }
         }
 
-        getRecapitulations(parentID: string) {
+        getRecapitulations(parentId: string) {
             var ctrl = this;
             var scope = this.$scope;
             var query = {
                 "SortOrder": "ASC",
-                "ParentID": parentID
+                "ParentId": parentId
             }
             var type = Controllers.FrozenAccountRecapitulationController;
             if (this.indexCtrl.currentUser) {
@@ -44,8 +44,8 @@ module App.Controllers {
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
-                    scope.entities = recapitulations.filter(r => r.RegionID != parentID);
-                    scope.total = recapitulations.filter(r => r.RegionID == parentID)[0];
+                    scope.entities = recapitulations.filter(r => r.RegionId != parentId);
+                    scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
                 });
             });
         }

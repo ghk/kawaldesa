@@ -6,11 +6,11 @@ module App.Models {
 	import IQuery = Scaffold.IQuery;
 
     export interface IBaseAccountRecapitulation {
-        ID: number;
-        RegionID: string;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
         RegionName: string;
         BudgetedIncome: number;
         RealizedIncome: number;
@@ -27,11 +27,11 @@ module App.Models {
     export class BaseAccountRecapitulation {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        ID: number;
-        RegionID: string;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
         RegionName: string;
         BudgetedIncome: number;
         RealizedIncome: number;
@@ -45,11 +45,11 @@ module App.Models {
         AccountCompletedVillage: number;
         
         constructor(data?: IBaseAccountRecapitulation) {
-            this.ID = data ? data.ID : null;
-            this.RegionID = data ? data.RegionID : null;
-            this.APBNID = data ? data.APBNID : null;
-            this.APBNYear = data ? data.APBNYear : null;
-            this.ParentRegionID = data ? data.ParentRegionID : null;
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnId = data ? data.ApbnId : null;
+            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
             this.RegionName = data ? data.RegionName : null;
             this.BudgetedIncome = data ? data.BudgetedIncome : null;
             this.RealizedIncome = data ? data.RealizedIncome : null;
@@ -67,7 +67,7 @@ module App.Models {
     
     
     export interface IBaseEntity {
-        ID: number;
+        Id: number;
         DateCreated: /** System.DateTime **/ any;
         DateModified: /** System.DateTime **/ any;
     }
@@ -75,12 +75,12 @@ module App.Models {
     export class BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        ID: number;
+        Id: number;
         DateCreated: /** System.DateTime **/ any;
         DateModified: /** System.DateTime **/ any;
         
         constructor(data?: IBaseEntity) {
-            this.ID = data ? data.ID : null;
+            this.Id = data ? data.Id : null;
             this.DateCreated = data ? data.DateCreated : null;
             this.DateModified = data ? data.DateModified : null;
         }
@@ -89,13 +89,13 @@ module App.Models {
     
     
     export interface IRegion {
-        ID: string;
+        Id: string;
         Name: string;
         Type: App.Models.RegionType;
         IsKelurahan: boolean;
         Website: string;
         UrlKey: string;
-        fkParentID: string;
+        fkParentId: string;
         Parent: App.Models.IRegion;
         DateCreated: /** System.DateTime **/ any;
         DateModified: /** System.DateTime **/ any;
@@ -104,25 +104,25 @@ module App.Models {
     export class Region {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        ID: string;
+        Id: string;
         Name: string;
         Type: App.Models.RegionType;
         IsKelurahan: boolean;
         Website: string;
         UrlKey: string;
-        fkParentID: string;
+        fkParentId: string;
         Parent: App.Models.IRegion;
         DateCreated: /** System.DateTime **/ any;
         DateModified: /** System.DateTime **/ any;
         
         constructor(data?: IRegion) {
-            this.ID = data ? data.ID : null;
+            this.Id = data ? data.Id : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.IsKelurahan = data ? data.IsKelurahan : null;
             this.Website = data ? data.Website : null;
             this.UrlKey = data ? data.UrlKey : null;
-            this.fkParentID = data ? data.fkParentID : null;
+            this.fkParentId = data ? data.fkParentId : null;
             this.Parent = data ? data.Parent : null;
             this.DateCreated = data ? data.DateCreated : null;
             this.DateModified = data ? data.DateModified : null;
@@ -132,18 +132,18 @@ module App.Models {
     
     
     export interface IBaseTransferRecapitulation {
-        ID: number;
-        RegionID: string;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
         RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
+        BudgetedApbn: number;
+        TransferredApbn: number;
+        AcknowledgedApbn: number;
+        BudgetedAdd: number;
+        TransferredAdd: number;
+        AcknowledgedAdd: number;
         BudgetedTotal: number;
         TransferredTotal: number;
         AcknowledgedTotal: number;
@@ -152,35 +152,35 @@ module App.Models {
     export class BaseTransferRecapitulation {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        ID: number;
-        RegionID: string;
-        APBNID: number;
-        APBNYear: number;
-        ParentRegionID: number;
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
         RegionName: string;
-        BudgetedAPBN: number;
-        TransferredAPBN: number;
-        AcknowledgedAPBN: number;
-        BudgetedADD: number;
-        TransferredADD: number;
-        AcknowledgedADD: number;
+        BudgetedApbn: number;
+        TransferredApbn: number;
+        AcknowledgedApbn: number;
+        BudgetedAdd: number;
+        TransferredAdd: number;
+        AcknowledgedAdd: number;
         BudgetedTotal: number;
         TransferredTotal: number;
         AcknowledgedTotal: number;
         
         constructor(data?: IBaseTransferRecapitulation) {
-            this.ID = data ? data.ID : null;
-            this.RegionID = data ? data.RegionID : null;
-            this.APBNID = data ? data.APBNID : null;
-            this.APBNYear = data ? data.APBNYear : null;
-            this.ParentRegionID = data ? data.ParentRegionID : null;
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnId = data ? data.ApbnId : null;
+            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
             this.RegionName = data ? data.RegionName : null;
-            this.BudgetedAPBN = data ? data.BudgetedAPBN : null;
-            this.TransferredAPBN = data ? data.TransferredAPBN : null;
-            this.AcknowledgedAPBN = data ? data.AcknowledgedAPBN : null;
-            this.BudgetedADD = data ? data.BudgetedADD : null;
-            this.TransferredADD = data ? data.TransferredADD : null;
-            this.AcknowledgedADD = data ? data.AcknowledgedADD : null;
+            this.BudgetedApbn = data ? data.BudgetedApbn : null;
+            this.TransferredApbn = data ? data.TransferredApbn : null;
+            this.AcknowledgedApbn = data ? data.AcknowledgedApbn : null;
+            this.BudgetedAdd = data ? data.BudgetedAdd : null;
+            this.TransferredAdd = data ? data.TransferredAdd : null;
+            this.AcknowledgedAdd = data ? data.AcknowledgedAdd : null;
             this.BudgetedTotal = data ? data.BudgetedTotal : null;
             this.TransferredTotal = data ? data.TransferredTotal : null;
             this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
@@ -199,15 +199,15 @@ module App.Models {
         IsActivated: boolean;
         DateDeactivated: /** System.DateTime **/ any;
         TargetSource: string;
-        fkParentAccountID: number;
+        fkParentAccountId: number;
         ParentAccount: App.Models.IAccount;
-        fkAPBDesID: number;
-        APBDes: App.Models.IAPBDes;
-        fkCreatedByID: string;
+        fkApbdesId: number;
+        Apbdes: App.Models.IApbdes;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkModifiedByID: string;
+        fkModifiedById: string;
         ModifiedBy: /** App.Models.User **/ any;
-        fkDeactivatedByID: string;
+        fkDeactivatedById: string;
         DeactivatedBy: /** App.Models.User **/ any;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
@@ -226,15 +226,15 @@ module App.Models {
         IsActivated: boolean;
         DateDeactivated: /** System.DateTime **/ any;
         TargetSource: string;
-        fkParentAccountID: number;
+        fkParentAccountId: number;
         ParentAccount: App.Models.IAccount;
-        fkAPBDesID: number;
-        APBDes: App.Models.IAPBDes;
-        fkCreatedByID: string;
+        fkApbdesId: number;
+        Apbdes: App.Models.IApbdes;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkModifiedByID: string;
+        fkModifiedById: string;
         ModifiedBy: /** App.Models.User **/ any;
-        fkDeactivatedByID: string;
+        fkDeactivatedById: string;
         DeactivatedBy: /** App.Models.User **/ any;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
@@ -251,15 +251,15 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.DateDeactivated = data ? data.DateDeactivated : null;
             this.TargetSource = data ? data.TargetSource : null;
-            this.fkParentAccountID = data ? data.fkParentAccountID : null;
+            this.fkParentAccountId = data ? data.fkParentAccountId : null;
             this.ParentAccount = data ? data.ParentAccount : null;
-            this.fkAPBDesID = data ? data.fkAPBDesID : null;
-            this.APBDes = data ? data.APBDes : null;
-            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.fkApbdesId = data ? data.fkApbdesId : null;
+            this.Apbdes = data ? data.Apbdes : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
-            this.fkModifiedByID = data ? data.fkModifiedByID : null;
+            this.fkModifiedById = data ? data.fkModifiedById : null;
             this.ModifiedBy = data ? data.ModifiedBy : null;
-            this.fkDeactivatedByID = data ? data.fkDeactivatedByID : null;
+            this.fkDeactivatedById = data ? data.fkDeactivatedById : null;
             this.DeactivatedBy = data ? data.DeactivatedBy : null;
             this.ChildAccounts = data ? data.ChildAccounts : null;
             this.ParentCode = data ? data.ParentCode : null;
@@ -297,99 +297,99 @@ module App.Models {
     }
     
     
-    export interface IAPBD extends IBaseEntity {
-        DAU: number;
-        DBH: number;
+    export interface IApbd extends IBaseEntity {
+        Dau: number;
+        Dbh: number;
         IsActivated: boolean;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkRegionID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkRegionId: string;
         Region: App.Models.IRegion;
-        fkAPBDFileID: number;
-        APBDFile: App.Models.IAPBDFile;
+        fkApbdFileId: number;
+        ApbdFile: App.Models.IApbdFile;
     }
     
-    export class APBD extends BaseEntity {
+    export class Apbd extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        DAU: number;
-        DBH: number;
+        Dau: number;
+        Dbh: number;
         IsActivated: boolean;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkRegionID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkRegionId: string;
         Region: App.Models.IRegion;
-        fkAPBDFileID: number;
-        APBDFile: App.Models.IAPBDFile;
+        fkApbdFileId: number;
+        ApbdFile: App.Models.IApbdFile;
         
-        constructor(data?: IAPBD) {
+        constructor(data?: IApbd) {
             super(data);
-            this.DAU = data ? data.DAU : null;
-            this.DBH = data ? data.DBH : null;
+            this.Dau = data ? data.Dau : null;
+            this.Dbh = data ? data.Dbh : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.fkAPBNID = data ? data.fkAPBNID : null;
-            this.APBN = data ? data.APBN : null;
-            this.fkRegionID = data ? data.fkRegionID : null;
+            this.fkApbnId = data ? data.fkApbnId : null;
+            this.Apbn = data ? data.Apbn : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkAPBDFileID = data ? data.fkAPBDFileID : null;
-            this.APBDFile = data ? data.APBDFile : null;
+            this.fkApbdFileId = data ? data.fkApbdFileId : null;
+            this.ApbdFile = data ? data.ApbdFile : null;
         }
         
     }
     
     
-    export interface IAPBDes extends IBaseEntity {
+    export interface IApbdes extends IBaseEntity {
         IsActivated: boolean;
         IsCompleted: boolean;
         DateCompleted: /** System.DateTime **/ any;
-        SourceURL: string;
-        fkSourceFileID: number;
+        SourceUrl: string;
+        fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkRegionID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkRegionId: string;
         Region: App.Models.IRegion;
-        fkCompletedByID: string;
+        fkCompletedById: string;
         CompletedBy: /** App.Models.User **/ any;
-        fkModifiedByID: string;
+        fkModifiedById: string;
         ModifiedBy: /** App.Models.User **/ any;
         Accounts: Array<App.Models.IAccount>;
     }
     
-    export class APBDes extends BaseEntity {
+    export class Apbdes extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         IsActivated: boolean;
         IsCompleted: boolean;
         DateCompleted: /** System.DateTime **/ any;
-        SourceURL: string;
-        fkSourceFileID: number;
+        SourceUrl: string;
+        fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkRegionID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkRegionId: string;
         Region: App.Models.IRegion;
-        fkCompletedByID: string;
+        fkCompletedById: string;
         CompletedBy: /** App.Models.User **/ any;
-        fkModifiedByID: string;
+        fkModifiedById: string;
         ModifiedBy: /** App.Models.User **/ any;
         Accounts: Array<App.Models.IAccount>;
         
-        constructor(data?: IAPBDes) {
+        constructor(data?: IApbdes) {
             super(data);
             this.IsActivated = data ? data.IsActivated : null;
             this.IsCompleted = data ? data.IsCompleted : null;
             this.DateCompleted = data ? data.DateCompleted : null;
-            this.SourceURL = data ? data.SourceURL : null;
-            this.fkSourceFileID = data ? data.fkSourceFileID : null;
+            this.SourceUrl = data ? data.SourceUrl : null;
+            this.fkSourceFileId = data ? data.fkSourceFileId : null;
             this.SourceFile = data ? data.SourceFile : null;
-            this.fkAPBNID = data ? data.fkAPBNID : null;
-            this.APBN = data ? data.APBN : null;
-            this.fkRegionID = data ? data.fkRegionID : null;
+            this.fkApbnId = data ? data.fkApbnId : null;
+            this.Apbn = data ? data.Apbn : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkCompletedByID = data ? data.fkCompletedByID : null;
+            this.fkCompletedById = data ? data.fkCompletedById : null;
             this.CompletedBy = data ? data.CompletedBy : null;
-            this.fkModifiedByID = data ? data.fkModifiedByID : null;
+            this.fkModifiedById = data ? data.fkModifiedById : null;
             this.ModifiedBy = data ? data.ModifiedBy : null;
             this.Accounts = data ? data.Accounts : null;
         }
@@ -397,56 +397,56 @@ module App.Models {
     }
     
     
-    export interface IAPBDFile extends IBaseEntity {
+    export interface IApbdFile extends IBaseEntity {
         FileName: string;
         IsActivated: boolean;
-        APBDs: Array<App.Models.IAPBD>;
-        fkFileID: number;
+        Apbds: Array<App.Models.IApbd>;
+        fkFileId: number;
         File: App.Models.IBlob;
-        APBDCount: number;
-        TotalDAU: number;
-        TotalDBH: number;
+        ApbdCount: number;
+        TotalDau: number;
+        TotalDbh: number;
     }
     
-    export class APBDFile extends BaseEntity {
+    export class ApbdFile extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         FileName: string;
         IsActivated: boolean;
-        APBDs: Array<App.Models.IAPBD>;
-        fkFileID: number;
+        Apbds: Array<App.Models.IApbd>;
+        fkFileId: number;
         File: App.Models.IBlob;
-        APBDCount: number;
-        TotalDAU: number;
-        TotalDBH: number;
+        ApbdCount: number;
+        TotalDau: number;
+        TotalDbh: number;
         
-        constructor(data?: IAPBDFile) {
+        constructor(data?: IApbdFile) {
             super(data);
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.APBDs = data ? data.APBDs : null;
-            this.fkFileID = data ? data.fkFileID : null;
+            this.Apbds = data ? data.Apbds : null;
+            this.fkFileId = data ? data.fkFileId : null;
             this.File = data ? data.File : null;
-            this.APBDCount = data ? data.APBDCount : null;
-            this.TotalDAU = data ? data.TotalDAU : null;
-            this.TotalDBH = data ? data.TotalDBH : null;
+            this.ApbdCount = data ? data.ApbdCount : null;
+            this.TotalDau = data ? data.TotalDau : null;
+            this.TotalDbh = data ? data.TotalDbh : null;
         }
         
     }
     
     
-    export interface IAPBN extends IBaseEntity {
+    export interface IApbn extends IBaseEntity {
         DanaPerDesa: number;
         Year: number;
     }
     
-    export class APBN extends BaseEntity {
+    export class Apbn extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         DanaPerDesa: number;
         Year: number;
         
-        constructor(data?: IAPBN) {
+        constructor(data?: IApbn) {
             super(data);
             this.DanaPerDesa = data ? data.DanaPerDesa : null;
             this.Year = data ? data.Year : null;
@@ -488,9 +488,9 @@ module App.Models {
         Notes: string;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        fkRealizationID: number;
+        fkRealizationId: number;
         Realization: App.Models.IRealization;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
         Pictures: Array<App.Models.IBlob>;
     }
@@ -501,9 +501,9 @@ module App.Models {
         Notes: string;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        fkRealizationID: number;
+        fkRealizationId: number;
         Realization: App.Models.IRealization;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
         Pictures: Array<App.Models.IBlob>;
         
@@ -512,11 +512,72 @@ module App.Models {
             this.Notes = data ? data.Notes : null;
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.fkRealizationID = data ? data.fkRealizationID : null;
+            this.fkRealizationId = data ? data.fkRealizationId : null;
             this.Realization = data ? data.Realization : null;
-            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
             this.Pictures = data ? data.Pictures : null;
+        }
+        
+    }
+    
+    
+    export interface IInvitationToken extends IBaseEntity {
+        Token: string;
+        IsUsed: boolean;
+        fkUserId: string;
+        User: /** App.Models.User **/ any;
+        fkInviterId: string;
+        Inviter: /** App.Models.User **/ any;
+    }
+    
+    export class InvitationToken extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Token: string;
+        IsUsed: boolean;
+        fkUserId: string;
+        User: /** App.Models.User **/ any;
+        fkInviterId: string;
+        Inviter: /** App.Models.User **/ any;
+        
+        constructor(data?: IInvitationToken) {
+            super(data);
+            this.Token = data ? data.Token : null;
+            this.IsUsed = data ? data.IsUsed : null;
+            this.fkUserId = data ? data.fkUserId : null;
+            this.User = data ? data.User : null;
+            this.fkInviterId = data ? data.fkInviterId : null;
+            this.Inviter = data ? data.Inviter : null;
+        }
+        
+    }
+    
+    
+    export interface IOrganization extends IBaseEntity {
+        Name: string;
+        Description: string;
+        UrlKey: string;
+        fkPictureId: number;
+        Picture: App.Models.IBlob;
+    }
+    
+    export class Organization extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Name: string;
+        Description: string;
+        UrlKey: string;
+        fkPictureId: number;
+        Picture: App.Models.IBlob;
+        
+        constructor(data?: IOrganization) {
+            super(data);
+            this.Name = data ? data.Name : null;
+            this.Description = data ? data.Description : null;
+            this.UrlKey = data ? data.UrlKey : null;
+            this.fkPictureId = data ? data.fkPictureId : null;
+            this.Picture = data ? data.Picture : null;
         }
         
     }
@@ -526,9 +587,9 @@ module App.Models {
         Description: string;
         Vendor: string;
         Sector: App.Models.Sector;
-        fkTransactionID: number;
+        fkTransactionId: number;
         Transaction: App.Models.ITransaction;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
     }
     
@@ -538,9 +599,9 @@ module App.Models {
         Description: string;
         Vendor: string;
         Sector: App.Models.Sector;
-        fkTransactionID: number;
+        fkTransactionId: number;
         Transaction: App.Models.ITransaction;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
         
         constructor(data?: IRealization) {
@@ -548,9 +609,9 @@ module App.Models {
             this.Description = data ? data.Description : null;
             this.Vendor = data ? data.Vendor : null;
             this.Sector = data ? data.Sector : null;
-            this.fkTransactionID = data ? data.fkTransactionID : null;
+            this.fkTransactionId = data ? data.fkTransactionId : null;
             this.Transaction = data ? data.Transaction : null;
-            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
         }
         
@@ -561,22 +622,22 @@ module App.Models {
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        SourceURL: string;
-        fkSourceFileID: number;
+        SourceUrl: string;
+        fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkSourceID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkSourceId: string;
         Source: App.Models.IRegion;
-        fkDestinationID: string;
+        fkDestinationId: string;
         Destination: App.Models.IRegion;
-        fkAccountID: number;
+        fkAccountId: number;
         Account: App.Models.IAccount;
-        fkActorID: string;
+        fkActorId: string;
         Actor: App.Models.IRegion;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkTransactionFileID: number;
+        fkTransactionFileId: number;
         TransactionFile: App.Models.ITransactionFile;
     }
     
@@ -586,22 +647,22 @@ module App.Models {
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
-        SourceURL: string;
-        fkSourceFileID: number;
+        SourceUrl: string;
+        fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkAPBNID: number;
-        APBN: App.Models.IAPBN;
-        fkSourceID: string;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkSourceId: string;
         Source: App.Models.IRegion;
-        fkDestinationID: string;
+        fkDestinationId: string;
         Destination: App.Models.IRegion;
-        fkAccountID: number;
+        fkAccountId: number;
         Account: App.Models.IAccount;
-        fkActorID: string;
+        fkActorId: string;
         Actor: App.Models.IRegion;
-        fkCreatedByID: string;
+        fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkTransactionFileID: number;
+        fkTransactionFileId: number;
         TransactionFile: App.Models.ITransactionFile;
         
         constructor(data?: IBaseTransaction) {
@@ -609,22 +670,22 @@ module App.Models {
             this.Amount = data ? data.Amount : null;
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.SourceURL = data ? data.SourceURL : null;
-            this.fkSourceFileID = data ? data.fkSourceFileID : null;
+            this.SourceUrl = data ? data.SourceUrl : null;
+            this.fkSourceFileId = data ? data.fkSourceFileId : null;
             this.SourceFile = data ? data.SourceFile : null;
-            this.fkAPBNID = data ? data.fkAPBNID : null;
-            this.APBN = data ? data.APBN : null;
-            this.fkSourceID = data ? data.fkSourceID : null;
+            this.fkApbnId = data ? data.fkApbnId : null;
+            this.Apbn = data ? data.Apbn : null;
+            this.fkSourceId = data ? data.fkSourceId : null;
             this.Source = data ? data.Source : null;
-            this.fkDestinationID = data ? data.fkDestinationID : null;
+            this.fkDestinationId = data ? data.fkDestinationId : null;
             this.Destination = data ? data.Destination : null;
-            this.fkAccountID = data ? data.fkAccountID : null;
+            this.fkAccountId = data ? data.fkAccountId : null;
             this.Account = data ? data.Account : null;
-            this.fkActorID = data ? data.fkActorID : null;
+            this.fkActorId = data ? data.fkActorId : null;
             this.Actor = data ? data.Actor : null;
-            this.fkCreatedByID = data ? data.fkCreatedByID : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
-            this.fkTransactionFileID = data ? data.fkTransactionFileID : null;
+            this.fkTransactionFileId = data ? data.fkTransactionFileId : null;
             this.TransactionFile = data ? data.TransactionFile : null;
         }
         
@@ -662,7 +723,7 @@ module App.Models {
     export interface ITransactionFile extends IBaseEntity {
         FileName: string;
         IsActivated: boolean;
-        fkFileID: number;
+        fkFileId: number;
         File: App.Models.IBlob;
         Transactions: Array<App.Models.ITransaction>;
         TransactionCount: number;
@@ -675,7 +736,7 @@ module App.Models {
         
         FileName: string;
         IsActivated: boolean;
-        fkFileID: number;
+        fkFileId: number;
         File: App.Models.IBlob;
         Transactions: Array<App.Models.ITransaction>;
         TransactionCount: number;
@@ -686,7 +747,7 @@ module App.Models {
             super(data);
             this.FileName = data ? data.FileName : null;
             this.IsActivated = data ? data.IsActivated : null;
-            this.fkFileID = data ? data.fkFileID : null;
+            this.fkFileId = data ? data.fkFileId : null;
             this.File = data ? data.File : null;
             this.Transactions = data ? data.Transactions : null;
             this.TransactionCount = data ? data.TransactionCount : null;
@@ -726,25 +787,25 @@ module App.Models {
     
     
     export interface IUserScope extends IBaseEntity {
-        fkUserID: string;
+        fkUserId: string;
         User: /** App.Models.User **/ any;
-        fkRegionID: string;
+        fkRegionId: string;
         Region: App.Models.IRegion;
     }
     
     export class UserScope extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        fkUserID: string;
+        fkUserId: string;
         User: /** App.Models.User **/ any;
-        fkRegionID: string;
+        fkRegionId: string;
         Region: App.Models.IRegion;
         
         constructor(data?: IUserScope) {
             super(data);
-            this.fkUserID = data ? data.fkUserID : null;
+            this.fkUserId = data ? data.fkUserId : null;
             this.User = data ? data.User : null;
-            this.fkRegionID = data ? data.fkRegionID : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
         }
         

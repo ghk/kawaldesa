@@ -6,8 +6,8 @@
 module App.Controllers {
 
     export interface ICurrentUser {
-        ID: string;
-        FacebookID: String;
+        Id: string;
+        FacebookId: String;
         Name: String;
         Roles: String[];
         Scopes: string[];
@@ -37,7 +37,7 @@ module App.Controllers {
         childName: string;
         type = "transfer";
         currentUser: ICurrentUser;
-        regionID: string;
+        regionId: string;
         isPathReplacing = false;
         currentPath = null;
 
@@ -64,25 +64,25 @@ module App.Controllers {
             var path = this.$location.path();
             if (path == this.currentPath)
                 return;
-            var regionID:string = null;
+            var regionId:string = null;
             var regionKey = null;
             if (path == "/" || path == "") {
-                regionID = "0";
+                regionId = "0";
                 this.type = "transfer";
             } else if (path.indexOf("/p/") != -1) {
-                regionID = this.$location.path().replace("/p/", "");
+                regionId = this.$location.path().replace("/p/", "");
                 this.type = "transfer";
             } else if (path.indexOf("/r/") != -1) {
-                regionID = this.$location.path().replace("/r/", "");
+                regionId = this.$location.path().replace("/r/", "");
                 this.type = "realization";
             } else if (path.indexOf("/apbn/") != -1) {
-                regionID = this.$location.path().replace("/apbn/", "");
+                regionId = this.$location.path().replace("/apbn/", "");
                 this.type = "apbn";
             } else if (path.indexOf("/add/") != -1) {
-                regionID = this.$location.path().replace("/add/", "");
+                regionId = this.$location.path().replace("/add/", "");
                 this.type = "add";
             } else if (path.indexOf("/bhpr/") != -1) {
-                regionID = this.$location.path().replace("/bhpr/", "");
+                regionId = this.$location.path().replace("/bhpr/", "");
                 this.type = "bhpr";
             } else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
@@ -93,12 +93,12 @@ module App.Controllers {
                 regionKey = path.substring(1);
             }
 
-            if(regionID != null || regionKey)
-                this.loadRegion(regionID, regionKey);
+            if(regionId != null || regionKey)
+                this.loadRegion(regionId, regionKey);
 
-            if (regionID == null && !regionKey)
-                regionID = "0";
-            this.regionID = regionID;
+            if (regionId == null && !regionKey)
+                regionId = "0";
+            this.regionId = regionId;
             this.currentPath = path;
         }
 
@@ -114,12 +114,12 @@ module App.Controllers {
                     t = "add";
                 else if (type == "bhpr")
                     t = "bhpr";
-                var path = "/" + t + "/" + this.region.ID;
+                var path = "/" + t + "/" + this.region.Id;
                 this.$location.path(path);
             }
         }
 
-        changeRegion(regionID, $event) {
+        changeRegion(regionId, $event) {
             $event.preventDefault();
             this.$scope.$broadcast("regionChangeBefore");
             var t = "p"
@@ -131,7 +131,7 @@ module App.Controllers {
                 t = "add";
             else if (this.type == "bhpr")
                 t = "bhpr";
-            var path = "/" + t + "/" + regionID;
+            var path = "/" + t + "/" + regionId;
             this.$location.path(path);
         }
 
@@ -147,32 +147,32 @@ module App.Controllers {
             return this.currentUser.Roles.some(r => roleName == r);
         }
 
-        isInScope(entityID) {
-            var regionIDs = this.regionTree.map(r => r.ID);
-            regionIDs.push(entityID);
-            return regionIDs.some(rid => this.currentUser.Scopes.some(id => rid == id));
+        isInScope(entityId) {
+            var regionId = this.regionTree.map(r => r.Id);
+            regionId.push(entityId);
+            return regionId.some(rid => this.currentUser.Scopes.some(id => rid == id));
         }
 
-        isInRoleAndScope(roleName, entityID) {
-            return this.isInRole(roleName) && this.isInScope(entityID);
+        isInRoleAndScope(roleName, entityId) {
+            return this.isInRole(roleName) && this.isInScope(entityId);
         }
 
-        loadRegion(parentID?: string, parentKey?: string) {
+        loadRegion(parentId?: string, parentKey?: string) {
             var ctrl = this;
 
             this.regionTree = [];
             this.childName = CHILD_NAMES[0];
 
             var promise = null;
-            if (parentID != null)
-                promise = Controllers.RegionController.Get(parentID);
+            if (parentId != null)
+                promise = Controllers.RegionController.Get(parentId);
             else if (parentKey)
                 promise = Controllers.RegionController.GetByURLKey(parentKey);
 
             promise.done((region: Models.Region) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.region = region;
-                    ctrl.regionID = region.ID;
+                    ctrl.regionId = region.Id;
                     var regionTree = [];
                     var cur : Models.IRegion = region;
                     while (cur) {

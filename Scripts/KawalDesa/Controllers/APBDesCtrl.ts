@@ -14,9 +14,9 @@ module App.Controllers {
         static $inject = ["$scope", "$upload"];
 
         indexCtrl: IndexCtrl;
-        apbdes: Models.APBDes;
+        apbdes: Models.Apbdes;
         rootAccounts: Models.Account[];
-        newAccounts: { [rootAccountID: number]: Models.Account[] } = {};
+        newAccounts: { [rootAccountId: number]: Models.Account[] } = {};
         expenseGroup = Models.ExpenseGroup;
         sector = Models.Sector;
 
@@ -51,15 +51,15 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
 
             this.formErrors = {};
-            this.isVolunteer = this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.ID);
+            this.isVolunteer = this.indexCtrl.isInRoleAndScope('volunteer_account', this.indexCtrl.region.Id);
 
             $scope.$on('regionChangeSuccess', function () {
                 ctrl.onRegionChanged();
             });
         }
 
-        addNewAccount(rootAccountID: number) {
-            this.newAccounts[rootAccountID].push(new Models.Account());
+        addNewAccount(rootAccountId: number) {
+            this.newAccounts[rootAccountId].push(new Models.Account());
             this.filteredExpenses = this.filterObject(Models.ExpenseGroup);
             this.filteredSector = this.filterObject(Models.Sector);
             this.buttonAddAccountShow = true;
@@ -72,12 +72,12 @@ module App.Controllers {
             }
         }
 
-        saveNewAccounts(rootAccountID: number) {
+        saveNewAccounts(rootAccountId: number) {
             var ctrl = this;
-            this.formErrors[rootAccountID] = {};
-            Controllers.APBDesController.AddAccounts(this.apbdes.ID, rootAccountID, this.newAccounts[rootAccountID])
+            this.formErrors[rootAccountId] = {};
+            Controllers.APBDesController.AddAccounts(this.apbdes.Id, rootAccountId, this.newAccounts[rootAccountId])
                 .done(() => {
-                    ctrl.getAPBDes(ctrl.indexCtrl.region.ID);
+                    ctrl.getAPBDes(ctrl.indexCtrl.region.Id);
                 })
                 .fail((error: any) => {
                     ctrl.$scope.$apply(() => {
@@ -94,37 +94,37 @@ module App.Controllers {
                             }
                             return results;
                         }
-                        for (var i = 0; i < ctrl.newAccounts[rootAccountID].length; i++) {
-                            ctrl.formErrors[rootAccountID][i] = getError(i);
+                        for (var i = 0; i < ctrl.newAccounts[rootAccountId].length; i++) {
+                            ctrl.formErrors[rootAccountId][i] = getError(i);
                         }
                     });
                 });
         }
 
-        saveNewRealization(accountID) {
+        saveNewRealization(accountId) {
             var ctrl = this;
             
             Controllers.TransactionController.AddAccountTransaction(new Scaffold.Multipart({
-                forms: this.formTransactionRealization[accountID[0]],
-                files: this.formTransactionRealization[accountID[0]].Proof
+                forms: this.formTransactionRealization[accountId[0]],
+                files: this.formTransactionRealization[accountId[0]].Proof
             })).success(() => {
-                ctrl.totalRealizationAmount[accountID[1]] += this.formTransactionRealization[accountID[0]].Amount;
-                ctrl.totalRootRealizationAmount[accountID[2]] += this.formTransactionRealization[accountID[0]].Amount
-                ctrl.setFormAccount(accountID[0], 0, false);
-                ctrl.loadRealization(accountID[0]);
+                ctrl.totalRealizationAmount[accountId[1]] += this.formTransactionRealization[accountId[0]].Amount;
+                ctrl.totalRootRealizationAmount[accountId[2]] += this.formTransactionRealization[accountId[0]].Amount
+                ctrl.setFormAccount(accountId[0], 0, false);
+                ctrl.loadRealization(accountId[0]);
             });
         }
 
-        saveNewFieldReport(realizationID) {
+        saveNewFieldReport(realizationId) {
             var ctrl = this;
 
-            console.log(this.formFieldReport[realizationID]);
+            console.log(this.formFieldReport[realizationId]);
             Controllers.FieldReportController.AddFieldReport(new Scaffold.Multipart({
-                forms: this.formFieldReport[realizationID],
-                files: this.formFieldReport[realizationID].Report
+                forms: this.formFieldReport[realizationId],
+                files: this.formFieldReport[realizationId].Report
             }))
                 //.success(() => {
-                //    ctrl.loadFieldReport(realizationID);
+                //    ctrl.loadFieldReport(realizationId);
                 //});
         }
 
@@ -144,62 +144,62 @@ module App.Controllers {
         }
 
         isExpanded(entity) {
-            var result = this.expandedStates[entity.ID];
+            var result = this.expandedStates[entity.Id];
             return result;
         }
 
         isRealizationExpanded(entity) {
-            var result = this.realizationExpandedStates[entity.Realization.ID];
+            var result = this.realizationExpandedStates[entity.Realization.Id];
             return result;
         }
 
         isFormExpanded(entity) {
-            return this.formTransactionRealization[entity.ID];
+            return this.formTransactionRealization[entity.Id];
         }
 
         isFormRealizationExpanded(entity) {
-            return this.formFieldReport[entity.Realization.ID];
+            return this.formFieldReport[entity.Realization.Id];
         }
 
-        toggleAccountExpander(accountID, ev) {
+        toggleAccountExpander(accountId, ev) {
             ev.preventDefault();
-            this.expandedStates[accountID] = !this.expandedStates[accountID];
-            this.loadRealization(accountID);
+            this.expandedStates[accountId] = !this.expandedStates[accountId];
+            this.loadRealization(accountId);
         }
 
-        toggleRealizationExpander(realizationID, ev) {
+        toggleRealizationExpander(realizationId, ev) {
             ev.preventDefault();
-            this.realizationExpandedStates[realizationID] = !this.realizationExpandedStates[realizationID];
-            //this.loadFieldReport(realizationID);
+            this.realizationExpandedStates[realizationId] = !this.realizationExpandedStates[realizationId];
+            //this.loadFieldReport(realizationId);
         }       
 
-        setFormAccount(accountID, rootAccountID, state) {
+        setFormAccount(accountId, rootAccountId, state) {
             if (state)
-                this.formTransactionRealization[accountID] = {
-                    fkAccountID: accountID
+                this.formTransactionRealization[accountId] = {
+                    fkAccountId: accountId
                 };
             else 
-                delete this.formTransactionRealization[accountID];
+                delete this.formTransactionRealization[accountId];
         }
 
-        setFormFieldReport(realizationID, state) {
+        setFormFieldReport(realizationId, state) {
             if (state)
-                this.formFieldReport[realizationID] = {
-                    RealizationID: realizationID
+                this.formFieldReport[realizationId] = {
+                    RealizationId: realizationId
                 };
             else
-                delete this.formFieldReport[realizationID];
+                delete this.formFieldReport[realizationId];
         }
 
-        isRootAccount(parentAccountID) {
-            if (parentAccountID != null)
+        isRootAccount(parentAccountId) {
+            if (parentAccountId != null)
                 return true;
             return false;
         }
 
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
-                this.getAPBDes(this.indexCtrl.region.ID);
+                this.getAPBDes(this.indexCtrl.region.Id);
                 this.formTransactionRealization = {};
                 this.formFieldReport = {};
                 this.realizations = {};
@@ -233,7 +233,7 @@ module App.Controllers {
         onSubmittingWebsite() {
             var ctrl = this;
             
-            Controllers.RegionController.UpdateWebsite(this.indexCtrl.region.ID, this.indexCtrl.region.Website)
+            Controllers.RegionController.UpdateWebsite(this.indexCtrl.region.Id, this.indexCtrl.region.Website)
                     .done(() => {
                         ctrl.$scope.$apply(() => {
                             this.onWebsiteShowLink();
@@ -243,7 +243,7 @@ module App.Controllers {
 
         onComplete() {
             var ctrl = this;
-            Controllers.APBDesController.Complete(this.apbdes.ID)
+            Controllers.APBDesController.Complete(this.apbdes.Id)
                 .done(() => {
                     ctrl.$scope.$apply(() => {
                         this.isCompleteStatus = "sudah";
@@ -260,43 +260,43 @@ module App.Controllers {
                 window.open(website);
         }
 
-        loadRealization(accountID) {
+        loadRealization(accountId) {
             var ctrl = this;
-            if (this.expandedStates[accountID]) {
-                Controllers.TransactionController.GetRealizationTransactions(accountID).done(details => {
+            if (this.expandedStates[accountId]) {
+                Controllers.TransactionController.GetRealizationTransactions(accountId).done(details => {
                     ctrl.$scope.$apply(() => {
-                        ctrl.realizations[accountID] = details;
+                        ctrl.realizations[accountId] = details;
                     });
                 });
             }
         }
 
-        loadFieldReport(realizationID) {
+        loadFieldReport(realizationId) {
             var ctrl = this;
-            if (this.realizationExpandedStates[realizationID]) {
-                Controllers.FieldReportController.GetPicture(realizationID).done(details => {
+            if (this.realizationExpandedStates[realizationId]) {
+                Controllers.FieldReportController.GetPicture(realizationId).done(details => {
                     console.log(details);
                     ctrl.$scope.$apply(() => {
-                        ctrl.fieldReport[realizationID] = details;
+                        ctrl.fieldReport[realizationId] = details;
                     });
                 });
             }
         }
 
-        getAPBDes(regionID: string) {
+        getAPBDes(regionId: string) {
             var ctrl = this;
             var scope = this.$scope;
-            Controllers.APBDesController.GetByRegionID(regionID).done((apbdes) => {
+            Controllers.APBDesController.GetByRegionId(regionId).done((apbdes) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.apbdes = apbdes;
-                    ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountID == null);
+                    ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountId == null);
                     ctrl.rootAccounts.sort((a, b) => a.Type - b.Type);
                     for (var i = 0; i < ctrl.rootAccounts.length; i++) {
                         var totalRootObj = 0;
                         var totalRootRealizationObj = 0;
                         var root = ctrl.rootAccounts[i];
                         root.ChildAccounts = apbdes.Accounts
-                            .filter(a => a.Type == root.Type && a.fkParentAccountID != null);
+                            .filter(a => a.Type == root.Type && a.fkParentAccountId != null);
                         root.ChildAccounts.sort((a, b) => a.Code.localeCompare(b.Code));
 
                         for (var j = 0; j < root.ChildAccounts.length; j++) {
@@ -312,22 +312,22 @@ module App.Controllers {
                             }
 
                             if (root.ChildAccounts[j].ChildAccounts.length > 0) {
-                                ctrl.totalTargetAmount[root.ChildAccounts[j].ID] = totalObj;
-                                ctrl.totalRealizationAmount[root.ChildAccounts[j].ID] = totalRealizationObj;
+                                ctrl.totalTargetAmount[root.ChildAccounts[j].Id] = totalObj;
+                                ctrl.totalRealizationAmount[root.ChildAccounts[j].Id] = totalRealizationObj;
 
                                 totalRootObj += totalObj;
                                 totalRootRealizationObj += totalRealizationObj;
                             }
                         }
 
-                        ctrl.totalRootTargetAmount[ctrl.rootAccounts[i].ID] = totalRootObj;
-                        ctrl.totalRootRealizationAmount[ctrl.rootAccounts[i].ID] = totalRootRealizationObj;
+                        ctrl.totalRootTargetAmount[ctrl.rootAccounts[i].Id] = totalRootObj;
+                        ctrl.totalRootRealizationAmount[ctrl.rootAccounts[i].Id] = totalRootRealizationObj;
                     }
 
                     ctrl.newAccounts = {};
                     for (var i = 0; i < ctrl.rootAccounts.length; i++) {
                         var root = ctrl.rootAccounts[i];
-                        ctrl.newAccounts[root.ID] = [];
+                        ctrl.newAccounts[root.Id] = [];
                     }
 
                     if (apbdes.IsCompleted) {
