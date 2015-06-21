@@ -22,6 +22,13 @@ namespace App.Models
         public string Name { get; set; }
         public string FacebookID { get; set; }
         public bool FacebookIsVerified { get; set; }
+        public bool IsADuplicate { get; set; }
+        public bool IsActive { get; set; }
+        public string Email { get; set; }
+
+        [ForeignKey("Organization")]
+        public long? fkOrganizationID { get; set; }
+        public virtual Organization Organization { get; set; }
     }
 
     public class UserViewModel
@@ -50,6 +57,7 @@ namespace App.Models
 
     public static class Role {
         public const string ADMIN = "admin";
+        public const string ORGANIZATION_ADMIN = "org_admin";
         public const string VOLUNTEER = "volunteer";
         public const string VOLUNTEER_APBN = "volunteer_apbn";
         public const string VOLUNTEER_ADD = "volunteer_add";

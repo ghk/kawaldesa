@@ -47,6 +47,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActionMailer.Net.Postmark">
+      <HintPath>packages\ActionMailerNext.Postmark.1.1.0.0\lib\net40\ActionMailer.Net.Postmark.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionMailerNext, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\ActionMailerNext.2.0.0.0\lib\net45\ActionMailerNext.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionMailerNext.Mvc5">
+      <HintPath>packages\ActionMailerNext.Mvc5.2.0.0.1\lib\net45\ActionMailerNext.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
@@ -88,6 +98,9 @@
     <Reference Include="log4net">
       <HintPath>packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Mandrill">
+      <HintPath>packages\Mandrill.1.0.85\lib\net40\Mandrill.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -124,6 +137,12 @@
     </Reference>
     <Reference Include="Npgsql.EntityFramework">
       <HintPath>packages\Npgsql.EntityFramework.2.2.3\lib\net45\Npgsql.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>packages\RazorEngine.3.1.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -204,6 +223,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Models\OrganizationController.cs" />
+    <Compile Include="Mailers\UserMailer.cs" />
+    <Compile Include="Models\InvitationToken.cs" />
+    <Compile Include="Models\Organization.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
@@ -296,6 +319,8 @@
     <Content Include="Views\KawalDesa\APBNAllocation.cshtml" />
     <Content Include="Views\KawalDesa\ADDAllocation.cshtml" />
     <Content Include="Views\KawalDesa\BHPRAllocation.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

@@ -20,6 +20,7 @@ namespace App.Models
         public virtual IDbSet<FieldReport> FieldReport { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserScope> UserScopes { get; set; }
+        public virtual IDbSet<Organization> Organizations { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
         public virtual IDbSet<APBN> APBNs { get; set; }
         public virtual IDbSet<APBD> APBDs { get; set; }
@@ -34,6 +35,7 @@ namespace App.Models
         public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
         public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
+        public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);

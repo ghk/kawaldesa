@@ -284,7 +284,6 @@ namespace App.Controllers.Services
             {
                 bool willBeAssigned = roleNames.Contains(roleName);
                 bool isCurrentlyAssigned = principal.IsInRole(roleName);
-                bool isCurrentlyAssigned2 = UserManager.IsInRole(user.Id, roleName);
                 IdentityResult res = null;
                 if(willBeAssigned != isCurrentlyAssigned)
                 {

@@ -16,6 +16,7 @@ using App.Security;
 using System.Web.Script.Serialization;
 using System.Configuration;
 using System.Security.Principal;
+using App.Mailers;
 
 namespace App.Controllers
 {
@@ -46,6 +47,7 @@ namespace App.Controllers
         [KawalDesaAuthorize]
         public ActionResult Dashboard()
         {
+            //new UserMailer().Invitation().Deliver();
             var user = GetUserDictFromSession();
             if (user == null)
             {
@@ -64,7 +66,7 @@ namespace App.Controllers
             return redirectHost;
 
         }
-        public ActionResult Login()
+        public ActionResult Login(String token)
         {
             var referrer = Request.ServerVariables["HTTP_REFERER"] as String;
 
@@ -84,6 +86,8 @@ namespace App.Controllers
 
             var redirectHost = GetRedirectHost();
             var redirectUrl = redirectHost + "/FacebookRedirect";
+            if (!string.IsNullOrWhiteSpace(token))
+                redirectUrl += "?token=" + token.Trim();
 
             if (referrer != null && (!referrer.StartsWith(redirectHost) || referrer.ToLower().EndsWith("login")))
                 referrer = null;
@@ -104,7 +108,7 @@ namespace App.Controllers
             String facebookRedirect = String.Format("https://graph.facebook.com/oauth/authorize? type=web_server&client_id={0}&redirect_uri={1}", clientID, redirectUrl);
             return new RedirectResult(facebookRedirect);
         }
-        public ActionResult FacebookRedirect(String code)
+        public ActionResult FacebookRedirect(String code, String token)
         {
             String loginRedirect = Session["LoginRedirect"] as string;
             if (loginRedirect == null)
@@ -167,7 +171,33 @@ namespace App.Controllers
             {
                 using (DB db = new DB())
                 {
-                    var user = db.Users.FirstOrDefault(u => u.FacebookID == facebookID);
+                    InvitationToken invitationToken = null;
+                    if (!string.IsNullOrWhiteSpace(token))
+                    {
+                        token = token.Trim();
+                        invitationToken = db.InvitationTokens.FirstOrDefault(t => t.Token == token && !t.IsUsed);
+                    }
+
+                    var user = db.Users.FirstOrDefault(u => u.FacebookID == facebookID && u.IsActive);
+                    if(invitationToken != null)
+                    {
+                        invitationToken.IsUsed = true;
+                        db.Entry(invitationToken).State = EntityState.Modified;
+                        if (user != null)
+                        {
+                            user.IsADuplicate = true;
+                            user.IsActive = false;
+                            db.Entry(user).State = EntityState.Modified;
+                        }
+                        user = invitationToken.User;
+                        user.IsActive = true;
+                        user.FacebookID = facebookID;
+                        user.UserName = "fb"+facebookID;
+                        user.Name = name;
+
+                        db.SaveChanges();
+                    }
+
                     if (user == null)
                     {
                         var userManager = new UserManager<User>(new UserStore<User>(db));
@@ -175,13 +205,14 @@ namespace App.Controllers
                         {
                             FacebookID = facebookID,
                             Name = name,
+                            IsActive = true,
                             UserName = "fb" + facebookID,
                             FacebookIsVerified = isVerified
                         };
                         var newUser = userManager.Create(user);
                         userManager.AddToRole(user.Id, Role.VOLUNTEER);
-                        db.SaveChanges();
                     }
+
                     Session[USERID_KEY] = user.Id;
                 }
             }
