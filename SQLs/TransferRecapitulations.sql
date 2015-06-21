@@ -1,6 +1,6 @@
 ﻿CREATE OR REPLACE VIEW dbo."TransferRecapitulations" AS
         SELECT
-	apbn."ID" * 100000 + r."ID" as "ID",
+	apbn."ID" ||'-'|| r."ID" as "ID",
 	r."ID" as "RegionID",
 	apbn."ID" as "APBNID",
 	apbn."Year" as "APBNYear",

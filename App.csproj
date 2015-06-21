@@ -223,10 +223,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412260908019_Views.cs" />
-    <Compile Include="Migrations\201412260908019_Views.Designer.cs">
-      <DependentUpon>201412260908019_Views.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APBDes.cs" />
     <Compile Include="Models\FieldReport.cs" />
@@ -356,11 +352,6 @@
       <Project>{c51dff62-62f4-4451-9757-fd8d97cda2a8}</Project>
       <Name>Scaffold</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412260908019_Views.resx">
-      <DependentUpon>201412260908019_Views.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

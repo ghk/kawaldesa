@@ -4,6 +4,7 @@
 	desa."ID" as "ID",
 	desa."Type" as "Type",
 	desa."Name" as "Name",
+	desa."IsKelurahan" as "IsKelurahan",
 	kec."ID" as "ParentID",
 	kab."ID" as "ParentParentID",
 	prov."ID" as "ParentParentParentID",
