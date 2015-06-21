@@ -33,7 +33,7 @@ module App.Controllers {
             }
         }
 
-        getRecapitulations(parentID: number) {
+        getRecapitulations(parentID: string) {
             var ctrl = this;
             var scope = this.$scope;
             var query = {

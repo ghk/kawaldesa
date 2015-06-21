@@ -10,7 +10,7 @@ module App.Controllers {
         FacebookID: String;
         Name: String;
         Roles: String[];
-        Scopes: number[];
+        Scopes: string[];
     }
 
     interface MyWindow extends Window {
@@ -37,7 +37,7 @@ module App.Controllers {
         childName: string;
         type = "transfer";
         currentUser: ICurrentUser;
-        regionID: number;
+        regionID: string;
         isPathReplacing = false;
         currentPath = null;
 
@@ -64,25 +64,25 @@ module App.Controllers {
             var path = this.$location.path();
             if (path == this.currentPath)
                 return;
-            var regionID = -1;
+            var regionID:string = null;
             var regionKey = null;
             if (path == "/" || path == "") {
-                regionID = 0;
+                regionID = "0";
                 this.type = "transfer";
             } else if (path.indexOf("/p/") != -1) {
-                regionID = parseInt(this.$location.path().replace("/p/", ""));
+                regionID = this.$location.path().replace("/p/", "");
                 this.type = "transfer";
             } else if (path.indexOf("/r/") != -1) {
-                regionID = parseInt(this.$location.path().replace("/r/", ""));
+                regionID = this.$location.path().replace("/r/", "");
                 this.type = "realization";
             } else if (path.indexOf("/apbn/") != -1) {
-                regionID = parseInt(this.$location.path().replace("/apbn/", ""));
+                regionID = this.$location.path().replace("/apbn/", "");
                 this.type = "apbn";
             } else if (path.indexOf("/add/") != -1) {
-                regionID = parseInt(this.$location.path().replace("/add/", ""));
+                regionID = this.$location.path().replace("/add/", "");
                 this.type = "add";
             } else if (path.indexOf("/bhpr/") != -1) {
-                regionID = parseInt(this.$location.path().replace("/bhpr/", ""));
+                regionID = this.$location.path().replace("/bhpr/", "");
                 this.type = "bhpr";
             } else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
@@ -93,11 +93,11 @@ module App.Controllers {
                 regionKey = path.substring(1);
             }
 
-            if(regionID != -1 || regionKey)
+            if(regionID != null || regionKey)
                 this.loadRegion(regionID, regionKey);
 
-            if (regionID == -1 && !regionKey)
-                regionID = 0;
+            if (regionID == null && !regionKey)
+                regionID = "0";
             this.regionID = regionID;
             this.currentPath = path;
         }
@@ -157,14 +157,14 @@ module App.Controllers {
             return this.isInRole(roleName) && this.isInScope(entityID);
         }
 
-        loadRegion(parentID?: number, parentKey?: string) {
+        loadRegion(parentID?: string, parentKey?: string) {
             var ctrl = this;
 
             this.regionTree = [];
             this.childName = CHILD_NAMES[0];
 
             var promise = null;
-            if (parentID != -1)
+            if (parentID != null)
                 promise = Controllers.RegionController.Get(parentID);
             else if (parentKey)
                 promise = Controllers.RegionController.GetByURLKey(parentKey);

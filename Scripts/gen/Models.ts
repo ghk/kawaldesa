@@ -1,17 +1,5 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-/// WARNING: T4 generated file 
+﻿/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
-
 
 module App.Models {
 
@@ -19,7 +7,7 @@ module App.Models {
 
     export interface IBaseAccountRecapitulation {
         ID: number;
-        RegionID: number;
+        RegionID: string;
         APBNID: number;
         APBNYear: number;
         ParentRegionID: number;
@@ -40,7 +28,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         ID: number;
-        RegionID: number;
+        RegionID: string;
         APBNID: number;
         APBNYear: number;
         ParentRegionID: number;
@@ -100,9 +88,52 @@ module App.Models {
     }
     
     
+    export interface IRegion {
+        ID: string;
+        Name: string;
+        Type: App.Models.RegionType;
+        IsKelurahan: boolean;
+        Website: string;
+        UrlKey: string;
+        fkParentID: string;
+        Parent: App.Models.IRegion;
+        DateCreated: /** System.DateTime **/ any;
+        DateModified: /** System.DateTime **/ any;
+    }
+    
+    export class Region {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        ID: string;
+        Name: string;
+        Type: App.Models.RegionType;
+        IsKelurahan: boolean;
+        Website: string;
+        UrlKey: string;
+        fkParentID: string;
+        Parent: App.Models.IRegion;
+        DateCreated: /** System.DateTime **/ any;
+        DateModified: /** System.DateTime **/ any;
+        
+        constructor(data?: IRegion) {
+            this.ID = data ? data.ID : null;
+            this.Name = data ? data.Name : null;
+            this.Type = data ? data.Type : null;
+            this.IsKelurahan = data ? data.IsKelurahan : null;
+            this.Website = data ? data.Website : null;
+            this.UrlKey = data ? data.UrlKey : null;
+            this.fkParentID = data ? data.fkParentID : null;
+            this.Parent = data ? data.Parent : null;
+            this.DateCreated = data ? data.DateCreated : null;
+            this.DateModified = data ? data.DateModified : null;
+        }
+        
+    }
+    
+    
     export interface IBaseTransferRecapitulation {
         ID: number;
-        RegionID: number;
+        RegionID: string;
         APBNID: number;
         APBNYear: number;
         ParentRegionID: number;
@@ -122,7 +153,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         ID: number;
-        RegionID: number;
+        RegionID: string;
         APBNID: number;
         APBNYear: number;
         ParentRegionID: number;
@@ -272,7 +303,7 @@ module App.Models {
         IsActivated: boolean;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
         fkAPBDFileID: number;
         APBDFile: App.Models.IAPBDFile;
@@ -286,7 +317,7 @@ module App.Models {
         IsActivated: boolean;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
         fkAPBDFileID: number;
         APBDFile: App.Models.IAPBDFile;
@@ -316,7 +347,7 @@ module App.Models {
         SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
         fkCompletedByID: string;
         CompletedBy: /** App.Models.User **/ any;
@@ -336,7 +367,7 @@ module App.Models {
         SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
         fkCompletedByID: string;
         CompletedBy: /** App.Models.User **/ any;
@@ -526,44 +557,6 @@ module App.Models {
     }
     
     
-    export interface IRegion extends IBaseEntity {
-        ID: number;
-        Name: string;
-        Type: App.Models.RegionType;
-        IsKelurahan: boolean;
-        Website: string;
-        UrlKey: string;
-        fkParentID: number;
-        Parent: App.Models.IRegion;
-    }
-    
-    export class Region extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        ID: number;
-        Name: string;
-        Type: App.Models.RegionType;
-        IsKelurahan: boolean;
-        Website: string;
-        UrlKey: string;
-        fkParentID: number;
-        Parent: App.Models.IRegion;
-        
-        constructor(data?: IRegion) {
-            super(data);
-            this.ID = data ? data.ID : null;
-            this.Name = data ? data.Name : null;
-            this.Type = data ? data.Type : null;
-            this.IsKelurahan = data ? data.IsKelurahan : null;
-            this.Website = data ? data.Website : null;
-            this.UrlKey = data ? data.UrlKey : null;
-            this.fkParentID = data ? data.fkParentID : null;
-            this.Parent = data ? data.Parent : null;
-        }
-        
-    }
-    
-    
     export interface IBaseTransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
@@ -573,13 +566,13 @@ module App.Models {
         SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkSourceID: number;
+        fkSourceID: string;
         Source: App.Models.IRegion;
-        fkDestinationID: number;
+        fkDestinationID: string;
         Destination: App.Models.IRegion;
         fkAccountID: number;
         Account: App.Models.IAccount;
-        fkActorID: number;
+        fkActorID: string;
         Actor: App.Models.IRegion;
         fkCreatedByID: string;
         CreatedBy: /** App.Models.User **/ any;
@@ -598,13 +591,13 @@ module App.Models {
         SourceFile: App.Models.IBlob;
         fkAPBNID: number;
         APBN: App.Models.IAPBN;
-        fkSourceID: number;
+        fkSourceID: string;
         Source: App.Models.IRegion;
-        fkDestinationID: number;
+        fkDestinationID: string;
         Destination: App.Models.IRegion;
         fkAccountID: number;
         Account: App.Models.IAccount;
-        fkActorID: number;
+        fkActorID: string;
         Actor: App.Models.IRegion;
         fkCreatedByID: string;
         CreatedBy: /** App.Models.User **/ any;
@@ -735,7 +728,7 @@ module App.Models {
     export interface IUserScope extends IBaseEntity {
         fkUserID: string;
         User: /** App.Models.User **/ any;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
     }
     
@@ -744,7 +737,7 @@ module App.Models {
         
         fkUserID: string;
         User: /** App.Models.User **/ any;
-        fkRegionID: number;
+        fkRegionID: string;
         Region: App.Models.IRegion;
         
         constructor(data?: IUserScope) {
@@ -757,6 +750,4 @@ module App.Models {
         
     }
     
-
 }
-

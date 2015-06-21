@@ -12,13 +12,13 @@ namespace App.Models
     {
         public long ID { get; set; }
 
-        public long RegionID { get; set; }
+        public string RegionID { get; set; }
 
         public long APBNID { get; set; }
 
         public int APBNYear { get; set; }
 
-        public long? ParentRegionID { get; set; }
+        public string ParentRegionID { get; set; }
 
         public string RegionName { get; set; }
 

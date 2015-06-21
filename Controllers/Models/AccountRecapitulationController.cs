@@ -17,8 +17,8 @@ namespace App.Controllers.Models
 
         protected override IQueryable<TRecapitulation> ApplyQuery(IQueryable<TRecapitulation> query)
         {
-            var parentID = GetQueryString<long?>("ParentID");
-            return query.Where(t => t.ParentRegionID == parentID.Value || t.RegionID == parentID.Value);
+            var parentID = GetQueryString<string>("ParentID");
+            return query.Where(t => t.ParentRegionID == parentID || t.RegionID == parentID);
         }
     }
     public class AccountRecapitulationController : BaseAccountRecapitulationController<AccountRecapitulation>

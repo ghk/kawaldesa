@@ -47,7 +47,7 @@ module App.Controllers {
                     });
                 });
             }
-            Controllers.RegionController.Get(0).done(region => {
+            Controllers.RegionController.Get("0").done(region => {
                 $scope.$apply(() => {
                     ctrl.national = region;
                 });

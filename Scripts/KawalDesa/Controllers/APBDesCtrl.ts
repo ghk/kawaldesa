@@ -283,7 +283,7 @@ module App.Controllers {
             }
         }
 
-        getAPBDes(regionID: number) {
+        getAPBDes(regionID: string) {
             var ctrl = this;
             var scope = this.$scope;
             Controllers.APBDesController.GetByRegionID(regionID).done((apbdes) => {

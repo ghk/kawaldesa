@@ -1,17 +1,5 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-/// WARNING: T4 generated file 
+﻿/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
-
 
 module App.Models {
 
@@ -50,6 +38,4 @@ module App.Models {
         Others = 99,
     }
     
-
 }
-
