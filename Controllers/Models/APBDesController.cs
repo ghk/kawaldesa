@@ -14,9 +14,9 @@ using Scaffold.ControllerExtensions;
 
 namespace App.Controllers.Models
 {
-    public class APBDesController : ReadOnlyController<Apbdes, long>
+    public class ApbdesController : ReadOnlyController<Apbdes, long>
     {
-        public APBDesController(DB dbContext)
+        public ApbdesController(DB dbContext)
             : base(dbContext)
         {
             AllowGetAll = false;
@@ -29,20 +29,20 @@ namespace App.Controllers.Models
         {
             try
             {
-                var apbdesID = long.Parse(multipart.Forms["ID"]);
+                var apbdesId = long.Parse(multipart.Forms["Id"]);
                 var sourceURL = multipart.Forms["SourceURL"];
 
-                var apbdes = dbSet.SelectOne(apbdesID, 
-                    s => new { s.IsCompleted, fkRegionID = s.fkRegionId });
+                var apbdes = dbSet.SelectOne(apbdesId, 
+                    s => new { s.IsCompleted, fkRegionId = s.fkRegionId });
                 if (apbdes.IsCompleted)
                     throw new ApplicationException("apbdes is completed");
-                KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionID);
+                KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
                 var fileResult = multipart.Files[0];
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
-                Update(apbdesID)
+                Update(apbdesId)
                     .Set(e => e.SourceUrl, sourceURL)
                     .Set(e => e.fkSourceFileId, blob.Id)
                     .Save();
@@ -57,9 +57,9 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
-        public void Complete(long apbdesID)
+        public void Complete(long apbdesId)
         {
-            var apbdes = dbSet.Find(apbdesID);
+            var apbdes = dbSet.Find(apbdesId);
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
@@ -70,16 +70,16 @@ namespace App.Controllers.Models
         }
 
         [HttpPost]
-        public void AddAccounts(long apbdesID, long rootAccountID, [FromBody] List<Account> accounts)
+        public void AddAccounts(long apbdesId, long rootAccountId, [FromBody] List<Account> accounts)
         {
             /* Fetches */
 
-            var apbdes = Get(apbdesID);
+            var apbdes = Get(apbdesId);
             if (apbdes.IsCompleted)
                 throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
-            var rootAccount = dbContext.Set<Account>().Find(rootAccountID);
+            var rootAccount = dbContext.Set<Account>().Find(rootAccountId);
 
             var existingAccounts = apbdes.Accounts
                 .Where(a => a.Type == rootAccount.Type)

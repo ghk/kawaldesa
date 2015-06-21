@@ -10,9 +10,9 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class APBDFileController: BaseController<ApbdFile, long>
+    public class ApbdFileController: BaseController<ApbdFile, long>
     {
-        public APBDFileController(DB dbContext)
+        public ApbdFileController(DB dbContext)
             : base(dbContext)
         {
         }
@@ -25,17 +25,17 @@ namespace App.Controllers.Models
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
-                foreach(var existingAPBDFile in dbContext.Set<ApbdFile>().Where(a => a.IsActivated))
+                foreach(var existingApbdFile in dbContext.Set<ApbdFile>().Where(a => a.IsActivated))
                 {
-                    existingAPBDFile.IsActivated = false;
-                    dbContext.Entry(existingAPBDFile).State = System.Data.Entity.EntityState.Modified;
+                    existingApbdFile.IsActivated = false;
+                    dbContext.Entry(existingApbdFile).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 
-                foreach(var existingAPBD in dbContext.Set<Apbd>().Where(a => a.IsActivated))
+                foreach(var existingApbd in dbContext.Set<Apbd>().Where(a => a.IsActivated))
                 {
-                    existingAPBD.IsActivated = false;
-                    dbContext.Entry(existingAPBD).State = System.Data.Entity.EntityState.Modified;
+                    existingApbd.IsActivated = false;
+                    dbContext.Entry(existingApbd).State = System.Data.Entity.EntityState.Modified;
                 }
 
 
@@ -49,7 +49,7 @@ namespace App.Controllers.Models
 
                 var provinces = dbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
                 var kabupatens = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
-                var apbds = ParseAPBDExcel(new FileInfo(fileResult.FilePath), apbdFile, provinces, kabupatens);
+                var apbds = ParseApbdExcel(new FileInfo(fileResult.FilePath), apbdFile, provinces, kabupatens);
 
                 foreach(var apbd in apbds)
                 {
@@ -65,7 +65,7 @@ namespace App.Controllers.Models
             }
         }
 
-        private List<Apbd> ParseAPBDExcel(FileInfo file, ApbdFile apbdFile, List<Region> provinces, List<Region> kabupatens)
+        private List<Apbd> ParseApbdExcel(FileInfo file, ApbdFile apbdFile, List<Region> provinces, List<Region> kabupatens)
         {
             ExcelPackage package = new ExcelPackage(file);
             ExcelWorkbook workbook = package.Workbook;

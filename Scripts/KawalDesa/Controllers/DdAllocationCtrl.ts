@@ -9,7 +9,7 @@ module App.Controllers {
     import Models = App.Models;
     import Controllers = App.Controllers.Models;
 
-    class APBNAllocationCtrl {
+    class DdAllocationCtrl {
 
         static $inject = ["$scope", "$upload"];
 
@@ -25,7 +25,7 @@ module App.Controllers {
         }
 
         onRegionChanged() {
-            if (this.indexCtrl.type == "apbn") {
+            if (this.indexCtrl.type == "dd") {
                 this.getRecapitulations(this.indexCtrl.region.Id);
             }
         }
@@ -52,5 +52,5 @@ module App.Controllers {
 
     }
 
-    kawaldesa.controller("APBNAllocationCtrl", APBNAllocationCtrl);
+    kawaldesa.controller("DdAllocationCtrl", DdAllocationCtrl);
 }

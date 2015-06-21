@@ -9,7 +9,7 @@ module App.Controllers {
     import Models = App.Models;
     import Controllers = App.Controllers.Models;
 
-    class APBDesCtrl {
+    class ApbdesCtrl {
 
         static $inject = ["$scope", "$upload"];
 
@@ -75,9 +75,9 @@ module App.Controllers {
         saveNewAccounts(rootAccountId: number) {
             var ctrl = this;
             this.formErrors[rootAccountId] = {};
-            Controllers.APBDesController.AddAccounts(this.apbdes.Id, rootAccountId, this.newAccounts[rootAccountId])
+            Controllers.ApbdesController.AddAccounts(this.apbdes.Id, rootAccountId, this.newAccounts[rootAccountId])
                 .done(() => {
-                    ctrl.getAPBDes(ctrl.indexCtrl.region.Id);
+                    ctrl.getApbdes(ctrl.indexCtrl.region.Id);
                 })
                 .fail((error: any) => {
                     ctrl.$scope.$apply(() => {
@@ -199,7 +199,7 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.region.Type == 4) {
-                this.getAPBDes(this.indexCtrl.region.Id);
+                this.getApbdes(this.indexCtrl.region.Id);
                 this.formTransactionRealization = {};
                 this.formFieldReport = {};
                 this.realizations = {};
@@ -243,7 +243,7 @@ module App.Controllers {
 
         onComplete() {
             var ctrl = this;
-            Controllers.APBDesController.Complete(this.apbdes.Id)
+            Controllers.ApbdesController.Complete(this.apbdes.Id)
                 .done(() => {
                     ctrl.$scope.$apply(() => {
                         this.isCompleteStatus = "sudah";
@@ -283,10 +283,10 @@ module App.Controllers {
             }
         }
 
-        getAPBDes(regionId: string) {
+        getApbdes(regionId: string) {
             var ctrl = this;
             var scope = this.$scope;
-            Controllers.APBDesController.GetByRegionId(regionId).done((apbdes) => {
+            Controllers.ApbdesController.GetByRegionId(regionId).done((apbdes) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.apbdes = apbdes;
                     ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountId == null);
@@ -339,5 +339,5 @@ module App.Controllers {
         }
     }
 
-    kawaldesa.controller("APBDesCtrl", APBDesCtrl);
+    kawaldesa.controller("ApbdesCtrl", ApbdesCtrl);
 }

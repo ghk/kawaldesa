@@ -84,7 +84,7 @@ module App.Controllers.Models {
 		}
 		}
         
-    export class APBDesController
+    export class ApbdesController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         public dataModel : Models.IApbdes = null;
@@ -93,9 +93,9 @@ module App.Controllers.Models {
             this.dataModel = data;
         }
 		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdes>> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBDes/GetAll',
+				url: '/api/Apbdes/GetAll',
 				data: query,
 			})).then((models) => {
 				return models.map((model) => new Models.Apbdes(model));
@@ -104,54 +104,54 @@ module App.Controllers.Models {
 		}
 
 		static Get(id: number): JQueryPromise<Models.IApbdes> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/APBDes/Get/'+id,
+			url: '/api/Apbdes/Get/'+id,
 			})).then((model) => new Models.Apbdes(model));
 			return res;
 		}
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBDes/GetCount',
+				url: '/api/Apbdes/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 	        
         static UpdateSources(multipart: Scaffold.Multipart): any  {
-			var res = multipart.upload('/api/APBDes/UpdateSources');
+			var res = multipart.upload('/api/Apbdes/UpdateSources');
 			   return res;
 	    }
     
-        static Complete(apbdesID: number): JQueryPromise<void> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+        static Complete(apbdesId: number): JQueryPromise<void> {
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 			type: 'POST',
-			url: '/api/APBDes/Complete?apbdesID='+apbdesID+'',
+			url: '/api/Apbdes/Complete?apbdesId='+apbdesId+'',
 				}));
 			   return res;
 	    }
     
-        static AddAccounts(apbdesID: number, rootAccountID: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+        static AddAccounts(apbdesId: number, rootAccountId: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 			type: 'POST',
-			url: '/api/APBDes/AddAccounts?apbdesID='+apbdesID+'&rootAccountID='+rootAccountID+'',
+			url: '/api/Apbdes/AddAccounts?apbdesId='+apbdesId+'&rootAccountId='+rootAccountId+'',
 	            data: JSON.stringify(accounts),
 			}));
 			   return res;
 	    }
     
         static GetByRegionId(regionId: string): JQueryPromise<App.Models.IApbdes> {
-			var res = $.ajax(APBDesController.ajaxSettings.build({
+			var res = $.ajax(ApbdesController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/APBDes/GetByRegionId?regionId='+encodeURI(regionId)+'',
+			url: '/api/Apbdes/GetByRegionId?regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
 	    }
 	}
     
-    export class APBDFileController
+    export class ApbdFileController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         public dataModel : Models.IApbdFile = null;
@@ -160,9 +160,9 @@ module App.Controllers.Models {
             this.dataModel = data;
         }
 		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdFile>> {
-			var res = $.ajax(APBDFileController.ajaxSettings.build({
+			var res = $.ajax(ApbdFileController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBDFile/GetAll',
+				url: '/api/ApbdFile/GetAll',
 				data: query,
 			})).then((models) => {
 				return models.map((model) => new Models.ApbdFile(model));
@@ -171,17 +171,17 @@ module App.Controllers.Models {
 		}
 
 		static Get(id: number): JQueryPromise<Models.IApbdFile> {
-			var res = $.ajax(APBDFileController.ajaxSettings.build({
+			var res = $.ajax(ApbdFileController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/APBDFile/Get/'+id,
+			url: '/api/ApbdFile/Get/'+id,
 			})).then((model) => new Models.ApbdFile(model));
 			return res;
 		}
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(APBDFileController.ajaxSettings.build({
+			var res = $.ajax(ApbdFileController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBDFile/GetCount',
+				url: '/api/ApbdFile/GetCount',
 				data: query,
 			}));
 			return res;
@@ -189,9 +189,9 @@ module App.Controllers.Models {
 		
 		static Save(model: Models.IApbdFile): JQueryPromise<void> {
 			var isNew = model.Id == null;
-            var res = $.ajax(APBDFileController.ajaxSettings.build({
+            var res = $.ajax(ApbdFileController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
-				 url: '/api/APBDFile/'+(isNew ? 'Post' : 'Put'),
+				 url: '/api/ApbdFile/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
@@ -202,20 +202,20 @@ module App.Controllers.Models {
         }
 
 		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(APBDFileController.ajaxSettings.build({
+				var res = $.ajax(ApbdFileController.ajaxSettings.build({
 					type: 'GET',
-					url: '/api/APBDFile/Delete/'+id,
+					url: '/api/ApbdFile/Delete/'+id,
 				}));
 				return res;
 		}
 	        
         static PostFile(multipart: Scaffold.Multipart): any  {
-			var res = multipart.upload('/api/APBDFile/PostFile');
+			var res = multipart.upload('/api/ApbdFile/PostFile');
 			   return res;
 	    }
 	}
     
-    export class APBNController
+    export class ApbnController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         public dataModel : Models.IApbn = null;
@@ -224,9 +224,9 @@ module App.Controllers.Models {
             this.dataModel = data;
         }
 		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbn>> {
-			var res = $.ajax(APBNController.ajaxSettings.build({
+			var res = $.ajax(ApbnController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBN/GetAll',
+				url: '/api/Apbn/GetAll',
 				data: query,
 			})).then((models) => {
 				return models.map((model) => new Models.Apbn(model));
@@ -235,17 +235,17 @@ module App.Controllers.Models {
 		}
 
 		static Get(id: number): JQueryPromise<Models.IApbn> {
-			var res = $.ajax(APBNController.ajaxSettings.build({
+			var res = $.ajax(ApbnController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/APBN/Get/'+id,
+			url: '/api/Apbn/Get/'+id,
 			})).then((model) => new Models.Apbn(model));
 			return res;
 		}
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(APBNController.ajaxSettings.build({
+			var res = $.ajax(ApbnController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/APBN/GetCount',
+				url: '/api/Apbn/GetCount',
 				data: query,
 			}));
 			return res;
@@ -253,9 +253,9 @@ module App.Controllers.Models {
 		
 		static Save(model: Models.IApbn): JQueryPromise<void> {
 			var isNew = model.Id == null;
-            var res = $.ajax(APBNController.ajaxSettings.build({
+            var res = $.ajax(ApbnController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
-				 url: '/api/APBN/'+(isNew ? 'Post' : 'Put'),
+				 url: '/api/Apbn/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
@@ -266,9 +266,9 @@ module App.Controllers.Models {
         }
 
 		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(APBNController.ajaxSettings.build({
+				var res = $.ajax(ApbnController.ajaxSettings.build({
 					type: 'GET',
-					url: '/api/APBN/Delete/'+id,
+					url: '/api/Apbn/Delete/'+id,
 				}));
 				return res;
 		}
@@ -368,10 +368,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetPicture(realizationID: number): JQueryPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
+        static GetPicture(realizationId: number): JQueryPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
 			var res = $.ajax(FieldReportController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/FieldReport/GetPicture?realizationID='+realizationID+'',
+			url: '/api/FieldReport/GetPicture?realizationId='+realizationId+'',
 				}));
 			   return res;
 	    }
@@ -527,10 +527,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static UpdateWebsite(regionID: string, regionWebsite: string): JQueryPromise<void> {
+        static UpdateWebsite(regionId: string, regionWebsite: string): JQueryPromise<void> {
 			var res = $.ajax(RegionController.ajaxSettings.build({
 			type: 'POST',
-			url: '/api/Region/UpdateWebsite?regionID='+encodeURI(regionID)+'&regionWebsite='+encodeURI(regionWebsite)+'',
+			url: '/api/Region/UpdateWebsite?regionId='+encodeURI(regionId)+'&regionWebsite='+encodeURI(regionWebsite)+'',
 				}));
 			   return res;
 	    }
@@ -577,10 +577,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetTransferTransactions(regionID: string): JQueryPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
+        static GetTransferTransactions(regionId: string): JQueryPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
 			var res = $.ajax(TransactionController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/Transaction/GetTransferTransactions?regionID='+encodeURI(regionID)+'',
+			url: '/api/Transaction/GetTransferTransactions?regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
 	    }
@@ -590,10 +590,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetRealizationTransactions(accountID: number): JQueryPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
+        static GetRealizationTransactions(accountId: number): JQueryPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
 			var res = $.ajax(TransactionController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/Transaction/GetRealizationTransactions?accountID='+accountID+'',
+			url: '/api/Transaction/GetRealizationTransactions?accountId='+accountId+'',
 				}));
 			   return res;
 	    }

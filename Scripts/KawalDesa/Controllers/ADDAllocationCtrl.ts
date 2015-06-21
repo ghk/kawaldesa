@@ -9,7 +9,7 @@ module App.Controllers {
     import Models = App.Models;
     import Controllers = App.Controllers.Models;
 
-    class ADDAllocationCtrl {
+    class AddAllocationCtrl {
 
         static $inject = ["$scope", "$upload"];
 
@@ -52,5 +52,5 @@ module App.Controllers {
 
     }
 
-    kawaldesa.controller("ADDAllocationCtrl", ADDAllocationCtrl);
+    kawaldesa.controller("AddAllocationCtrl", AddAllocationCtrl);
 }

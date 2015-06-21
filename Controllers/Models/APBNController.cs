@@ -6,9 +6,9 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class APBNController: BaseController<Apbn, long>
+    public class ApbnController: BaseController<Apbn, long>
     {
-        public APBNController(DB dbContext)
+        public ApbnController(DB dbContext)
             : base(dbContext)
         {
         }

@@ -9,7 +9,7 @@ module App.Controllers {
     import Models = App.Models;
     import Controllers = App.Controllers.Models;
 
-    class BHPRAllocationCtrl {
+    class BhprAllocationCtrl {
 
         static $inject = ["$scope", "$upload"];
 
@@ -52,5 +52,5 @@ module App.Controllers {
 
     }
 
-    kawaldesa.controller("BHPRAllocationCtrl", BHPRAllocationCtrl);
+    kawaldesa.controller("BhprAllocationCtrl", BhprAllocationCtrl);
 }

@@ -229,14 +229,14 @@
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
-    <Compile Include="Controllers\Models\APBDesController.cs" />
-    <Compile Include="Controllers\Models\APBDFileController.cs" />
+    <Compile Include="Controllers\Models\ApbdesController.cs" />
+    <Compile Include="Controllers\Models\ApbdFileController.cs" />
     <Compile Include="Controllers\Models\FieldReportController.cs" />
     <Compile Include="Controllers\Models\RealizationController.cs" />
     <Compile Include="Controllers\Models\AccountRecapitulationController.cs" />
     <Compile Include="Controllers\Models\TransferRecapitulationController.cs" />
     <Compile Include="Controllers\Models\RegionController.cs" />
-    <Compile Include="Controllers\Models\APBNController.cs" />
+    <Compile Include="Controllers\Models\ApbnController.cs" />
     <Compile Include="Controllers\Models\TransactionController.cs" />
     <Compile Include="Controllers\Services\UserController.cs" />
     <Compile Include="Controllers\Models\BaseController.cs" />
@@ -313,11 +313,11 @@
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
-    <Content Include="Views\KawalDesa\APBDes.cshtml" />
+    <Content Include="Views\KawalDesa\Apbdes.cshtml" />
     <Content Include="Views\KawalDesa\Login.cshtml" />
-    <Content Include="Views\KawalDesa\APBNAllocation.cshtml" />
-    <Content Include="Views\KawalDesa\ADDAllocation.cshtml" />
-    <Content Include="Views\KawalDesa\BHPRAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\DdAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
   </ItemGroup>
@@ -353,11 +353,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Enums.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BHPRAllocationCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\ADDAllocationCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBNAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BhprAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DdAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\APBDesCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\ApbdesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />

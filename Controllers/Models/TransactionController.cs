@@ -47,11 +47,11 @@ namespace App.Controllers.Models
                 var source = dbContext.Set<Region>().First(r => r.Id == transaction.fkSourceId);
                 var destination = dbContext.Set<Region>().First(r => r.Id == transaction.fkDestinationId);
 
-                long? accountID = null;
+                long? accountId = null;
                 if (transaction.fkActorId == transaction.fkDestinationId)
                 {
                     var targetSource = transaction.fkSourceId == "0" ? "apbn" : "add";
-                    accountID = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.Apbdes.fkRegionId == transaction.fkDestinationId).Id;
+                    accountId = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.Apbdes.fkRegionId == transaction.fkDestinationId).Id;
                 }
 
                 string roleRequired = null;
@@ -74,7 +74,7 @@ namespace App.Controllers.Models
                 if (!principal.IsInRole(roleRequired))
                     throw new ApplicationException("Principal is not in role");
 
-                long? blobID = null;
+                long? blobId = null;
                 if (multipart.Files.Count > 0)
                 {
                     var fileResult = multipart.Files[0];
@@ -82,13 +82,13 @@ namespace App.Controllers.Models
                     dbContext.Set<Blob>().Add(blob);
                     dbContext.SaveChanges();
                     fileResult.Move(blob.FilePath);
-                    blobID = blob.Id;
+                    blobId = blob.Id;
                 }
 
-                transaction.fkSourceFileId = blobID;
+                transaction.fkSourceFileId = blobId;
                 transaction.IsActivated = true;
                 transaction.fkCreatedById = user.Id;
-                transaction.fkAccountId = accountID;
+                transaction.fkAccountId = accountId;
                 transaction.fkApbnId = 1; //TODO
 
 
@@ -101,15 +101,15 @@ namespace App.Controllers.Models
             }
         }
 
-        public List<TransferTransactionRow> GetTransferTransactions(string regionID)
+        public List<TransferTransactionRow> GetTransferTransactions(string regionId)
         {
             var transactions = dbSet.Include(t => t.SourceFile)
-                .Where(t => t.fkDestinationId == regionID && t.IsActivated).ToList();
+                .Where(t => t.fkDestinationId == regionId && t.IsActivated).ToList();
 
             Func<IEnumerable<Transaction>, List<TransferTransaction>> GetDetails = (tr) =>
             {
-                var transferreds = tr.Where(t => t.fkActorId != regionID).ToList();
-                var acknowledgeds = tr.Where(t => t.fkActorId == regionID).ToList();
+                var transferreds = tr.Where(t => t.fkActorId != regionId).ToList();
+                var acknowledgeds = tr.Where(t => t.fkActorId == regionId).ToList();
                 Pad(transferreds, acknowledgeds.Count - transferreds.Count);
                 Pad(acknowledgeds, transferreds.Count - acknowledgeds.Count);
 
@@ -161,7 +161,7 @@ namespace App.Controllers.Models
                 Transaction transaction = new Transaction
                 {
                     Amount = long.Parse(multipart.GetForm("Amount")),
-                    fkAccountId = long.Parse(multipart.GetForm("fkAccountID")),
+                    fkAccountId = long.Parse(multipart.GetForm("fkAccountId")),
                     Date = DateTime.ParseExact(multipart.GetForm("Date"), "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 };
 
@@ -206,10 +206,10 @@ namespace App.Controllers.Models
             }
         }
 
-        public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountID)
+        public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountId)
         {
             var realizationSet = dbContext.Set<Realization>();
-            return dbSet.Where(t => t.fkAccountId == accountID)
+            return dbSet.Where(t => t.fkAccountId == accountId)
                 .Select(t => new RealizationTransactionRow
                 {
                     Realization = realizationSet.FirstOrDefault(a => a.fkTransactionId == t.Id),
@@ -230,11 +230,11 @@ namespace App.Controllers.Models
     {
         public String TransferredDate { get; set; }
         public decimal TransferredAmount { get; set; }
-        public String TransferredProofID { get; set; }
+        public String TransferredProofId { get; set; }
 
         public String AcknowledgedDate { get; set; }
         public decimal AcknowledgedAmount { get; set; }
-        public String AcknowledgedProofID { get; set; }
+        public String AcknowledgedProofId { get; set; }
 
         public TransferTransaction(Transaction transferred, Transaction acknowledged)
         {
@@ -243,7 +243,7 @@ namespace App.Controllers.Models
                 TransferredDate = transferred.Date.ToString("dd-MM-yyyy");
                 TransferredAmount = transferred.Amount;
                 if (transferred.SourceFile != null)
-                    TransferredProofID = transferred.SourceFile.RelativeFileName;
+                    TransferredProofId = transferred.SourceFile.RelativeFileName;
             }
             if (acknowledged != null)
             {
@@ -251,7 +251,7 @@ namespace App.Controllers.Models
                 AcknowledgedDate = acknowledged.Date.ToString("dd-MM-yyyy");
                 AcknowledgedAmount = acknowledged.Amount;
                 if (acknowledged.SourceFile != null)
-                    AcknowledgedProofID = acknowledged.SourceFile.RelativeFileName;
+                    AcknowledgedProofId = acknowledged.SourceFile.RelativeFileName;
             }
         }
     }

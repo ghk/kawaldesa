@@ -18,8 +18,8 @@ namespace App.Controllers.Models
         }
         protected override IQueryable<Region> ApplyQuery(IQueryable<Region> query)
         {
-            var parentID = GetQueryString<string>("ParentID");
-            return query.Where(r => r.fkParentId == parentID);
+            var parentId = GetQueryString<string>("ParentId");
+            return query.Where(r => r.fkParentId == parentId);
         }
 
         public Region GetByURLKey(String urlKey)
@@ -34,10 +34,10 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
-        public void UpdateWebsite(string regionID, String regionWebsite)
+        public void UpdateWebsite(string regionId, String regionWebsite)
         {
-            KawalDesaController.CheckRegionAllowed(dbContext, regionID);
-            Update(regionID)
+            KawalDesaController.CheckRegionAllowed(dbContext, regionId);
+            Update(regionId)
                 .Set(e => e.Website, regionWebsite)
                 .Save();
         }

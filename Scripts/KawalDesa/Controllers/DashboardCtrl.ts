@@ -36,12 +36,12 @@ module App.Controllers {
             var indexCtrl = this.indexCtrl;
 
             if (indexCtrl.isInRole("admin")) {
-                Controllers.APBNController.GetAll().done(apbns => {
+                Controllers.ApbnController.GetAll().done(apbns => {
                     $scope.$apply(() => {
                         $scope.apbns = apbns;
                     });
                 });
-                Controllers.APBDFileController.GetAll().done(apbdFiles => {
+                Controllers.ApbdFileController.GetAll().done(apbdFiles => {
                     $scope.$apply(() => {
                         $scope.apbdFiles = apbdFiles;
                     });
@@ -171,7 +171,7 @@ module App.Controllers {
             this.savingStates["apbn"] = true;
             for (var i = 0, len = apbns.length; i < len; i++) {
                 var apbn = apbns[i];                                                              
-                Controllers.APBNController.Save(apbn).done(() => {
+                Controllers.ApbnController.Save(apbn).done(() => {
                     ctrl.$scope.$apply(() => {
                         ctrl.savingStates["apbn"] = false;
                     });
