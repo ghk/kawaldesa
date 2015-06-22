@@ -22,6 +22,8 @@ namespace App.Models
         public virtual IDbSet<Blob> Blobs { get; set; }
         public virtual IDbSet<FieldReport> FieldReport { get; set; }
         public virtual IDbSet<User> Users { get; set; }
+        public virtual IDbSet<Role> Roles { get; set; }
+        public virtual IDbSet<UserRole> UserRoles { get; set; }
         public virtual IDbSet<UserScope> UserScopes { get; set; }
         public virtual IDbSet<Organization> Organizations { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
@@ -41,13 +43,13 @@ namespace App.Models
         public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey(i => i.Id);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(i => new { i.RoleId, i.UserId });
-
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Types()
             .Configure(c => c.ToTable(GetTableName(c.ClrType.Name), "public"));
             modelBuilder.Conventions.Add<CustomKeyConvention>();
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);
+            modelBuilder.Entity<Role>().HasKey(i => i.Id);
+            modelBuilder.Entity<UserRole>().HasKey(i => new { i.RoleId, i.UserId });
         }
         public static string GetTableName(String typeName) 
         {

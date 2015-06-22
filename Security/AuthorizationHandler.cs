@@ -41,7 +41,7 @@ namespace App.Security
                 }
 
                 var userName = userNameHeaderValues.First();                
-                var userManager = new UserManager<User>(new UserStore<User>(new DB()));
+                var userManager = new UserManager<User>(new CUserStore<User>(new DB()));
                 var user = userManager.FindByName(userName);
                 if (user != null) 
                 {
@@ -61,7 +61,7 @@ namespace App.Security
             else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session[KawalDesaController.USERID_KEY]))
             {
                 var session = HttpContext.Current.Session;                
-                var userManager = new UserManager<User>(new UserStore<User>(new DB()));
+                var userManager = new UserManager<User>(new CUserStore<User>(new DB()));
                 var user = userManager.FindById((string)session[KawalDesaController.USERID_KEY]);
                 if (user != null)
                 {

@@ -36,6 +36,7 @@ namespace App.Models
             User user = new User();
             user.Email = email;
             user.UserName = email;
+            user.Id = Guid.NewGuid().ToString();
             result.User = user;
             db.Set<User>().Add(user);
             db.SaveChanges();
@@ -44,9 +45,9 @@ namespace App.Models
             db.Set<InvitationToken>().Add(result);
             db.SaveChanges();
 
-            var UserStore = new UserStore<User>(db);
+            var UserStore = new CUserStore<User>(db);
             var UserManager = new UserManager<User>(UserStore);
-            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            var RoleManager = new RoleManager<Role>(new CRoleStore<Role>(db));
             foreach(var role in roles)
             {
                 UserManager.AddToRole(user.Id, role);

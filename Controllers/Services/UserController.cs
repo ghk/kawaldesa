@@ -24,17 +24,17 @@ namespace App.Controllers.Services
     public class UserController: ApiController
     {
         private DB dbContext;
-        private UserStore<User> UserStore;
+        private IUserStore<User> UserStore;
         private UserManager<User> UserManager;
-        private RoleManager<IdentityRole> RoleManager;
+        private RoleManager<Role> RoleManager;
 
         public UserController()
         {
             dbContext = new DB();
             dbContext.Configuration.ProxyCreationEnabled = false;
-            UserStore = new UserStore<User>(dbContext);
+            UserStore = new CUserStore<User>(dbContext);
             UserManager = new UserManager<User>(UserStore);
-            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
+            RoleManager = new RoleManager<Role>(new CRoleStore<Role>(dbContext));
         }
 
         [HttpPost]

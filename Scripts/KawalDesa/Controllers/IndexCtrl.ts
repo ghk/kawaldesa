@@ -86,6 +86,8 @@ module App.Controllers {
                 this.type = "bhpr";
             } else if (path.indexOf("/dashboard") != -1) {
                 this.type = "dashboard";
+            } else if (path.indexOf("/OrganizationIndex") != -1) {
+                this.type = "org_index";
             } else if (path.indexOf("/login") != -1) {
                 this.type = "login";
             } else {

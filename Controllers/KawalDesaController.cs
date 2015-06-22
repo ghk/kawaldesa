@@ -58,6 +58,14 @@ namespace App.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult OrganizationIndex()
+        {
+            var user = GetUserDictFromSession();
+            ViewData["User"] = new JavaScriptSerializer().Serialize(user);
+            return View();
+        }
+
         private string GetRedirectHost()
         {
             var redirectHost = "http://kawaldesa.org";
@@ -187,12 +195,12 @@ namespace App.Controllers
                         {
                             user.IsADuplicate = true;
                             user.IsActive = false;
+                            user.UserName = "inactive"+user.Id.Replace("-", "");
                             db.Entry(user).State = EntityState.Modified;
                         }
                         user = invitationToken.User;
                         user.IsActive = true;
                         user.FacebookId = facebookID;
-                        user.UserName = "fb"+facebookID;
                         user.Name = name;
 
                         db.SaveChanges();
@@ -200,13 +208,14 @@ namespace App.Controllers
 
                     if (user == null)
                     {
-                        var userManager = new UserManager<User>(new UserStore<User>(db));
+                        var userManager = new UserManager<User>(new CUserStore<User>(db));
                         user = new User
                         {
                             FacebookId = facebookID,
                             Name = name,
                             IsActive = true,
                             UserName = "fb" + facebookID,
+                            Id = Guid.NewGuid().ToString(),
                             FacebookIsVerified = isVerified
                         };
                         var newUser = userManager.Create(user);
@@ -227,7 +236,7 @@ namespace App.Controllers
                 return null;
             using (var db = new DB())
             {
-                var userManager = new UserManager<User>(new UserStore<User>(db));
+                var userManager = new UserManager<User>(new CUserStore<User>(db));
                 var user = db.Users.FirstOrDefault(u => u.Id == userId);
                 result["ID"] = user.Id;
                 result["Name"] = user.Name;

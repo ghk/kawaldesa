@@ -17,7 +17,7 @@ namespace App.Models
         public string UrlKey { get; set; }
 
         [ForeignKey("Picture")]
-        public long fkPictureId { get; set; }
+        public long? fkPictureId { get; set; }
         public virtual Blob Picture { get; set; }
     }
 }

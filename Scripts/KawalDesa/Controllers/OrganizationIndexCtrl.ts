@@ -16,7 +16,7 @@ module App.Controllers {
         static $inject = ["$scope"];
 
         organizations: Models.Organization[];
-        selectedOrganization: Models.Organization;
+        selected: Models.Organization;
         newOrganizationAdminEmail: string;
 
         savingStates = {};
@@ -25,14 +25,22 @@ module App.Controllers {
             var ctrl = this;
             this.indexCtrl = $scope.indexCtrl;
             Controllers.OrganizationController.GetAll().done(orgs => {
-                ctrl.organizations = orgs;
+                $scope.$apply(() => {
+                    ctrl.organizations = orgs;
+                });
             });
+        }
+
+        addOrganization() {
+            this.selected = new Models.Organization();
+            var modal: any = $("#organization-modal");
+            modal.modal("show");
         }
 
         saveOrganization() {
             var ctrl = this;
             this.savingStates["org"] = true;
-            Controllers.OrganizationController.Save(this.selectedOrganization).done(() => {
+            Controllers.OrganizationController.Save(this.selected).done(() => {
                 ctrl.savingStates["org"] = false;
             });
         }
@@ -41,7 +49,7 @@ module App.Controllers {
             var ctrl = this;
             this.savingStates["org"] = true;
             Controllers.OrganizationController
-                .AddOrgAdmin(this.selectedOrganization.Id, this.newOrganizationAdminEmail).done(() => {
+                .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail).done(() => {
                 ctrl.savingStates["org"] = false;
             });
         }
