@@ -1,4 +1,4 @@
-﻿<div ng-controller="APBDesCtrl as apbdesCtrl" ng-if="indexCtrl.region.Type == 4">
+﻿<div ng-controller="ApbdesCtrl as apbdesCtrl" ng-if="indexCtrl.region.Type == 4">
     <table style="width:100%;">
         <tr>
             <td width="14%" class="sidebar" valign="top">
@@ -26,7 +26,7 @@
                     <form class="form-horizontal" role="form">
                         Sumber APBDes <br />
                         <input type="text" placeholder="URL"
-                               ng-if="apbdesCtrl.isVolunteer" style="width: 100%;"/>
+                               ng-if="apbdesCtrl.isVolunteer" style="width: 100%;" />
                         <div style="margin-top:5px">
                             <input type="file" ng-file-select
                                    ng-model="file"

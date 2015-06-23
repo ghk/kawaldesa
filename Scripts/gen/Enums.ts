@@ -8,6 +8,18 @@ module App.Models {
         EXPENSE,
     }
     
+    export enum DocumentUploadType {
+        NationalDd,
+        RegionalDd,
+        NationalAdd,
+        RegionalAdd,
+        NationalBhpr,
+        RegionalBhpr,
+        DdTransfer,
+        AddTransfer,
+        BhprTransfer,
+    }
+    
     export enum ExpenseGroup {
         Employee = 0,
         GoodsAndServices,

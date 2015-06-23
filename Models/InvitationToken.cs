@@ -31,26 +31,34 @@ namespace App.Models
         public static InvitationToken Create(DbContext db, String email, User inviter, 
             Organization organization, List<String> roles, List<Region> regions)
         {
+            var UserStore = new CUserStore<User>(db);
+            var UserManager = new UserManager<User>(UserStore);
+            var RoleManager = new RoleManager<Role>(new CRoleStore<Role>(db));
+
             InvitationToken result = new InvitationToken();
             result.Token = GenerateToken();
             User user = new User();
             user.Email = email;
             user.UserName = email;
+            user.fkOrganizationId = organization.Id;
             user.Id = Guid.NewGuid().ToString();
-            result.User = user;
-            db.Set<User>().Add(user);
-            db.SaveChanges();
+            user.Organization = organization;
 
+            UserManager.Create(user);
+
+            result.User = user;
+            result.fkInviterId = inviter.Id;
             result.fkUserId = user.Id;
             db.Set<InvitationToken>().Add(result);
             db.SaveChanges();
 
-            var UserStore = new CUserStore<User>(db);
-            var UserManager = new UserManager<User>(UserStore);
-            var RoleManager = new RoleManager<Role>(new CRoleStore<Role>(db));
+            result.Inviter = inviter;
+            result.User = user;
+
             foreach(var role in roles)
             {
-                UserManager.AddToRole(user.Id, role);
+                var res = UserManager.AddToRole(user.Id, role);
+                Console.WriteLine(res);
             }
             foreach(var region in regions)
             {
@@ -61,6 +69,7 @@ namespace App.Models
                 };
                 db.Set<UserScope>().Add(scope);
             }
+            db.SaveChanges();
 
             return result;
         }

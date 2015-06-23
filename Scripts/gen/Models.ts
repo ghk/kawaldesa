@@ -88,6 +88,37 @@ module App.Models {
     }
     
     
+    export interface IUserViewModel {
+        Id: string;
+        FacebookId: string;
+        UserName: string;
+        Name: string;
+        Roles: Array<string>;
+        Scopes: Array<App.Models.IRegion>;
+    }
+    
+    export class UserViewModel {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        FacebookId: string;
+        UserName: string;
+        Name: string;
+        Roles: Array<string>;
+        Scopes: Array<App.Models.IRegion>;
+        
+        constructor(data?: IUserViewModel) {
+            this.Id = data ? data.Id : null;
+            this.FacebookId = data ? data.FacebookId : null;
+            this.UserName = data ? data.UserName : null;
+            this.Name = data ? data.Name : null;
+            this.Roles = data ? data.Roles : null;
+            this.Scopes = data ? data.Scopes : null;
+        }
+        
+    }
+    
+    
     export interface IRegion {
         Id: string;
         Name: string;
@@ -484,6 +515,71 @@ module App.Models {
     }
     
     
+    export interface IDocumentUpload extends IBaseEntity {
+        FileName: string;
+        Type: App.Models.DocumentUploadType;
+        IsActivated: boolean;
+        IsApproved: boolean;
+        DateApproved: /** System.DateTime **/ any;
+        DateActivated: /** System.DateTime **/ any;
+        DateDeactivated: /** System.DateTime **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: /** App.Models.User **/ any;
+    }
+    
+    export class DocumentUpload extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        FileName: string;
+        Type: App.Models.DocumentUploadType;
+        IsActivated: boolean;
+        IsApproved: boolean;
+        DateApproved: /** System.DateTime **/ any;
+        DateActivated: /** System.DateTime **/ any;
+        DateDeactivated: /** System.DateTime **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: /** App.Models.User **/ any;
+        
+        constructor(data?: IDocumentUpload) {
+            super(data);
+            this.FileName = data ? data.FileName : null;
+            this.Type = data ? data.Type : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.IsApproved = data ? data.IsApproved : null;
+            this.DateApproved = data ? data.DateApproved : null;
+            this.DateActivated = data ? data.DateActivated : null;
+            this.DateDeactivated = data ? data.DateDeactivated : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.fkFileId = data ? data.fkFileId : null;
+            this.File = data ? data.File : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
+            this.fkOrganizationId = data ? data.fkOrganizationId : null;
+            this.Organization = data ? data.Organization : null;
+            this.fkApprovedById = data ? data.fkApprovedById : null;
+            this.ApprovedBy = data ? data.ApprovedBy : null;
+        }
+        
+    }
+    
+    
     export interface IFieldReport extends IBaseEntity {
         Notes: string;
         Date: /** System.DateTime **/ any;
@@ -557,7 +653,11 @@ module App.Models {
     export interface IOrganization extends IBaseEntity {
         Name: string;
         Description: string;
+        Website: string;
+        Facebook: string;
+        Twitter: string;
         UrlKey: string;
+        PictureFileName: string;
         fkPictureId: number;
         Picture: App.Models.IBlob;
     }
@@ -567,7 +667,11 @@ module App.Models {
         
         Name: string;
         Description: string;
+        Website: string;
+        Facebook: string;
+        Twitter: string;
         UrlKey: string;
+        PictureFileName: string;
         fkPictureId: number;
         Picture: App.Models.IBlob;
         
@@ -575,7 +679,11 @@ module App.Models {
             super(data);
             this.Name = data ? data.Name : null;
             this.Description = data ? data.Description : null;
+            this.Website = data ? data.Website : null;
+            this.Facebook = data ? data.Facebook : null;
+            this.Twitter = data ? data.Twitter : null;
             this.UrlKey = data ? data.UrlKey : null;
+            this.PictureFileName = data ? data.PictureFileName : null;
             this.fkPictureId = data ? data.fkPictureId : null;
             this.Picture = data ? data.Picture : null;
         }

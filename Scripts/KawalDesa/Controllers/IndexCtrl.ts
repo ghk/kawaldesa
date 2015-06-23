@@ -9,6 +9,7 @@ module App.Controllers {
         Id: string;
         FacebookId: String;
         Name: String;
+        fkOrganizationId: number;
         Roles: String[];
         Scopes: string[];
     }
@@ -28,6 +29,17 @@ module App.Controllers {
         "Kabupaten / Kota",
         "Kecamatan",
         "Desa"
+    ];
+
+    var ROUTES = [
+        ["/dd/", "dd", true],
+        ["/add/", "add", true],
+        ["/bhpr/", "bhpr", true],
+        ["/p/", "transfer", true],
+        ["/r/", "realization", true],
+        ["/dashboard", "dashboard", false],
+        ["/orgs", "orgs", false],
+        ["/login", "login", false],
     ];
 
     export class IndexCtrl {
@@ -57,8 +69,8 @@ module App.Controllers {
                     ctrl.onLocationChange();
                 ctrl.isPathReplacing = false;
             });
-
         }
+
 
         onLocationChange() {
             var path = this.$location.path();
@@ -66,31 +78,20 @@ module App.Controllers {
                 return;
             var regionId:string = null;
             var regionKey = null;
+            this.type = null;
             if (path == "/" || path == "") {
                 regionId = "0";
                 this.type = "transfer";
-            } else if (path.indexOf("/p/") != -1) {
-                regionId = this.$location.path().replace("/p/", "");
-                this.type = "transfer";
-            } else if (path.indexOf("/r/") != -1) {
-                regionId = this.$location.path().replace("/r/", "");
-                this.type = "realization";
-            } else if (path.indexOf("/apbn/") != -1) {
-                regionId = this.$location.path().replace("/apbn/", "");
-                this.type = "apbn";
-            } else if (path.indexOf("/add/") != -1) {
-                regionId = this.$location.path().replace("/add/", "");
-                this.type = "add";
-            } else if (path.indexOf("/bhpr/") != -1) {
-                regionId = this.$location.path().replace("/bhpr/", "");
-                this.type = "bhpr";
-            } else if (path.indexOf("/dashboard") != -1) {
-                this.type = "dashboard";
-            } else if (path.indexOf("/OrganizationIndex") != -1) {
-                this.type = "org_index";
-            } else if (path.indexOf("/login") != -1) {
-                this.type = "login";
             } else {
+                var matched : any[] = ROUTES.filter(r => path.indexOf(r[0]) == 0);
+                if (matched[0]) {
+                    this.type = matched[0][1] ;
+                    if (matched[0][2]) {
+                        regionId = path.replace(matched[0][1], "");
+                    }
+                }
+            }
+            if (this.type == null) {
                 this.type = "realization";
                 regionKey = path.substring(1);
             }
@@ -107,16 +108,8 @@ module App.Controllers {
         changeType(type, $event) {
             if (this.type != 'dashboard') {
                 $event.preventDefault();
-                var t = "p"
-                if (type == "realization")
-                    t = "r";
-                else if (type == "apbn")
-                    t = "apbn";
-                else if (type == "add")
-                    t = "add";
-                else if (type == "bhpr")
-                    t = "bhpr";
-                var path = "/" + t + "/" + this.region.Id;
+                var matched : any[] = ROUTES.filter(r => r[1] == type);
+                var path = matched[0][0] + this.region.Id;
                 this.$location.path(path);
             }
         }
@@ -124,16 +117,9 @@ module App.Controllers {
         changeRegion(regionId, $event) {
             $event.preventDefault();
             this.$scope.$broadcast("regionChangeBefore");
-            var t = "p"
-            if (this.type == "realization")
-                t = "r";
-            else if (this.type == "apbn")
-                t = "apbn";
-            else if (this.type == "add")
-                t = "add";
-            else if (this.type == "bhpr")
-                t = "bhpr";
-            var path = "/" + t + "/" + regionId;
+            var type = this.type;
+            var matched : any[] = ROUTES.filter(r => r[1] == type);
+            var path = matched[0][0] + regionId;
             this.$location.path(path);
         }
 
@@ -157,6 +143,11 @@ module App.Controllers {
 
         isInRoleAndScope(roleName, entityId) {
             return this.isInRole(roleName) && this.isInScope(entityId);
+        }
+
+        modal(selector, action) {
+            var modal: any = $(selector);
+            modal.modal(action);
         }
 
         loadRegion(parentId?: string, parentKey?: string) {

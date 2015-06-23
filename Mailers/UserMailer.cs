@@ -22,7 +22,7 @@ namespace App.Mailers
         {
             // Setting up needed properties
             MailAttributes.From = new MailAddress("ghk@gozalikumara.com", "Gozali Kumara");
-            MailAttributes.To.Add(new MailAddress("ghk@microvac.co.id"));
+            MailAttributes.To.Add(new MailAddress(token.User.Email));
             MailAttributes.Subject = "Undangan bergabung dengan kawaldesa";
             MailAttributes.Priority = MailPriority.High;
 

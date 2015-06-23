@@ -89,10 +89,13 @@ namespace App.Models
 
     }
 
+    [ViewModel]
     public class UserViewModel
     {
         public string Id { get; set; }
+        public string FacebookId { get; set; }
         public string UserName { get; set; }
+        public string Name { get; set; }
         public List<string> Roles { get; set; }
         public List<Region> Scopes { get; set; }
     }

@@ -190,7 +190,6 @@ namespace App.Controllers.Services
         }
 
         [HttpGet]        
-        [Authorize(Roles=Role.ADMIN)]
         public virtual UserViewModel Get(string id)
         {
             var user = UserManager.FindById(id);
@@ -205,12 +204,27 @@ namespace App.Controllers.Services
 
         [HttpGet]
         [Authorize]
-        public virtual UserViewModel Get()
+        public virtual UserViewModel GetCurrent()
         {
             KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
             var view = AutoMapper.Mapper.Map<User, UserViewModel>(identity.User);
             view.Roles = UserManager.GetRoles(identity.User.Id).ToList();
             return view;
+        }
+
+        [HttpGet]
+        public IEnumerable<UserViewModel> GetAllByOrg(long orgId)
+        {
+            IQueryable<User> exp = dbContext.Set<User>().Include("Roles").Where(u => u.fkOrganizationId.Value == orgId);           
+            List<User> users = exp.ToList();
+            List<UserViewModel> views = new List<UserViewModel>();
+            foreach (var user in users)
+            {
+                UserViewModel view = AutoMapper.Mapper.Map<User, UserViewModel>(user);
+                view.Roles = UserManager.GetRoles(user.Id).ToList();
+                views.Add(view);
+            }            
+            return views;
         }
 
         private List<Region> GetScopes()

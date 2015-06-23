@@ -59,7 +59,7 @@ namespace App.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult OrganizationIndex()
+        public ActionResult Organization(long? id)
         {
             var user = GetUserDictFromSession();
             ViewData["User"] = new JavaScriptSerializer().Serialize(user);
@@ -139,6 +139,8 @@ namespace App.Controllers
                 String secretKey = ConfigurationManager.AppSettings[FacebookSecretKeyConfig];
                 var redirectHost = GetRedirectHost();
                 var redirectUrl = redirectHost + "/FacebookRedirect";
+                if (!string.IsNullOrWhiteSpace(token))
+                    redirectUrl += "?token=" + token;
 
                 string url = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}";
                 WebRequest request = WebRequest.Create(string.Format(url, clientID, redirectUrl, secretKey, code));
@@ -241,6 +243,7 @@ namespace App.Controllers
                 result["ID"] = user.Id;
                 result["Name"] = user.Name;
                 result["FacebookID"] = user.FacebookId;
+                result["fkOrganizationId"] = user.fkOrganizationId;
                 result["Roles"] = userManager.GetRoles(user.Id);
                 result["Scopes"] = db.UserScopes.Where(s => s.fkUserId == user.Id)
                     .Select(s => s.fkRegionId)

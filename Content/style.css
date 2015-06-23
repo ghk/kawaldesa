@@ -218,10 +218,19 @@ p.subtext {
     padding-left: 20px;
 }
 
-    .help > ul > li {
+.help > ul > li {
         margin-bottom: 1em;
     }
 
 .help.well {
     background-color: #fafafa;
 }
+
+.modal-content {
+    border-radius: 0px;
+}
+
+.modal-header .close {
+    margin-top: -2px;
+}
+

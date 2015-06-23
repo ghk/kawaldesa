@@ -327,6 +327,65 @@ module App.Controllers.Models {
 	    }
 	}
     
+    export class DocumentUploadController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : Models.IDocumentUpload = null;
+        
+        constructor(data?: Models.IDocumentUpload) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IDocumentUpload>> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/DocumentUpload/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new Models.DocumentUpload(model));
+			});
+			return res;
+		}
+
+		static Get(id: number): JQueryPromise<Models.IDocumentUpload> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/DocumentUpload/Get/'+id,
+			})).then((model) => new Models.DocumentUpload(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/DocumentUpload/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		
+		static Save(model: Models.IDocumentUpload): JQueryPromise<void> {
+			var isNew = model.Id == null;
+            var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+                 type: isNew ? 'POST' : 'PUT',
+				 url: '/api/DocumentUpload/'+(isNew ? 'Post' : 'Put'),
+				 data: JSON.stringify(model)
+            })).then((id) => {
+				if(isNew) {
+					model.Id = id;
+				}
+			});
+            return res;
+        }
+
+		static Delete(id: number): JQueryPromise<void> {
+				var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+					type: 'GET',
+					url: '/api/DocumentUpload/Delete/'+id,
+				}));
+				return res;
+		}
+		}
+        
     export class FieldReportController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
@@ -459,11 +518,8 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static UpdateWebsite(id: number, regionWebsite: string): JQueryPromise<void> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-			type: 'POST',
-			url: '/api/Organization/UpdateWebsite?id='+id+'&regionWebsite='+encodeURI(regionWebsite)+'',
-				}));
+        static Update(multipart: Scaffold.Multipart): any  {
+			var res = multipart.upload('/api/Organization/Update');
 			   return res;
 	    }
 	}
@@ -709,7 +765,7 @@ module App.Controllers.Services {
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        static Login(/** [FromBody] **/model: /** App.Models.LoginViewModel **/ any): JQueryPromise</** App.Models.UserViewModel **/ any> {
+        static Login(/** [FromBody] **/model: /** App.Models.LoginViewModel **/ any): JQueryPromise<App.Models.IUserViewModel> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'POST',
 			url: '/api/User/Login',
@@ -718,7 +774,7 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static GetCurrentUser(): JQueryPromise</** App.Models.UserViewModel **/ any> {
+        static GetCurrentUser(): JQueryPromise<App.Models.IUserViewModel> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/User/GetCurrentUser',
@@ -759,7 +815,7 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static GetAll(): JQueryPromise<Array</** App.Models.UserViewModel **/ any>> {
+        static GetAll(): JQueryPromise<Array<App.Models.IUserViewModel>> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/User/GetAll',
@@ -767,10 +823,26 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static Get(id: string): JQueryPromise</** App.Models.UserViewModel **/ any> {
+        static Get(id: string): JQueryPromise<App.Models.IUserViewModel> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/User/Get?id='+encodeURI(id)+'',
+				}));
+			   return res;
+	    }
+    
+        static GetCurrent(): JQueryPromise<App.Models.IUserViewModel> {
+			var res = $.ajax(UserController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/User/GetCurrent',
+				}));
+			   return res;
+	    }
+    
+        static GetAllByOrg(orgId: number): JQueryPromise<Array<App.Models.IUserViewModel>> {
+			var res = $.ajax(UserController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/User/GetAllByOrg?orgId='+orgId+'',
 				}));
 			   return res;
 	    }

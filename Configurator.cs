@@ -53,11 +53,13 @@ namespace App
                 .Include("~/Scaffold/Content/bootstrap-theme.min.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa")
+                .Include("~/Scaffold/Content/fontawesome/fontawesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa-all")
                 .Include("~/Scaffold/Content/bootstrap/bootstrap.css")
+                .Include("~/Scaffold/Content/fontawesome/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
@@ -129,7 +131,12 @@ namespace App
                 url: "",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional }
             );
-            var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect", "OrganizationIndex"};
+            routes.MapRoute(
+                name: "Oganization",
+                url: "orgs/{id}",
+                defaults: new { controller = "KawalDesa", action = "Organization", id=UrlParameter.Optional}
+            );
+            var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect"};
             foreach (var appRoute in appRoutes)
             {
                 routes.MapRoute(

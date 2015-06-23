@@ -1,0 +1,289 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+<div ng-controller="OrganizationCtrl as organizationCtrl" ng-if="indexCtrl.type == 'orgs'">
+    <div ng-if="organizationCtrl.selected == null && !organizationCtrl.savingStates['page']">
+        <div class="container-fluid alert">Daftar Organisasi</div>
+
+        <div class="content-header">
+            Daftar Organisasi
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Nama</th>
+                        <th style="text-align: left;">Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="org in organizationCtrl.organizations">
+                        <td style="text-align: left;">
+                            <a href="/orgs/{{org.Id}}">{{org.Name}}</a>
+                        </td>
+                        <td style="text-align: left;">
+                            {{org.Description}}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="" ng-if="organizationCtrl.isInRole('admin')">
+                        <td colspan="5"><a class="btn btn-primary btn-xs" href="#" ng-click="indexCtrl.modal('#new-organization-modal', 'show')">Tambah Organisasi</a></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="container-fluid" ng-if="organizationCtrl.selected != null" style="padding:0 20px;">
+        <div class="row">
+            <div class="col-md-3">
+                <div style="padding:10px;" ng-show="!!organizationCtrl.selected.PictureFileName">
+                    <img ng-src="~/Content/files/{{organizationCtrl.selected.PictureFileName}}" style="width:100%;" />
+                </div>
+                <h4>{{organizationCtrl.selected.Name}}</h4>
+                <p>
+                    {{organizationCtrl.selected.Description}}
+                </p>
+                <table class="table-condensed">
+                    <tr ng-show="{{!!organizationCtrl.selected.Website}}">
+                        <td> <i class="fa fa-home"></i> </td>
+                        <td> <a href="{{organizationCtrl.selected.Website}}">{{organizationCtrl.selected.Website}}</a> </td>
+                    </tr>
+                    <tr ng-show="{{!!organizationCtrl.selected.Facebook}}">
+                        <td> <i class="fa fa-facebook"></i> </td>
+                        <td> <a href="{{organizationCtrl.selected.Facebook}}">{{organizationCtrl.selected.Facebook}}</a> </td>
+                    </tr>
+                    <tr ng-show="{{!!organizationCtrl.selected.Twitter}}">
+                        <td> <i class="fa fa-twitter"></i> </td>
+                        <td> <a href="{{organizationCtrl.selected.Twitter}}">{{organizationCtrl.selected.Twitter}}</a> </td>
+                    </tr>
+                </table>
+                <br />
+                <a class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#organization-modal', 'show')" href="#" ng-if="organizationCtrl.isEditable()">Ubah data organisasi</a>
+            </div>
+            <div class="col-md-9">
+                <div class="content-header">
+                    Anggota
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left;">
+                                    Koordinator
+                                </td>
+                                <td style="text-align: left;">
+                                    <a href="/u/{{user.Id}}" ng-repeat="user in organizationCtrl.orgAdmins">
+                                        {{user.Name ? user.Name : user.UserName}}
+                                    </a>
+                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#new-admin-modal', 'show')">Tambah koordinator</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    Pelapor
+                                </td>
+                                <td style="text-align: left;">
+                                    <a href="/u/{{user.Id}}" ng-repeat="user in organizationCtrl.orgVolunteers">
+                                        {{user.Name ? user.Name : user.UserName}}
+                                    </a>
+                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#new-volunteer-modal', 'show')">Tambah pelapor</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-header">
+                    Laporan Terakhir
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Wilayah</th>
+                                <th>Nama Dokumen</th>
+                                <th>Sumber</th>
+                                <th>Unduh</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="upload in organizationCtrl.orgUploads">
+                                <td>{{upload.CreatedDate}}</td>
+                                <td>{{upload.Type}}</td>
+                                <td>{{upload.Region.Name}}</td>
+                                <td>{{upload.DocumentName}}</td>
+                                <td>{{upload.Source}}</td>
+                                <td>{{upload.Type}}</td>
+                                <td>{{upload.Status}}</td>
+                                <td>{{upload.Type}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">{{organizationCtrl.selected.Name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input ng-model="organizationCtrl.selected.Name" type="name" class="form-control" id="name" placeholder="Nama organisasi">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="picture" class="col-sm-2 control-label">Gambar</label>
+                                <div class="col-sm-10">
+                                    <input type="file" ng-file-select class="form-control"
+                                           ng-model="organizationCtrl.picture" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" ng-model="organizationCtrl.selected.Description" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Situs</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Website" placeholder="Alamat situs" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Twitter</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Twitter" placeholder="Laman twitter" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Facebook</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Facebook" placeholder="Laman facebook" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">URL Key</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.UrlKey" placeholder="Url Key" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="!organizationCtrl.savingStates['org']">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveOrganization()">Simpan</button>
+                    </div>
+                    <div ng-show="organizationCtrl.savingStates['org']">
+                        Menyimpan...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new-organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Tambah Organisasi</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Nama Organisasi</label>
+                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationName" placeholder="Nama Organisasi" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="!organizationCtrl.savingStates['new-org']">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganization()">Simpan</button>
+                    </div>
+                    <div ng-show="organizationCtrl.savingStates['new-org']">
+                        Menyimpan...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="new-admin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Tambah koordinator untuk {{organizationCtrl.selected.Name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationAdminEmail" placeholder="Undangan akan dikirim ke email ini" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="!organizationCtrl.savingStates['new-admin']">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationAdmin()">Kirim Undangan</button>
+                    </div>
+                    <div ng-show="organizationCtrl.savingStates['new-admin']">
+                        Mengirim undangan...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new-volunteer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Tambah pelapor untuk {{organizationCtrl.selected.Name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationVolunteerEmail" placeholder="Undangan akan dikirim ke email ini" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="!organizationCtrl.savingStates['new-volunteer']">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationVolunteer()">Kirim Undangan</button>
+                    </div>
+                    <div ng-show="organizationCtrl.savingStates['new-volunteer']">
+                        Mengirim undangan...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
