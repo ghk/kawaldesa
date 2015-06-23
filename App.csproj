@@ -324,6 +324,7 @@
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
     <Content Include="Views\KawalDesa\Organization.cshtml" />
+    <Content Include="Views\KawalDesa\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -359,6 +360,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BhprAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\UserCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\OrganizationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DdAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />

@@ -52,7 +52,6 @@ module App.Controllers {
                     ctrl.national = region;
                 });
             });
-            this.getRegionChildren(0);
         }
 
         loadUser() {
@@ -90,58 +89,6 @@ module App.Controllers {
             Models.User.UpdateVolunteerRoles(selectedRoles).done(() => {
                 ctrl.loadUser();
                 this.savingStates["roles"] = false;
-            });
-        }
-
-        getRegionChildren(id: number) {
-            if (id != 0 && !id)
-                return;
-
-            var ctrl = this;
-            if (! (typeof (this.regionChildren[id]) == "undefined"))
-                return this.regionChildren[id];
-
-            this.regionChildren[id] = [];
-            Controllers.RegionController.GetAll({ "ParentId": id }).done(regions => {
-                ctrl.$scope.$apply(() => {
-                    for (var i = 0; i < regions.length; i++) {
-                        ctrl.regionChildren[id].push(regions[i]);
-                    }
-                });
-            });
-            return this.regionChildren[id];
-        }
-
-        truncateRegionPair(regionPair, index) {
-            for (var i = index + 1; i < regionPair.length; i++) {
-                regionPair[i] = null;
-            }
-        }
-
-        saveScopes() {
-            var ctrl = this;
-            var selectedRegions : Models.Region[] = [];
-            for (var i = 0; i < this.regionPairs.length; i++) {
-                var last = null;
-                var regionPair = this.regionPairs[i];
-                for (var j = 0; j < regionPair.length; j++) {
-                    var region = regionPair[j];
-                    if (!region) {
-                        break;
-                    }
-                    last = region;
-                }
-                if (last){
-                    selectedRegions.push(last);
-                }
-            }
-
-            this.savingStates["scopes"] = true;
-            Models.User.SetScopes(selectedRegions).done(() => {
-                ctrl.loadUser();
-                ctrl.$scope.$apply(() => {
-                    ctrl.savingStates["scopes"] = false;
-                });
             });
         }
 

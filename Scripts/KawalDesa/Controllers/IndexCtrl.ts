@@ -39,6 +39,7 @@ module App.Controllers {
         ["/r/", "realization", true],
         ["/dashboard", "dashboard", false],
         ["/orgs", "orgs", false],
+        ["/u/", "users", false],
         ["/login", "login", false],
     ];
 

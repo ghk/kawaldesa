@@ -83,7 +83,7 @@ namespace App.Controllers.Services
             { 
                 UserName = user.UserName, 
                 Roles = roles.ToList(),
-                Scopes = GetScopes()
+                Scopes = GetScopes(user.Id)
             };
             return userViewModel;
         }
@@ -199,18 +199,12 @@ namespace App.Controllers.Services
 
             var view = AutoMapper.Mapper.Map<User, UserViewModel>(user);
             view.Roles = UserManager.GetRoles(user.Id).ToList();
+            view.Scopes = GetScopes(user.Id);
+            if (user.fkOrganizationId.HasValue)
+                view.Organization = dbContext.Set<Organization>().Find(user.fkOrganizationId.Value);
             return view;
         }
 
-        [HttpGet]
-        [Authorize]
-        public virtual UserViewModel GetCurrent()
-        {
-            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
-            var view = AutoMapper.Mapper.Map<User, UserViewModel>(identity.User);
-            view.Roles = UserManager.GetRoles(identity.User.Id).ToList();
-            return view;
-        }
 
         [HttpGet]
         public IEnumerable<UserViewModel> GetAllByOrg(long orgId)
@@ -227,16 +221,17 @@ namespace App.Controllers.Services
             return views;
         }
 
-        private List<Region> GetScopes()
+        private List<Region> GetScopes(string id)
         {
-            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
+            var user = UserManager.FindById(id);
+
             return dbContext.Set<UserScope>()
                 .Include(r => r.Region)
                 .Include(r => r.Region.Parent)
                 .Include(r => r.Region.Parent.Parent)
                 .Include(r => r.Region.Parent.Parent.Parent)
                 .Include(r => r.Region.Parent.Parent.Parent.Parent)
-                .Where(s => s.fkUserId == identity.User.Id)
+                .Where(s => s.fkUserId == user.Id)
                 .ToList()
                 .OrderBy(s => s.Id)
                 .Select(r => r.Region)
@@ -244,12 +239,12 @@ namespace App.Controllers.Services
         }
 
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER)]
-        public void SetScopes(List<Region> regions)
+        [Authorize(Roles=Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
+        public void SetScopes(string id, [FromBody] List<Region> regions)
         {
-            KawalDesaIdentity identity = (KawalDesaIdentity)User.Identity;
+            var user = UserManager.FindById(id);
             var currentScopes = dbContext.Set<UserScope>()
-                .Where(s => s.fkUserId == identity.User.Id)
+                .Where(s => s.fkUserId == user.Id)
                 .ToList();
             foreach(var scope in currentScopes)
             {
@@ -259,7 +254,7 @@ namespace App.Controllers.Services
             {
                 var scope = new UserScope
                 {
-                    fkUserId = identity.User.Id,
+                    fkUserId = user.Id,
                     fkRegionId = region.Id
                 };
                 dbContext.Set<UserScope>().Add(scope);
@@ -267,37 +262,21 @@ namespace App.Controllers.Services
             dbContext.SaveChanges();
         }
 
-        [HttpGet]
-        [Authorize(Roles=Role.ADMIN)]
-        public virtual HttpResponseMessage GetSecretKey(string id)
-        {
-            var user = UserManager.FindById(id);
-            if (user == null)
-                return null;
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            String secret = user.UserName + Environment.NewLine + user.SecretKey;
-            result.Content = new StringContent(secret);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "emisslombok.key" };
-            return result;
-        }
-   
         [HttpPost]
-        [Authorize(Roles=Role.VOLUNTEER)]
-        public virtual void UpdateVolunteerRoles(List<String> roleNames)
+        [Authorize(Roles=Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
+        public virtual void UpdateVolunteerRoles(String id, [FromBody] List<String> roleNames)
         {
             var allowedRoles = new String[]{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
             Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION};
 
-            var principal = HttpContext.Current.User;
-            var user = KawalDesaController.GetCurrentUser();
-            var roles = UserManager.GetRoles(user.Id);
+            var user = UserManager.FindById(id);
+            var roles = UserManager.GetRoles(id);
 
             foreach(string roleName in allowedRoles)
             {
                 bool willBeAssigned = roleNames.Contains(roleName);
-                bool isCurrentlyAssigned = principal.IsInRole(roleName);
+                bool isCurrentlyAssigned = UserManager.IsInRole(id, roleName);
                 IdentityResult res = null;
                 if(willBeAssigned != isCurrentlyAssigned)
                 {

@@ -831,14 +831,6 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static GetCurrent(): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
-			url: '/api/User/GetCurrent',
-				}));
-			   return res;
-	    }
-    
         static GetAllByOrg(orgId: number): JQueryPromise<Array<App.Models.IUserViewModel>> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'GET',
@@ -847,27 +839,21 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static SetScopes(regions: Array<App.Models.IRegion>): JQueryPromise<void> {
+        static SetScopes(id: string, /** [FromBody] **/regions: Array<App.Models.IRegion>): JQueryPromise<void> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'POST',
-			url: '/api/User/SetScopes?regions='+regions+'',
-				}));
+			url: '/api/User/SetScopes?id='+encodeURI(id)+'',
+	            data: JSON.stringify(regions),
+			}));
 			   return res;
 	    }
     
-        static GetSecretKey(id: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
-			url: '/api/User/GetSecretKey?id='+encodeURI(id)+'',
-				}));
-			   return res;
-	    }
-    
-        static UpdateVolunteerRoles(roleNames: Array<string>): JQueryPromise<void> {
+        static UpdateVolunteerRoles(id: string, /** [FromBody] **/roleNames: Array<string>): JQueryPromise<void> {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'POST',
-			url: '/api/User/UpdateVolunteerRoles?roleNames='+roleNames+'',
-				}));
+			url: '/api/User/UpdateVolunteerRoles?id='+encodeURI(id)+'',
+	            data: JSON.stringify(roleNames),
+			}));
 			   return res;
 	    }
 	}

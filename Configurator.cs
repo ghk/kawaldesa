@@ -136,6 +136,11 @@ namespace App
                 url: "orgs/{id}",
                 defaults: new { controller = "KawalDesa", action = "Organization", id=UrlParameter.Optional}
             );
+            routes.MapRoute(
+                name: "Users",
+                url: "u/{id}",
+                defaults: new { controller = "KawalDesa", action = "User"}
+            );
             var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect"};
             foreach (var appRoute in appRoutes)
             {

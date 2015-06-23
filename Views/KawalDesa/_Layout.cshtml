@@ -66,7 +66,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/dashboard">Konfigurasi</a></li>
+                            <li><a href="/u/{{indexCtrl.currentUser.ID}}">Profil</a></li>
+                            <li ng-show="{{indexCtrl.currentUser.fkOrganizationId}}"><a href="/orgs/{{indexCtrl.currentUser.fkOrganizationId}}">Organisasi</a></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </li>

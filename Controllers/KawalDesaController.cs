@@ -66,6 +66,14 @@ namespace App.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult User(string id)
+        {
+            var user = GetUserDictFromSession();
+            ViewData["User"] = new JavaScriptSerializer().Serialize(user);
+            return View();
+        }
+
         private string GetRedirectHost()
         {
             var redirectHost = "http://kawaldesa.org";

@@ -93,6 +93,7 @@ module App.Models {
         FacebookId: string;
         UserName: string;
         Name: string;
+        Organization: App.Models.IOrganization;
         Roles: Array<string>;
         Scopes: Array<App.Models.IRegion>;
     }
@@ -104,6 +105,7 @@ module App.Models {
         FacebookId: string;
         UserName: string;
         Name: string;
+        Organization: App.Models.IOrganization;
         Roles: Array<string>;
         Scopes: Array<App.Models.IRegion>;
         
@@ -112,6 +114,7 @@ module App.Models {
             this.FacebookId = data ? data.FacebookId : null;
             this.UserName = data ? data.UserName : null;
             this.Name = data ? data.Name : null;
+            this.Organization = data ? data.Organization : null;
             this.Roles = data ? data.Roles : null;
             this.Scopes = data ? data.Scopes : null;
         }

@@ -1,0 +1,171 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+<div ng-controller="UserCtrl as userCtrl" ng-if="indexCtrl.type == 'users'">
+    <div class="container-fluid" style="padding:0 20px;">
+        <div class="row">
+            <div class="col-md-2">
+                <h4>{{userCtrl.selected.Name ? userCtrl.selected.Name : userCtrl.selected.UserName}}</h4>
+                <a href="/orgs/{{userCtrl.selected.Organization.Id}}" ng-if="userCtrl.selected.Organization">
+                    {{userCtrl.selected.Organization.Name}}
+                </a>
+            </div>
+            <div class="col-md-10">
+
+                <div class="content-header">
+                    Jenis Pelapor
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left;">Jenis Pelapor</th>
+                                <th style="text-align: left;">Dapat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_apbn" />
+                                    Pelapor Penyaluran APBN
+                                </td>
+                                <td style="text-align: left;">
+                                    Melaporkan penyaluran Alokasi APBN untuk Dana Desa dari Pusat
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_add" />
+                                    Pelapor Penyaluran ADD
+                                </td>
+                                <td style="text-align: left;">
+                                    Melaporkan penyaluran Alokasi Dana Desa dari Kabupaten/Kota
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_desa" />
+                                    Pelapor Penerimaan Dana Desa
+                                </td>
+                                <td style="text-align: left;">
+                                    Melaporkan penerimaan Dana Desa baik dari APBN (Pusat) maupun dari ADD (Kabupaten / Kota)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_account" />
+                                    Pelapor APBDes
+                                </td>
+                                <td style="text-align: left;">
+                                    Melaporkan Anggaran Pendapatan dan Belanja Desa (APBDes) beserta realisasinya.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_realization" />
+                                    Pelapor Realisasi Lapangan
+                                </td>
+                                <td style="text-align: left;">
+                                    Melaporkan bukti di lapangan tentang realisasi APBDes.
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="" ng-if="userCtrl.isEditable()">
+                                <td colspan="2">
+                                    <button ng-if="!userCtrl.savingStates['roles']" class="btn btn-primary btn-xs" ng-click="userCtrl.saveRoles()">Simpan jenis pelapor</button>
+                                    <span ng-if="userCtrl.savingStates['roles']">Menyimpan</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="content-header">
+                    Lingkup Laporan
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th style=" width: 25%;">Propinsi</th>
+                                <th style=" width: 25%;">Kabupaten/Kota</th>
+                                <th style=" width: 25%;">Kecamatan</th>
+                                <th style=" width: 25%;">Desa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="regionPair in userCtrl.regionPairs">
+                                <td ng-repeat="region in regionPair track by $index" ng-if="$index != 0">
+                                    <select ng-model="regionPair[$index]"
+                                            style="width: 100%;"
+                                            ng-if="regionPair[$index - 1]"
+                                            ng-change="userCtrl.truncateRegionPair(regionPair, $index)"
+                                            ng-options="r.Name for r in userCtrl.getRegionChildren(regionPair[$index - 1].ID) track by r.ID">
+                                        <option value="">Semua</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr ng-if="userCtrl.national && userCtrl.isEditable()" class="">
+                                <td colspan="4">
+                                    <button class="btn btn-xs"
+                                        ng-click="userCtrl.regionPairs.push([userCtrl.national, null, null, null, null])">
+                                        Tambah Lingkupan
+                                    </button>
+                                </td>
+                            </trng-if="userCtrl.national>
+                        </tbody>
+                        <tfoot>
+                            <tr class="" ng-if="userCtrl.isEditable()">
+                                <td colspan="2">
+                                    <button ng-if="!userCtrl.savingStates['scopes']"
+                                            class="btn btn-primary btn-xs"
+                                            ng-click="userCtrl.saveScopes()">
+                                        Simpan lingkup wilayah
+                                    </button>
+                                    <span ng-if="userCtrl.savingStates['scopes']">Menyimpan</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="content-header">
+                    Laporan Terakhir
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Wilayah</th>
+                                <th>Nama Dokumen</th>
+                                <th>Sumber</th>
+                                <th>Unduh</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="upload in userCtrl.uploads">
+                                <td>{{upload.CreatedDate}}</td>
+                                <td>{{upload.Type}}</td>
+                                <td>{{upload.Region.Name}}</td>
+                                <td>{{upload.DocumentName}}</td>
+                                <td>{{upload.Source}}</td>
+                                <td>{{upload.Type}}</td>
+                                <td>{{upload.Status}}</td>
+                                <td>{{upload.Type}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
