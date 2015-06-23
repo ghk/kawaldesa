@@ -227,9 +227,17 @@
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\InvitationToken.cs" />
+    <Compile Include="Models\NationalBhprAllocation.cs" />
+    <Compile Include="Models\NationalAddAllocation.cs" />
+    <Compile Include="Models\RegionalBhprAllocation.cs" />
+    <Compile Include="Models\RegionalAddAllocation.cs" />
+    <Compile Include="Models\RegionalDdAllocation.cs" />
+    <Compile Include="Models\NationalDdAllocation.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\DocumentUploadType.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
+    <Compile Include="Utils\Excel\ExcelFileNameAttribute.cs" />
+    <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\Models\ApbdesController.cs" />
