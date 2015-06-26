@@ -43,6 +43,10 @@ namespace App.Models
 
         public bool IsActivated { get; set; }
 
+        [ForeignKey("Apbd")]
+        public long fkApbdId { get; set; }
+        public virtual Apbd Apbd { get; set; }
+
         [ForeignKey("DocumentUpload")]
         public long fkDocumentUploadId { get; set; }
         public virtual DocumentUpload DocumentUpload { get; set; }

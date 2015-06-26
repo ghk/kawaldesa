@@ -30,6 +30,12 @@ namespace App.Models
         public virtual IDbSet<Apbn> Apbns { get; set; }
         public virtual IDbSet<Apbd> Apbds { get; set; }
         public virtual IDbSet<DocumentUpload> DocumentUploads { get; set; }
+        public virtual IDbSet<NationalDdAllocation> NationalDdAllocations { get; set; }
+        public virtual IDbSet<NationalAddAllocation> NationalAddAllocations { get; set; }
+        public virtual IDbSet<NationalBhprAllocation> NationalBhprAllocations { get; set; }
+        public virtual IDbSet<RegionalDdAllocation> RegionalDdAllocations { get; set; }
+        public virtual IDbSet<RegionalAddAllocation> RegionalAddAllocations { get; set; }
+        public virtual IDbSet<RegionalBhprAllocation> RegionalBhprAllocations { get; set; }
         public virtual IDbSet<ApbdFile> ApbdFiles { get; set; }
         public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }

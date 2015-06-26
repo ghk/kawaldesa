@@ -8,8 +8,6 @@ namespace App.Models
 {
     public class Apbn : BaseEntity
     {
-        public decimal DanaPerDesa { get; set; }
-
         [Index(IsUnique=true)]
         public int Year { get; set; }
 

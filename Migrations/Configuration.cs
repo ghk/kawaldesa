@@ -74,7 +74,6 @@ namespace App.Migrations
             {
                 context.Apbns.Add(new Apbn
                 {
-                    DanaPerDesa = 812404036,
                     Year = 2015
                 });
             }

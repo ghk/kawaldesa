@@ -119,12 +119,12 @@ namespace App.Controllers.Models
                     if (kab == null)
                         throw new ApplicationException("Cannot found kabupaten with name: " + cellText+" And province: "+province.Name);
                     Apbd apbd = new Apbd();
-                    apbd.fkApbdFileId = apbdFile.Id;
+                    //apbd.fkApbdFileId = apbdFile.Id;
                     apbd.fkApbnId = 1;
                     apbd.IsActivated = true;
                     apbd.fkRegionId = kab.Id;
-                    apbd.Dbh = decimal.Parse(worksheet.Cells[i, 3].Text);
-                    apbd.Dau = decimal.Parse(worksheet.Cells[i, 4].Text);
+                    //apbd.Dbh = decimal.Parse(worksheet.Cells[i, 3].Text);
+                    //apbd.Dau = decimal.Parse(worksheet.Cells[i, 4].Text);
                     results.Add(apbd);
                 }
             }

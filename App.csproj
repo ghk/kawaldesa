@@ -238,6 +238,7 @@
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\Excel\ExcelFileNameAttribute.cs" />
     <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
+    <Compile Include="Utils\Excel\ExcelHeaders.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\Models\ApbdesController.cs" />
