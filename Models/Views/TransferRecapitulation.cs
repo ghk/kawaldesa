@@ -8,9 +8,9 @@ using System.Web;
 
 namespace App.Models.Views
 {
-    public class BaseTransferRecapitulation : IModel<long>
+    public class BaseTransferRecapitulation : IModel<string>
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public string RegionId { get; set; }
 

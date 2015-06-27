@@ -70,11 +70,16 @@ namespace App.Migrations
             }
 
             */
-            if(context.Apbns.Count() == 0)
+            if(context.Apbns.Count() < 2)
             {
                 context.Apbns.Add(new Apbn
                 {
                     Year = 2015
+                });
+                context.Apbns.Add(new Apbn
+                {
+                    Year = 2015,
+                    IsPerubahan = true,
                 });
             }
 

@@ -29,7 +29,10 @@ namespace App.Models.Views
         public decimal? RegionalTransfer { get; set; }
 
         public decimal? Dd { get; set; }
+
         public int TotalDesa { get; set; }
+
+        public int CompletedDesa { get; set; }
     }
 
     public class NationalDdAllocationRecapitulation : BaseNationalDdAllocationRecapitulation

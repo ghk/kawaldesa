@@ -34,6 +34,8 @@ namespace App.Models.Views
         public decimal? Add { get; set; }
 
         public int TotalDesa { get; set; }
+
+        public int CompletedDesa { get; set; }
     }
     public class NationalAddAllocationRecapitulation : BaseNationalAddAllocationRecapitulation
     {
