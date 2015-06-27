@@ -38,9 +38,9 @@ namespace App.Models
 
         public decimal OthersExpense { get; set; }
 
-        public decimal TotalVillage { get; set; }
+        public decimal TotalDesa { get; set; }
 
-        public decimal AccountCompletedVillage { get; set; }
+        public decimal AccountCompletedDesa { get; set; }
 
     }
     public class AccountRecapitulation : BaseAccountRecapitulation

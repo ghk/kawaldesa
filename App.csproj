@@ -227,8 +227,11 @@
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\InvitationToken.cs" />
+    <Compile Include="Models\NationalAddAllocationRecapitulation.cs" />
+    <Compile Include="Models\NationalBhprAllocationRecapitulation.cs" />
     <Compile Include="Models\NationalBhprAllocation.cs" />
     <Compile Include="Models\NationalAddAllocation.cs" />
+    <Compile Include="Models\NationalDdAllocationRecapitulation.cs" />
     <Compile Include="Models\RegionalBhprAllocation.cs" />
     <Compile Include="Models\RegionalAddAllocation.cs" />
     <Compile Include="Models\RegionalDdAllocation.cs" />
