@@ -10,10 +10,10 @@ using System.Web;
 using System.Web.Http.Validation;
 using Scaffold;
 
-namespace App.Models.Views
+namespace App.Models
 {
 
-    public class BaseNationalBhprAllocationRecapitulation : IModel<string>
+    public class BaseRegionalBhprRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -25,24 +25,22 @@ namespace App.Models.Views
 
         public string RegionName { get; set; }
 
-        public string ParentRegionId { get; set; }
+        public decimal? BaseAllocation { get; set; }
 
-        public decimal? RegionalTax { get; set; }
+        public decimal? Pdrd { get; set; }
 
-        public decimal? RegionalRetribution { get; set; }
+        public decimal? PdrdRatio { get; set; }
+
+        public decimal? FormulaBasedAllocation { get; set; }
 
         public decimal? Bhpr { get; set; }
-
-        public int TotalDesa { get; set; }
-
-        public int CompletedDesa { get; set; }
     }
 
-    public class NationalBhprAllocationRecapitulation : BaseNationalBhprAllocationRecapitulation
+    public class RegionalBhprRecapitulation : BaseRegionalBhprRecapitulation
     {
     }
 
-    public class FrozenNationalBhprAllocationRecapitulation : BaseNationalBhprAllocationRecapitulation
+    public class FrozenRegionalBhprRecapitulation : BaseRegionalBhprRecapitulation
     {
     }
 }

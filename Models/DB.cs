@@ -46,18 +46,18 @@ namespace App.Models
         public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
         public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
-        public virtual IDbSet<NationalAddAllocationRecapitulation> NationalAddAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalAddAllocationRecapitulation> FrozenNationalAddAllocationRecapitulations { get; set; }
-        public virtual IDbSet<NationalBhprAllocationRecapitulation> NationalBhprAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalBhprAllocationRecapitulation> FrozenNationalBhprAllocationRecapitulations { get; set; }
-        public virtual IDbSet<NationalDdAllocationRecapitulation> NationalDdAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalDdAllocationRecapitulation> FrozenNationalDdAllocationRecapitulations { get; set; }
-        public virtual IDbSet<RegionalAddAllocationRecapitulation> RegionalAddAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalAddAllocationRecapitulation> FrozenRegionalAddAllocationRecapitulations { get; set; }
-        public virtual IDbSet<RegionalBhprAllocationRecapitulation> RegionalBhprAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalBhprAllocationRecapitulation> FrozenRegionalBhprAllocationRecapitulations { get; set; }
-        public virtual IDbSet<RegionalDdAllocationRecapitulation> RegionalDdAllocationRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalDdAllocationRecapitulation> FrozenRegionalDdAllocationRecapitulations { get; set; }
+        public virtual IDbSet<NationalAddRecapitulation> NationalAddRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalAddRecapitulation> FrozenNationalAddRecapitulations { get; set; }
+        public virtual IDbSet<NationalBhprRecapitulation> NationalBhprRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalBhprRecapitulation> FrozenNationalBhprRecapitulations { get; set; }
+        public virtual IDbSet<NationalDdRecapitulation> NationalDdRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalDdRecapitulation> FrozenNationalDdRecapitulations { get; set; }
+        public virtual IDbSet<RegionalAddRecapitulation> RegionalAddRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalAddRecapitulation> FrozenRegionalAddRecapitulations { get; set; }
+        public virtual IDbSet<RegionalBhprRecapitulation> RegionalBhprRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalBhprRecapitulation> FrozenRegionalBhprRecapitulations { get; set; }
+        public virtual IDbSet<RegionalDdRecapitulation> RegionalDdRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalDdRecapitulation> FrozenRegionalDdRecapitulations { get; set; }
         public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

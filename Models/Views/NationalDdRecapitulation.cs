@@ -12,7 +12,7 @@ using System.Web.Http.Validation;
 namespace App.Models.Views
 {
 
-    public class BaseNationalDdAllocationRecapitulation : BaseEntity
+    public class BaseNationalDdRecapitulation : BaseEntity
     {
         public string Id { get; set; }
 
@@ -35,11 +35,11 @@ namespace App.Models.Views
         public int CompletedDesa { get; set; }
     }
 
-    public class NationalDdAllocationRecapitulation : BaseNationalDdAllocationRecapitulation
+    public class NationalDdRecapitulation : BaseNationalDdRecapitulation
     {
     }
 
-    public class FrozenNationalDdAllocationRecapitulation : BaseNationalDdAllocationRecapitulation
+    public class FrozenNationalDdRecapitulation : BaseNationalDdRecapitulation
     {
     }
 }

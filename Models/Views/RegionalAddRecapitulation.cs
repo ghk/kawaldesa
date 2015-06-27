@@ -13,7 +13,7 @@ using Scaffold;
 namespace App.Models
 {
 
-    public class BaseRegionalDdAllocationRecapitulation : IModel<string>
+    public class BaseRegionalAddRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -55,13 +55,12 @@ namespace App.Models
 
         public decimal? FormulaBasedAllocation { get; set; }
 
-        public decimal? Dd { get; set; }
+        public decimal? Add { get; set; }
     }
-    public class RegionalDdAllocationRecapitulation : BaseRegionalDdAllocationRecapitulation
+    public class RegionalAddRecapitulation : BaseRegionalAddRecapitulation
     {
     }
-
-    public class FrozenRegionalDdAllocationRecapitulation : BaseRegionalDdAllocationRecapitulation
+    public class FrozenRegionalAddRecapitulation : BaseRegionalAddRecapitulation
     {
     }
 }

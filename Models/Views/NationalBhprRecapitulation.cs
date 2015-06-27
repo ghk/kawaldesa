@@ -13,7 +13,7 @@ using Scaffold;
 namespace App.Models.Views
 {
 
-    public class BaseNationalAddAllocationRecapitulation : IModel<string>
+    public class BaseNationalBhprRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -27,21 +27,22 @@ namespace App.Models.Views
 
         public string ParentRegionId { get; set; }
 
-        public decimal? DanaPerimbangan { get; set; }
+        public decimal? RegionalTax { get; set; }
 
-        public decimal? Dak { get; set; }
+        public decimal? RegionalRetribution { get; set; }
 
-        public decimal? Add { get; set; }
+        public decimal? Bhpr { get; set; }
 
         public int TotalDesa { get; set; }
 
         public int CompletedDesa { get; set; }
     }
-    public class NationalAddAllocationRecapitulation : BaseNationalAddAllocationRecapitulation
+
+    public class NationalBhprRecapitulation : BaseNationalBhprRecapitulation
     {
     }
 
-    public class FrozenNationalAddAllocationRecapitulation : BaseNationalAddAllocationRecapitulation
+    public class FrozenNationalBhprRecapitulation : BaseNationalBhprRecapitulation
     {
     }
 }
