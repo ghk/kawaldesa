@@ -72,7 +72,7 @@ namespace App.Models
         public decimal? FormulaBasedAllocation { get; set; }
 
         [ExcelHeader("ADD")]
-        public decimal? Dd { get; set; }
+        public decimal? Add { get; set; }
 
         [ForeignKey("Region")]
         public String fkRegionId { get; set; }

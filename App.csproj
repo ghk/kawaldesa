@@ -238,6 +238,9 @@
     <Compile Include="Models\NationalDdAllocation.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\DocumentUploadType.cs" />
+    <Compile Include="Models\Views\RegionalAddAllocationRecapitulation.cs" />
+    <Compile Include="Models\Views\RegionalBhprAllocationRecapitulation.cs" />
+    <Compile Include="Models\Views\RegionalDdAllocationRecapitulation.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\Excel\ExcelFileNameAttribute.cs" />
     <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
