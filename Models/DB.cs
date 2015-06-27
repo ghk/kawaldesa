@@ -52,6 +52,12 @@ namespace App.Models
         public virtual IDbSet<FrozenNationalBhprAllocationRecapitulation> FrozenNationalBhprAllocationRecapitulations { get; set; }
         public virtual IDbSet<NationalDdAllocationRecapitulation> NationalDdAllocationRecapitulations { get; set; }
         public virtual IDbSet<FrozenNationalDdAllocationRecapitulation> FrozenNationalDdAllocationRecapitulations { get; set; }
+        public virtual IDbSet<RegionalAddAllocationRecapitulation> RegionalAddAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalAddAllocationRecapitulation> FrozenRegionalAddAllocationRecapitulations { get; set; }
+        public virtual IDbSet<RegionalBhprAllocationRecapitulation> RegionalBhprAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalBhprAllocationRecapitulation> FrozenRegionalBhprAllocationRecapitulations { get; set; }
+        public virtual IDbSet<RegionalDdAllocationRecapitulation> RegionalDdAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenRegionalDdAllocationRecapitulation> FrozenRegionalDdAllocationRecapitulations { get; set; }
         public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
