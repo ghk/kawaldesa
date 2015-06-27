@@ -89,7 +89,6 @@ namespace App.Controllers.Models
                 transaction.IsActivated = true;
                 transaction.fkCreatedById = user.Id;
                 transaction.fkAccountId = accountId;
-                transaction.fkApbnId = 1; //TODO
 
 
                 dbSet.Add(transaction);
@@ -177,7 +176,6 @@ namespace App.Controllers.Models
                 KawalDesaController.CheckRegionAllowed(dbContext, account.Apbdes.fkRegionId);
 
                 transaction.fkActorId = account.Apbdes.fkRegionId;
-                transaction.fkApbnId = account.Apbdes.fkApbnId;
                 dbContext.Set<Transaction>().Add(transaction);
 
                 realization.fkTransactionId = transaction.Id;

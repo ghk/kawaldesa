@@ -6,7 +6,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
-namespace App.Models
+namespace App.Models.Views
 {
     public class BaseAccountRecapitulation : IModel<long>
     {

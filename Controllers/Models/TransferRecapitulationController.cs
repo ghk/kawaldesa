@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.Views;
 using Scaffold;
 using System;
 using System.Collections.Generic;

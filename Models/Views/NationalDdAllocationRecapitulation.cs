@@ -9,12 +9,18 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http.Validation;
 
-namespace App.Models
+namespace App.Models.Views
 {
 
-    public class NationalDdAllocationRecapitulation : BaseEntity
+    public class BaseNationalDdAllocationRecapitulation : BaseEntity
     {
+        public string Id { get; set; }
+
         public string RegionId { get; set; }
+        
+        public int ApbnYear { get; set; }
+
+        public bool ApbnIsPerubahan { get; set; }
 
         public string RegionName { get; set; }
 
@@ -24,16 +30,13 @@ namespace App.Models
 
         public decimal? Dd { get; set; }
         public int TotalDesa { get; set; }
+    }
 
-        public String fkRegionId { get; set; }
-        public virtual Region Region { get; set; }
+    public class NationalDdAllocationRecapitulation : BaseNationalDdAllocationRecapitulation
+    {
+    }
 
-        public bool IsActivated { get; set; }
-
-        public long fkApbnId { get; set; }
-        public virtual Apbn Apbn { get; set; }
-
-        public long fkDocumentUploadId { get; set; }
-        public virtual DocumentUpload DocumentUpload { get; set; }
+    public class FrozenNationalDdAllocationRecapitulation : BaseNationalDdAllocationRecapitulation
+    {
     }
 }

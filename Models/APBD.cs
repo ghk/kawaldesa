@@ -8,8 +8,6 @@ namespace App.Models
 {
     public class Apbd : BaseEntity
     {
-        public bool IsActivated { get; set; }
-        
         [ForeignKey("Apbn")]
         public long fkApbnId { get; set; }
         public virtual Apbn Apbn { get; set; }

@@ -8,13 +8,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http.Validation;
+using Scaffold;
 
-namespace App.Models
+namespace App.Models.Views
 {
 
-    public class NationalAddAllocationRecapitulation : BaseEntity
+    public class BaseNationalAddAllocationRecapitulation : IModel<string>
     {
+        public string Id { get; set; }
+
         public string RegionId { get; set; }
+
+        public int ApbdYear { get; set; }
+
+        public bool ApbdIsPerubahan { get; set; }
 
         public string RegionName { get; set; }
 
@@ -27,16 +34,12 @@ namespace App.Models
         public decimal? Add { get; set; }
 
         public int TotalDesa { get; set; }
+    }
+    public class NationalAddAllocationRecapitulation : BaseNationalAddAllocationRecapitulation
+    {
+    }
 
-        public String fkRegionId { get; set; }
-        public virtual Region Region { get; set; }
-
-        public bool IsActivated { get; set; }
-
-        public long fkApbnId { get; set; }
-        public virtual Apbn Apbn { get; set; }
-
-        public long fkDocumentUploadId { get; set; }
-        public virtual DocumentUpload DocumentUpload { get; set; }
+    public class FrozenNationalAddAllocationRecapitulation : BaseNationalAddAllocationRecapitulation
+    {
     }
 }

@@ -11,6 +11,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Data.Entity.Infrastructure.Pluralization;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using App.Models.Views;
 
 namespace App.Models
 {
@@ -45,6 +46,12 @@ namespace App.Models
         public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
         public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
+        public virtual IDbSet<NationalAddAllocationRecapitulation> NationalAddAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalAddAllocationRecapitulation> FrozenNationalAddAllocationRecapitulations { get; set; }
+        public virtual IDbSet<NationalBhprAllocationRecapitulation> NationalBhprAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalBhprAllocationRecapitulation> FrozenNationalBhprAllocationRecapitulations { get; set; }
+        public virtual IDbSet<NationalDdAllocationRecapitulation> NationalDdAllocationRecapitulations { get; set; }
+        public virtual IDbSet<FrozenNationalDdAllocationRecapitulation> FrozenNationalDdAllocationRecapitulations { get; set; }
         public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

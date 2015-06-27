@@ -6,7 +6,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
-namespace App.Models
+namespace App.Models.Views
 {
     public class BaseTransferRecapitulation : IModel<long>
     {
@@ -33,33 +33,6 @@ namespace App.Models
         public decimal TransferredAdd { get; set; }
 
         public decimal AcknowledgedAdd { get; set; }
-
-        [NotMapped]
-        public decimal BudgetedTotal
-        {
-            get
-            {
-                return BudgetedApbn + BudgetedAdd;
-            }
-        }
-
-        [NotMapped]
-        public decimal TransferredTotal
-        {
-            get
-            {
-                return TransferredApbn + TransferredAdd;
-            }
-        }
-
-        [NotMapped]
-        public decimal AcknowledgedTotal
-        {
-            get
-            {
-                return AcknowledgedApbn + AcknowledgedAdd;
-            }
-        }
 
     }
     public class TransferRecapitulation : BaseTransferRecapitulation

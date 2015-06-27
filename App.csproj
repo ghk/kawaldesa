@@ -227,11 +227,11 @@
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\InvitationToken.cs" />
-    <Compile Include="Models\NationalAddAllocationRecapitulation.cs" />
-    <Compile Include="Models\NationalBhprAllocationRecapitulation.cs" />
+    <Compile Include="Models\Views\NationalAddAllocationRecapitulation.cs" />
+    <Compile Include="Models\Views\NationalBhprAllocationRecapitulation.cs" />
     <Compile Include="Models\NationalBhprAllocation.cs" />
     <Compile Include="Models\NationalAddAllocation.cs" />
-    <Compile Include="Models\NationalDdAllocationRecapitulation.cs" />
+    <Compile Include="Models\Views\NationalDdAllocationRecapitulation.cs" />
     <Compile Include="Models\RegionalBhprAllocation.cs" />
     <Compile Include="Models\RegionalAddAllocation.cs" />
     <Compile Include="Models\RegionalDdAllocation.cs" />
@@ -265,7 +265,7 @@
     <Compile Include="Models\Realization.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Apbd.cs" />
-    <Compile Include="Models\AccountRecapitulation.cs" />
+    <Compile Include="Models\Views\AccountRecapitulation.cs" />
     <Compile Include="Models\Sector.cs" />
     <Compile Include="Models\UserScope.cs" />
     <Compile Include="Models\Apbn.cs" />
@@ -279,7 +279,7 @@
     <Compile Include="Models\Identities.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransferRecapitulation.cs" />
+    <Compile Include="Models\Views\TransferRecapitulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationHandler.cs" />
     <Compile Include="Security\CryptographyHelper.cs" />

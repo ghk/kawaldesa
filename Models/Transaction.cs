@@ -23,13 +23,12 @@ namespace App.Models
 
         public string SourceUrl { get; set; }
 
+        public int Year { get; set; }
+
+
         [ForeignKey("SourceFile")]
         public long? fkSourceFileId { get; set; }
         public virtual Blob SourceFile { get; set; }
-
-        [ForeignKey("Apbn")]
-        public long fkApbnId { get; set; }
-        public virtual Apbn Apbn { get; set; }
 
         [ForeignKey("Source")]
         public string fkSourceId { get; set; }
