@@ -74,11 +74,13 @@ namespace App.Migrations
             {
                 context.Apbns.Add(new Apbn
                 {
-                    Year = 2015
+                    Year = 2015,
+                    Key = "2015",
                 });
                 context.Apbns.Add(new Apbn
                 {
                     Year = 2015,
+                    Key = "2015p",
                     IsPerubahan = true,
                 });
             }

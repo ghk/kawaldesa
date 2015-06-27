@@ -8,9 +8,10 @@ namespace App.Models
 {
     public class Apbn : BaseEntity
     {
+        [Index(IsUnique=true)]
+        public string Key { get; set; }
+
         [Index]
-        //[Index(IsUnique=true)]
-        //TODO  uniqueindex Year Is Perubahan
         public int Year { get; set; }
 
         public bool IsPerubahan { get; set; }

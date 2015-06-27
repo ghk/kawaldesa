@@ -19,9 +19,7 @@ namespace App.Models.Views
 
         public string RegionId { get; set; }
 
-        public int ApbdYear { get; set; }
-
-        public bool ApbdIsPerubahan { get; set; }
+        public string ApbnKey { get; set; }
 
         public string RegionName { get; set; }
 

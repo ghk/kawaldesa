@@ -8,19 +8,18 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http.Validation;
+using Scaffold;
 
 namespace App.Models.Views
 {
 
-    public class BaseNationalDdRecapitulation : BaseEntity
+    public class BaseNationalDdRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
         public string RegionId { get; set; }
         
-        public int ApbnYear { get; set; }
-
-        public bool ApbnIsPerubahan { get; set; }
+        public string ApbnKey { get; set; }
 
         public string RegionName { get; set; }
 
