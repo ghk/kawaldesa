@@ -245,7 +245,6 @@
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\Models\ApbdesController.cs" />
-    <Compile Include="Controllers\Models\ApbdFileController.cs" />
     <Compile Include="Controllers\Models\FieldReportController.cs" />
     <Compile Include="Controllers\Models\RealizationController.cs" />
     <Compile Include="Controllers\Models\AccountRecapitulationController.cs" />
@@ -266,7 +265,6 @@
     <Compile Include="Models\Realization.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Apbd.cs" />
-    <Compile Include="Models\ApbdFile.cs" />
     <Compile Include="Models\AccountRecapitulation.cs" />
     <Compile Include="Models\Sector.cs" />
     <Compile Include="Models\UserScope.cs" />
@@ -281,7 +279,6 @@
     <Compile Include="Models\Identities.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransactionFile.cs" />
     <Compile Include="Models\TransferRecapitulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationHandler.cs" />

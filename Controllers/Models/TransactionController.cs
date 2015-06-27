@@ -188,6 +188,8 @@ namespace App.Controllers.Models
                     var fileResult = multipart.Files[0];
                     var blob = new Blob(fileResult);
                     dbContext.Set<Blob>().Add(blob);
+                    /*
+                     * TODO
                     TransactionFile transactionFile = new TransactionFile()
                     {
                         FileName = blob.Name,
@@ -195,6 +197,7 @@ namespace App.Controllers.Models
                         IsActivated = true
                     };
                     dbContext.Set<TransactionFile>().Add(transactionFile);
+                    */
                     fileResult.Move(blob.FilePath);
                 }                
                 

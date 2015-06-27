@@ -36,13 +36,11 @@ namespace App.Models
         public virtual IDbSet<RegionalDdAllocation> RegionalDdAllocations { get; set; }
         public virtual IDbSet<RegionalAddAllocation> RegionalAddAllocations { get; set; }
         public virtual IDbSet<RegionalBhprAllocation> RegionalBhprAllocations { get; set; }
-        public virtual IDbSet<ApbdFile> ApbdFiles { get; set; }
         public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }
         public virtual IDbSet<Realization> Realizations { get; set; }
         public virtual IDbSet<Transaction> Transactions  { get; set; }
         public virtual IDbSet<FrozenTransaction> FrozenTransactions  { get; set; }
-        public virtual IDbSet<TransactionFile> TransactionFiles { get; set; }
         public virtual IDbSet<TransferRecapitulation> TransferRecapitulations { get; set; }
         public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }

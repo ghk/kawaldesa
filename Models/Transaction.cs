@@ -51,9 +51,9 @@ namespace App.Models
         public string fkCreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
-        [ForeignKey("TransactionFile")]
-        public long? fkTransactionFileId { get; set; }
-        public virtual TransactionFile TransactionFile { get; set; }
+        [ForeignKey("DocumentUpload")]
+        public long? fkDocumentUploadId { get; set; }
+        public virtual DocumentUpload DocumentUpload { get; set; }
 
         [Validator]
         public IEnumerable<ModelValidationResult> Validate()
