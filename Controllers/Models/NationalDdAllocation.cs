@@ -35,7 +35,7 @@ namespace App.Controllers.Models
             var regions = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
             var parentRegions = dbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
             var allocations = new List<NationalDdAllocation>();
-            return new AllocationExcelWriter<NationalDdAllocation>().WriteData(parentRegions, regions, allocations);
+            return new AllocationExcelWriter<NationalDdAllocation>().Write(parentRegions, regions, allocations);
         }
 
     }

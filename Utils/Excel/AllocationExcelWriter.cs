@@ -15,12 +15,12 @@ namespace App.Utils.Excel
     public class AllocationExcelWriter<TAllocation>
         where TAllocation: IAllocation
     {
-        public HttpResponseMessage WriteData(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
+        public HttpResponseMessage Write(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
         {
             byte[] output = null;
 
             int startRow = 2;
-            int startColumn = 2;
+            int startCol = 2;
             var fileAttr = (ExcelFileNameAttribute) Attribute.GetCustomAttribute(typeof(TAllocation), typeof(ExcelFileNameAttribute));
             String fileName = fileAttr == null ? typeof(TAllocation).Name : fileAttr.Value; 
 
@@ -30,26 +30,26 @@ namespace App.Utils.Excel
                 var headers = new ExcelHeaders(typeof(TAllocation));
                 int row = startRow;
 
-                row = WriteHeader(worksheet, row, startColumn, headers);
+                row = WriteHeader(worksheet, row, startCol, headers);
                 int headerEndRow = row - 1;
 
                 foreach(var group in regions.GroupBy(r => r.fkParentId).OrderBy(g => g.Key))
                 {
                     var parentRegion = parentRegions.First(r => r.Id == group.Key);
-                    WriteGroupRow(worksheet, parentRegion.Id, row, startColumn, headers, parentRegion);
+                    WriteGroupRow(worksheet, parentRegion.Id, row, startCol, headers, parentRegion);
                     row += 1;
 
                     bool isAlternatingColor = false;
                     foreach (var region in group.OrderBy(r => r.Id))
                     {
                         var allocation = allocations.FirstOrDefault(a => a.fkRegionId == region.Id);
-                        WriteDataRow(worksheet, isAlternatingColor, region.Id, row, startColumn, headers, region, allocation);
+                        WriteDataRow(worksheet, isAlternatingColor, region.Id, row, startCol, headers, region, allocation);
                         row += 1;
                         isAlternatingColor = !isAlternatingColor;
                     }
                 }
 
-                int col = startColumn;
+                int col = startCol;
                 foreach(var leaf in headers.Root.Leafs)
                 {
                     var attr = (ExcelHeaderAttribute) Attribute.GetCustomAttribute(leaf.Property, typeof(ExcelHeaderAttribute));
@@ -58,14 +58,14 @@ namespace App.Utils.Excel
                     col += 1;
                 }
 
-                var tableAddr = GetAddress(startRow, startColumn) + ":" + GetAddress(row - 1, startColumn + headers.Root.ColSpan - 1);
+                var tableAddr = GetAddress(startRow, startCol) + ":" + GetAddress(row - 1, startCol + headers.Root.ColSpan - 1);
                 worksheet.Cells[tableAddr].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 worksheet.Cells[tableAddr].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 worksheet.Cells[tableAddr].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 worksheet.Cells[tableAddr].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                 worksheet.Cells[tableAddr].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thick);
 
-                var headerAddr = GetAddress(startRow, startColumn) + ":" + GetAddress(headerEndRow, startColumn + headers.Root.ColSpan - 1);
+                var headerAddr = GetAddress(startRow, startCol) + ":" + GetAddress(headerEndRow, startCol + headers.Root.ColSpan - 1);
                 worksheet.Cells[headerAddr].Style.Font.Bold = true;
                 worksheet.Cells[headerAddr].Style.Font.Color.SetColor(System.Drawing.Color.White);
                 worksheet.Cells[headerAddr].Style.Fill.PatternType = ExcelFillStyle.Solid;
@@ -86,41 +86,41 @@ namespace App.Utils.Excel
             };
             return result;
         }
-        private void WriteGroupRow(ExcelWorksheet worksheet, String no, int row, int columnStart, ExcelHeaders headers, Region region)
+        private void WriteGroupRow(ExcelWorksheet worksheet, String no, int row, int startCol, ExcelHeaders headers, Region region)
         {
-            worksheet.Cells[GetAddress(row, columnStart)].Value = no;
-            worksheet.Cells[GetAddress(row, columnStart + 1)].Value = region.Name;
-            var groupAddr = GetAddress(row, columnStart) + ":" + GetAddress(row, columnStart + headers.Root.ColSpan + 1);
+            worksheet.Cells[GetAddress(row, startCol)].Value = no;
+            worksheet.Cells[GetAddress(row, startCol + 1)].Value = region.Name;
+            var groupAddr = GetAddress(row, startCol) + ":" + GetAddress(row, startCol + headers.Root.ColSpan + 1);
             worksheet.Cells[groupAddr].Style.Font.Bold = true;
             worksheet.Cells[groupAddr].Style.Font.Color.SetColor(System.Drawing.Color.Red);
             if(headers.Root.ColSpan > 2)
-                worksheet.Cells[GetAddress(row, columnStart + 1)+":"+GetAddress(row, columnStart + headers.Root.ColSpan - 1)].Merge = true;
+                worksheet.Cells[GetAddress(row, startCol + 1)+":"+GetAddress(row, startCol + headers.Root.ColSpan - 1)].Merge = true;
         }
 
-        private void WriteDataRow(ExcelWorksheet worksheet, bool isAlternatingColor, String no, int row, int columnStart, ExcelHeaders headers,
+        private void WriteDataRow(ExcelWorksheet worksheet, bool isAlternatingColor, String no, int row, int startCol, ExcelHeaders headers,
             Region region, TAllocation allocation)
         {
-            worksheet.Cells[GetAddress(row, columnStart)].Value = no;
-            worksheet.Cells[GetAddress(row, columnStart + 1)].Value = region.Name;
+            worksheet.Cells[GetAddress(row, startCol)].Value = no;
+            worksheet.Cells[GetAddress(row, startCol + 1)].Value = region.Name;
             int colOffset = 2;
             foreach(var leaf in headers.Root.Leafs)
             {
                 if (leaf.Property.Name != "RegionName")
                 {
                     var value = allocation == null ? null : leaf.Property.GetValue(allocation);
-                    var addr = GetAddress(row, columnStart + colOffset);
+                    var addr = GetAddress(row, startCol + colOffset);
                     worksheet.Cells[addr].Value = value;
                     colOffset++;
                 }
             }
             if(isAlternatingColor)
             {
-                var rowAddr = GetAddress(row, columnStart) + ":" + GetAddress(row, columnStart + headers.Root.ColSpan - 1);
+                var rowAddr = GetAddress(row, startCol) + ":" + GetAddress(row, startCol + headers.Root.ColSpan - 1);
                 worksheet.Cells[rowAddr].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[rowAddr].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(220, 230, 241));
             }
         }
-        private int WriteHeader(ExcelWorksheet worksheet, int row, int columnStart, ExcelHeaders headers)
+        private int WriteHeader(ExcelWorksheet worksheet, int row, int startCol, ExcelHeaders headers)
         {
             List<ExcelHeaders.TreeNode> currentNodes = new List<ExcelHeaders.TreeNode>();
             List<ExcelHeaders.TreeNode> allNodes = new List<ExcelHeaders.TreeNode>();
@@ -135,15 +135,15 @@ namespace App.Utils.Excel
             }
             foreach(var node in allNodes)
             {
-                string addr = GetAddress(row + node.RowOffset, columnStart + node.ColOffset);
+                string addr = GetAddress(row + node.RowOffset, startCol + node.ColOffset);
                 worksheet.Cells[addr].Value = node.Value;
             }
             foreach(var node in allNodes)
             {
                 if (node.ColSpan == 1 && node.RowSpan == 1)
                     continue;
-                string start = GetAddress(row + node.RowOffset, columnStart + node.ColOffset);
-                string end = GetAddress(row + node.RowOffset + node.RowSpan, columnStart + node.ColOffset + node.ColSpan);
+                string start = GetAddress(row + node.RowOffset, startCol + node.ColOffset);
+                string end = GetAddress(row + node.RowOffset + node.RowSpan, startCol + node.ColOffset + node.ColSpan);
                 worksheet.Cells[start + ":" + end].Merge = true;
             }
             int maxRow = row;
