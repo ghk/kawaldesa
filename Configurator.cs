@@ -112,8 +112,8 @@ namespace App
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
             routes.MapRoute(
-                name: "Default apbn",
-                url: "apbn/{id}",
+                name: "Default dd",
+                url: "dd/{id}",
                 defaults: new { controller = "KawalDesa", action = "Index", type = UrlParameter.Optional, id = UrlParameter.Optional }
             );
             routes.MapRoute(

@@ -3,7 +3,6 @@
 
 module App.Controllers.Models {
 	import IQuery = Scaffold.IQuery;
-	import Models = App.Models;
 
     export class BaseAccountRecapitulationController
     {
@@ -13,27 +12,27 @@ module App.Controllers.Models {
     export class AccountRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IAccountRecapitulation = null;
+        public dataModel : App.Models.Views.IAccountRecapitulation = null;
         
-        constructor(data?: Models.IAccountRecapitulation) {
+        constructor(data?: App.Models.Views.IAccountRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IAccountRecapitulation>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IAccountRecapitulation>> {
 			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/AccountRecapitulation/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.AccountRecapitulation(model));
+				return models.map((model) => new App.Models.Views.AccountRecapitulation(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IAccountRecapitulation> {
+		static Get(id: number): JQueryPromise<App.Models.Views.IAccountRecapitulation> {
 			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/AccountRecapitulation/Get/'+id,
-			})).then((model) => new Models.AccountRecapitulation(model));
+			})).then((model) => new App.Models.Views.AccountRecapitulation(model));
 			return res;
 		}
 
@@ -50,27 +49,27 @@ module App.Controllers.Models {
     export class FrozenAccountRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IFrozenAccountRecapitulation = null;
+        public dataModel : App.Models.Views.IFrozenAccountRecapitulation = null;
         
-        constructor(data?: Models.IFrozenAccountRecapitulation) {
+        constructor(data?: App.Models.Views.IFrozenAccountRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IFrozenAccountRecapitulation>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenAccountRecapitulation>> {
 			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/FrozenAccountRecapitulation/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.FrozenAccountRecapitulation(model));
+				return models.map((model) => new App.Models.Views.FrozenAccountRecapitulation(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IFrozenAccountRecapitulation> {
+		static Get(id: number): JQueryPromise<App.Models.Views.IFrozenAccountRecapitulation> {
 			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/FrozenAccountRecapitulation/Get/'+id,
-			})).then((model) => new Models.FrozenAccountRecapitulation(model));
+			})).then((model) => new App.Models.Views.FrozenAccountRecapitulation(model));
 			return res;
 		}
 
@@ -87,27 +86,27 @@ module App.Controllers.Models {
     export class ApbdesController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IApbdes = null;
+        public dataModel : App.Models.IApbdes = null;
         
-        constructor(data?: Models.IApbdes) {
+        constructor(data?: App.Models.IApbdes) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdes>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IApbdes>> {
 			var res = $.ajax(ApbdesController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Apbdes/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Apbdes(model));
+				return models.map((model) => new App.Models.Apbdes(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IApbdes> {
+		static Get(id: number): JQueryPromise<App.Models.IApbdes> {
 			var res = $.ajax(ApbdesController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Apbdes/Get/'+id,
-			})).then((model) => new Models.Apbdes(model));
+			})).then((model) => new App.Models.Apbdes(model));
 			return res;
 		}
 
@@ -151,94 +150,30 @@ module App.Controllers.Models {
 	    }
 	}
     
-    export class ApbdFileController
-    {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IApbdFile = null;
-        
-        constructor(data?: Models.IApbdFile) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbdFile>> {
-			var res = $.ajax(ApbdFileController.ajaxSettings.build({
-				type: 'GET',
-				url: '/api/ApbdFile/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new Models.ApbdFile(model));
-			});
-			return res;
-		}
-
-		static Get(id: number): JQueryPromise<Models.IApbdFile> {
-			var res = $.ajax(ApbdFileController.ajaxSettings.build({
-			type: 'GET',
-			url: '/api/ApbdFile/Get/'+id,
-			})).then((model) => new Models.ApbdFile(model));
-			return res;
-		}
-
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(ApbdFileController.ajaxSettings.build({
-				type: 'GET',
-				url: '/api/ApbdFile/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		
-		static Save(model: Models.IApbdFile): JQueryPromise<void> {
-			var isNew = model.Id == null;
-            var res = $.ajax(ApbdFileController.ajaxSettings.build({
-                 type: isNew ? 'POST' : 'PUT',
-				 url: '/api/ApbdFile/'+(isNew ? 'Post' : 'Put'),
-				 data: JSON.stringify(model)
-            })).then((id) => {
-				if(isNew) {
-					model.Id = id;
-				}
-			});
-            return res;
-        }
-
-		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(ApbdFileController.ajaxSettings.build({
-					type: 'GET',
-					url: '/api/ApbdFile/Delete/'+id,
-				}));
-				return res;
-		}
-	        
-        static PostFile(multipart: Scaffold.Multipart): any  {
-			var res = multipart.upload('/api/ApbdFile/PostFile');
-			   return res;
-	    }
-	}
-    
     export class ApbnController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IApbn = null;
+        public dataModel : App.Models.IApbn = null;
         
-        constructor(data?: Models.IApbn) {
+        constructor(data?: App.Models.IApbn) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IApbn>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IApbn>> {
 			var res = $.ajax(ApbnController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Apbn/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Apbn(model));
+				return models.map((model) => new App.Models.Apbn(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IApbn> {
+		static Get(id: number): JQueryPromise<App.Models.IApbn> {
 			var res = $.ajax(ApbnController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Apbn/Get/'+id,
-			})).then((model) => new Models.Apbn(model));
+			})).then((model) => new App.Models.Apbn(model));
 			return res;
 		}
 
@@ -251,7 +186,7 @@ module App.Controllers.Models {
 			return res;
 		}
 		
-		static Save(model: Models.IApbn): JQueryPromise<void> {
+		static Save(model: App.Models.IApbn): JQueryPromise<void> {
 			var isNew = model.Id == null;
             var res = $.ajax(ApbnController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
@@ -330,27 +265,27 @@ module App.Controllers.Models {
     export class DocumentUploadController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IDocumentUpload = null;
+        public dataModel : App.Models.IDocumentUpload = null;
         
-        constructor(data?: Models.IDocumentUpload) {
+        constructor(data?: App.Models.IDocumentUpload) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IDocumentUpload>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IDocumentUpload>> {
 			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/DocumentUpload/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.DocumentUpload(model));
+				return models.map((model) => new App.Models.DocumentUpload(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IDocumentUpload> {
+		static Get(id: number): JQueryPromise<App.Models.IDocumentUpload> {
 			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/DocumentUpload/Get/'+id,
-			})).then((model) => new Models.DocumentUpload(model));
+			})).then((model) => new App.Models.DocumentUpload(model));
 			return res;
 		}
 
@@ -363,7 +298,7 @@ module App.Controllers.Models {
 			return res;
 		}
 		
-		static Save(model: Models.IDocumentUpload): JQueryPromise<void> {
+		static Save(model: App.Models.IDocumentUpload): JQueryPromise<void> {
 			var isNew = model.Id == null;
             var res = $.ajax(DocumentUploadController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
@@ -389,27 +324,27 @@ module App.Controllers.Models {
     export class FieldReportController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IFieldReport = null;
+        public dataModel : App.Models.IFieldReport = null;
         
-        constructor(data?: Models.IFieldReport) {
+        constructor(data?: App.Models.IFieldReport) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IFieldReport>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IFieldReport>> {
 			var res = $.ajax(FieldReportController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/FieldReport/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.FieldReport(model));
+				return models.map((model) => new App.Models.FieldReport(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IFieldReport> {
+		static Get(id: number): JQueryPromise<App.Models.IFieldReport> {
 			var res = $.ajax(FieldReportController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/FieldReport/Get/'+id,
-			})).then((model) => new Models.FieldReport(model));
+			})).then((model) => new App.Models.FieldReport(model));
 			return res;
 		}
 
@@ -436,30 +371,109 @@ module App.Controllers.Models {
 	    }
 	}
     
+    export class BaseNationalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class NationalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.INationalDdRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.INationalDdRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalDdRecapitulation>> {
+			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalDdRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.NationalDdRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.INationalDdRecapitulation> {
+			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/NationalDdRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.NationalDdRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalDdRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenNationalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenNationalDdRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenNationalDdRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalDdRecapitulation>> {
+			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalDdRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenNationalDdRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalDdRecapitulation> {
+			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenNationalDdRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenNationalDdRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalDdRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
     export class OrganizationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IOrganization = null;
+        public dataModel : App.Models.IOrganization = null;
         
-        constructor(data?: Models.IOrganization) {
+        constructor(data?: App.Models.IOrganization) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IOrganization>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IOrganization>> {
 			var res = $.ajax(OrganizationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Organization/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Organization(model));
+				return models.map((model) => new App.Models.Organization(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IOrganization> {
+		static Get(id: number): JQueryPromise<App.Models.IOrganization> {
 			var res = $.ajax(OrganizationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Organization/Get/'+id,
-			})).then((model) => new Models.Organization(model));
+			})).then((model) => new App.Models.Organization(model));
 			return res;
 		}
 
@@ -472,7 +486,7 @@ module App.Controllers.Models {
 			return res;
 		}
 		
-		static Save(model: Models.IOrganization): JQueryPromise<void> {
+		static Save(model: App.Models.IOrganization): JQueryPromise<void> {
 			var isNew = model.Id == null;
             var res = $.ajax(OrganizationController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
@@ -527,27 +541,27 @@ module App.Controllers.Models {
     export class RealizationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IRealization = null;
+        public dataModel : App.Models.IRealization = null;
         
-        constructor(data?: Models.IRealization) {
+        constructor(data?: App.Models.IRealization) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IRealization>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRealization>> {
 			var res = $.ajax(RealizationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Realization/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Realization(model));
+				return models.map((model) => new App.Models.Realization(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IRealization> {
+		static Get(id: number): JQueryPromise<App.Models.IRealization> {
 			var res = $.ajax(RealizationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Realization/Get/'+id,
-			})).then((model) => new Models.Realization(model));
+			})).then((model) => new App.Models.Realization(model));
 			return res;
 		}
 
@@ -564,27 +578,27 @@ module App.Controllers.Models {
     export class RegionController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IRegion = null;
+        public dataModel : App.Models.IRegion = null;
         
-        constructor(data?: Models.IRegion) {
+        constructor(data?: App.Models.IRegion) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IRegion>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRegion>> {
 			var res = $.ajax(RegionController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Region/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Region(model));
+				return models.map((model) => new App.Models.Region(model));
 			});
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<Models.IRegion> {
+		static Get(id: string): JQueryPromise<App.Models.IRegion> {
 			var res = $.ajax(RegionController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Region/Get/'+id,
-			})).then((model) => new Models.Region(model));
+			})).then((model) => new App.Models.Region(model));
 			return res;
 		}
 
@@ -617,27 +631,27 @@ module App.Controllers.Models {
     export class TransactionController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.ITransaction = null;
+        public dataModel : App.Models.ITransaction = null;
         
-        constructor(data?: Models.ITransaction) {
+        constructor(data?: App.Models.ITransaction) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.ITransaction>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ITransaction>> {
 			var res = $.ajax(TransactionController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Transaction/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.Transaction(model));
+				return models.map((model) => new App.Models.Transaction(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.ITransaction> {
+		static Get(id: number): JQueryPromise<App.Models.ITransaction> {
 			var res = $.ajax(TransactionController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/Transaction/Get/'+id,
-			})).then((model) => new Models.Transaction(model));
+			})).then((model) => new App.Models.Transaction(model));
 			return res;
 		}
 
@@ -685,27 +699,27 @@ module App.Controllers.Models {
     export class TransferRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.ITransferRecapitulation = null;
+        public dataModel : App.Models.Views.ITransferRecapitulation = null;
         
-        constructor(data?: Models.ITransferRecapitulation) {
+        constructor(data?: App.Models.Views.ITransferRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.ITransferRecapitulation>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.ITransferRecapitulation>> {
 			var res = $.ajax(TransferRecapitulationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/TransferRecapitulation/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.TransferRecapitulation(model));
+				return models.map((model) => new App.Models.Views.TransferRecapitulation(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.ITransferRecapitulation> {
+		static Get(id: string): JQueryPromise<App.Models.Views.ITransferRecapitulation> {
 			var res = $.ajax(TransferRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/TransferRecapitulation/Get/'+id,
-			})).then((model) => new Models.TransferRecapitulation(model));
+			})).then((model) => new App.Models.Views.TransferRecapitulation(model));
 			return res;
 		}
 
@@ -722,27 +736,27 @@ module App.Controllers.Models {
     export class FrozenTransferRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : Models.IFrozenTransferRecapitulation = null;
+        public dataModel : App.Models.Views.IFrozenTransferRecapitulation = null;
         
-        constructor(data?: Models.IFrozenTransferRecapitulation) {
+        constructor(data?: App.Models.Views.IFrozenTransferRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<Models.IFrozenTransferRecapitulation>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenTransferRecapitulation>> {
 			var res = $.ajax(FrozenTransferRecapitulationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/FrozenTransferRecapitulation/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new Models.FrozenTransferRecapitulation(model));
+				return models.map((model) => new App.Models.Views.FrozenTransferRecapitulation(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<Models.IFrozenTransferRecapitulation> {
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenTransferRecapitulation> {
 			var res = $.ajax(FrozenTransferRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/FrozenTransferRecapitulation/Get/'+id,
-			})).then((model) => new Models.FrozenTransferRecapitulation(model));
+			})).then((model) => new App.Models.Views.FrozenTransferRecapitulation(model));
 			return res;
 		}
 
@@ -759,7 +773,6 @@ module App.Controllers.Models {
 }
 module App.Controllers.Services {
 	import IQuery = Scaffold.IQuery;
-	import Models = App.Models;
 
     export class UserController
     {

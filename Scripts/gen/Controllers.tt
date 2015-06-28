@@ -7,14 +7,13 @@
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 
 <#
-	ModelNamespaces = new String[]{"App.Models"};
+	ModelNamespaces = new String[]{"App.Models", "App.Models.Views"};
     var namespaces = new []{"App.Controllers.Models", "App.Controllers.Services"};
     foreach(var _namespace in namespaces)
     {
 #>
 module <#= _namespace #> {
 	import IQuery = Scaffold.IQuery;
-	import Models = App.Models;
 
 <#
 		
@@ -31,9 +30,9 @@ module <#= _namespace #> {
 			var idType  = "number";
 			if(modelClass != null)
             {
-				println("public dataModel : Models.I{0} = null;", modelClass.Name);
+				println("public dataModel : {0}.I{1} = null;", modelClass.Namespace.FullName, modelClass.Name);
 				println();
-				print("constructor(data?: Models.I{0})", modelClass.Name); 
+				print("constructor(data?: {0}.I{1})", modelClass.Namespace.FullName, modelClass.Name); 
 				println(" {");
 				Indent(3);
 				println("this.dataModel = data;");
@@ -45,22 +44,22 @@ module <#= _namespace #> {
 			if(modelClass != null && IsReadOnlyController(_controller))
             {			
 	#>
-		static GetAll(query?: IQuery): JQueryPromise<Array<<#= "Models.I" + modelClass.Name #>>> {
+		static GetAll(query?: IQuery): JQueryPromise<Array<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>>> {
 			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/<#= GetRouteName(_controller.Name) #>/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new <#= "Models." + modelClass.Name #>(model));
+				return models.map((model) => new <#= modelClass.Namespace.FullName+"." + modelClass.Name #>(model));
 			});
 			return res;
 		}
 
-		static Get(id: <#= idType #>): JQueryPromise<<#= "Models.I" + modelClass.Name #>> {
+		static Get(id: <#= idType #>): JQueryPromise<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>> {
 			var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/<#= GetRouteName(_controller.Name) #>/Get/'+id,
-			})).then((model) => new <#= "Models." + modelClass.Name #>(model));
+			})).then((model) => new <#= modelClass.Namespace.FullName+"." + modelClass.Name #>(model));
 			return res;
 		}
 
@@ -79,7 +78,7 @@ module <#= _namespace #> {
 			if(modelClass != null && IsCrudController(_controller))
             {				
 	#>	
-		static Save(model: <#= "Models.I" + modelClass.Name #>): JQueryPromise<void> {
+		static Save(model: <#= modelClass.Namespace.FullName+".I" + modelClass.Name #>): JQueryPromise<void> {
 			var isNew = model.Id == null;
             var res = $.ajax(<#= _controller.Name #>.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',

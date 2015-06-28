@@ -35,16 +35,16 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/apbn/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('apbn', $event)">Dana Desa dari APBN</a></li>
-                            <li><a href="/add/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('add', $event)">ADD dari APBD</a></li>
-                            <li><a href="/bhpr/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('bhpr', $event)">Bagi Hasil Pajak &amp; Retribusi</a></li>
+                            <li><a href="/apbn/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('apbn', $event)">Dana Desa dari APBN</a></li>
+                            <li><a href="/add/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('add', $event)">ADD dari APBD</a></li>
+                            <li><a href="/bhpr/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('bhpr', $event)">Bagi Hasil Pajak &amp; Retribusi</a></li>
                         </ul>
                     </li>
                     <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
-                        <a href="/p/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
+                        <a href="/p/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
                     </li>
                     <li ng-class="{'active' : indexCtrl.type == 'realization'}">
-                        <a href="/r/{{indexCtrl.regionID}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
+                        <a href="/r/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav nav-region">
@@ -53,7 +53,7 @@
                         <div class="gt hidden-xs">→</div>
                     </li>
                     <li ng-repeat-end ng-class="{'active':$last}">
-                        <a href="#" ng-click="indexCtrl.changeRegion(region.ID, $event)">
+                        <a href="#" ng-click="indexCtrl.changeRegion(region.Id, $event)">
                             {{region.Name}}
                         </a>
                     </li>
@@ -66,7 +66,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/u/{{indexCtrl.currentUser.ID}}">Profil</a></li>
+                            <li><a href="/u/{{indexCtrl.currentUser.Id}}">Profil</a></li>
                             <li ng-show="{{indexCtrl.currentUser.fkOrganizationId}}"><a href="/orgs/{{indexCtrl.currentUser.fkOrganizationId}}">Organisasi</a></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>

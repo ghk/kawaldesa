@@ -224,6 +224,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Models\DocumentUploadController.cs" />
     <Compile Include="Controllers\Models\OrganizationController.cs" />
+    <Compile Include="Controllers\Models\NationalDdRecapitulationController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\InvitationToken.cs" />

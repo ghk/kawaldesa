@@ -46,15 +46,15 @@
             <tbody>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type < 2">
                     <td>
-                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                        <a href="/dd/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
                     </td>
-                    <td class="money"> {{entity.BudgetedIncome * 10 | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome | number:0}}</td>
-                    <td class="money"> {{10 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome / entity.TotalVillage | number:0}} </td>
+                    <td class="money"> {{entity.RegionalTransfer | number:0}} </td>
+                    <td class="money"> {{entity.Dd | number:0}} </td>
+                    <td class="money"> {{entity.Dd / entity.RegionalTransfer * 10 | number:0}}</td>
+                    <td class="money"> {{entity.CompletedDesa | number:0}} / {{entity.TotalDesa | number:0}} </td>
+                    <td class="money"> {{entity.Dd / entity.CompletedDesa | number:0}} </td>
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
                     <td>
@@ -84,11 +84,11 @@
             <tfoot ng-show="entities.length > 0">
                 <tr class="success" ng-if="indexCtrl.region.Type < 2">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgetedIncome * 10 | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome | number:0}}</td>
-                    <td class="money"> {{10 | number:0}} </td>
-                    <td class="money"> {{total.TotalVillage | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome / total.TotalVillage | number:0}} </td>
+                    <td class="money"> {{total.RegionalTransfer | number:0}} </td>
+                    <td class="money"> {{total.Dd | number:0}} </td>
+                    <td class="money"> {{total.Dd / total.RegionalTransfer * 10 | number:0}}</td>
+                    <td class="money"> {{total.CompletedDesa | number:0}} / {{total.TotalDesa | number:0}} </td>
+                    <td class="money"> {{total.Dd / total.CompletedDesa | number:0}} </td>
                 </tr>
             </tfoot>
 

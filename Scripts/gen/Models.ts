@@ -5,67 +5,6 @@ module App.Models {
 
 	import IQuery = Scaffold.IQuery;
 
-    export interface IBaseAccountRecapitulation {
-        Id: number;
-        RegionId: string;
-        ApbnId: number;
-        ApbnYear: number;
-        ParentRegionId: string;
-        RegionName: string;
-        BudgetedIncome: number;
-        RealizedIncome: number;
-        BudgetedExpense: number;
-        RealizedExpense: number;
-        EmployeeExpense: number;
-        GoodsAndServicesExpense: number;
-        CapitalExpense: number;
-        OthersExpense: number;
-        TotalVillage: number;
-        AccountCompletedVillage: number;
-    }
-    
-    export class BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        Id: number;
-        RegionId: string;
-        ApbnId: number;
-        ApbnYear: number;
-        ParentRegionId: string;
-        RegionName: string;
-        BudgetedIncome: number;
-        RealizedIncome: number;
-        BudgetedExpense: number;
-        RealizedExpense: number;
-        EmployeeExpense: number;
-        GoodsAndServicesExpense: number;
-        CapitalExpense: number;
-        OthersExpense: number;
-        TotalVillage: number;
-        AccountCompletedVillage: number;
-        
-        constructor(data?: IBaseAccountRecapitulation) {
-            this.Id = data ? data.Id : null;
-            this.RegionId = data ? data.RegionId : null;
-            this.ApbnId = data ? data.ApbnId : null;
-            this.ApbnYear = data ? data.ApbnYear : null;
-            this.ParentRegionId = data ? data.ParentRegionId : null;
-            this.RegionName = data ? data.RegionName : null;
-            this.BudgetedIncome = data ? data.BudgetedIncome : null;
-            this.RealizedIncome = data ? data.RealizedIncome : null;
-            this.BudgetedExpense = data ? data.BudgetedExpense : null;
-            this.RealizedExpense = data ? data.RealizedExpense : null;
-            this.EmployeeExpense = data ? data.EmployeeExpense : null;
-            this.GoodsAndServicesExpense = data ? data.GoodsAndServicesExpense : null;
-            this.CapitalExpense = data ? data.CapitalExpense : null;
-            this.OthersExpense = data ? data.OthersExpense : null;
-            this.TotalVillage = data ? data.TotalVillage : null;
-            this.AccountCompletedVillage = data ? data.AccountCompletedVillage : null;
-        }
-        
-    }
-    
-    
     export interface IBaseEntity {
         Id: number;
         DateCreated: /** System.DateTime **/ any;
@@ -165,64 +104,6 @@ module App.Models {
     }
     
     
-    export interface IBaseTransferRecapitulation {
-        Id: number;
-        RegionId: string;
-        ApbnId: number;
-        ApbnYear: number;
-        ParentRegionId: string;
-        RegionName: string;
-        BudgetedApbn: number;
-        TransferredApbn: number;
-        AcknowledgedApbn: number;
-        BudgetedAdd: number;
-        TransferredAdd: number;
-        AcknowledgedAdd: number;
-        BudgetedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
-    }
-    
-    export class BaseTransferRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        Id: number;
-        RegionId: string;
-        ApbnId: number;
-        ApbnYear: number;
-        ParentRegionId: string;
-        RegionName: string;
-        BudgetedApbn: number;
-        TransferredApbn: number;
-        AcknowledgedApbn: number;
-        BudgetedAdd: number;
-        TransferredAdd: number;
-        AcknowledgedAdd: number;
-        BudgetedTotal: number;
-        TransferredTotal: number;
-        AcknowledgedTotal: number;
-        
-        constructor(data?: IBaseTransferRecapitulation) {
-            this.Id = data ? data.Id : null;
-            this.RegionId = data ? data.RegionId : null;
-            this.ApbnId = data ? data.ApbnId : null;
-            this.ApbnYear = data ? data.ApbnYear : null;
-            this.ParentRegionId = data ? data.ParentRegionId : null;
-            this.RegionName = data ? data.RegionName : null;
-            this.BudgetedApbn = data ? data.BudgetedApbn : null;
-            this.TransferredApbn = data ? data.TransferredApbn : null;
-            this.AcknowledgedApbn = data ? data.AcknowledgedApbn : null;
-            this.BudgetedAdd = data ? data.BudgetedAdd : null;
-            this.TransferredAdd = data ? data.TransferredAdd : null;
-            this.AcknowledgedAdd = data ? data.AcknowledgedAdd : null;
-            this.BudgetedTotal = data ? data.BudgetedTotal : null;
-            this.TransferredTotal = data ? data.TransferredTotal : null;
-            this.AcknowledgedTotal = data ? data.AcknowledgedTotal : null;
-        }
-        
-    }
-    
-    
     export interface IAccount extends IBaseEntity {
         Code: string;
         Name: string;
@@ -303,70 +184,27 @@ module App.Models {
     }
     
     
-    export interface IAccountRecapitulation extends IBaseAccountRecapitulation {
-    }
-    
-    export class AccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        
-        constructor(data?: IAccountRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenAccountRecapitulation extends IBaseAccountRecapitulation {
-    }
-    
-    export class FrozenAccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenAccountRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
     export interface IApbd extends IBaseEntity {
-        Dau: number;
-        Dbh: number;
-        IsActivated: boolean;
         fkApbnId: number;
         Apbn: App.Models.IApbn;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkApbdFileId: number;
-        ApbdFile: App.Models.IApbdFile;
     }
     
     export class Apbd extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        Dau: number;
-        Dbh: number;
-        IsActivated: boolean;
         fkApbnId: number;
         Apbn: App.Models.IApbn;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkApbdFileId: number;
-        ApbdFile: App.Models.IApbdFile;
         
         constructor(data?: IApbd) {
             super(data);
-            this.Dau = data ? data.Dau : null;
-            this.Dbh = data ? data.Dbh : null;
-            this.IsActivated = data ? data.IsActivated : null;
             this.fkApbnId = data ? data.fkApbnId : null;
             this.Apbn = data ? data.Apbn : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkApbdFileId = data ? data.fkApbdFileId : null;
-            this.ApbdFile = data ? data.ApbdFile : null;
         }
         
     }
@@ -431,59 +269,24 @@ module App.Models {
     }
     
     
-    export interface IApbdFile extends IBaseEntity {
-        FileName: string;
-        IsActivated: boolean;
-        Apbds: Array<App.Models.IApbd>;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        ApbdCount: number;
-        TotalDau: number;
-        TotalDbh: number;
-    }
-    
-    export class ApbdFile extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        FileName: string;
-        IsActivated: boolean;
-        Apbds: Array<App.Models.IApbd>;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        ApbdCount: number;
-        TotalDau: number;
-        TotalDbh: number;
-        
-        constructor(data?: IApbdFile) {
-            super(data);
-            this.FileName = data ? data.FileName : null;
-            this.IsActivated = data ? data.IsActivated : null;
-            this.Apbds = data ? data.Apbds : null;
-            this.fkFileId = data ? data.fkFileId : null;
-            this.File = data ? data.File : null;
-            this.ApbdCount = data ? data.ApbdCount : null;
-            this.TotalDau = data ? data.TotalDau : null;
-            this.TotalDbh = data ? data.TotalDbh : null;
-        }
-        
-    }
-    
-    
     export interface IApbn extends IBaseEntity {
-        DanaPerDesa: number;
+        Key: string;
         Year: number;
+        IsPerubahan: boolean;
     }
     
     export class Apbn extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        DanaPerDesa: number;
+        Key: string;
         Year: number;
+        IsPerubahan: boolean;
         
         constructor(data?: IApbn) {
             super(data);
-            this.DanaPerDesa = data ? data.DanaPerDesa : null;
+            this.Key = data ? data.Key : null;
             this.Year = data ? data.Year : null;
+            this.IsPerubahan = data ? data.IsPerubahan : null;
         }
         
     }
@@ -653,6 +456,153 @@ module App.Models {
     }
     
     
+    export interface INationalAddAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        DanaPerimbangan: number;
+        Dak: number;
+        Add: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class NationalAddAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        DanaPerimbangan: number;
+        Dak: number;
+        Add: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: INationalAddAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.DanaPerimbangan = data ? data.DanaPerimbangan : null;
+            this.Dak = data ? data.Dak : null;
+            this.Add = data ? data.Add : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbdId = data ? data.fkApbdId : null;
+            this.Apbd = data ? data.Apbd : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
+    export interface INationalBhprAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        RegionalTax: number;
+        RegionalRetribution: number;
+        Bhpr: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class NationalBhprAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        RegionalTax: number;
+        RegionalRetribution: number;
+        Bhpr: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: INationalBhprAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.RegionalTax = data ? data.RegionalTax : null;
+            this.RegionalRetribution = data ? data.RegionalRetribution : null;
+            this.Bhpr = data ? data.Bhpr : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbdId = data ? data.fkApbdId : null;
+            this.Apbd = data ? data.Apbd : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
+    export interface INationalDdAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        RegionalTransfer: number;
+        Dd: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class NationalDdAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        RegionalTransfer: number;
+        Dd: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbnId: number;
+        Apbn: App.Models.IApbn;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: INationalDdAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.RegionalTransfer = data ? data.RegionalTransfer : null;
+            this.Dd = data ? data.Dd : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbnId = data ? data.fkApbnId : null;
+            this.Apbn = data ? data.Apbn : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
     export interface IOrganization extends IBaseEntity {
         Name: string;
         Description: string;
@@ -729,15 +679,248 @@ module App.Models {
     }
     
     
+    export interface IRegionalAddAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Add: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class RegionalAddAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Add: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: IRegionalAddAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Population = data ? data.Population : null;
+            this.PopulationRatio = data ? data.PopulationRatio : null;
+            this.PopulationWeight = data ? data.PopulationWeight : null;
+            this.PoorPopulation = data ? data.PoorPopulation : null;
+            this.PoorPopulationRatio = data ? data.PoorPopulationRatio : null;
+            this.PoorPopulationWeight = data ? data.PoorPopulationWeight : null;
+            this.Area = data ? data.Area : null;
+            this.AreaRatio = data ? data.AreaRatio : null;
+            this.AreaWeight = data ? data.AreaWeight : null;
+            this.Ikg = data ? data.Ikg : null;
+            this.IkgRatio = data ? data.IkgRatio : null;
+            this.IkgWeight = data ? data.IkgWeight : null;
+            this.TotalWeight = data ? data.TotalWeight : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Add = data ? data.Add : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbdId = data ? data.fkApbdId : null;
+            this.Apbd = data ? data.Apbd : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
+    export interface IRegionalBhprAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Pdrd: number;
+        PdrdRatio: number;
+        FormulaBasedAllocation: number;
+        Bhpr: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class RegionalBhprAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Pdrd: number;
+        PdrdRatio: number;
+        FormulaBasedAllocation: number;
+        Bhpr: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: IRegionalBhprAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Pdrd = data ? data.Pdrd : null;
+            this.PdrdRatio = data ? data.PdrdRatio : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Bhpr = data ? data.Bhpr : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbdId = data ? data.fkApbdId : null;
+            this.Apbd = data ? data.Apbd : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
+    export interface IRegionalDdAllocation extends IBaseEntity {
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Dd: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+    }
+    
+    export class RegionalDdAllocation extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        No: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Dd: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        IsActivated: boolean;
+        fkApbdId: number;
+        Apbd: App.Models.IApbd;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        
+        constructor(data?: IRegionalDdAllocation) {
+            super(data);
+            this.No = data ? data.No : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Population = data ? data.Population : null;
+            this.PopulationRatio = data ? data.PopulationRatio : null;
+            this.PopulationWeight = data ? data.PopulationWeight : null;
+            this.PoorPopulation = data ? data.PoorPopulation : null;
+            this.PoorPopulationRatio = data ? data.PoorPopulationRatio : null;
+            this.PoorPopulationWeight = data ? data.PoorPopulationWeight : null;
+            this.Area = data ? data.Area : null;
+            this.AreaRatio = data ? data.AreaRatio : null;
+            this.AreaWeight = data ? data.AreaWeight : null;
+            this.Ikg = data ? data.Ikg : null;
+            this.IkgRatio = data ? data.IkgRatio : null;
+            this.IkgWeight = data ? data.IkgWeight : null;
+            this.TotalWeight = data ? data.TotalWeight : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Dd = data ? data.Dd : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.fkApbdId = data ? data.fkApbdId : null;
+            this.Apbd = data ? data.Apbd : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+        }
+        
+    }
+    
+    
     export interface IBaseTransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
         SourceUrl: string;
+        Year: number;
         fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkApbnId: number;
-        Apbn: App.Models.IApbn;
         fkSourceId: string;
         Source: App.Models.IRegion;
         fkDestinationId: string;
@@ -748,8 +931,8 @@ module App.Models {
         Actor: App.Models.IRegion;
         fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkTransactionFileId: number;
-        TransactionFile: App.Models.ITransactionFile;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
     }
     
     export class BaseTransaction extends BaseEntity {
@@ -759,10 +942,9 @@ module App.Models {
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
         SourceUrl: string;
+        Year: number;
         fkSourceFileId: number;
         SourceFile: App.Models.IBlob;
-        fkApbnId: number;
-        Apbn: App.Models.IApbn;
         fkSourceId: string;
         Source: App.Models.IRegion;
         fkDestinationId: string;
@@ -773,8 +955,8 @@ module App.Models {
         Actor: App.Models.IRegion;
         fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkTransactionFileId: number;
-        TransactionFile: App.Models.ITransactionFile;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
         
         constructor(data?: IBaseTransaction) {
             super(data);
@@ -782,10 +964,9 @@ module App.Models {
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.SourceUrl = data ? data.SourceUrl : null;
+            this.Year = data ? data.Year : null;
             this.fkSourceFileId = data ? data.fkSourceFileId : null;
             this.SourceFile = data ? data.SourceFile : null;
-            this.fkApbnId = data ? data.fkApbnId : null;
-            this.Apbn = data ? data.Apbn : null;
             this.fkSourceId = data ? data.fkSourceId : null;
             this.Source = data ? data.Source : null;
             this.fkDestinationId = data ? data.fkDestinationId : null;
@@ -796,8 +977,8 @@ module App.Models {
             this.Actor = data ? data.Actor : null;
             this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
-            this.fkTransactionFileId = data ? data.fkTransactionFileId : null;
-            this.TransactionFile = data ? data.TransactionFile : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
         }
         
     }
@@ -831,39 +1012,649 @@ module App.Models {
     }
     
     
-    export interface ITransactionFile extends IBaseEntity {
-        FileName: string;
-        IsActivated: boolean;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        Transactions: Array<App.Models.ITransaction>;
-        TransactionCount: number;
-        DesaCount: number;
-        TotalAmount: number;
+    export interface IUserScope extends IBaseEntity {
+        fkUserId: string;
+        User: /** App.Models.User **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
     }
     
-    export class TransactionFile extends BaseEntity {
+    export class UserScope extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        FileName: string;
-        IsActivated: boolean;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        Transactions: Array<App.Models.ITransaction>;
-        TransactionCount: number;
-        DesaCount: number;
-        TotalAmount: number;
+        fkUserId: string;
+        User: /** App.Models.User **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
         
-        constructor(data?: ITransactionFile) {
+        constructor(data?: IUserScope) {
             super(data);
-            this.FileName = data ? data.FileName : null;
-            this.IsActivated = data ? data.IsActivated : null;
-            this.fkFileId = data ? data.fkFileId : null;
-            this.File = data ? data.File : null;
-            this.Transactions = data ? data.Transactions : null;
-            this.TransactionCount = data ? data.TransactionCount : null;
-            this.DesaCount = data ? data.DesaCount : null;
-            this.TotalAmount = data ? data.TotalAmount : null;
+            this.fkUserId = data ? data.fkUserId : null;
+            this.User = data ? data.User : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+        }
+        
+    }
+    
+}
+module App.Models.Views {
+
+	import IQuery = Scaffold.IQuery;
+    
+    export interface IBaseAccountRecapitulation {
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
+        RegionName: string;
+        BudgetedIncome: number;
+        RealizedIncome: number;
+        BudgetedExpense: number;
+        RealizedExpense: number;
+        EmployeeExpense: number;
+        GoodsAndServicesExpense: number;
+        CapitalExpense: number;
+        OthersExpense: number;
+        TotalDesa: number;
+        AccountCompletedDesa: number;
+    }
+    
+    export class BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: number;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
+        RegionName: string;
+        BudgetedIncome: number;
+        RealizedIncome: number;
+        BudgetedExpense: number;
+        RealizedExpense: number;
+        EmployeeExpense: number;
+        GoodsAndServicesExpense: number;
+        CapitalExpense: number;
+        OthersExpense: number;
+        TotalDesa: number;
+        AccountCompletedDesa: number;
+        
+        constructor(data?: IBaseAccountRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnId = data ? data.ApbnId : null;
+            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BudgetedIncome = data ? data.BudgetedIncome : null;
+            this.RealizedIncome = data ? data.RealizedIncome : null;
+            this.BudgetedExpense = data ? data.BudgetedExpense : null;
+            this.RealizedExpense = data ? data.RealizedExpense : null;
+            this.EmployeeExpense = data ? data.EmployeeExpense : null;
+            this.GoodsAndServicesExpense = data ? data.GoodsAndServicesExpense : null;
+            this.CapitalExpense = data ? data.CapitalExpense : null;
+            this.OthersExpense = data ? data.OthersExpense : null;
+            this.TotalDesa = data ? data.TotalDesa : null;
+            this.AccountCompletedDesa = data ? data.AccountCompletedDesa : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseNationalAddRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        DanaPerimbangan: number;
+        Dak: number;
+        Add: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+    }
+    
+    export class BaseNationalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        DanaPerimbangan: number;
+        Dak: number;
+        Add: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+        
+        constructor(data?: IBaseNationalAddRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
+            this.DanaPerimbangan = data ? data.DanaPerimbangan : null;
+            this.Dak = data ? data.Dak : null;
+            this.Add = data ? data.Add : null;
+            this.TotalDesa = data ? data.TotalDesa : null;
+            this.CompletedDesa = data ? data.CompletedDesa : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseNationalBhprRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        RegionalTax: number;
+        RegionalRetribution: number;
+        Bhpr: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+    }
+    
+    export class BaseNationalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        RegionalTax: number;
+        RegionalRetribution: number;
+        Bhpr: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+        
+        constructor(data?: IBaseNationalBhprRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
+            this.RegionalTax = data ? data.RegionalTax : null;
+            this.RegionalRetribution = data ? data.RegionalRetribution : null;
+            this.Bhpr = data ? data.Bhpr : null;
+            this.TotalDesa = data ? data.TotalDesa : null;
+            this.CompletedDesa = data ? data.CompletedDesa : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseNationalDdRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        RegionalTransfer: number;
+        Dd: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+    }
+    
+    export class BaseNationalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        ParentRegionId: string;
+        RegionalTransfer: number;
+        Dd: number;
+        TotalDesa: number;
+        CompletedDesa: number;
+        
+        constructor(data?: IBaseNationalDdRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
+            this.RegionalTransfer = data ? data.RegionalTransfer : null;
+            this.Dd = data ? data.Dd : null;
+            this.TotalDesa = data ? data.TotalDesa : null;
+            this.CompletedDesa = data ? data.CompletedDesa : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseRegionalAddRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Add: number;
+    }
+    
+    export class BaseRegionalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Add: number;
+        
+        constructor(data?: IBaseRegionalAddRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Population = data ? data.Population : null;
+            this.PopulationRatio = data ? data.PopulationRatio : null;
+            this.PopulationWeight = data ? data.PopulationWeight : null;
+            this.PoorPopulation = data ? data.PoorPopulation : null;
+            this.PoorPopulationRatio = data ? data.PoorPopulationRatio : null;
+            this.PoorPopulationWeight = data ? data.PoorPopulationWeight : null;
+            this.Area = data ? data.Area : null;
+            this.AreaRatio = data ? data.AreaRatio : null;
+            this.AreaWeight = data ? data.AreaWeight : null;
+            this.Ikg = data ? data.Ikg : null;
+            this.IkgRatio = data ? data.IkgRatio : null;
+            this.IkgWeight = data ? data.IkgWeight : null;
+            this.TotalWeight = data ? data.TotalWeight : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Add = data ? data.Add : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseRegionalBhprRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Pdrd: number;
+        PdrdRatio: number;
+        FormulaBasedAllocation: number;
+        Bhpr: number;
+    }
+    
+    export class BaseRegionalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Pdrd: number;
+        PdrdRatio: number;
+        FormulaBasedAllocation: number;
+        Bhpr: number;
+        
+        constructor(data?: IBaseRegionalBhprRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Pdrd = data ? data.Pdrd : null;
+            this.PdrdRatio = data ? data.PdrdRatio : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Bhpr = data ? data.Bhpr : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseRegionalDdRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Dd: number;
+    }
+    
+    export class BaseRegionalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnKey: string;
+        RegionName: string;
+        BaseAllocation: number;
+        Population: number;
+        PopulationRatio: number;
+        PopulationWeight: number;
+        PoorPopulation: number;
+        PoorPopulationRatio: number;
+        PoorPopulationWeight: number;
+        Area: number;
+        AreaRatio: number;
+        AreaWeight: number;
+        Ikg: number;
+        IkgRatio: number;
+        IkgWeight: number;
+        TotalWeight: number;
+        FormulaBasedAllocation: number;
+        Dd: number;
+        
+        constructor(data?: IBaseRegionalDdRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BaseAllocation = data ? data.BaseAllocation : null;
+            this.Population = data ? data.Population : null;
+            this.PopulationRatio = data ? data.PopulationRatio : null;
+            this.PopulationWeight = data ? data.PopulationWeight : null;
+            this.PoorPopulation = data ? data.PoorPopulation : null;
+            this.PoorPopulationRatio = data ? data.PoorPopulationRatio : null;
+            this.PoorPopulationWeight = data ? data.PoorPopulationWeight : null;
+            this.Area = data ? data.Area : null;
+            this.AreaRatio = data ? data.AreaRatio : null;
+            this.AreaWeight = data ? data.AreaWeight : null;
+            this.Ikg = data ? data.Ikg : null;
+            this.IkgRatio = data ? data.IkgRatio : null;
+            this.IkgWeight = data ? data.IkgWeight : null;
+            this.TotalWeight = data ? data.TotalWeight : null;
+            this.FormulaBasedAllocation = data ? data.FormulaBasedAllocation : null;
+            this.Dd = data ? data.Dd : null;
+        }
+        
+    }
+    
+    
+    export interface IBaseTransferRecapitulation {
+        Id: string;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
+        RegionName: string;
+        BudgetedApbn: number;
+        TransferredApbn: number;
+        AcknowledgedApbn: number;
+        BudgetedAdd: number;
+        TransferredAdd: number;
+        AcknowledgedAdd: number;
+    }
+    
+    export class BaseTransferRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        RegionId: string;
+        ApbnId: number;
+        ApbnYear: number;
+        ParentRegionId: string;
+        RegionName: string;
+        BudgetedApbn: number;
+        TransferredApbn: number;
+        AcknowledgedApbn: number;
+        BudgetedAdd: number;
+        TransferredAdd: number;
+        AcknowledgedAdd: number;
+        
+        constructor(data?: IBaseTransferRecapitulation) {
+            this.Id = data ? data.Id : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnId = data ? data.ApbnId : null;
+            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
+            this.RegionName = data ? data.RegionName : null;
+            this.BudgetedApbn = data ? data.BudgetedApbn : null;
+            this.TransferredApbn = data ? data.TransferredApbn : null;
+            this.AcknowledgedApbn = data ? data.AcknowledgedApbn : null;
+            this.BudgetedAdd = data ? data.BudgetedAdd : null;
+            this.TransferredAdd = data ? data.TransferredAdd : null;
+            this.AcknowledgedAdd = data ? data.AcknowledgedAdd : null;
+        }
+        
+    }
+    
+    
+    export interface IAccountRecapitulation extends IBaseAccountRecapitulation {
+    }
+    
+    export class AccountRecapitulation extends BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IAccountRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenAccountRecapitulation extends IBaseAccountRecapitulation {
+    }
+    
+    export class FrozenAccountRecapitulation extends BaseAccountRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenAccountRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface INationalAddRecapitulation extends IBaseNationalAddRecapitulation {
+    }
+    
+    export class NationalAddRecapitulation extends BaseNationalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: INationalAddRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenNationalAddRecapitulation extends IBaseNationalAddRecapitulation {
+    }
+    
+    export class FrozenNationalAddRecapitulation extends BaseNationalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenNationalAddRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface INationalBhprRecapitulation extends IBaseNationalBhprRecapitulation {
+    }
+    
+    export class NationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: INationalBhprRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenNationalBhprRecapitulation extends IBaseNationalBhprRecapitulation {
+    }
+    
+    export class FrozenNationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenNationalBhprRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface INationalDdRecapitulation extends IBaseNationalDdRecapitulation {
+    }
+    
+    export class NationalDdRecapitulation extends BaseNationalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: INationalDdRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenNationalDdRecapitulation extends IBaseNationalDdRecapitulation {
+    }
+    
+    export class FrozenNationalDdRecapitulation extends BaseNationalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenNationalDdRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IRegionalAddRecapitulation extends IBaseRegionalAddRecapitulation {
+    }
+    
+    export class RegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IRegionalAddRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenRegionalAddRecapitulation extends IBaseRegionalAddRecapitulation {
+    }
+    
+    export class FrozenRegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenRegionalAddRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IRegionalBhprRecapitulation extends IBaseRegionalBhprRecapitulation {
+    }
+    
+    export class RegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IRegionalBhprRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenRegionalBhprRecapitulation extends IBaseRegionalBhprRecapitulation {
+    }
+    
+    export class FrozenRegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenRegionalBhprRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IRegionalDdRecapitulation extends IBaseRegionalDdRecapitulation {
+    }
+    
+    export class RegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IRegionalDdRecapitulation) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenRegionalDdRecapitulation extends IBaseRegionalDdRecapitulation {
+    }
+    
+    export class FrozenRegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenRegionalDdRecapitulation) {
+            super(data);
         }
         
     }
@@ -892,32 +1683,6 @@ module App.Models {
         
         constructor(data?: IFrozenTransferRecapitulation) {
             super(data);
-        }
-        
-    }
-    
-    
-    export interface IUserScope extends IBaseEntity {
-        fkUserId: string;
-        User: /** App.Models.User **/ any;
-        fkRegionId: string;
-        Region: App.Models.IRegion;
-    }
-    
-    export class UserScope extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        fkUserId: string;
-        User: /** App.Models.User **/ any;
-        fkRegionId: string;
-        Region: App.Models.IRegion;
-        
-        constructor(data?: IUserScope) {
-            super(data);
-            this.fkUserId = data ? data.fkUserId : null;
-            this.User = data ? data.User : null;
-            this.fkRegionId = data ? data.fkRegionId : null;
-            this.Region = data ? data.Region : null;
         }
         
     }

@@ -41,11 +41,6 @@ module App.Controllers {
                         $scope.apbns = apbns;
                     });
                 });
-                Controllers.ApbdFileController.GetAll().done(apbdFiles => {
-                    $scope.$apply(() => {
-                        $scope.apbdFiles = apbdFiles;
-                    });
-                });
             }
             Controllers.RegionController.Get("0").done(region => {
                 $scope.$apply(() => {

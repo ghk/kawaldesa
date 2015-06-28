@@ -35,12 +35,11 @@ module App.Controllers {
             var scope = this.$scope;
             var query = {
                 "SortOrder": "ASC",
-                "ParentId": parentId
+                "fkParentId": parentId
             }
-            var type = Controllers.FrozenAccountRecapitulationController;
+            var type = Controllers.FrozenNationalDdRecapitulationController;
             if (this.indexCtrl.currentUser) {
-                // TODO: HUH?
-                type = Controllers.FrozenAccountRecapitulationController;
+                type = Controllers.NationalDdRecapitulationController;
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {

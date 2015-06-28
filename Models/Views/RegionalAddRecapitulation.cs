@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http.Validation;
 using Scaffold;
 
-namespace App.Models
+namespace App.Models.Views
 {
 
     public class BaseRegionalAddRecapitulation : IModel<string>

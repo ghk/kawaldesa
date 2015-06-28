@@ -7,8 +7,8 @@
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 
 <#
-	ModelNamespaces = new String[]{"App.Models"};
-    var namespaces = new []{"App.Models"};
+    var namespaces = new []{"App.Models", "App.Models.Views"};
+	ModelNamespaces = namespaces;
     foreach(var _namespace in namespaces)
     {
 #>
