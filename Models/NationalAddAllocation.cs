@@ -12,8 +12,8 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("ADD Kab Se Indonesia.xlsx")]
-    public class NationalAddAllocation : BaseEntity
+    [ExcelFileName("ADD Kab Se Indonesia")]
+    public class NationalAddAllocation : BaseEntity, IAllocation
     {
         [ExcelHeader("No")]
         public string No { get; set; }

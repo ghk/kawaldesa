@@ -12,8 +12,8 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("Bagi Hasil Pajak Kab Se Indonesia.xlsx")]
-    public class NationalBhprAllocation : BaseEntity
+    [ExcelFileName("Bagi Hasil Pajak Kab Se Indonesia")]
+    public class NationalBhprAllocation : BaseEntity, IAllocation
     {
         [ExcelHeader("No")]
         public string No { get; set; }

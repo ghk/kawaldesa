@@ -12,19 +12,19 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("Dana Desa APBN Kab Se Indonesia.xlsx")]
-    public class NationalDdAllocation : BaseEntity
+    [ExcelFileName("Dana Desa APBN Kab Se Indonesia")]
+    public class NationalDdAllocation : BaseEntity, IAllocation
     {
         [ExcelHeader("No")]
         public string No { get; set; }
 
-        [ExcelHeader("Provinsi/Kabupaten")]
+        [ExcelHeader(35, "Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Transfer Daerah")]
+        [ExcelHeader(25, "Transfer Daerah")]
         public decimal? RegionalTransfer { get; set; }
 
-        [ExcelHeader("Dana Desa")]
+        [ExcelHeader(25, "Dana Desa")]
         public decimal? Dd { get; set; }
 
         [ForeignKey("Region")]
