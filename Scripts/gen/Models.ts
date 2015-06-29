@@ -323,7 +323,11 @@ module App.Models {
     
     export interface IDocumentUpload extends IBaseEntity {
         FileName: string;
+        DocumentName: string;
         Type: App.Models.DocumentUploadType;
+        Source: string;
+        Notes: string;
+        ApbnKey: string;
         IsActivated: boolean;
         IsApproved: boolean;
         DateApproved: /** System.DateTime **/ any;
@@ -345,7 +349,11 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         FileName: string;
+        DocumentName: string;
         Type: App.Models.DocumentUploadType;
+        Source: string;
+        Notes: string;
+        ApbnKey: string;
         IsActivated: boolean;
         IsApproved: boolean;
         DateApproved: /** System.DateTime **/ any;
@@ -365,7 +373,11 @@ module App.Models {
         constructor(data?: IDocumentUpload) {
             super(data);
             this.FileName = data ? data.FileName : null;
+            this.DocumentName = data ? data.DocumentName : null;
             this.Type = data ? data.Type : null;
+            this.Source = data ? data.Source : null;
+            this.Notes = data ? data.Notes : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.IsApproved = data ? data.IsApproved : null;
             this.DateApproved = data ? data.DateApproved : null;

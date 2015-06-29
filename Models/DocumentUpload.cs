@@ -9,7 +9,11 @@ namespace App.Models
     public class DocumentUpload : BaseEntity
     {
         public String FileName { get; set; }
+        public String DocumentName { get; set; }
         public DocumentUploadType Type { get; set; }
+        public String Source { get; set; }
+        public String Notes { get; set; }
+        public String ApbnKey { get; set; }
 
         public bool IsActivated { get; set; }
         public bool IsApproved { get; set; }

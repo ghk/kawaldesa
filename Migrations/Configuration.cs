@@ -34,7 +34,8 @@ namespace App.Migrations
             var roleNames = new string[]{
                 Role.ADMIN,
                 Role.VOLUNTEER, Role.VOLUNTEER_APBN, Role.VOLUNTEER_ADD, Role.VOLUNTEER_DESA, 
-                Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN
+                Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN,
+                Role.VOLUNTEER_ALLOCATION
             };
 
             foreach(var roleName in roleNames)

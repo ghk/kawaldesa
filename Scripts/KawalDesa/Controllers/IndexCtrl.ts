@@ -5,6 +5,10 @@
 
 module App.Controllers {
 
+    function safeApply(scope, fn) {
+        (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
+    }
+
     export interface ICurrentUser {
         Id: string;
         FacebookId: String;
@@ -53,6 +57,15 @@ module App.Controllers {
         regionId: string;
         isPathReplacing = false;
         currentPath = null;
+
+        activeUploadType: App.Models.DocumentUploadType;
+        activeUploadRegionId: string;
+        activeUpload: App.Models.DocumentUpload;
+        activeUploadOrg: App.Models.Organization;
+        activeUploadCreator: App.Models.UserViewModel;
+        newUploadFile: any;
+        newUpload: App.Models.DocumentUpload;
+        newUploadState = false;
 
         static $inject = ["$scope", "$location"];
 
@@ -149,6 +162,47 @@ module App.Controllers {
         modal(selector, action) {
             var modal: any = $(selector);
             modal.modal(action);
+        }
+
+        configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) {
+            this.activeUploadType = type;
+            this.activeUploadRegionId = regionId;
+            this.newUpload = new Models.DocumentUpload();
+            var ctrl = this;
+            ctrl.activeUpload = null;
+            Controllers.DocumentUploadController.GetActive(type, regionId, "2015p").done(doc => {
+                ctrl.$scope.$apply(() => {
+                    ctrl.activeUpload = doc;
+                });
+                if (doc != null) {
+                    Controllers.OrganizationController.Get(doc.fkOrganizationId).done(org => {
+                        ctrl.$scope.$apply(() => {
+                            ctrl.activeUploadOrg = org;
+                        });
+                    });
+                    Services.UserController.Get(doc.fkCreatedById).done(user => {
+                        ctrl.$scope.$apply(() => {
+                            ctrl.activeUploadCreator = user;
+                        });
+                    });
+                }
+            });
+        }
+
+        upload() {
+            var ctrl = this;
+            var multipart = new Scaffold.Multipart({ files: this.newUploadFile, forms: this.newUpload });
+            ctrl.newUploadState = true;
+            Controllers.DocumentUploadController.Upload(multipart, this.activeUploadType, this.activeUploadRegionId, "2015p").success(() => {
+                safeApply(ctrl.$scope, () => {
+                    ctrl.modal('#document-upload-modal', 'hide');
+                    ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                });
+            }).finally(() => {
+                ctrl.$scope.$apply(() => {
+                    ctrl.newUploadState = false;
+                });
+            });;
         }
 
         loadRegion(parentId?: string, parentKey?: string) {

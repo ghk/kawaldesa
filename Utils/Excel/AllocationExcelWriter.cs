@@ -105,7 +105,7 @@ namespace App.Utils.Excel
             int colOffset = 2;
             foreach(var leaf in headers.Root.Leafs)
             {
-                if (leaf.Property.Name != "RegionName")
+                if (leaf.Property.Name != "RegionName" && leaf.Property.Name != "No")
                 {
                     var value = allocation == null ? null : leaf.Property.GetValue(allocation);
                     var addr = GetAddress(row, startCol + colOffset);

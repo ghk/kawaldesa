@@ -1,6 +1,37 @@
-﻿<div ng-controller="DdAllocationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'dd' && indexCtrl.region.Type < 4">
+﻿<div ng-controller="DdAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'dd' && indexCtrl.region.Type < 4">
+
+    <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
+        <b>Dana desa</b> adalah dana yang bersumber dari Anggaran Pendapatan dan Belanja Negara (<b>APBN</b>) yang diperuntukkan bagi desa <a href="#" ng-click="showMore=true;" ng-show="!showMore">...</a><span ng-show="showMore">yang ditransfer melalui Anggaran Pendapatan dan Belanja Daerah (APBD) kabupaten/kota dan digunakan untuk membiayai penyelenggaraan pemerintahan, pelaksanaan pembangunan, pembinaan kemasyarakatan dan pemberdayaan masyarakat. (Sumber: <a href="#">PP No. 60 tahun 2014</a>, <a href="#">PP No. 22 tahun 2015</a>)</span>
+        <br />
+    </div>
+
     <div class="content-header">
-        APBN untuk Dana Desa
+        Pagu Dana Desa dari APBN-P 2015
+    </div>
+
+    <div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="indexCtrl.activeUpload">
+        Sumber: <a href="#" ng-click="activeUploadMore = !activeUploadMore">{{indexCtrl.activeUpload.DocumentName}}</a>
+        <div ng-show="activeUploadMore">
+            <br />
+            <dl class="dl-horizontal">
+                <dt>Nama Dokumen</dt>
+                <dd>{{indexCtrl.activeUpload.DocumentName}}</dd>
+                <dt>Sumber Dokumen</dt>
+                <dd>{{indexCtrl.activeUpload.Source}}</dd>
+                <dt>Keterangan</dt>
+                <dd>{{indexCtrl.activeUpload.Notes}}</dd>
+                <dt>File Spreadsheet</dt>
+                <dd><a href="/Content/files/{{indexCtrl.activeUpload.FileName}}">unduh</a></dd>
+                <dt>Pengunggah</dt>
+                <dd><a href="/u/{{indexCtrl.activeUpload.fkCreatedById}}">{{indexCtrl.activeUploadCreator.Name}}</a></dd>
+                <dt>Tanggal Unggah</dt>
+                <dd>{{indexCtrl.activeUpload.DateCreated}}</dd>
+                <dt>Organisasi</dt>
+                <dd><a href="/orgs/{{indexCtrl.activeUpload.fkOrganizationId}}">{{indexCtrl.activeUploadOrg.Name}}</a></dd>
+            </dl>
+            <br />
+            <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)">Unggah dan perbaharui</a>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -18,7 +49,7 @@
                     <th style="vertical-align: middle;" rowspan="3">{{indexCtrl.childName}}</th>
                     <th style="vertical-align: middle;" class="money" rowspan="3">Alokasi Dasar</th>
                     <th colspan="14" style="text-align: center;">Alokasi Berdasarkan Formula</th>
-                    <th style="vertical-align: middle;" class="money" rowspan="3" class="money" >Pagu Dana Desa</th>
+                    <th style="vertical-align: middle;" class="money" rowspan="3" class="money">Pagu Dana Desa</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
                     <th style="text-align: center" colspan="3">Penduduk</th>
@@ -53,7 +84,7 @@
                     <td class="money"> {{entity.RegionalTransfer | number:0}} </td>
                     <td class="money"> {{entity.Dd | number:0}} </td>
                     <td class="money"> {{entity.Dd / entity.RegionalTransfer * 10 | number:0}}</td>
-                    <td class="money"> {{entity.CompletedDesa | number:0}} / {{entity.TotalDesa | number:0}} </td>
+                    <td class="money"> {{entity.TotalDesa | number:0}} </td>
                     <td class="money"> {{entity.Dd / entity.CompletedDesa | number:0}} </td>
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
@@ -87,7 +118,7 @@
                     <td class="money"> {{total.RegionalTransfer | number:0}} </td>
                     <td class="money"> {{total.Dd | number:0}} </td>
                     <td class="money"> {{total.Dd / total.RegionalTransfer * 10 | number:0}}</td>
-                    <td class="money"> {{total.CompletedDesa | number:0}} / {{total.TotalDesa | number:0}} </td>
+                    <td class="money"> {{total.TotalDesa | number:0}} </td>
                     <td class="money"> {{total.Dd / total.CompletedDesa | number:0}} </td>
                 </tr>
             </tfoot>
@@ -101,7 +132,8 @@
         </table>
     </div>
     <div class="container-fluid well help">
-        <ul>
-        </ul>
+        Pengalokasian anggaran Dana Desa dalam APBN dilakukan secara bertahap, yang dilaksanakan sebagai berikut: a. Tahun Anggaran 2015 paling sedikit sebesar 3% (tiga per seratus); b. Tahun Anggaran 2016 paling sedikit sebesar 60% (enam per seratus); dan c.Tahun Anggaran 2017 dan seterusnya sebesar 10% (sepuluh per seratus), dari anggaran Transfer ke Daerah. (PP No. 22 tahun 2015 pasal 30 A ayat 1)
+        <ul></ul>
     </div>
+
 </div>

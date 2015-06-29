@@ -319,8 +319,29 @@ module App.Controllers.Models {
 				}));
 				return res;
 		}
-		}
-        
+	        
+        static GetActive(type: number, regionId: string, apbnKey: string): JQueryPromise<App.Models.IDocumentUpload> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/DocumentUpload/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static GetTemplate(type: number, regionId: string, apbnKey: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/DocumentUpload/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
+			var res = multipart.upload('/api/DocumentUpload/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+			   return res;
+	    }
+	}
+    
     export class FieldReportController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();

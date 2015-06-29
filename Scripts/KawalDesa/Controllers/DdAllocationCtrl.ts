@@ -11,11 +11,13 @@ module App.Controllers {
 
     class DdAllocationCtrl {
 
-        static $inject = ["$scope", "$upload"];
+        static $inject = ["$scope"];
 
         indexCtrl: IndexCtrl;
+        uploadDoc = new Models.DocumentUpload();
+        file: any;
 
-        constructor(public $scope, public $upload) {
+        constructor(public $scope) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
@@ -26,6 +28,7 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.type == "dd") {
+                this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalDd, "0");
                 this.getRecapitulations(this.indexCtrl.region.Id);
             }
         }
@@ -48,6 +51,7 @@ module App.Controllers {
                 });
             });
         }
+
 
     }
 

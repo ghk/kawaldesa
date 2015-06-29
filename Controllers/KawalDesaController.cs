@@ -247,7 +247,9 @@ namespace App.Controllers
             using (var db = new DB())
             {
                 var userManager = new UserManager<User>(new CUserStore<User>(db));
-                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+                var user = db.Users.FirstOrDefault(u => u.Id == userId && u.IsActive);
+                if (user == null)
+                    return null;
                 result["ID"] = user.Id;
                 result["Name"] = user.Name;
                 result["FacebookID"] = user.FacebookId;

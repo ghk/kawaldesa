@@ -1,20 +1,27 @@
-﻿create materialized view national_region_dds as
-select
-  apbn.key || '-' || r.id as id,
-  r.id as region_id,
-  apbn.key as apbn_key,
-  r.name as region_name,
-  r.parent_id as parent_region_id,
-  sum(dd.regional_transfer) as regional_transfer,
-  sum(dd.dd) as dd,
-  coalesce(sum(rdc.desa_count), 0::numeric) as completed_desa
+﻿-- Materialized View: national_region_dds
 
-  from apbns apbn
-  cross join region_parents r
-  left outer join national_dd_allocations dd 
-	on dd.is_activated = true
-	and apbn.id = dd.fk_apbn_id 
-	and ( (r.type = 0 and r.parent_parent_id = dd.fk_region_id) or (r.type = 1 and r.parent_id = dd.fk_region_id))
-  left outer join region_desa_counts rdc on dd.fk_region_id = rdc.id
-  where r.type <= 1
-  group by r.id, apbn.key , r.name, r.parent_id, rdc.desa_count
+-- DROP MATERIALIZED VIEW national_region_dds;
+
+CREATE MATERIALIZED VIEW national_region_dds AS 
+SELECT (apbn.key || '-'::text) || r.id::text AS id,
+    r.id AS region_id,
+    apbn.key AS apbn_key,
+    r.name AS region_name,
+    r.parent_id AS parent_region_id,
+    sum(dd.regional_transfer) AS regional_transfer,
+    sum(dd.dd) AS dd,
+    COALESCE(sum(rdc.desa_count), 0::numeric) AS completed_desa
+   FROM apbns apbn
+     CROSS JOIN region_parents r
+     left JOIN (
+	select dd.dd, dd.regional_transfer, dd.fk_region_id, rc.parent_id, rc.parent_parent_id, dd.fk_apbn_id from national_dd_allocations dd 	
+	inner join region_parents rc  ON dd.fk_region_id = rc.id 
+	where dd.is_activated = true
+	) dd ON ((r.type = 0 AND dd.parent_parent_id::text = r.id::text) OR (r.type = 1 AND dd.parent_id::text = r.id::text))  AND apbn.id = dd.fk_apbn_id 
+     LEFT JOIN region_desa_counts rdc ON r.id::text = rdc.id::text
+  WHERE r.type <= 1
+  GROUP BY r.id, apbn.key, r.name, r.parent_id, rdc.desa_count
+WITH DATA;
+
+ALTER TABLE national_region_dds
+  OWNER TO postgres;

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace App.Models
 {
-    public interface IAllocation
+    public interface IAllocation: IDocumentUploadEntry
     {
-        string fkRegionId { get; }
-        string No { get; }
-        string RegionName { get; }
+        string No { get; set; }
+
+        string RegionName { get; set; }
+
+        string fkRegionId { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace App.Controllers.Models
         public User AddOrgAdmin(long id, String email)
         {
             var org = dbSet.Find(id);
-            var roles = new List<string>{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
+            var roles = new List<string>{Role.VOLUNTEER_ALLOCATION, Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
             Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN, Role.VOLUNTEER};
             var national = dbContext.Set<Region>().Find("0");
             User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
@@ -65,37 +65,43 @@ namespace App.Controllers.Models
         [Authorize(Roles = Role.ADMIN)]
         public Organization Update(Multipart<Organization> multipart)
         {
-            var org = multipart.Entity;
-            Validate(multipart.Entity);
-
-            if (!ModelState.IsValid)
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
-
-            Update(org)
-                .Set(o => o.Name)
-                .Set(o => o.Description)
-                .Set(o => o.Website)
-                .Set(o => o.Facebook)
-                .Set(o => o.Twitter)
-                .Set(o => o.UrlKey)
-                .Save();
-
-            if (multipart.Files.Count > 0)
+            try
             {
-                var fileResult = multipart.Files[0];
-                var blob = new Blob(fileResult);
-                dbContext.Set<Blob>().Add(blob);
-                dbContext.SaveChanges();
-                fileResult.Move(blob.FilePath);
+                var org = multipart.Entity;
+                Validate(multipart.Entity);
 
-                org.fkPictureId = blob.Id;
+                if (!ModelState.IsValid)
+                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+
                 Update(org)
-                    .Set(o => o.fkPictureId, blob.Id)
-                    .Set(o => o.PictureFileName, blob.RelativeFileName)
+                    .Set(o => o.Name)
+                    .Set(o => o.Description)
+                    .Set(o => o.Website)
+                    .Set(o => o.Facebook)
+                    .Set(o => o.Twitter)
+                    .Set(o => o.UrlKey)
                     .Save();
-            }
 
-            return org;
+                if (multipart.Files.Count > 0)
+                {
+                    var fileResult = multipart.Files[0];
+                    var blob = new Blob(fileResult);
+                    dbContext.Set<Blob>().Add(blob);
+                    dbContext.SaveChanges();
+                    fileResult.Move(blob.FilePath);
+
+                    org.fkPictureId = blob.Id;
+                    Update(org)
+                        .Set(o => o.fkPictureId, blob.Id)
+                        .Set(o => o.PictureFileName, blob.RelativeFileName)
+                        .Save();
+                }
+                return org;
+            }
+            finally
+            {
+                multipart.DeleteUnmoved();
+            }
         }
     }
 }
