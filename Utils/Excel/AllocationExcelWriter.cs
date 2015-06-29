@@ -143,7 +143,7 @@ namespace App.Utils.Excel
                 if (node.ColSpan == 1 && node.RowSpan == 1)
                     continue;
                 string start = GetAddress(row + node.RowOffset, startCol + node.ColOffset);
-                string end = GetAddress(row + node.RowOffset + node.RowSpan, startCol + node.ColOffset + node.ColSpan);
+                string end = GetAddress(row + node.RowOffset + node.RowSpan - 1, startCol + node.ColOffset + node.ColSpan - 1);
                 worksheet.Cells[start + ":" + end].Merge = true;
             }
             int maxRow = row;

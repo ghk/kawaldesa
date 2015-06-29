@@ -41,25 +41,16 @@
                                     Pelapor Penyaluran APBN
                                 </td>
                                 <td style="text-align: left;">
-                                    Melaporkan penyaluran Alokasi APBN untuk Dana Desa dari Pusat
+                                    Melaporkan penyaluran Dana Desa dari Pusat
                                 </td>
                             </tr>
                             <tr>
                                 <td style="text-align: left;">
                                     <input type="checkbox" ng-model="userCtrl.roles.volunteer_add" />
-                                    Pelapor Penyaluran ADD
+                                    Pelapor Penyaluran ADD dari Kabupaten
                                 </td>
                                 <td style="text-align: left;">
                                     Melaporkan penyaluran Alokasi Dana Desa dari Kabupaten/Kota
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: left;">
-                                    <input type="checkbox" ng-model="userCtrl.roles.volunteer_desa" />
-                                    Pelapor Penerimaan Dana Desa
-                                </td>
-                                <td style="text-align: left;">
-                                    Melaporkan penerimaan Dana Desa baik dari APBN (Pusat) maupun dari ADD (Kabupaten / Kota)
                                 </td>
                             </tr>
                             <tr>
@@ -161,14 +152,13 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="upload in userCtrl.uploads">
-                                <td>{{upload.CreatedDate}}</td>
-                                <td>{{upload.Type}}</td>
+                                <td>{{upload.DateCreated | date: 'medium'}}</td>
+                                <td>{{App.Models.DocumentUploadType[upload.Type]}}</td>
                                 <td>{{upload.Region.Name}}</td>
                                 <td>{{upload.DocumentName}}</td>
                                 <td>{{upload.Source}}</td>
-                                <td>{{upload.Type}}</td>
-                                <td>{{upload.Status}}</td>
-                                <td>{{upload.Type}}</td>
+                                <td><a href="~/Content/files/{{upload.FileName}}">unduh</a></td>
+                                <td>{{upload.IsActivated ? 'Aktif' : 'Tidak Aktif'}}</td>
                             </tr>
                         </tbody>
                     </table>

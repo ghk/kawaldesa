@@ -19,6 +19,8 @@ namespace App.Models.Views
 
         public string RegionId { get; set; }
 
+        public string ParentRegionId { get; set; }
+
         public string ApbnKey { get; set; }
 
         public string RegionName { get; set; }

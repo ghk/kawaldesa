@@ -28,7 +28,15 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.type == "dd") {
-                this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalDd, "0");
+                if (this.indexCtrl.region.Type <= 1) {
+                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalDd, "0");
+                } else if (this.indexCtrl.region.Type >= 2) {
+                    var kab = this.indexCtrl.region;
+                    while (kab.Type != 2) {
+                        kab = kab.Parent;
+                    }
+                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.RegionalDd, kab.Id);
+                }
                 this.getRecapitulations(this.indexCtrl.region.Id);
             }
         }
@@ -40,9 +48,15 @@ module App.Controllers {
                 "SortOrder": "ASC",
                 "fkParentId": parentId
             }
-            var type = Controllers.FrozenNationalDdRecapitulationController;
+            var type : any = Controllers.FrozenNationalDdRecapitulationController;
             if (this.indexCtrl.currentUser) {
                 type = Controllers.NationalDdRecapitulationController;
+            }
+            if (this.indexCtrl.region.Type >= 2) {
+                type = Controllers.FrozenRegionalDdRecapitulationController;
+                if (this.indexCtrl.currentUser) {
+                    type = Controllers.RegionalDdRecapitulationController;
+                }
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {

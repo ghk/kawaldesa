@@ -596,6 +596,85 @@ module App.Controllers.Models {
 		}
 		}
         
+    export class BaseRegionalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class RegionalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IRegionalDdRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IRegionalDdRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalDdRecapitulation>> {
+			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalDdRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.RegionalDdRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalDdRecapitulation> {
+			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/RegionalDdRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.RegionalDdRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalDdRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenRegionalDdRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenRegionalDdRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenRegionalDdRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>> {
+			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalDdRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenRegionalDdRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalDdRecapitulation> {
+			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenRegionalDdRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenRegionalDdRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalDdRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
     export class RegionController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();

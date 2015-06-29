@@ -61,8 +61,6 @@ module App.Controllers {
         activeUploadType: App.Models.DocumentUploadType;
         activeUploadRegionId: string;
         activeUpload: App.Models.DocumentUpload;
-        activeUploadOrg: App.Models.Organization;
-        activeUploadCreator: App.Models.UserViewModel;
         newUploadFile: any;
         newUpload: App.Models.DocumentUpload;
         newUploadState = false;
@@ -70,6 +68,7 @@ module App.Controllers {
         static $inject = ["$scope", "$location"];
 
         constructor(public $scope, public $location){
+            $scope.App = App;
             var ctrl = this;
             var scope = this.$scope;
             this.currentUser = window.CurrentUser;
@@ -174,18 +173,6 @@ module App.Controllers {
                 ctrl.$scope.$apply(() => {
                     ctrl.activeUpload = doc;
                 });
-                if (doc != null) {
-                    Controllers.OrganizationController.Get(doc.fkOrganizationId).done(org => {
-                        ctrl.$scope.$apply(() => {
-                            ctrl.activeUploadOrg = org;
-                        });
-                    });
-                    Services.UserController.Get(doc.fkCreatedById).done(user => {
-                        ctrl.$scope.$apply(() => {
-                            ctrl.activeUploadCreator = user;
-                        });
-                    });
-                }
             });
         }
 

@@ -13,15 +13,15 @@ namespace App.Models
 {
 
     [ExcelFileName("Dana Desa APBN Desa Se Kab.xlsx")]
-    public class RegionalDdAllocation : BaseEntity
+    public class RegionalDdAllocation : BaseEntity, IAllocation
     {
-        [ExcelHeader("No")]
+        [ExcelHeader(15,"No")]
         public string No { get; set; }
 
-        [ExcelHeader("Desa")]
+        [ExcelHeader(35, "Desa")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Alokasi Dasar")]
+        [ExcelHeader(25, "Alokasi Dasar")]
         public decimal? BaseAllocation { get; set; }
 
 
@@ -68,10 +68,10 @@ namespace App.Models
         [ExcelHeader("Total Bobot", "Alokasi Berdasarkan Formula")]
         public decimal? TotalWeight { get; set; }
 
-        [ExcelHeader("Alokasi Formula", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader(25, "Alokasi Formula", "Alokasi Berdasarkan Formula")]
         public decimal? FormulaBasedAllocation { get; set; }
 
-        [ExcelHeader("Dana Desa")]
+        [ExcelHeader(25, "Dana Desa")]
         public decimal? Dd { get; set; }
 
         [ForeignKey("Region")]

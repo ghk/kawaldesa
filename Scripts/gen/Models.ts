@@ -1244,6 +1244,7 @@ module App.Models.Views {
     export interface IBaseRegionalAddRecapitulation {
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1269,6 +1270,7 @@ module App.Models.Views {
         
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1291,6 +1293,7 @@ module App.Models.Views {
         constructor(data?: IBaseRegionalAddRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.RegionName = data ? data.RegionName : null;
             this.BaseAllocation = data ? data.BaseAllocation : null;
@@ -1317,6 +1320,7 @@ module App.Models.Views {
     export interface IBaseRegionalBhprRecapitulation {
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1331,6 +1335,7 @@ module App.Models.Views {
         
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1342,6 +1347,7 @@ module App.Models.Views {
         constructor(data?: IBaseRegionalBhprRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.RegionName = data ? data.RegionName : null;
             this.BaseAllocation = data ? data.BaseAllocation : null;
@@ -1357,6 +1363,7 @@ module App.Models.Views {
     export interface IBaseRegionalDdRecapitulation {
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1382,6 +1389,7 @@ module App.Models.Views {
         
         Id: string;
         RegionId: string;
+        ParentRegionId: string;
         ApbnKey: string;
         RegionName: string;
         BaseAllocation: number;
@@ -1404,6 +1412,7 @@ module App.Models.Views {
         constructor(data?: IBaseRegionalDdRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
+            this.ParentRegionId = data ? data.ParentRegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.RegionName = data ? data.RegionName : null;
             this.BaseAllocation = data ? data.BaseAllocation : null;

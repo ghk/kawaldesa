@@ -107,6 +107,7 @@
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
+                                <th>Pelapor</th>
                                 <th>Jenis</th>
                                 <th>Wilayah</th>
                                 <th>Nama Dokumen</th>
@@ -117,14 +118,14 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="upload in organizationCtrl.orgUploads">
-                                <td>{{upload.CreatedDate}}</td>
-                                <td>{{upload.Type}}</td>
+                                <td>{{upload.DateCreated | date: 'medium'}}</td>
+                                <td><a href="/u/{{upload.fkCreatedById}}">{{upload.CreatedBy.Name}}</a></td>
+                                <td>{{App.Models.DocumentUploadType[upload.Type]}}</td>
                                 <td>{{upload.Region.Name}}</td>
                                 <td>{{upload.DocumentName}}</td>
                                 <td>{{upload.Source}}</td>
-                                <td>{{upload.Type}}</td>
-                                <td>{{upload.Status}}</td>
-                                <td>{{upload.Type}}</td>
+                                <td><a href="~/Content/files/{{upload.FileName}}">unduh</a></td>
+                                <td>{{upload.IsActivated ? 'Aktif' : 'Tidak Aktif'}}</td>
                             </tr>
                         </tbody>
                     </table>

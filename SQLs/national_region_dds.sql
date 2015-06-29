@@ -1,8 +1,4 @@
-﻿-- Materialized View: national_region_dds
-
--- DROP MATERIALIZED VIEW national_region_dds;
-
-CREATE MATERIALIZED VIEW national_region_dds AS 
+﻿CREATE OR REPLACE VIEW national_region_dds AS 
 SELECT (apbn.key || '-'::text) || r.id::text AS id,
     r.id AS region_id,
     apbn.key AS apbn_key,
@@ -18,10 +14,10 @@ SELECT (apbn.key || '-'::text) || r.id::text AS id,
 	inner join region_parents rc  ON dd.fk_region_id = rc.id 
 	where dd.is_activated = true
 	) dd ON ((r.type = 0 AND dd.parent_parent_id::text = r.id::text) OR (r.type = 1 AND dd.parent_id::text = r.id::text))  AND apbn.id = dd.fk_apbn_id 
-     LEFT JOIN region_desa_counts rdc ON r.id::text = rdc.id::text
+     LEFT JOIN region_desa_counts rdc ON dd.fk_region_id::text = rdc.id::text and dd.dd is not null
   WHERE r.type <= 1
-  GROUP BY r.id, apbn.key, r.name, r.parent_id, rdc.desa_count
-WITH DATA;
+  GROUP BY r.id, apbn.key, r.name, r.parent_id;
+
 
 ALTER TABLE national_region_dds
   OWNER TO postgres;
