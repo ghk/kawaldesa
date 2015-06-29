@@ -37,6 +37,8 @@ namespace App.Models
         public virtual IDbSet<RegionalDdAllocation> RegionalDdAllocations { get; set; }
         public virtual IDbSet<RegionalAddAllocation> RegionalAddAllocations { get; set; }
         public virtual IDbSet<RegionalBhprAllocation> RegionalBhprAllocations { get; set; }
+        public virtual IDbSet<Transfer> Transfer  { get; set; }
+        public virtual IDbSet<FrozenTransfer> FrozenTransfers  { get; set; }
         public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }
         public virtual IDbSet<Realization> Realizations { get; set; }
