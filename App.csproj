@@ -224,7 +224,9 @@
   <ItemGroup>
     <Compile Include="Controllers\Models\DocumentUploadActivator.cs" />
     <Compile Include="Controllers\Models\DocumentUploadController.cs" />
+    <Compile Include="Controllers\Models\NationalBhprRecapitulationController.cs" />
     <Compile Include="Controllers\Models\NationalAddRecapitulationController.cs" />
+    <Compile Include="Controllers\Models\RegionalBhprRecapitulationController.cs" />
     <Compile Include="Controllers\Models\RegionalAddRecapitulationController.cs" />
     <Compile Include="Controllers\Models\RegionalDdRecapitulationController.cs" />
     <Compile Include="Controllers\Models\OrganizationController.cs" />
@@ -340,13 +342,13 @@
     <Content Include="Views\KawalDesa\Apbdes.cshtml" />
     <Content Include="Views\KawalDesa\Login.cshtml" />
     <Content Include="Views\KawalDesa\DdAllocation.cshtml" />
-    <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
     <Content Include="Views\KawalDesa\Organization.cshtml" />
     <Content Include="Views\KawalDesa\User.cshtml" />
     <Content Include="Views\KawalDesa\DocumentUploadSource.cshtml" />
     <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

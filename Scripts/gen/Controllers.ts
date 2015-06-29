@@ -471,6 +471,85 @@ module App.Controllers.Models {
 		}
 		}
         
+    export class BaseNationalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class NationalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.INationalBhprRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.INationalBhprRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalBhprRecapitulation>> {
+			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalBhprRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.NationalBhprRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.INationalBhprRecapitulation> {
+			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/NationalBhprRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.NationalBhprRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalBhprRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenNationalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenNationalBhprRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenNationalBhprRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>> {
+			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalBhprRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenNationalBhprRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalBhprRecapitulation> {
+			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenNationalBhprRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenNationalBhprRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalBhprRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
     export class BaseNationalDdRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
@@ -748,6 +827,85 @@ module App.Controllers.Models {
 			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/FrozenRegionalAddRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class BaseRegionalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class RegionalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IRegionalBhprRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IRegionalBhprRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalBhprRecapitulation>> {
+			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalBhprRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.RegionalBhprRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalBhprRecapitulation> {
+			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/RegionalBhprRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.RegionalBhprRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalBhprRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenRegionalBhprRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenRegionalBhprRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenRegionalBhprRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>> {
+			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalBhprRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenRegionalBhprRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalBhprRecapitulation> {
+			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenRegionalBhprRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenRegionalBhprRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalBhprRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;

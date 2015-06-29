@@ -13,7 +13,7 @@ namespace App.Models
 {
 
     [ExcelFileName("Bagi Hasil Pajak Desa Se Kab")]
-    public class RegionalBhprAllocation : BaseEntity
+    public class RegionalBhprAllocation : BaseEntity, IAllocation
     {
         [ExcelHeader("No")]
         public string No { get; set; }
