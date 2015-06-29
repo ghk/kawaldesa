@@ -234,3 +234,7 @@ p.subtext {
     margin-top: -2px;
 }
 
+.table > tbody > tr:hover {
+    background-color: rgb(222, 230, 241);
+
+}

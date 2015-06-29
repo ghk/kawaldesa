@@ -152,7 +152,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="upload in userCtrl.uploads">
-                                <td>{{upload.DateCreated | date: 'medium'}}</td>
+                                <td>{{upload.DateCreated | date: 'dd MMM yyyy, HH:mm:ss'}}</td>
                                 <td>{{App.Models.DocumentUploadType[upload.Type]}}</td>
                                 <td>{{upload.Region.Name}}</td>
                                 <td>{{upload.DocumentName}}</td>

@@ -7,25 +7,23 @@
     <div ng-show="activeUploadMore">
         <br />
         <dl class="dl-horizontal">
-            <dt>Nama Dokumen</dt>
-            <dd>{{indexCtrl.activeUpload.DocumentName}}</dd>
             <dt>Sumber Dokumen</dt>
             <dd>{{indexCtrl.activeUpload.Source}}</dd>
             <dt>Keterangan</dt>
             <dd>{{indexCtrl.activeUpload.Notes}}</dd>
-            <dt>File Spreadsheet</dt>
-            <dd><a href="/Content/files/{{indexCtrl.activeUpload.FileName}}">unduh</a></dd>
             <dt>Pengunggah</dt>
             <dd><a href="/u/{{indexCtrl.activeUpload.fkCreatedById}}">{{indexCtrl.activeUpload.CreatedBy.Name}}</a></dd>
             <dt>Tanggal Unggah</dt>
-            <dd>{{indexCtrl.activeUpload.DateCreated | date:'medium'}}</dd>
+            <dd>{{indexCtrl.activeUpload.DateCreated | date:'dd MMM yyyy, HH:mm:ss'}}</dd>
             <dt>Organisasi</dt>
             <dd><a href="/orgs/{{indexCtrl.activeUpload.fkOrganizationId}}">{{indexCtrl.activeUpload.Organization.Name}}</a></dd>
         </dl>
-        <br /> <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)">Unggah dan Perbaharui</a>
+        <a href="/Content/files/{{indexCtrl.activeUpload.FileName}}" class="btn btn-default"> <i class="fa fa-download"></i> Unduh spreadsheet</a>
+        <a href="http://docs.google.com/gview?url=http://kawaldesa.org/Content/files/{{indexCtrl.activeUpload.FileName}}" class="btn btn-default"> <i class="fa fa-table"></i> Buka di Google docs</a>
+        <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-upload"></i> Unggah dan perbaharui</a>
     </div>
 </div>
 <div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="!indexCtrl.activeUpload">
-    Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)">Unggah Dokumen</a>
+    Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-upload"></i> Unggah dokumen</a>
 </div>
 

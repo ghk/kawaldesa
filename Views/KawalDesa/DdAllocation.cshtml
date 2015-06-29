@@ -1,7 +1,7 @@
-﻿<div ng-controller="DdAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'dd' && indexCtrl.region.Type < 4">
+﻿<div ng-controller="DdAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'dd' && indexCtrl.guessedRegionType < 4">
 
     <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
-        <b>Dana desa</b> adalah dana yang bersumber dari Anggaran Pendapatan dan Belanja Negara (<b>APBN</b>) yang diperuntukkan bagi desa <a href="#" ng-click="showMore=true;" class="btn btn-default btn-xs" ng-show="!showMore">...</a><span ng-show="showMore">yang ditransfer melalui Anggaran Pendapatan dan Belanja Daerah (APBD) kabupaten/kota dan digunakan untuk membiayai penyelenggaraan pemerintahan, pelaksanaan pembangunan, pembinaan kemasyarakatan dan pemberdayaan masyarakat. (Sumber: <a href="#">PP No. 60 tahun 2014</a>, <a href="#">PP No. 22 tahun 2015</a>)</span>
+        <b>Dana desa</b> adalah dana yang bersumber dari Anggaran Pendapatan dan Belanja Negara (<b>APBN</b>) yang diperuntukkan bagi desa <a href="#" ng-click="showMore=true;" class="btn btn-default btn-xs" ng-show="!showMore">selengkapnya...</a><span ng-show="showMore">yang ditransfer melalui Anggaran Pendapatan dan Belanja Daerah (APBD) kabupaten/kota dan digunakan untuk membiayai penyelenggaraan pemerintahan, pelaksanaan pembangunan, pembinaan kemasyarakatan dan pemberdayaan masyarakat. (Sumber: <a href="#">PP No. 60 tahun 2014</a>, <a href="#">PP No. 22 tahun 2015</a>)</span>
         <br />
     </div>
 
@@ -54,9 +54,12 @@
             <tbody>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type < 2">
                     <td>
-                        <a href="/dd/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
+                        <a ng-if="indexCtrl.guessType(entity.RegionId) < 4" href="/dd/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
+                        <span ng-if="indexCtrl.guessType(entity.RegionId) == 4">
+                            {{entity.RegionName}}
+                        </span>
                     </td>
                     <td class="money"> {{entity.RegionalTransfer | number:0}} </td>
                     <td class="money"> {{entity.Dd | number:0}} </td>
@@ -66,9 +69,12 @@
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
                     <td>
-                        <a href="/dd/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
+                        <a ng-if="indexCtrl.guessType(entity.RegionId) < 4" href="/dd/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
+                        <span ng-if="indexCtrl.guessType(entity.RegionId) == 4">
+                            {{entity.RegionName}}
+                        </span>
                     </td>
                     <td class="money"> {{entity.BaseAllocation | number:0}}</td>
                     <td class="money"> {{entity.Population | number:0}}</td>

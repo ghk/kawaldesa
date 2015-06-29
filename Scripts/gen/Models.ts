@@ -1027,6 +1027,78 @@ module App.Models {
     }
     
     
+    export interface IBaseTransfer extends IBaseEntity {
+        Dd: number;
+        Add: number;
+        Bhpr: number;
+        Date: /** System.DateTime **/ any;
+        IsActivated: boolean;
+        Year: number;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        fkDestinationId: string;
+        Destination: App.Models.IRegion;
+    }
+    
+    export class BaseTransfer extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Dd: number;
+        Add: number;
+        Bhpr: number;
+        Date: /** System.DateTime **/ any;
+        IsActivated: boolean;
+        Year: number;
+        fkDocumentUploadId: number;
+        DocumentUpload: App.Models.IDocumentUpload;
+        fkDestinationId: string;
+        Destination: App.Models.IRegion;
+        
+        constructor(data?: IBaseTransfer) {
+            super(data);
+            this.Dd = data ? data.Dd : null;
+            this.Add = data ? data.Add : null;
+            this.Bhpr = data ? data.Bhpr : null;
+            this.Date = data ? data.Date : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.Year = data ? data.Year : null;
+            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
+            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkDestinationId = data ? data.fkDestinationId : null;
+            this.Destination = data ? data.Destination : null;
+        }
+        
+    }
+    
+    
+    export interface ITransfer extends IBaseTransfer {
+    }
+    
+    export class Transfer extends BaseTransfer {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: ITransfer) {
+            super(data);
+        }
+        
+    }
+    
+    
+    export interface IFrozenTransfer extends IBaseTransfer {
+    }
+    
+    export class FrozenTransfer extends BaseTransfer {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        
+        constructor(data?: IFrozenTransfer) {
+            super(data);
+        }
+        
+    }
+    
+    
     export interface IUserScope extends IBaseEntity {
         fkUserId: string;
         User: /** App.Models.User **/ any;

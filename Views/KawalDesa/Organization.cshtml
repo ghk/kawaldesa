@@ -118,7 +118,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="upload in organizationCtrl.orgUploads">
-                                <td>{{upload.DateCreated | date: 'medium'}}</td>
+                                <td>{{upload.DateCreated | date: 'dd MMM yyyy, HH:mm:ss'}}</td>
                                 <td><a href="/u/{{upload.fkCreatedById}}">{{upload.CreatedBy.Name}}</a></td>
                                 <td>{{App.Models.DocumentUploadType[upload.Type]}}</td>
                                 <td>{{upload.Region.Name}}</td>
@@ -234,7 +234,14 @@
 
     <div class="modal fade" id="new-admin-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" ng-show="organizationCtrl.savingStates['new-admin']">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        Mengirim undangan...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-admin']">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">Tambah koordinator untuk {{organizationCtrl.selected.Name}}</h4>
@@ -248,12 +255,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <div ng-show="!organizationCtrl.savingStates['new-admin']">
+                    <div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationAdmin()">Kirim Undangan</button>
-                    </div>
-                    <div ng-show="organizationCtrl.savingStates['new-admin']">
-                        Mengirim undangan...
                     </div>
                 </div>
             </div>
@@ -262,7 +266,14 @@
 
     <div class="modal fade" id="new-volunteer-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" ng-show="organizationCtrl.savingStates['new-volunteer']">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        Mengirim undangan...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-volunteer']">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">Tambah pelapor untuk {{organizationCtrl.selected.Name}}</h4>
@@ -276,12 +287,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <div ng-show="!organizationCtrl.savingStates['new-volunteer']">
+                    <div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationVolunteer()">Kirim Undangan</button>
-                    </div>
-                    <div ng-show="organizationCtrl.savingStates['new-volunteer']">
-                        Mengirim undangan...
                     </div>
                 </div>
             </div>

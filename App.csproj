@@ -236,6 +236,7 @@
     <Compile Include="Models\IDocumentUploadEntry.cs" />
     <Compile Include="Models\InvitationToken.cs" />
     <Compile Include="Models\IAllocation.cs" />
+    <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\Views\NationalAddRecapitulation.cs" />
     <Compile Include="Models\Views\NationalBhprRecapitulation.cs" />
     <Compile Include="Models\NationalBhprAllocation.cs" />

@@ -88,6 +88,18 @@ namespace App.Controllers.Services
             return userViewModel;
         }
 
+        public UserViewModel Convert(User user)
+        {
+            var roles = UserManager.GetRoles(user.Id);
+            UserViewModel userViewModel = new UserViewModel() 
+            { 
+                UserName = user.UserName, 
+                Roles = roles.ToList(),
+                Scopes = GetScopes(user.Id)
+            };
+            return userViewModel;
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public void Logout()

@@ -10,14 +10,17 @@ using System.Web;
 using System.Web.Http;
 using System.Net.Http;
 using System.Net;
+using App.Controllers.Services;
 
 namespace App.Controllers.Models
 {
     public class OrganizationController : BaseController<Organization, long>
     {
-        public OrganizationController(DB dbContext)
+        private UserController userController;
+        public OrganizationController(DB dbContext, UserController userController)
             : base(dbContext)
         {
+            this.userController = userController;
             dbContext.Configuration.ProxyCreationEnabled = false;
         }
         protected override IQueryable<Organization> ApplyQuery(IQueryable<Organization> query)
@@ -37,7 +40,7 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles = Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
-        public User AddOrgAdmin(long id, String email)
+        public UserViewModel AddOrgAdmin(long id, String email)
         {
             var org = dbSet.Find(id);
             var roles = new List<string>{Role.VOLUNTEER_ALLOCATION, Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
@@ -46,19 +49,19 @@ namespace App.Controllers.Models
             User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
             var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>{national});
             new UserMailer().Invitation(token).Deliver();
-            return token.User;
+            return userController.Convert(token.User);
         }
 
         [HttpPost]
         [Authorize(Roles = Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
-        public User AddOrgVolunteer(long id, String email)
+        public UserViewModel AddOrgVolunteer(long id, String email)
         {
             var org = dbSet.Find(id);
             var roles = new List<string>{ Role.VOLUNTEER};
             User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
             var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>());
             new UserMailer().Invitation(token).Deliver();
-            return token.User;
+            return userController.Convert(token.User);
         }
 
         [HttpPost]

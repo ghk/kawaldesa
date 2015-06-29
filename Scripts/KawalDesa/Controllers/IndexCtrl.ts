@@ -55,6 +55,7 @@ module App.Controllers {
         type = "transfer";
         currentUser: ICurrentUser;
         regionId: string;
+        guessedRegionType: number;
         isPathReplacing = false;
         currentPath = null;
 
@@ -114,6 +115,7 @@ module App.Controllers {
 
             if (regionId == null && !regionKey)
                 regionId = "0";
+            this.guessedRegionType = this.guessType(regionId);
             this.regionId = regionId;
             this.currentPath = path;
         }
@@ -172,6 +174,11 @@ module App.Controllers {
             Controllers.DocumentUploadController.GetActive(type, regionId, "2015p").done(doc => {
                 ctrl.$scope.$apply(() => {
                     ctrl.activeUpload = doc;
+                    if (doc) {
+                        ctrl.newUpload.DocumentName = doc.DocumentName;
+                        ctrl.newUpload.Source = doc.Source;
+                        ctrl.newUpload.Notes = doc.Notes;
+                    }
                 });
             });
         }
@@ -184,12 +191,19 @@ module App.Controllers {
                 safeApply(ctrl.$scope, () => {
                     ctrl.modal('#document-upload-modal', 'hide');
                     ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                    ctrl.$scope.$broadcast("regionChangeSuccess");
                 });
             }).finally(() => {
-                ctrl.$scope.$apply(() => {
+                safeApply(ctrl.$scope, () => {
                     ctrl.newUploadState = false;
                 });
             });;
+        }
+
+        guessType(regionId: string) {
+            if (regionId == "0")
+                return 0;
+            return (regionId.match(/\./g) || []).length + 1;
         }
 
         loadRegion(parentId?: string, parentKey?: string) {

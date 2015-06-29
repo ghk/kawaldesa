@@ -695,7 +695,7 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static AddOrgAdmin(id: number, email: string): JQueryPromise</** App.Models.User **/ any> {
+        static AddOrgAdmin(id: number, email: string): JQueryPromise<App.Models.IUserViewModel> {
 			var res = $.ajax(OrganizationController.ajaxSettings.build({
 			type: 'POST',
 			url: '/api/Organization/AddOrgAdmin?id='+id+'&email='+encodeURI(email)+'',
@@ -703,7 +703,7 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static AddOrgVolunteer(id: number, email: string): JQueryPromise</** App.Models.User **/ any> {
+        static AddOrgVolunteer(id: number, email: string): JQueryPromise<App.Models.IUserViewModel> {
 			var res = $.ajax(OrganizationController.ajaxSettings.build({
 			type: 'POST',
 			url: '/api/Organization/AddOrgVolunteer?id='+id+'&email='+encodeURI(email)+'',
@@ -1207,6 +1207,14 @@ module App.Controllers.Services {
 			var res = $.ajax(UserController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/User/GetCurrentUser',
+				}));
+			   return res;
+	    }
+    
+        static Convert(user: /** App.Models.User **/ any): JQueryPromise<App.Models.IUserViewModel> {
+			var res = $.ajax(UserController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/User/Convert?user='+user+'',
 				}));
 			   return res;
 	    }

@@ -46,7 +46,7 @@ namespace App
             // CSS Bundles
             bundles.Add(new StyleBundle("~/css/libs/bootstrap", 
                 "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
-                .Include("~/Scaffold/Content/bootstrap/bootstrap.css"));
+                .Include("~/Scaffold/Content/bootstrap.min.css"));
 
             bundles.Add(new StyleBundle("~/css/libs/bootstrap-theme", 
                 "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css")
@@ -58,7 +58,7 @@ namespace App
                 .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa-all")
-                .Include("~/Scaffold/Content/bootstrap/bootstrap.css")
+                .Include("~/Scaffold/Content/bootstrap.min.css")
                 .Include("~/Scaffold/Content/fontawesome/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));

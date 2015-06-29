@@ -1,7 +1,13 @@
-﻿<div ng-controller="AddAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'add' && indexCtrl.region.Type < 4">
+﻿<div ng-controller="AddAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'add' && indexCtrl.guessedRegionType < 4">
 
     <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
-        <b>Dana desa</b> adalah dana yang bersumber dari Anggaran Pendapatan dan Belanja Negara (<b>APBN</b>) yang diperuntukkan bagi desa <a href="#" ng-click="showMore=true;" class="btn btn-default btn-xs" ng-show="!showMore">...</a><span ng-show="showMore">yang ditransfer melalui Anggaran Pendapatan dan Belanja Daerah (APBD) kabupaten/kota dan digunakan untuk membiayai penyelenggaraan pemerintahan, pelaksanaan pembangunan, pembinaan kemasyarakatan dan pemberdayaan masyarakat. (Sumber: <a href="#">PP No. 60 tahun 2014</a>, <a href="#">PP No. 22 tahun 2015</a>)</span>
+        <b>Alokasi Dana Desa (ADD)</b>
+        adalah dana untuk desa yang ditetapkan melalui Peraturan Bupati/Walikota
+        <a href="#" ng-click="showMore=true;" class="btn btn-default btn-xs" ng-show="!showMore">selengkapnya...</a>
+        <span ng-show="showMore">
+            yang paling sedikit 10% dari dana perimbangan yang diterima kabupaten/kota dalam anggaran pendapatan dan belanja daerah
+            (Sumber: <a href="#">PP No. 43 tahun 2014</a>)
+        </span>
         <br />
     </div>
 
@@ -56,9 +62,12 @@
             <tbody>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type < 2">
                     <td>
-                        <a href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
+                        <a ng-if="indexCtrl.guessType(entity.RegionId) < 4" href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
+                        <span ng-if="indexCtrl.guessType(entity.RegionId) == 4">
+                            {{entity.RegionName}}
+                        </span>
                     </td>
                     <td class="money"> {{entity.Dbh | number:0}} </td>
                     <td class="money"> {{entity.Dau | number:0}} </td>
@@ -70,9 +79,12 @@
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
                     <td>
-                        <a href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
+                        <a ng-if="indexCtrl.guessType(entity.RegionId) < 4" href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
+                        <span ng-if="indexCtrl.guessType(entity.RegionId) == 4">
+                            {{entity.RegionName}}
+                        </span>
                     </td>
                     <td class="money"> {{entity.BaseAllocation | number:0}}</td>
                     <td class="money"> {{entity.Population | number:0}}</td>
@@ -136,12 +148,8 @@
     <div class="container-fluid well help">
         <ul>
             <li id="help-target">
-                Menurut PP No. 22 tahun 2015 pasal 30 A, pengalokasian anggaran Dana Desa dalam APBN dilakukan secara bertahap, yang dilaksanakan sebagai berikut:
-                <ul>
-                    <li>a. Tahun Anggaran 2015 paling sedikit sebesar 3% (tiga per seratus);</li>
-                    <li>b. Tahun Anggaran 2016 paling sedikit sebesar 6% (enam per seratus);</li>
-                    <li>dan c.Tahun Anggaran 2017 dan seterusnya sebesar 10% (sepuluh per seratus), dari anggaran Transfer ke Daerah.</li>
-                </ul>
+                Menurut PP No. 43 tahun 2015 Pasal 96, ADD = 10% x (Dana Bagi Hasil (DBH) Pajak dan Sumber Daya Alam + Dana Alokasi Umum (DAU) - Dana
+                Alokasi Khusus (DAK))
             </li>
         </ul>
     </div>

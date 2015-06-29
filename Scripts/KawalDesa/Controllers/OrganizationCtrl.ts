@@ -114,8 +114,11 @@ module App.Controllers {
             var ctrl = this;
             this.savingStates["new-admin"] = true;
             Controllers.OrganizationController
-                .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail).done(() => {
-                    ctrl.indexCtrl.modal("#new-admin-modal", "hide");
+                .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail).done(user => {
+                    ctrl.$scope.$apply(() => {
+                        ctrl.orgAdmins.push(user);
+                        ctrl.indexCtrl.modal("#new-admin-modal", "hide");
+                    });
                 }).always(() => {
                     ctrl.$scope.$apply(() => {
                         ctrl.savingStates["new-admin"] = false;
@@ -127,8 +130,11 @@ module App.Controllers {
             var ctrl = this;
             this.savingStates["new-volunteer"] = true;
             Controllers.OrganizationController
-                .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail).done(() => {
-                    ctrl.indexCtrl.modal("#new-volunteer-modal", "hide");
+                .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail).done(user => {
+                    ctrl.$scope.$apply(() => {
+                        ctrl.orgVolunteers.push(user);
+                        ctrl.indexCtrl.modal("#new-volunteer-modal", "hide");
+                    });
                 }).always(() => {
                     ctrl.$scope.$apply(() => {
                         ctrl.savingStates["new-volunteer"] = false;
