@@ -15,26 +15,26 @@ namespace App.Models
     [ExcelFileName("Bagi Hasil Pajak Desa Se Kab")]
     public class RegionalBhprAllocation : BaseEntity, IAllocation
     {
-        [ExcelHeader("No")]
+        [ExcelHeader(15, "No")]
         public string No { get; set; }
 
-        [ExcelHeader("Desa")]
+        [ExcelHeader(35, "Desa")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Alokasi Dasar")]
+        [ExcelHeader(35, "Alokasi Dasar")]
         public decimal? BaseAllocation { get; set; }
 
 
-        [ExcelHeader("PDRD Desa", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader(15, "PDRD Desa", "Alokasi Berdasarkan Formula")]
         public decimal? Pdrd { get; set; }
 
-        [ExcelHeader("Rasio", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader(15, "Rasio", "Alokasi Berdasarkan Formula")]
         public decimal? PdrdRatio { get; set; }
 
-        [ExcelHeader("Alokasi Formula", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader(25, "Alokasi Formula", "Alokasi Berdasarkan Formula")]
         public decimal? FormulaBasedAllocation { get; set; }
 
-        [ExcelHeader("Bagi Hasil Pajak & Retribusi")]
+        [ExcelHeader(25, "Bagi Hasil Pajak & Retribusi")]
         public decimal? Bhpr { get; set; }
 
         [ForeignKey("Region")]

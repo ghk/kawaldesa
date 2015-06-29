@@ -16,41 +16,41 @@
             <thead>
                 <tr ng-if="indexCtrl.region.Type < 2">
                     <th style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Bagi Hasil</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Alokasi Umum</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Alokasi Khusus</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Total ADD</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">% Total ADD / (DBH + DAU - DAK) <a href="#help-target">?</a></th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Jumlah Desa</th>
-                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Rata-rata ADD</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Dana Bagi Hasil</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Dana Alokasi Umum</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Dana Alokasi Khusus</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Total ADD</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">% Total ADD / (DBH + DAU - DAK) <a href="#help-target">?</a></th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Jumlah Desa</th>
+                    <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Rata-rata ADD</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
-                    <th style="vertical-align: middle;" rowspan="3">{{indexCtrl.childName}}</th>
-                    <th style="vertical-align: middle;" class="money" rowspan="3">Alokasi Dasar</th>
+                    <th style="vertical-align: middle; text-align: center;" rowspan="3">{{indexCtrl.childName}}</th>
+                    <th style="vertical-align: middle; text-align: center;" rowspan="3">Alokasi Dasar</th>
                     <th colspan="14" style="text-align: center;">Alokasi Berdasarkan Formula</th>
-                    <th style="vertical-align: middle;" class="money" rowspan="3" class="money">Pagu ADD</th>
+                    <th style="vertical-align: middle; text-align: center;" rowspan="3" class="money">Pagu ADD</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
                     <th style="text-align: center" colspan="3">Penduduk</th>
                     <th style="text-align: center" colspan="3">Penduduk Miskin</th>
                     <th style="text-align: center" colspan="3">Wilayah</th>
                     <th style="text-align: center" colspan="3">IKG</th>
-                    <th class="money" rowspan="2">Total Bobot</th>
-                    <th class="money" rowspan="2">Alokasi Formula</th>
+                    <th style="text-align: center; vertical-align: middle;" rowspan="2">Total Bobot</th>
+                    <th style="text-align: center; vertical-align: middle;" rowspan="2">Alokasi Formula</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
-                    <th class="money">Jumlah</th>
-                    <th class="money">Rasio</th>
-                    <th class="money">Bobot</th>
-                    <th class="money">Jumlah</th>
-                    <th class="money">Rasio</th>
-                    <th class="money">Bobot</th>
-                    <th class="money">Luas</th>
-                    <th class="money">Rasio</th>
-                    <th class="money">Bobot</th>
-                    <th class="money">IKG</th>
-                    <th class="money">Rasio</th>
-                    <th class="money">Bobot</th>
+                    <th style="text-align: center">Jumlah</th>
+                    <th style="text-align: center">Rasio</th>
+                    <th style="text-align: center">Bobot</th>
+                    <th style="text-align: center">Jumlah</th>
+                    <th style="text-align: center">Rasio</th>
+                    <th style="text-align: center">Bobot</th>
+                    <th style="text-align: center">Luas</th>
+                    <th style="text-align: center">Rasio</th>
+                    <th style="text-align: center">Bobot</th>
+                    <th style="text-align: center">IKG</th>
+                    <th style="text-align: center">Rasio</th>
+                    <th style="text-align: center">Bobot</th>
                 </tr>
             </thead>
             <tbody>
@@ -95,14 +95,35 @@
             <tfoot ng-show="entities.length > 0">
                 <tr class="success" ng-if="indexCtrl.region.Type < 2">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.RegionalTransfer | number:0}} </td>
+                    <td class="money"> {{total.Dbh | number:0}} </td>
+                    <td class="money"> {{total.Dau | number:0}} </td>
+                    <td class="money"> {{total.Dak | number:0}} </td>
                     <td class="money"> {{total.Add | number:0}} </td>
-                    <td class="money"> {{total.Add / total.RegionalTransfer * 10 | number:0}}</td>
+                    <td class="money"> {{total.Add / (total.Dbh + total.Dau - total.Dak) * 100 | number:0}}</td>
                     <td class="money"> {{total.TotalDesa | number:0}} </td>
                     <td class="money"> {{total.Add / total.CompletedDesa | number:0}} </td>
                 </tr>
+                <tr class="success" ng-if="indexCtrl.region.Type >= 2">
+                    <td><a href="">Total</a></td>
+                    <td class="money"> {{total.BaseAllocation | number:0}}</td>
+                    <td class="money"> {{total.Population | number:0}}</td>
+                    <td class="money"> {{total.PopulationRatio | number:0}}</td>
+                    <td class="money"> {{total.PopulationWeight | number:0}}</td>
+                    <td class="money"> {{total.PoorPopulation | number:0}}</td>
+                    <td class="money"> {{total.PoorPopulationRatio | number:0}}</td>
+                    <td class="money"> {{total.PoorPopulationWeight | number:0}}</td>
+                    <td class="money"> {{total.Area | number:0}}</td>
+                    <td class="money"> {{total.AreaRatio | number:0}}</td>
+                    <td class="money"> {{total.AreaWeight | number:0}}</td>
+                    <td class="money"> {{total.Ikg | number:0}}</td>
+                    <td class="money"> {{total.IkgRatio | number:0}}</td>
+                    <td class="money"> {{total.IkgWeight | number:0}}</td>
+                    <td class="money"> {{total.TotalWeight | number:0}}</td>
+                    <td class="money"> {{total.FormulaBasedAllocation | number:0}}</td>
+                    <td class="money"> {{total.Add | number:0}}</td>
+                </tr>
             </tfoot>
-
+            </tfoot>
             <tfoot ng-show="entities.length == 0">
                 <tr>
                     <td colspan="17" style="padding: 10px 5px; text-align: center;">Memuat data...</td>

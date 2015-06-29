@@ -18,16 +18,16 @@ namespace App.Models
         [ExcelHeader("No")]
         public string No { get; set; }
 
-        [ExcelHeader("Provinsi/Kabupaten")]
+        [ExcelHeader(35, "Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Pajak Daerah")]
+        [ExcelHeader(25, "Pajak Daerah")]
         public decimal? RegionalTax { get; set; }
 
-        [ExcelHeader("Retribusi Daerah")]
+        [ExcelHeader(25, "Retribusi Daerah")]
         public decimal? RegionalRetribution { get; set; }
 
-        [ExcelHeader("Bagi Hasil Pajak & Retribusi")]
+        [ExcelHeader(25, "Bagi Hasil Pajak & Retribusi")]
         public decimal? Bhpr { get; set; }
 
         [ForeignKey("Region")]

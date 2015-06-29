@@ -25,7 +25,7 @@ namespace App.Models
         public decimal? BaseAllocation { get; set; }
 
 
-        [ExcelHeader("Jumlah Penduduk", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader("Jumlah", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
         public int? Population { get; set; }
 
         [ExcelHeader("Rasio", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
@@ -35,7 +35,7 @@ namespace App.Models
         public decimal? PopulationWeight { get; set; }
 
 
-        [ExcelHeader("Jumlah Penduduk Miskin", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader("Jumlah", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
         public int? PoorPopulation { get; set; }
 
         [ExcelHeader("Rasio", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
@@ -45,7 +45,7 @@ namespace App.Models
         public decimal? PoorPopulationWeight { get; set; }
 
 
-        [ExcelHeader("Luas Wilayah", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader("Luas", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
         public decimal? Area { get; set; }
 
         [ExcelHeader("Rasio", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
@@ -65,7 +65,7 @@ namespace App.Models
         public decimal? IkgWeight { get; set; }
 
 
-        [ExcelHeader("Total Bobot", "Alokasi Berdasarkan Formula")]
+        [ExcelHeader(15, "Total Bobot", "Alokasi Berdasarkan Formula")]
         public decimal? TotalWeight { get; set; }
 
         [ExcelHeader(25, "Alokasi Formula", "Alokasi Berdasarkan Formula")]

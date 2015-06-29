@@ -18,20 +18,20 @@ namespace App.Models
         [ExcelHeader("No")]
         public string No { get; set; }
 
-        [ExcelHeader("Provinsi/Kabupaten")]
+        [ExcelHeader(35, "Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Dana Bagi Hasil")]
+        [ExcelHeader(25, "Dana Bagi Hasil")]
         public decimal? Dbh { get; set; }
 
-        [ExcelHeader("Dana Alokasi Umum")]
+        [ExcelHeader(25, "Dana Alokasi Umum")]
         public decimal? Dau { get; set; }
 
 
-        [ExcelHeader("Dana Alokasi Khusus")]
+        [ExcelHeader(25, "Dana Alokasi Khusus")]
         public decimal? Dak { get; set; }
 
-        [ExcelHeader("ADD")]
+        [ExcelHeader(25, "ADD")]
         public decimal? Add { get; set; }
 
         [ForeignKey("Region")]
