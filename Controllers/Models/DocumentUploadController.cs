@@ -39,6 +39,22 @@ namespace App.Controllers.Models
                     allocation.fkApbdId = dbContext.Set<Apbd>().FirstOrDefault(a => a.fkApbnId == context.Apbn.Id && a.fkRegionId == context.Region.Id).Id;
                 },
             };
+            adapters[DocumentUploadType.NationalAdd] = new NationalDocumentUploadAdapter<NationalAddAllocation>() 
+            { 
+                DbContext = dbContext,
+                Init = (context, allocation) =>
+                {
+                    allocation.fkApbdId = dbContext.Set<Apbd>().FirstOrDefault(a => a.fkApbnId == context.Apbn.Id && a.fkRegionId == allocation.fkRegionId).Id;
+                },
+            };
+            adapters[DocumentUploadType.RegionalAdd] = new NationalDocumentUploadAdapter<RegionalAddAllocation>() 
+            { 
+                DbContext = dbContext,
+                Init = (context, allocation) =>
+                {
+                    allocation.fkApbdId = dbContext.Set<Apbd>().FirstOrDefault(a => a.fkApbnId == context.Apbn.Id && a.fkRegionId == context.Region.Id).Id;
+                },
+            };
         }
         protected override IQueryable<DocumentUpload> ApplyQuery(IQueryable<DocumentUpload> query)
         {

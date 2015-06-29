@@ -21,8 +21,12 @@ namespace App.Models
         [ExcelHeader("Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader("Dana Perimbangan")]
-        public decimal? DanaPerimbangan { get; set; }
+        [ExcelHeader("Dana Bagi Hasil")]
+        public decimal? Dbh { get; set; }
+
+        [ExcelHeader("Dana Alokasi Umum")]
+        public decimal? Dau { get; set; }
+
 
         [ExcelHeader("Dana Alokasi Khusus")]
         public decimal? Dak { get; set; }

@@ -12,7 +12,7 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("Bagi Hasil Pajak Desa Se Kab.xlsx")]
+    [ExcelFileName("Bagi Hasil Pajak Desa Se Kab")]
     public class RegionalBhprAllocation : BaseEntity
     {
         [ExcelHeader("No")]

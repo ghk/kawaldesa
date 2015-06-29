@@ -1,26 +1,34 @@
-﻿<div ng-controller="AddAllocationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'add' && indexCtrl.region.Type < 4">
-    <div class="content-header">
-        Alokasi Dana Desa (ADD) dari APBD
+﻿<div ng-controller="AddAllocationCtrl as allocationCtrl" ng-if="indexCtrl.type == 'add' && indexCtrl.region.Type < 4">
+
+    <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
+        <b>Dana desa</b> adalah dana yang bersumber dari Anggaran Pendapatan dan Belanja Negara (<b>APBN</b>) yang diperuntukkan bagi desa <a href="#" ng-click="showMore=true;" class="btn btn-default btn-xs" ng-show="!showMore">...</a><span ng-show="showMore">yang ditransfer melalui Anggaran Pendapatan dan Belanja Daerah (APBD) kabupaten/kota dan digunakan untuk membiayai penyelenggaraan pemerintahan, pelaksanaan pembangunan, pembinaan kemasyarakatan dan pemberdayaan masyarakat. (Sumber: <a href="#">PP No. 60 tahun 2014</a>, <a href="#">PP No. 22 tahun 2015</a>)</span>
+        <br />
     </div>
+
+    <div class="content-header">
+        Pagu ADD dari APBD-P 2015
+    </div>
+
+    @Html.Partial("DocumentUploadSource")
 
     <div class="table-responsive">
         <table class="table table-condensed table-responsive table-bordered">
             <thead>
                 <tr ng-if="indexCtrl.region.Type < 2">
                     <th style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Dana Perimbangan</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Dana Alokasi Khusus</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Dana Perimbangan - Dana Alokasi Khusus</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Total ADD</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">% Total ADD / (Dana Perimbangan - Dana Alokasi Khusus)</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Jumlah Desa</th>
-                    <th class="money" style="vertical-align: middle; width: 8.3333%;">Rata-rata ADD per Desa</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Bagi Hasil</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Alokasi Umum</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Dana Alokasi Khusus</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Total ADD</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">% Total ADD / (DBH + DAU - DAK) <a href="#help-target">?</a></th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Jumlah Desa</th>
+                    <th class="money" style="width: 8.3333%; vertical-align: middle;">Rata-rata ADD</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
                     <th style="vertical-align: middle;" rowspan="3">{{indexCtrl.childName}}</th>
                     <th style="vertical-align: middle;" class="money" rowspan="3">Alokasi Dasar</th>
                     <th colspan="14" style="text-align: center;">Alokasi Berdasarkan Formula</th>
-                    <th style="vertical-align: middle;" class="money" rowspan="3" class="money" >Pagu ADD</th>
+                    <th style="vertical-align: middle;" class="money" rowspan="3" class="money">Pagu ADD</th>
                 </tr>
                 <tr ng-if="indexCtrl.region.Type >= 2">
                     <th style="text-align: center" colspan="3">Penduduk</th>
@@ -48,66 +56,73 @@
             <tbody>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type < 2">
                     <td>
-                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                        <a href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
                     </td>
-                    <td class="money"> {{entity.BudgetedIncome * 10 | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome * 1 | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome * 9 | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome | number:0}}</td>
-                    <td class="money"> {{10 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome / entity.TotalVillage | number:0}} </td>
+                    <td class="money"> {{entity.Dbh | number:0}} </td>
+                    <td class="money"> {{entity.Dau | number:0}} </td>
+                    <td class="money"> {{entity.Dak | number:0}} </td>
+                    <td class="money"> {{entity.Add | number:0}} </td>
+                    <td class="money"> {{entity.Add / (entity.Dbh + entity.Dau - entity.Dak) * 100 | number:0}}</td>
+                    <td class="money"> {{entity.TotalDesa | number:0}} </td>
+                    <td class="money"> {{entity.Add / entity.CompletedDesa | number:0}} </td>
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">
                     <td>
-                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                        <a href="/add/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
                     </td>
-                    <td class="money"> {{entity.BudgetedIncome  * 0.9| number:0}}</td>
-                    <td class="money"> {{entity.TotalVillage * 100000 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 4 | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage * 1000 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 4 | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage * 100000 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 4 | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage * 100000 | number:0}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 4 | number:2}} </td>
-                    <td class="money"> {{entity.TotalVillage / total.TotalVillage * 12 | number:2}} </td>
-                    <td class="money"> {{entity.BudgetedIncome * 0.1 | number:0}} </td>
-                    <td class="money"> {{entity.BudgetedIncome | number:0}} </td>
+                    <td class="money"> {{entity.BaseAllocation | number:0}}</td>
+                    <td class="money"> {{entity.Population | number:0}}</td>
+                    <td class="money"> {{entity.PopulationRatio | number:0}}</td>
+                    <td class="money"> {{entity.PopulationWeight | number:0}}</td>
+                    <td class="money"> {{entity.PoorPopulation | number:0}}</td>
+                    <td class="money"> {{entity.PoorPopulationRatio | number:0}}</td>
+                    <td class="money"> {{entity.PoorPopulationWeight | number:0}}</td>
+                    <td class="money"> {{entity.Area | number:0}}</td>
+                    <td class="money"> {{entity.AreaRatio | number:0}}</td>
+                    <td class="money"> {{entity.AreaWeight | number:0}}</td>
+                    <td class="money"> {{entity.Ikg | number:0}}</td>
+                    <td class="money"> {{entity.IkgRatio | number:0}}</td>
+                    <td class="money"> {{entity.IkgWeight | number:0}}</td>
+                    <td class="money"> {{entity.TotalWeight | number:0}}</td>
+                    <td class="money"> {{entity.FormulaBasedAllocation | number:0}}</td>
+                    <td class="money"> {{entity.Add | number:0}}</td>
                 </tr>
             </tbody>
-
             <tfoot ng-show="entities.length > 0">
                 <tr class="success" ng-if="indexCtrl.region.Type < 2">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgetedIncome * 10 | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome * 1 | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome * 9 | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome | number:0}}</td>
-                    <td class="money"> {{10 | number:0}} </td>
-                    <td class="money"> {{total.TotalVillage | number:0}} </td>
-                    <td class="money"> {{total.BudgetedIncome / total.TotalVillage | number:0}} </td>
+                    <td class="money"> {{total.RegionalTransfer | number:0}} </td>
+                    <td class="money"> {{total.Add | number:0}} </td>
+                    <td class="money"> {{total.Add / total.RegionalTransfer * 10 | number:0}}</td>
+                    <td class="money"> {{total.TotalDesa | number:0}} </td>
+                    <td class="money"> {{total.Add / total.CompletedDesa | number:0}} </td>
                 </tr>
             </tfoot>
 
             <tfoot ng-show="entities.length == 0">
                 <tr>
-                    <td colspan="6" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
+                    <td colspan="17" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
                 </tr>
             </tfoot>
 
         </table>
     </div>
+
     <div class="container-fluid well help">
         <ul>
+            <li id="help-target">
+                Menurut PP No. 22 tahun 2015 pasal 30 A, pengalokasian anggaran Dana Desa dalam APBN dilakukan secara bertahap, yang dilaksanakan sebagai berikut:
+                <ul>
+                    <li>a. Tahun Anggaran 2015 paling sedikit sebesar 3% (tiga per seratus);</li>
+                    <li>b. Tahun Anggaran 2016 paling sedikit sebesar 6% (enam per seratus);</li>
+                    <li>dan c.Tahun Anggaran 2017 dan seterusnya sebesar 10% (sepuluh per seratus), dari anggaran Transfer ke Daerah.</li>
+                </ul>
+            </li>
         </ul>
     </div>
+
 </div>

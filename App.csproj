@@ -224,6 +224,8 @@
   <ItemGroup>
     <Compile Include="Controllers\Models\DocumentUploadActivator.cs" />
     <Compile Include="Controllers\Models\DocumentUploadController.cs" />
+    <Compile Include="Controllers\Models\NationalAddRecapitulationController.cs" />
+    <Compile Include="Controllers\Models\RegionalAddRecapitulationController.cs" />
     <Compile Include="Controllers\Models\RegionalDdRecapitulationController.cs" />
     <Compile Include="Controllers\Models\OrganizationController.cs" />
     <Compile Include="Controllers\Models\NationalDdRecapitulationController.cs" />
@@ -338,12 +340,13 @@
     <Content Include="Views\KawalDesa\Apbdes.cshtml" />
     <Content Include="Views\KawalDesa\Login.cshtml" />
     <Content Include="Views\KawalDesa\DdAllocation.cshtml" />
-    <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
     <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\Invitation.txt.cshtml" />
     <Content Include="Views\KawalDesa\Organization.cshtml" />
     <Content Include="Views\KawalDesa\User.cshtml" />
+    <Content Include="Views\KawalDesa\DocumentUploadSource.cshtml" />
+    <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -378,7 +381,7 @@
       <DependentUpon>Enums.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BhprAllocationCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAllocationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAlocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\UserCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\OrganizationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DdAllocationCtrl.ts" />

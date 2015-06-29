@@ -471,7 +471,8 @@ module App.Models {
     export interface INationalAddAllocation extends IBaseEntity {
         No: string;
         RegionName: string;
-        DanaPerimbangan: number;
+        Dbh: number;
+        Dau: number;
         Dak: number;
         Add: number;
         fkRegionId: string;
@@ -488,7 +489,8 @@ module App.Models {
         
         No: string;
         RegionName: string;
-        DanaPerimbangan: number;
+        Dbh: number;
+        Dau: number;
         Dak: number;
         Add: number;
         fkRegionId: string;
@@ -503,7 +505,8 @@ module App.Models {
             super(data);
             this.No = data ? data.No : null;
             this.RegionName = data ? data.RegionName : null;
-            this.DanaPerimbangan = data ? data.DanaPerimbangan : null;
+            this.Dbh = data ? data.Dbh : null;
+            this.Dau = data ? data.Dau : null;
             this.Dak = data ? data.Dak : null;
             this.Add = data ? data.Add : null;
             this.fkRegionId = data ? data.fkRegionId : null;
@@ -1121,7 +1124,8 @@ module App.Models.Views {
         ApbnKey: string;
         RegionName: string;
         ParentRegionId: string;
-        DanaPerimbangan: number;
+        Dbh: number;
+        Dau: number;
         Dak: number;
         Add: number;
         TotalDesa: number;
@@ -1136,7 +1140,8 @@ module App.Models.Views {
         ApbnKey: string;
         RegionName: string;
         ParentRegionId: string;
-        DanaPerimbangan: number;
+        Dbh: number;
+        Dau: number;
         Dak: number;
         Add: number;
         TotalDesa: number;
@@ -1148,7 +1153,8 @@ module App.Models.Views {
             this.ApbnKey = data ? data.ApbnKey : null;
             this.RegionName = data ? data.RegionName : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
-            this.DanaPerimbangan = data ? data.DanaPerimbangan : null;
+            this.Dbh = data ? data.Dbh : null;
+            this.Dau = data ? data.Dau : null;
             this.Dak = data ? data.Dak : null;
             this.Add = data ? data.Add : null;
             this.TotalDesa = data ? data.TotalDesa : null;

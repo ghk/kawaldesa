@@ -25,7 +25,9 @@ namespace App.Models.Views
 
         public string ParentRegionId { get; set; }
 
-        public decimal? DanaPerimbangan { get; set; }
+        public decimal? Dbh { get; set; }
+
+        public decimal? Dau { get; set; }
 
         public decimal? Dak { get; set; }
 

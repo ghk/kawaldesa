@@ -30,5 +30,5 @@ select
   rdc.desa_count as total_desa,
   dd.completed_desa as completed_desa
 
-  from national_region_dds dd
+  from national_dd_sums dd
   inner join region_desa_counts rdc on dd.region_id = rdc.id;

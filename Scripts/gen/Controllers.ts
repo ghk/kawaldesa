@@ -392,6 +392,85 @@ module App.Controllers.Models {
 	    }
 	}
     
+    export class BaseNationalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class NationalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.INationalAddRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.INationalAddRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalAddRecapitulation>> {
+			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalAddRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.NationalAddRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.INationalAddRecapitulation> {
+			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/NationalAddRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.NationalAddRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/NationalAddRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenNationalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenNationalAddRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenNationalAddRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalAddRecapitulation>> {
+			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalAddRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenNationalAddRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalAddRecapitulation> {
+			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenNationalAddRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenNationalAddRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenNationalAddRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
     export class BaseNationalDdRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
@@ -590,6 +669,85 @@ module App.Controllers.Models {
 			var res = $.ajax(RealizationController.ajaxSettings.build({
 				type: 'GET',
 				url: '/api/Realization/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class BaseRegionalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+	}
+        
+    export class RegionalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IRegionalAddRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IRegionalAddRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalAddRecapitulation>> {
+			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalAddRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.RegionalAddRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalAddRecapitulation> {
+			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/RegionalAddRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.RegionalAddRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionalAddRecapitulation/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class FrozenRegionalAddRecapitulationController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.Views.IFrozenRegionalAddRecapitulation = null;
+        
+        constructor(data?: App.Models.Views.IFrozenRegionalAddRecapitulation) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>> {
+			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalAddRecapitulation/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.Views.FrozenRegionalAddRecapitulation(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalAddRecapitulation> {
+			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/FrozenRegionalAddRecapitulation/Get/'+id,
+			})).then((model) => new App.Models.Views.FrozenRegionalAddRecapitulation(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/FrozenRegionalAddRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;

@@ -11,11 +11,13 @@ module App.Controllers {
 
     class AddAllocationCtrl {
 
-        static $inject = ["$scope", "$upload"];
+        static $inject = ["$scope"];
 
         indexCtrl: IndexCtrl;
+        uploadDoc = new Models.DocumentUpload();
+        file: any;
 
-        constructor(public $scope, public $upload) {
+        constructor(public $scope) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
@@ -26,6 +28,15 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.type == "add") {
+                if (this.indexCtrl.region.Type <= 1) {
+                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalAdd, "0");
+                } else if (this.indexCtrl.region.Type >= 2) {
+                    var kab = this.indexCtrl.region;
+                    while (kab.Type != 2) {
+                        kab = kab.Parent;
+                    }
+                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.RegionalAdd, kab.Id);
+                }
                 this.getRecapitulations(this.indexCtrl.region.Id);
             }
         }
@@ -35,12 +46,17 @@ module App.Controllers {
             var scope = this.$scope;
             var query = {
                 "SortOrder": "ASC",
-                "ParentId": parentId
+                "fkParentId": parentId
             }
-            var type = Controllers.FrozenAccountRecapitulationController;
+            var type : any = Controllers.FrozenNationalAddRecapitulationController;
             if (this.indexCtrl.currentUser) {
-                // TODO: HUH?
-                type = Controllers.FrozenAccountRecapitulationController;
+                type = Controllers.NationalAddRecapitulationController;
+            }
+            if (this.indexCtrl.region.Type >= 2) {
+                type = Controllers.FrozenRegionalAddRecapitulationController;
+                if (this.indexCtrl.currentUser) {
+                    type = Controllers.RegionalAddRecapitulationController;
+                }
             }
             type.GetAll(query).done((recapitulations) => {
                 scope.$apply(() => {
@@ -49,6 +65,7 @@ module App.Controllers {
                 });
             });
         }
+
 
     }
 

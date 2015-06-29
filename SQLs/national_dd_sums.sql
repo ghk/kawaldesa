@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE VIEW national_region_dds AS 
+﻿CREATE OR REPLACE VIEW national_dd_sums AS 
 SELECT (apbn.key || '-'::text) || r.id::text AS id,
     r.id AS region_id,
     apbn.key AS apbn_key,
@@ -19,5 +19,5 @@ SELECT (apbn.key || '-'::text) || r.id::text AS id,
   GROUP BY r.id, apbn.key, r.name, r.parent_id;
 
 
-ALTER TABLE national_region_dds
+ALTER TABLE national_dd_sums
   OWNER TO postgres;

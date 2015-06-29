@@ -55,5 +55,5 @@ select
   dd.formula_based_allocation as formula_based_allocation,
   dd.dd as dd
 
-  FROM regional_region_dds dd
+  FROM regional_dd_sums dd
      JOIN region_desa_counts rdc ON dd.region_id::text = rdc.id::text;
