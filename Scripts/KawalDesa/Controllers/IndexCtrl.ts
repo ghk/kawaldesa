@@ -101,7 +101,7 @@ module App.Controllers {
                 if (matched[0]) {
                     this.type = matched[0][1] ;
                     if (matched[0][2]) {
-                        regionId = path.replace(matched[0][1], "");
+                        regionId = path.replace(matched[0][0], "");
                     }
                 }
             }

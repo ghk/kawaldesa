@@ -106,7 +106,8 @@ module App.Controllers {
             var scope = this.$scope;
             var query = {
                 "SortOrder": "ASC",
-                "ParentId": parentId
+                "ParentId": parentId,
+                "ApbnKey": "2015p"
             }
             var type = Controllers.FrozenTransferRecapitulationController;
             if (this.indexCtrl.currentUser) {

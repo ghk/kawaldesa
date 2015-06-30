@@ -16,23 +16,23 @@ namespace App.Models.Views
 
         public long ApbnId { get; set; }
 
-        public int ApbnYear { get; set; }
+        public string ApbnKey { get; set; }
 
         public string ParentRegionId { get; set; }
 
         public string RegionName { get; set; }
 
-        public decimal BudgetedApbn { get; set; }
+        public decimal BudgetedDd { get; set; }
 
-        public decimal TransferredApbn { get; set; }
-
-        public decimal AcknowledgedApbn { get; set; }
+        public decimal TransferredDd { get; set; }
 
         public decimal BudgetedAdd { get; set; }
 
         public decimal TransferredAdd { get; set; }
 
-        public decimal AcknowledgedAdd { get; set; }
+        public decimal BudgetedBhpr { get; set; }
+
+        public decimal TransferredBhpr { get; set; }
 
     }
     public class TransferRecapitulation : BaseTransferRecapitulation

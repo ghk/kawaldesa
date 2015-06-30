@@ -19,7 +19,8 @@ namespace App.Controllers.Models
         protected override IQueryable<TRecapitulation> ApplyQuery(IQueryable<TRecapitulation> query)
         {
             var parentId = GetQueryString<string>("ParentId");
-            return query.Where(t => t.ParentRegionId == parentId || t.RegionId == parentId);
+            var apbnKey = GetQueryString<string>("ApbnKey");
+            return query.Where(t => t.ApbnKey == apbnKey && (t.ParentRegionId == parentId || t.RegionId == parentId));
         }
     }
     public class TransferRecapitulationController : BaseTransferRecapitulationController<TransferRecapitulation>

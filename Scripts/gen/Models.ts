@@ -1034,10 +1034,10 @@ module App.Models {
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
         Year: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
         fkDocumentUploadId: number;
         DocumentUpload: App.Models.IDocumentUpload;
-        fkDestinationId: string;
-        Destination: App.Models.IRegion;
     }
     
     export class BaseTransfer extends BaseEntity {
@@ -1049,10 +1049,10 @@ module App.Models {
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
         Year: number;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
         fkDocumentUploadId: number;
         DocumentUpload: App.Models.IDocumentUpload;
-        fkDestinationId: string;
-        Destination: App.Models.IRegion;
         
         constructor(data?: IBaseTransfer) {
             super(data);
@@ -1062,10 +1062,10 @@ module App.Models {
             this.Date = data ? data.Date : null;
             this.IsActivated = data ? data.IsActivated : null;
             this.Year = data ? data.Year : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
             this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
             this.DocumentUpload = data ? data.DocumentUpload : null;
-            this.fkDestinationId = data ? data.fkDestinationId : null;
-            this.Destination = data ? data.Destination : null;
         }
         
     }
@@ -1518,15 +1518,15 @@ module App.Models.Views {
         Id: string;
         RegionId: string;
         ApbnId: number;
-        ApbnYear: number;
+        ApbnKey: string;
         ParentRegionId: string;
         RegionName: string;
-        BudgetedApbn: number;
-        TransferredApbn: number;
-        AcknowledgedApbn: number;
+        BudgetedDd: number;
+        TransferredDd: number;
         BudgetedAdd: number;
         TransferredAdd: number;
-        AcknowledgedAdd: number;
+        BudgetedBhpr: number;
+        TransferredBhpr: number;
     }
     
     export class BaseTransferRecapitulation {
@@ -1535,29 +1535,29 @@ module App.Models.Views {
         Id: string;
         RegionId: string;
         ApbnId: number;
-        ApbnYear: number;
+        ApbnKey: string;
         ParentRegionId: string;
         RegionName: string;
-        BudgetedApbn: number;
-        TransferredApbn: number;
-        AcknowledgedApbn: number;
+        BudgetedDd: number;
+        TransferredDd: number;
         BudgetedAdd: number;
         TransferredAdd: number;
-        AcknowledgedAdd: number;
+        BudgetedBhpr: number;
+        TransferredBhpr: number;
         
         constructor(data?: IBaseTransferRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnId = data ? data.ApbnId : null;
-            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
             this.RegionName = data ? data.RegionName : null;
-            this.BudgetedApbn = data ? data.BudgetedApbn : null;
-            this.TransferredApbn = data ? data.TransferredApbn : null;
-            this.AcknowledgedApbn = data ? data.AcknowledgedApbn : null;
+            this.BudgetedDd = data ? data.BudgetedDd : null;
+            this.TransferredDd = data ? data.TransferredDd : null;
             this.BudgetedAdd = data ? data.BudgetedAdd : null;
             this.TransferredAdd = data ? data.TransferredAdd : null;
-            this.AcknowledgedAdd = data ? data.AcknowledgedAdd : null;
+            this.BudgetedBhpr = data ? data.BudgetedBhpr : null;
+            this.TransferredBhpr = data ? data.TransferredBhpr : null;
         }
         
     }

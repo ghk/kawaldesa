@@ -15,7 +15,7 @@
                     <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
                     <th colspan="3" style="text-align: center; width: 25%;">APBN (Pusat → Desa) <sup><a href="#help-apbn">?</a></sup></th>
                     <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
-                    <th colspan="3" style="text-align: center; width: 25%;">Bagi hasil pajak (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
+                    <th colspan="2" style="text-align: center; width: 25%;">Bagi hasil pajak (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
                 </tr>
                 <tr>
                     <th class="money" style="width: 8.3333%;">Anggaran <sup><a href="#help-anggaran">?</a></sup></th>
@@ -24,9 +24,8 @@
                     <th class="money" style="width: 8.3333%;">Anggaran</th>
                     <th class="money" style="width: 8.3333%;">Target April (40%)</th>
                     <th class="money" style="width: 8.3333%;">Tersalurkan</th>
-                    <th class="money" style="width: 8.3333%;">Anggaran</th>
-                    <th class="money" style="width: 8.3333%;">Target Bulan Ini</th>
-                    <th class="money" style="width: 8.3333%;">Tersalurkan</th>
+                    <th class="money" style="width: 10%;">Anggaran</th>
+                    <th class="money" style="width: 10%;">Tersalurkan</th>
                 </tr>
             </thead>
             <tbody>
@@ -199,59 +198,35 @@
                         </a>
                     </td>
                     <td class="money">
-                        <div style="float:right;">{{entity.BudgetedAPBN | number:0}} </div>
+                        <div style="float:right;">{{entity.BudgetedDd | number:0}} </div>
                     </td>
                     <td class="money">
-                        <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.BudgetedAPBN * 0.4 | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
-                        </span>
-                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.BudgetedAPBN * 0.4 | number:0}}</div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
-                        </a>
+                        <div style="float:right;">{{entity.BudgetedDd * 0.4 | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.AcknowledgedAPBN | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
-                        </span>
-                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.AcknowledgedAPBN | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
-                        </a>
+                        <div style="float:right;">{{entity.TransferredDd | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <div style="float:right;">{{entity.BudgetedADD | number:0}} </div>
+                        <div style="float:right;">{{entity.BudgetedAdd | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.BudgetedADD * 0.4 | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
-                        </span>
-                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.BudgetedADD * 0.4 | number:0}}</div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.TransferredADD)"> </div>
-                        </a>
+                        <div style="float:right;">{{entity.BudgetedAdd * 0.4 | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <span ng-if="indexCtrl.region.Type < 3">
-                            <div style="float:right;">{{entity.AcknowledgedADD | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.AcknowledgedADD)"> </div>
-                        </span>
-                        <a href="#" ng-if="indexCtrl.region.Type == 3" ng-click="recapitulationCtrl.toggleTransactions(entity.RegionID, $event)">
-                            <div style="float:right;">{{entity.AcknowledgedADD | number:0}} </div>
-                            <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedADD, entity.AcknowledgedADD)"> </div>
-                        </a>
+                        <div style="float:right;">{{entity.TransferredAdd | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <div style="float:right;">{{0 | number:0}} </div>
+                        <div style="float:right;">{{entity.BudgetedBhpr | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                     </td>
                     <td class="money">
-                        <div style="float:right;">{{0 | number:0}} </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{0 | number:0}} </div>
+                        <div style="float:right;">{{entity.TransferredBhpr | number:0}} </div>
+                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
                     </td>
                 </tr>
             </tbody>
@@ -259,16 +234,16 @@
             <tfoot ng-show="entities.length > 0">
                 <tr class="success">
                     <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgetedAPBN | number:0}} </td>
-                    <td class="money"> {{total.BudgetedAPBN * 0.4 | number:0}} </td>
-                    <td class="money"> {{total.AcknowledgedAPBN | number:0}} </td>
+                    <td class="money"> {{total.BudgetedDd | number:0}} </td>
+                    <td class="money"> {{total.BudgetedDd * 0.4 | number:0}} </td>
+                    <td class="money"> {{total.TransferredDd | number:0}} </td>
 
-                    <td class="money"> {{total.BudgetedADD | number:0}} </td>
-                    <td class="money"> {{total.BudgetedADD * 0.4 | number:0}} </td>
-                    <td class="money"> {{total.AcknowledgedADD | number:0}} </td>
-                    <td class="money"> {{0 | number:0}} </td>
-                    <td class="money"> {{0 | number:0}} </td>
-                    <td class="money"> {{0 | number:0}} </td>
+                    <td class="money"> {{total.BudgetedAdd | number:0}} </td>
+                    <td class="money"> {{total.BudgetedAdd * 0.4 | number:0}} </td>
+                    <td class="money"> {{total.TransferredAdd | number:0}} </td>
+
+                    <td class="money"> {{total.BudgetedBhpr | number:0}} </td>
+                    <td class="money"> {{total.TransferredBhpr | number:0}} </td>
                 </tr>
             </tfoot>
 
