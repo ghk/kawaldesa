@@ -193,9 +193,12 @@
                 </tr>
                 <tr ng-repeat-end="">
                     <td>
-                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                        <a ng-if="indexCtrl.guessType(entity.RegionId) < 4" href="/p/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
                             {{entity.RegionName}}
                         </a>
+                        <span ng-if="indexCtrl.guessType(entity.RegionId) == 4">
+                            {{entity.RegionName}}
+                        </span>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedDd | number:0}} </div>
