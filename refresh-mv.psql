@@ -1,3 +1,12 @@
-REFRESH MATERIALIZED VIEW CONCURRENTLY dbo."FrozenTransactions";
-REFRESH MATERIALIZED VIEW CONCURRENTLY dbo."FrozenTransferRecapitulations"; 
-REFRESH MATERIALIZED VIEW CONCURRENTLY dbo."FrozenAccountRecapitulations"; 
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_national_dd_recapitulations;
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_regional_dd_recapitulations;
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_national_add_recapitulations;
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_regional_add_recapitulations;
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_national_bhpr_recapitulations;
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_regional_bhpr_recapitulations;
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY region_allocations;
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY frozen_transfer_recapitulations;

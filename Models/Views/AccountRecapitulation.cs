@@ -8,15 +8,15 @@ using System.Web;
 
 namespace App.Models.Views
 {
-    public class BaseAccountRecapitulation : IModel<long>
+    public class BaseAccountRecapitulation : IModel<string>
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public string RegionId { get; set; }
 
         public long ApbnId { get; set; }
 
-        public int ApbnYear { get; set; }
+        public string ApbnKey { get; set; }
 
         public string ParentRegionId { get; set; }
 
@@ -30,17 +30,18 @@ namespace App.Models.Views
 
         public decimal RealizedExpense { get; set; }
 
-        public decimal EmployeeExpense { get; set; }
+        public decimal Recap1Expense { get; set; }
 
-        public decimal GoodsAndServicesExpense { get; set; }
+        public decimal Recap2Expense { get; set; }
 
-        public decimal CapitalExpense { get; set; }
+        public decimal Recap3Expense { get; set; }
 
-        public decimal OthersExpense { get; set; }
+        public decimal Recap4Expense { get; set; }
+
 
         public decimal TotalDesa { get; set; }
 
-        public decimal AccountCompletedDesa { get; set; }
+        public decimal CompletedDesa { get; set; }
 
     }
     public class AccountRecapitulation : BaseAccountRecapitulation

@@ -59,8 +59,7 @@ namespace App.Models
         public const string ORGANIZATION_ADMIN = "org_admin";
         public const string VOLUNTEER = "volunteer";
         public const string VOLUNTEER_ALLOCATION = "volunteer_allocation";
-        public const string VOLUNTEER_APBN = "volunteer_apbn";
-        public const string VOLUNTEER_ADD = "volunteer_add";
+        public const string VOLUNTEER_TRANSFER = "volunteer_transfer";
         public const string VOLUNTEER_DESA = "volunteer_desa";
         public const string VOLUNTEER_ACCOUNT = "volunteer_account";
         public const string VOLUNTEER_REALIZATION = "volunteer_realization";

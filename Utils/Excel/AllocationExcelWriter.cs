@@ -17,12 +17,25 @@ namespace App.Utils.Excel
     {
         public HttpResponseMessage Write(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
         {
+            byte[] output = WriteToBytes(parentRegions, regions, allocations);
+
+            var fileAttr = (ExcelFileNameAttribute) Attribute.GetCustomAttribute(typeof(TAllocation), typeof(ExcelFileNameAttribute));
+            String fileName = fileAttr == null ? typeof(TAllocation).Name : fileAttr.Value; 
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(output) };
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = fileName + ".xlsx"
+            };
+            return result;
+        }
+        public byte[] WriteToBytes(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
+        {
             byte[] output = null;
 
             int startRow = 2;
             int startCol = 2;
-            var fileAttr = (ExcelFileNameAttribute) Attribute.GetCustomAttribute(typeof(TAllocation), typeof(ExcelFileNameAttribute));
-            String fileName = fileAttr == null ? typeof(TAllocation).Name : fileAttr.Value; 
 
             using (var package = new ExcelPackage())
             {
@@ -78,13 +91,7 @@ namespace App.Utils.Excel
                 output = stream.ToArray();
             }
 
-            var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(output) };
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = fileName + ".xlsx"
-            };
-            return result;
+            return output;
         }
         private void WriteGroupRow(ExcelWorksheet worksheet, String no, int row, int startCol, ExcelHeaders headers, Region region)
         {

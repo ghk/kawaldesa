@@ -8,7 +8,7 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class BaseAccountRecapitulationController<TRecapitulation> : ReadOnlyController<TRecapitulation, long>
+    public class BaseAccountRecapitulationController<TRecapitulation> : ReadOnlyController<TRecapitulation, string>
         where TRecapitulation: BaseAccountRecapitulation, new()
     {
         public BaseAccountRecapitulationController(DB dbContext)

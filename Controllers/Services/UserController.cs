@@ -279,7 +279,7 @@ namespace App.Controllers.Services
         [Authorize(Roles=Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
         public virtual void UpdateVolunteerRoles(String id, [FromBody] List<String> roleNames)
         {
-            var allowedRoles = new String[]{Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
+            var allowedRoles = new String[]{ Role.VOLUNTEER_TRANSFER, Role.VOLUNTEER_DESA, 
             Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION};
 
             var user = UserManager.FindById(id);

@@ -41,10 +41,24 @@ namespace App.Models
         {
             get
             {
-                var root = HttpContext.Current.Server.MapPath("~/Content/files");
+                String root = null;
+                if (HttpContext.Current != null)
+                    root = HttpContext.Current.Server.MapPath("~/Content/files");
+                else
+                    root = MapPath("~/Content/files");
                 Directory.CreateDirectory(root);
                 return Path.Combine(root, RelativeFileName);
             }
+        }
+
+        private string MapPath(string seedFile)
+        {
+
+            var absolutePath = new Uri(AppDomain.CurrentDomain.BaseDirectory).LocalPath;
+            var directoryName = Path.GetDirectoryName(absolutePath);
+            var path = Path.Combine(directoryName, ".." + seedFile.TrimStart('~').Replace('/', '\\'));
+
+            return path;
         }
     }
 }

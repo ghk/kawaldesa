@@ -57,10 +57,7 @@ namespace App.Controllers.Models
                 string roleRequired = null;
                 if (actor.Type == RegionType.NASIONAL || actor.Type == RegionType.KABUPATEN)
                 {
-                    if (source.Type == RegionType.NASIONAL && destination.Type == RegionType.DESA)
-                        roleRequired = Role.VOLUNTEER_APBN;
-                    if (source.Type == RegionType.KABUPATEN && destination.Type == RegionType.DESA)
-                        roleRequired = Role.VOLUNTEER_ADD;
+                    roleRequired = Role.VOLUNTEER_TRANSFER;
                 }
                 else if (actor.Type == RegionType.DESA)
                 {

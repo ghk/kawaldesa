@@ -199,37 +199,55 @@ namespace App.Controllers
                     var user = db.Users.FirstOrDefault(u => u.FacebookId == facebookID && u.IsActive);
                     if(invitationToken != null)
                     {
-                        invitationToken.IsUsed = true;
-                        db.Entry(invitationToken).State = EntityState.Modified;
-                        if (user != null)
+                        using (var tx = db.Database.BeginTransaction())
                         {
-                            user.IsADuplicate = true;
-                            user.IsActive = false;
-                            user.UserName = "inactive"+user.Id.Replace("-", "");
-                            db.Entry(user).State = EntityState.Modified;
-                        }
-                        user = invitationToken.User;
-                        user.IsActive = true;
-                        user.FacebookId = facebookID;
-                        user.Name = name;
+                            invitationToken.IsUsed = true;
+                            db.Entry(invitationToken).State = EntityState.Modified;
+                            if (user != null)
+                            {
+                                user.IsADuplicate = true;
+                                user.IsActive = false;
+                                user.UserName = "inactive" + user.Id.Replace("-", "");
+                                db.Entry(user).State = EntityState.Modified;
+                            }
+                            foreach (var documentUpload in db.DocumentUploads.Where(d => d.fkCreatedById == user.Id))
+                            {
+                                documentUpload.fkCreatedById = invitationToken.fkUserId;
+                                db.Entry(documentUpload).State = EntityState.Modified;
+                            }
+                            foreach (var documentUpload in db.DocumentUploads.Where(d => d.fkApprovedById == user.Id))
+                            {
+                                documentUpload.fkApprovedById = invitationToken.fkUserId;
+                                db.Entry(documentUpload).State = EntityState.Modified;
+                            }
+                            user = invitationToken.User;
+                            user.IsActive = true;
+                            user.FacebookId = facebookID;
+                            user.Name = name;
 
-                        db.SaveChanges();
+                            db.SaveChanges();
+                            tx.Commit();
+                        }
                     }
 
                     if (user == null)
                     {
-                        var userManager = new UserManager<User>(new CUserStore<User>(db));
-                        user = new User
+                        using (var tx = db.Database.BeginTransaction())
                         {
-                            FacebookId = facebookID,
-                            Name = name,
-                            IsActive = true,
-                            UserName = "fb" + facebookID,
-                            Id = Guid.NewGuid().ToString(),
-                            FacebookIsVerified = isVerified
-                        };
-                        var newUser = userManager.Create(user);
-                        userManager.AddToRole(user.Id, Role.VOLUNTEER);
+                            var userManager = new UserManager<User>(new CUserStore<User>(db));
+                            user = new User
+                            {
+                                FacebookId = facebookID,
+                                Name = name,
+                                IsActive = true,
+                                UserName = "fb" + facebookID,
+                                Id = Guid.NewGuid().ToString(),
+                                FacebookIsVerified = isVerified
+                            };
+                            var newUser = userManager.Create(user);
+                            userManager.AddToRole(user.Id, Role.VOLUNTEER);
+                            tx.Commit();
+                        }
                     }
 
                     Session[USERID_KEY] = user.Id;

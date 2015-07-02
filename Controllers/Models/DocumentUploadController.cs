@@ -94,6 +94,8 @@ namespace App.Controllers.Models
             if (!string.IsNullOrEmpty(createdById))
                 query = query.Where(r => r.fkCreatedById == createdById);
 
+            query = query.OrderByDescending(o => o.DateCreated).Take(20);
+
             return query;
         }
 
@@ -124,7 +126,102 @@ namespace App.Controllers.Models
             if (context.Region.Type != RegionType.NASIONAL && context.Region.Type != RegionType.KABUPATEN)
                 throw new ApplicationException("only allowed to upload on nasional or kabupaten");
 
-            adapters[t].Upload(multipart, context);
+            using (var tx = dbContext.Database.BeginTransaction())
+            {
+                adapters[t].Upload(multipart, context);
+                tx.Commit();
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles=Role.ADMIN)]
+        public void GenerateDanaDesaKabs(string apbnKey)
+        {
+            if (!HttpContext.Current.IsDebuggingEnabled)
+                throw new ApplicationException("this is a debug only feature");
+
+            GenDanaDesaKab(dbContext, apbnKey);
+        }
+
+        public static void GenDanaDesaKab(DbContext dbContext, String apbnKey)
+        {
+            var kabs = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
+            var existing = dbContext.Set<DocumentUpload>().Where(r => r.Type == DocumentUploadType.RegionalDd && r.ApbnKey == apbnKey && r.IsActivated);
+            var existingIds = new HashSet<string>(existing.Select(e => e.fkRegionId));
+            kabs = kabs.Where(k => !existingIds.Contains(k.Id)).ToList();
+            var apbn = dbContext.Set<Apbn>().First(a => a.Key == apbnKey);
+            int i = 0;
+            foreach(var kab in kabs)
+            {
+                String log = String.Format("kab {0} - {1} of {2}", kab.Name, i, kabs.Count);
+                File.AppendAllLines("D:\\Work\\kawaldesa.log", new String[]{log});
+                var apbd = dbContext.Set<Apbd>().First(a => a.fkApbnId == apbn.Id && a.fkRegionId == kab.Id);
+                var nationalAlloc = dbContext.Set<NationalDdAllocation>().FirstOrDefault(r => r.IsActivated && r.fkRegionId == kab.Id && r.fkApbnId == apbn.Id);
+                if(nationalAlloc != null)
+                {
+                    var nationalDoc = dbContext.Set<DocumentUpload>().First(d => d.Id == nationalAlloc.fkDocumentUploadId);
+                    GenDanaDesaKab(dbContext, apbd, kab, nationalAlloc, nationalDoc);
+                }
+                i++;
+            }
+        }
+
+
+        private static void GenDanaDesaKab(DbContext dbContext, Apbd apbd, Region region, NationalDdAllocation nationalAlloc, DocumentUpload nationalDoc)
+        {
+            var regions = dbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && !r.IsKelurahan && r.Parent.fkParentId == region.Id).ToList();
+            var parentRegions = dbContext.Set<Region>().Where(r => r.Type == RegionType.KECAMATAN && r.fkParentId == region.Id).ToList();
+
+            if(regions.Count == 0)
+                return;
+
+            decimal total = nationalAlloc.Dd ?? 0;
+            decimal amountPerDes = total * 9 / (regions.Count * 10);
+            var regionAllocs = new List<RegionalDdAllocation>();
+            foreach(var child in regions)
+            {
+                var regionAlloc = new RegionalDdAllocation();
+                regionAlloc.fkApbdId = apbd.Id;
+                regionAlloc.fkRegionId = child.Id;
+                regionAlloc.No = child.Id;
+                regionAlloc.RegionName = child.Name;
+                regionAlloc.BaseAllocation = amountPerDes;
+                regionAlloc.Dd = amountPerDes;
+                regionAllocs.Add(regionAlloc);
+            }
+            var fileBytes = new AllocationExcelWriter<RegionalDdAllocation>().WriteToBytes(parentRegions, regions, regionAllocs);
+
+            var blob = new Blob();
+            blob.Name = "Alokasi.xlsx";
+            dbContext.Set<Blob>().Add(blob);
+            dbContext.SaveChanges();
+            File.WriteAllBytes(blob.FilePath, fileBytes);
+
+            DocumentUpload upload = new DocumentUpload();
+            upload.fkCreatedById = nationalDoc.fkCreatedById;
+            upload.fkOrganizationId = nationalDoc.fkOrganizationId;
+            upload.DateCreated = DateTime.Now;
+            upload.DateActivated = DateTime.Now;
+            upload.Type = DocumentUploadType.RegionalDd;
+            upload.ApbnKey = nationalDoc.ApbnKey;
+            upload.fkRegionId = region.Id;
+            upload.Source = nationalDoc.Source;
+            upload.Notes = "Alokasi Dasar 90%";
+            upload.DocumentName = "Alokasi Dasar 90% APBN-P 2015";
+            upload.FileName = blob.RelativeFileName;
+            upload.fkFileId = blob.Id;
+            dbContext.Set<DocumentUpload>().Add(upload);
+            dbContext.SaveChanges();
+
+
+            foreach(var regionAlloc in regionAllocs)
+            {
+                regionAlloc.fkDocumentUploadId = upload.Id;
+                dbContext.Set<RegionalDdAllocation>().Add(regionAlloc);
+            }
+            dbContext.SaveChanges();
+
+            new DocumentUploadActivator<RegionalDdAllocation>().Activate(dbContext, upload);
         }
 
         public interface IDocumentUploadAdapter

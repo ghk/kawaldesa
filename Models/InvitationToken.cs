@@ -17,6 +17,7 @@ namespace App.Models
 {
     public class InvitationToken : BaseEntity
     {
+        [Index(IsUnique=true)]
         public string Token { get; set; }
         public bool IsUsed { get; set; }
 
@@ -35,8 +36,15 @@ namespace App.Models
             var UserManager = new UserManager<User>(UserStore);
             var RoleManager = new RoleManager<Role>(new CRoleStore<Role>(db));
 
+
             InvitationToken result = new InvitationToken();
-            result.Token = GenerateToken();
+            while(result.Token == null)
+            {
+                var token = GenerateToken();
+                var exists = db.Set<InvitationToken>().Any(i => i.Token == token);
+                if (!exists)
+                    result.Token = token;
+            }
             User user = new User();
             user.Email = email;
             user.UserName = email;
@@ -44,7 +52,9 @@ namespace App.Models
             user.Id = Guid.NewGuid().ToString();
             user.Organization = organization;
 
-            UserManager.Create(user);
+            var userRes = UserManager.Create(user);
+            if (!userRes.Succeeded)
+                throw new ApplicationException(userRes.Errors.First());
 
             result.User = user;
             result.fkInviterId = inviter.Id;
@@ -76,13 +86,14 @@ namespace App.Models
 
         public static string GenerateToken()
         {
-            int maxSize = 20;
+            int maxSize = 30;
             char[] chars = new char[62];
             chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
             byte[] data = new byte[1];
             using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
             {
+                //TODO: why is this stackoverflow's code generate bytes twice?
                 crypto.GetNonZeroBytes(data);
                 data = new byte[maxSize];
                 crypto.GetNonZeroBytes(data);

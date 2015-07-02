@@ -121,6 +121,16 @@ module App.Controllers {
         }
 
         changeType(type, $event) {
+
+            for (var i = 0, len = ROUTES.length; i < len; i++) {
+                var route = ROUTES[i];
+                var useRegionId = route[2];
+                var routeType = route[1];
+                if (this.type == routeType && !useRegionId) {
+                    return;
+                }
+            }
+
             if (this.type != 'dashboard') {
                 $event.preventDefault();
                 var matched : any[] = ROUTES.filter(r => r[1] == type);

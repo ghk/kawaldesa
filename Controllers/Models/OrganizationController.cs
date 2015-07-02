@@ -42,26 +42,36 @@ namespace App.Controllers.Models
         [Authorize(Roles = Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
         public UserViewModel AddOrgAdmin(long id, String email)
         {
-            var org = dbSet.Find(id);
-            var roles = new List<string>{Role.VOLUNTEER_ALLOCATION, Role.VOLUNTEER_ADD, Role.VOLUNTEER_APBN, Role.VOLUNTEER_DESA, 
-            Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN, Role.VOLUNTEER};
-            var national = dbContext.Set<Region>().Find("0");
-            User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
-            var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>{national});
-            new UserMailer().Invitation(token).Deliver();
-            return userController.Convert(token.User);
+            using (var tx = dbContext.Database.BeginTransaction())
+            {
+                var org = dbSet.Find(id);
+                var roles = new List<string>{Role.VOLUNTEER_ALLOCATION,  Role.VOLUNTEER_TRANSFER, Role.VOLUNTEER_DESA, 
+                Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN, Role.VOLUNTEER};
+                var national = dbContext.Set<Region>().Find("0");
+                User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
+                var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>{national});
+                new UserMailer().Invitation(token).Deliver();
+                tx.Commit();
+
+                return userController.Convert(token.User);
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = Role.ADMIN+","+Role.ORGANIZATION_ADMIN)]
         public UserViewModel AddOrgVolunteer(long id, String email)
         {
-            var org = dbSet.Find(id);
-            var roles = new List<string>{ Role.VOLUNTEER};
-            User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
-            var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>());
-            new UserMailer().Invitation(token).Deliver();
-            return userController.Convert(token.User);
+            using (var tx = dbContext.Database.BeginTransaction())
+            {
+                var org = dbSet.Find(id);
+                var roles = new List<string> { Role.VOLUNTEER };
+                User inviter = dbContext.Set<User>().Find(KawalDesaController.GetCurrentUser().Id);
+                var token = InvitationToken.Create(dbContext, email, inviter, org, roles, new List<Region>());
+                new UserMailer().Invitation(token).Deliver();
+                tx.Commit();
+
+                return userController.Convert(token.User);
+            }
         }
 
         [HttpPost]

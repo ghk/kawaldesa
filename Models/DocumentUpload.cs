@@ -27,7 +27,7 @@ namespace App.Models
         public virtual Region Region { get; set; }
 
         [ForeignKey("File")]
-        public long? fkFileId { get; set; }
+        public long fkFileId { get; set; }
         public virtual Blob File { get; set; }
 
         [ForeignKey("CreatedBy")]

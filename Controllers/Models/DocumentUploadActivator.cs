@@ -11,7 +11,7 @@ namespace App.Controllers.Models
     {
         public void Activate(DbContext db, DocumentUpload doc)
         {
-            var previousDoc = db.Set<DocumentUpload>().FirstOrDefault(d => d.IsActivated && d.Type == doc.Type && d.ApbnKey == doc.ApbnKey);
+            var previousDoc = db.Set<DocumentUpload>().FirstOrDefault(d => d.IsActivated && d.Type == doc.Type && d.ApbnKey == doc.ApbnKey && d.fkRegionId == doc.fkRegionId);
             if(previousDoc != null)
             {
                 var previousEntries = db.Set<TDocumentUploadEntry>().Where(d => d.fkDocumentUploadId == previousDoc.Id);

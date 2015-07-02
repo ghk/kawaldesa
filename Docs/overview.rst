@@ -1,15 +1,21 @@
 kawaldesa.org
 ===================================
 
-**Dana Desa**. Berpotensi besar dalam membangun Indonesia. Bila efektif dan efisien, dampak Dana Desa langsung dirasakan oleh setiap lini masyarakat. 
+**Dana Desa**. Peningkatan besarnya dana desa berpotensi besar dalam membangun Indonesia. 
 
 **Crowd Sourcing**. Penyelesaian pekerjaan dengan menggunakan masyarakat/publik sebagai sumber dayanya.
 
-**kawaldesa.org** . Upaya pengawalan dana desa oleh masyarakat agar penyaluran dan realisasinya efektif dan efisien, sehingga dampaknya bisa dirasakan kembali ke masyarakat
+**kawaldesa.org** . Upaya pengawalan dana desa oleh masyarakat agar alokasi, penyaluran dan realisasinya efektif dan efisien, sehingga dampaknya bisa dirasakan kembali ke masyarakat
 
 
 Crowdsourcing pengawalan dana desa
 -----------------------------------
+
+Pengawalan dana desa di kawaldesa.org meliputi:
+
+* Proses alokasi & penganggaran dana desa
+* Proses penyaluran dana desa dari Pusat atau Kabupaten/Kota ke Desa.
+* Realisasi APBDes oleh pemerintah desa.
 
 .. image:: images/pengawalan.png
    :scale: 50 %
@@ -18,6 +24,8 @@ Crowdsourcing pengawalan dana desa
 
 Pengawalan Alokasi Dana Desa
 -----------------------------------
+Pembuatan anggaran dana desa dilakukan oleh pemerintah pusat & daerah,
+kawaldesa.org menyimpan dan menampilkan anggaran dana desa yang dibuat pemerintah pusat & daerah tersebut
 
 Pengawalan Penyaluran Dana Desa
 -----------------------------------

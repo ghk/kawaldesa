@@ -1,5 +1,6 @@
 namespace App.Migrations
 {
+    using App.Controllers.Models;
     using App.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -33,7 +34,7 @@ namespace App.Migrations
 
             var roleNames = new string[]{
                 Role.ADMIN,
-                Role.VOLUNTEER, Role.VOLUNTEER_APBN, Role.VOLUNTEER_ADD, Role.VOLUNTEER_DESA, 
+                Role.VOLUNTEER, Role.VOLUNTEER_TRANSFER,  Role.VOLUNTEER_DESA, 
                 Role.VOLUNTEER_ACCOUNT, Role.VOLUNTEER_REALIZATION, Role.ORGANIZATION_ADMIN,
                 Role.VOLUNTEER_ALLOCATION
             };
@@ -85,6 +86,8 @@ namespace App.Migrations
                     IsPerubahan = true,
                 });
             }
+
+            //DocumentUploadController.GenDanaDesaKab(context, "2015p");
 
             base.Seed(context);
 
