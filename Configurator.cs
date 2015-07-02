@@ -53,7 +53,7 @@ namespace App
                 .Include("~/Scaffold/Content/bootstrap-theme.min.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa")
-                .Include("~/Scaffold/Content/fontawesome/fontawesome.css")
+                .Include("~/Scaffold/Content/fontawesome/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 

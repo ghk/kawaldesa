@@ -238,3 +238,7 @@ p.subtext {
     background-color: rgb(222, 230, 241);
 
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

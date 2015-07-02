@@ -16,7 +16,7 @@
     @Scripts.Render("~/js/kawaldesa-all")
 
 </head>
-<body ng-controller="IndexCtrl as indexCtrl">
+<body ng-controller="IndexCtrl as indexCtrl" ng-cloak class="ng-cloak">
     <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -67,7 +67,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/u/{{indexCtrl.currentUser.Id}}">Profil</a></li>
+                            <li><a href="/u/{{indexCtrl.currentUser.ID}}">Profil</a></li>
                             <li ng-show="{{indexCtrl.currentUser.fkOrganizationId}}"><a href="/orgs/{{indexCtrl.currentUser.fkOrganizationId}}">Organisasi</a></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>
