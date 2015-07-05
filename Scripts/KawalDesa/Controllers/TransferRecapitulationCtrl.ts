@@ -23,11 +23,9 @@ module App.Controllers {
         constructor(public $scope, public $upload) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
-            $scope.$on('regionChangeSuccess', function () {
-                ctrl.onRegionChanged();
-            });
             $scope.$on('regionChangeBefore', function () {
                 $scope.entities = [];
+                ctrl.onRegionChanged();
             });
         }
 
@@ -38,7 +36,7 @@ module App.Controllers {
                 this.formErrors = {};
                 this.formSavingStates = {};
                 this.transactions = {};
-                this.getRecapitulations(this.indexCtrl.region.Id);
+                this.getRecapitulations(this.indexCtrl.regionId);
             }
         }
 

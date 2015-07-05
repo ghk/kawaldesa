@@ -110,14 +110,19 @@ module App.Controllers {
                 regionKey = path.substring(1);
             }
 
+            this.guessedRegionType = this.guessType(regionId);
+            this.regionId = regionId;
+
             if(regionId != null || regionKey)
                 this.loadRegion(regionId, regionKey);
-
             if (regionId == null && !regionKey)
                 regionId = "0";
+
             this.guessedRegionType = this.guessType(regionId);
             this.regionId = regionId;
             this.currentPath = path;
+
+
         }
 
         changeType(type, $event) {
@@ -141,7 +146,6 @@ module App.Controllers {
 
         changeRegion(regionId, $event) {
             $event.preventDefault();
-            this.$scope.$broadcast("regionChangeBefore");
             var type = this.type;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
             var path = matched[0][0] + regionId;
@@ -217,6 +221,11 @@ module App.Controllers {
         }
 
         loadRegion(parentId?: string, parentKey?: string) {
+            setTimeout(() => {
+                ctrl.$scope.$apply(() => {
+                this.$scope.$broadcast("regionChangeBefore");
+                });
+            }, 0);
             var ctrl = this;
 
             this.regionTree = [];

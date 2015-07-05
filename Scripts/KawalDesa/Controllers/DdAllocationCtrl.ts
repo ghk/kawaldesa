@@ -21,23 +21,23 @@ module App.Controllers {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
-            $scope.$on('regionChangeSuccess', function () {
+            $scope.$on('regionChangeBefore', function () {
                 ctrl.onRegionChanged();
             });
         }
 
         onRegionChanged() {
             if (this.indexCtrl.type == "dd") {
-                if (this.indexCtrl.region.Type <= 1) {
+                if (this.indexCtrl.guessedRegionType <= 1) {
                     this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalDd, "0");
-                } else if (this.indexCtrl.region.Type >= 2) {
-                    var kab = this.indexCtrl.region;
-                    while (kab.Type != 2) {
-                        kab = kab.Parent;
-                    }
-                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.RegionalDd, kab.Id);
+                } else if (this.indexCtrl.guessedRegionType >= 2) {
+                    var kabId = this.indexCtrl.regionId;
+                    var ids = this.indexCtrl.regionId.split(".");
+                    if (ids.length > 2)
+                        kabId = ids[0] + "." + ids[1];
+                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.RegionalDd, kabId);
                 }
-                this.getRecapitulations(this.indexCtrl.region.Id);
+                this.getRecapitulations(this.indexCtrl.regionId);
             }
         }
 
@@ -52,7 +52,7 @@ module App.Controllers {
             if (this.indexCtrl.currentUser) {
                 type = Controllers.NationalDdRecapitulationController;
             }
-            if (this.indexCtrl.region.Type >= 2) {
+            if (this.indexCtrl.guessedRegionType >= 2) {
                 type = Controllers.FrozenRegionalDdRecapitulationController;
                 if (this.indexCtrl.currentUser) {
                     type = Controllers.RegionalDdRecapitulationController;
