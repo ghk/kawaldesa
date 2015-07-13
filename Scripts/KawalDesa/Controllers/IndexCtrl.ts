@@ -217,6 +217,8 @@ module App.Controllers {
         guessType(regionId: string) {
             if (regionId == "0")
                 return 0;
+            if (!regionId)
+                return null;
             return (regionId.match(/\./g) || []).length + 1;
         }
 
