@@ -5,6 +5,7 @@ appSettings.config
 /Content/files/
 /App_Data/
 /Docs/_build/
+.vs/
 
 # Created by http://www.gitignore.io
 # Scaffold Content

@@ -10,6 +10,7 @@ namespace App.Migrations
     {
         public override void Up()
         {
+            /*
             Sql(File.ReadAllText(MapPath(String.Format("~/SQLs/region_parents.sql"))));
             Sql(File.ReadAllText(MapPath(String.Format("~/SQLs/region_desa_counts.sql"))));
 
@@ -36,6 +37,7 @@ namespace App.Migrations
             Sql(File.ReadAllText(MapPath(String.Format("~/SQLs/transfer/frozen_transfers.sql"))));
             Sql(File.ReadAllText(MapPath(String.Format("~/SQLs/transfer/transfer_recapitulations.sql"))));
             Sql(File.ReadAllText(MapPath(String.Format("~/SQLs/transfer/frozen_transfer_recapitulations.sql"))));
+            */
 
         }
         
