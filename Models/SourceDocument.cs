@@ -6,20 +6,13 @@ using System.Web;
 
 namespace App.Models
 {
-    public class DocumentUpload : BaseEntity
+    public class SourceDocument : BaseEntity
     {
         public String FileName { get; set; }
-        public String DocumentName { get; set; }
+        public String OriginalFileName { get; set; }
         public DocumentUploadType Type { get; set; }
-        public String Notes { get; set; }
+
         public String ApbnKey { get; set; }
-
-        public bool IsActivated { get; set; }
-        public bool IsApproved { get; set; }
-
-        public DateTime DateApproved { get; set; }
-        public DateTime DateActivated { get; set; }
-        public DateTime DateDeactivated { get; set; }
 
         [ForeignKey("Region")]
         public String fkRegionId { get; set; }

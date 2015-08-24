@@ -231,11 +231,13 @@
     <Compile Include="Controllers\Models\RegionalDdRecapitulationController.cs" />
     <Compile Include="Controllers\Models\OrganizationController.cs" />
     <Compile Include="Controllers\Models\NationalDdRecapitulationController.cs" />
+    <Compile Include="Controllers\Models\SourceDocumentController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Migrations\201507131110346_Initial.cs" />
     <Compile Include="Migrations\201507131110346_Initial.Designer.cs">
       <DependentUpon>201507131110346_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\SourceDocument.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\IDocumentUploadEntry.cs" />
     <Compile Include="Models\InvitationToken.cs" />

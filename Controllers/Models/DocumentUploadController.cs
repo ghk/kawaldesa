@@ -205,7 +205,6 @@ namespace App.Controllers.Models
             upload.Type = DocumentUploadType.RegionalDd;
             upload.ApbnKey = nationalDoc.ApbnKey;
             upload.fkRegionId = region.Id;
-            upload.Source = nationalDoc.Source;
             upload.Notes = "Alokasi Dasar 90%";
             upload.DocumentName = "Alokasi Dasar 90% APBN-P 2015";
             upload.FileName = blob.RelativeFileName;

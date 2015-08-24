@@ -30,6 +30,7 @@ namespace App.Models
         public virtual IDbSet<Region> Regions { get; set; }
         public virtual IDbSet<Apbn> Apbns { get; set; }
         public virtual IDbSet<Apbd> Apbds { get; set; }
+        public virtual IDbSet<SourceDocument> SourceDocument { get; set; }
         public virtual IDbSet<DocumentUpload> DocumentUploads { get; set; }
         public virtual IDbSet<NationalDdAllocation> NationalDdAllocations { get; set; }
         public virtual IDbSet<NationalAddAllocation> NationalAddAllocations { get; set; }
