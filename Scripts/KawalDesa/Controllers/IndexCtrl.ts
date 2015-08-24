@@ -163,6 +163,15 @@ module App.Controllers {
             this.$location.path(path);
         }
 
+        onSearchSelect(item, model, label) {
+            console.log(model);
+            var regionId = model.Type == 4 ? model.ParentId : model.Id;
+            var type = this.type;
+            var matched : any[] = ROUTES.filter(r => r[1] == type);
+            var path = matched[0][0] + regionId;
+            this.$location.path(path);
+        }
+
         hasAnyVolunteerRoles() {
             return this.currentUser != null
                 && this.currentUser.Roles.some(r => r.indexOf("volunteer_") != -1);

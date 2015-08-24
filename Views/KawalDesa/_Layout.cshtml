@@ -48,7 +48,7 @@
                         <a href="/r/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav nav-region" style="display: none;">
+                <ul class="nav navbar-nav nav-region" ng-show="!searchShown">
 
                     <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
                         <div class="gt hidden-xs">→</div>
@@ -60,8 +60,8 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" class="btn"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
+                    <li ng-show="!searchShown">
+                        <a href="#" class="btn" ng-click="searchShown=true"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
                         <a style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -98,14 +98,15 @@
                         </li>
                     </ul>
                 </script>
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="input-group" style="width: 400px;">
+                <form class="navbar-form navbar-right" role="search" ng-show="searchShown" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+                    <div class="input-group" style="width: 375px;">
                         <input type="text" ng-model="selectedSearch" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
-                               typeahead="region for region in getRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control">
-                        <div class="input-group-btn">
+                               typeahead="region as region.Name for region in getRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control" typeahead-on-select="indexCtrl.onSearchSelect($item, $model, $value)">
+                        <div class="input-group-btn" style="width: 1%;">
                             <button class="btn btn-primary" type="submit"><span class="fa fa-search"></span>&nbsp;</button>
                         </div>
                     </div>
+                    <a href="#" style="margin: 0 0 0 1em;" ng-click="searchShown=false"><i class="fa fa-times"></i></a>
                 </form>
             </nav>
         </div>
