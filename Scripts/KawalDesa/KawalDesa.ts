@@ -4,7 +4,7 @@
 module App {
 
     export var kawaldesa = angular.module('kawaldesa', [
-        'angularFileUpload'
+        'angularFileUpload', 'ui.bootstrap.typeahead', 'ui.bootstrap.position'
     ]);
 
     kawaldesa.run(['$location', '$rootElement', function ($location, $rootElement) {        
@@ -12,7 +12,10 @@ module App {
     }]);
 
     kawaldesa.config(['$locationProvider', function ($locationProvider) {
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
         $locationProvider.hashPrefix('!');
     }]);
 }

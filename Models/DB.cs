@@ -28,6 +28,7 @@ namespace App.Models
         public virtual IDbSet<UserScope> UserScopes { get; set; }
         public virtual IDbSet<Organization> Organizations { get; set; }
         public virtual IDbSet<Region> Regions { get; set; }
+        public virtual IDbSet<RegionSearchResult> RegionSearchResults { get; set; }
         public virtual IDbSet<Apbn> Apbns { get; set; }
         public virtual IDbSet<Apbd> Apbds { get; set; }
         public virtual IDbSet<SourceDocument> SourceDocument { get; set; }

@@ -28,7 +28,7 @@ module App.Controllers.Models {
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.Views.IAccountRecapitulation> {
+		static Get(id: string): JQueryPromise<App.Models.Views.IAccountRecapitulation> {
 			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/AccountRecapitulation/Get/'+id,
@@ -65,7 +65,7 @@ module App.Controllers.Models {
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.Views.IFrozenAccountRecapitulation> {
+		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenAccountRecapitulation> {
 			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
 			type: 'GET',
 			url: '/api/FrozenAccountRecapitulation/Get/'+id,
@@ -338,6 +338,14 @@ module App.Controllers.Models {
     
         static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
 			var res = multipart.upload('/api/DocumentUpload/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+			   return res;
+	    }
+    
+        static GenerateDanaDesaKabs(apbnKey: string): JQueryPromise<void> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/DocumentUpload/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
+				}));
 			   return res;
 	    }
 	}
@@ -1040,6 +1048,107 @@ module App.Controllers.Models {
 			type: 'POST',
 			url: '/api/Region/UpdateWebsite?regionId='+encodeURI(regionId)+'&regionWebsite='+encodeURI(regionWebsite)+'',
 				}));
+			   return res;
+	    }
+	}
+    
+    export class RegionSearchResultController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.IRegionSearchResult = null;
+        
+        constructor(data?: App.Models.IRegionSearchResult) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRegionSearchResult>> {
+			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionSearchResult/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.RegionSearchResult(model));
+			});
+			return res;
+		}
+
+		static Get(id: string): JQueryPromise<App.Models.IRegionSearchResult> {
+			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/RegionSearchResult/Get/'+id,
+			})).then((model) => new App.Models.RegionSearchResult(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/RegionSearchResult/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
+    export class SourceDocumentController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.ISourceDocument = null;
+        
+        constructor(data?: App.Models.ISourceDocument) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ISourceDocument>> {
+			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/SourceDocument/GetAll',
+				data: query,
+			})).then((models) => {
+				return models.map((model) => new App.Models.SourceDocument(model));
+			});
+			return res;
+		}
+
+		static Get(id: number): JQueryPromise<App.Models.ISourceDocument> {
+			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/SourceDocument/Get/'+id,
+			})).then((model) => new App.Models.SourceDocument(model));
+			return res;
+		}
+
+		static Count(query?: IQuery): JQueryPromise<number> {
+			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
+				type: 'GET',
+				url: '/api/SourceDocument/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		
+		static Save(model: App.Models.ISourceDocument): JQueryPromise<void> {
+			var isNew = model.Id == null;
+            var res = $.ajax(SourceDocumentController.ajaxSettings.build({
+                 type: isNew ? 'POST' : 'PUT',
+				 url: '/api/SourceDocument/'+(isNew ? 'Post' : 'Put'),
+				 data: JSON.stringify(model)
+            })).then((id) => {
+				if(isNew) {
+					model.Id = id;
+				}
+			});
+            return res;
+        }
+
+		static Delete(id: number): JQueryPromise<void> {
+				var res = $.ajax(SourceDocumentController.ajaxSettings.build({
+					type: 'GET',
+					url: '/api/SourceDocument/Delete/'+id,
+				}));
+				return res;
+		}
+	        
+        static Upload(multipart: Scaffold.Multipart, type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): any  {
+			var res = multipart.upload('/api/SourceDocument/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
 			   return res;
 	    }
 	}

@@ -104,6 +104,37 @@ module App.Models {
     }
     
     
+    export interface IRegionSearchResult {
+        Id: string;
+        Name: string;
+        Type: App.Models.RegionType;
+        TypeName: string;
+        ParentId: string;
+        Parent: string;
+    }
+    
+    export class RegionSearchResult {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        Id: string;
+        Name: string;
+        Type: App.Models.RegionType;
+        TypeName: string;
+        ParentId: string;
+        Parent: string;
+        
+        constructor(data?: IRegionSearchResult) {
+            this.Id = data ? data.Id : null;
+            this.Name = data ? data.Name : null;
+            this.Type = data ? data.Type : null;
+            this.TypeName = data ? data.TypeName : null;
+            this.ParentId = data ? data.ParentId : null;
+            this.Parent = data ? data.Parent : null;
+        }
+        
+    }
+    
+    
     export interface IAccount extends IBaseEntity {
         Code: string;
         Name: string;
@@ -325,7 +356,6 @@ module App.Models {
         FileName: string;
         DocumentName: string;
         Type: App.Models.DocumentUploadType;
-        Source: string;
         Notes: string;
         ApbnKey: string;
         IsActivated: boolean;
@@ -351,7 +381,6 @@ module App.Models {
         FileName: string;
         DocumentName: string;
         Type: App.Models.DocumentUploadType;
-        Source: string;
         Notes: string;
         ApbnKey: string;
         IsActivated: boolean;
@@ -375,7 +404,6 @@ module App.Models {
             this.FileName = data ? data.FileName : null;
             this.DocumentName = data ? data.DocumentName : null;
             this.Type = data ? data.Type : null;
-            this.Source = data ? data.Source : null;
             this.Notes = data ? data.Notes : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.IsActivated = data ? data.IsActivated : null;
@@ -928,6 +956,62 @@ module App.Models {
     }
     
     
+    export interface ISourceDocument extends IBaseEntity {
+        FileName: string;
+        OriginalFileName: string;
+        Type: App.Models.DocumentUploadType;
+        ApbnKey: string;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: /** App.Models.User **/ any;
+    }
+    
+    export class SourceDocument extends BaseEntity {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        FileName: string;
+        OriginalFileName: string;
+        Type: App.Models.DocumentUploadType;
+        ApbnKey: string;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: /** App.Models.User **/ any;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: /** App.Models.User **/ any;
+        
+        constructor(data?: ISourceDocument) {
+            super(data);
+            this.FileName = data ? data.FileName : null;
+            this.OriginalFileName = data ? data.OriginalFileName : null;
+            this.Type = data ? data.Type : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.fkFileId = data ? data.fkFileId : null;
+            this.File = data ? data.File : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
+            this.fkOrganizationId = data ? data.fkOrganizationId : null;
+            this.Organization = data ? data.Organization : null;
+            this.fkApprovedById = data ? data.fkApprovedById : null;
+            this.ApprovedBy = data ? data.ApprovedBy : null;
+        }
+        
+    }
+    
+    
     export interface IBaseTransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
@@ -1130,61 +1214,61 @@ module App.Models.Views {
 	import IQuery = Scaffold.IQuery;
     
     export interface IBaseAccountRecapitulation {
-        Id: number;
+        Id: string;
         RegionId: string;
         ApbnId: number;
-        ApbnYear: number;
+        ApbnKey: string;
         ParentRegionId: string;
         RegionName: string;
         BudgetedIncome: number;
         RealizedIncome: number;
         BudgetedExpense: number;
         RealizedExpense: number;
-        EmployeeExpense: number;
-        GoodsAndServicesExpense: number;
-        CapitalExpense: number;
-        OthersExpense: number;
+        Recap1Expense: number;
+        Recap2Expense: number;
+        Recap3Expense: number;
+        Recap4Expense: number;
         TotalDesa: number;
-        AccountCompletedDesa: number;
+        CompletedDesa: number;
     }
     
     export class BaseAccountRecapitulation {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        Id: number;
+        Id: string;
         RegionId: string;
         ApbnId: number;
-        ApbnYear: number;
+        ApbnKey: string;
         ParentRegionId: string;
         RegionName: string;
         BudgetedIncome: number;
         RealizedIncome: number;
         BudgetedExpense: number;
         RealizedExpense: number;
-        EmployeeExpense: number;
-        GoodsAndServicesExpense: number;
-        CapitalExpense: number;
-        OthersExpense: number;
+        Recap1Expense: number;
+        Recap2Expense: number;
+        Recap3Expense: number;
+        Recap4Expense: number;
         TotalDesa: number;
-        AccountCompletedDesa: number;
+        CompletedDesa: number;
         
         constructor(data?: IBaseAccountRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnId = data ? data.ApbnId : null;
-            this.ApbnYear = data ? data.ApbnYear : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
             this.RegionName = data ? data.RegionName : null;
             this.BudgetedIncome = data ? data.BudgetedIncome : null;
             this.RealizedIncome = data ? data.RealizedIncome : null;
             this.BudgetedExpense = data ? data.BudgetedExpense : null;
             this.RealizedExpense = data ? data.RealizedExpense : null;
-            this.EmployeeExpense = data ? data.EmployeeExpense : null;
-            this.GoodsAndServicesExpense = data ? data.GoodsAndServicesExpense : null;
-            this.CapitalExpense = data ? data.CapitalExpense : null;
-            this.OthersExpense = data ? data.OthersExpense : null;
+            this.Recap1Expense = data ? data.Recap1Expense : null;
+            this.Recap2Expense = data ? data.Recap2Expense : null;
+            this.Recap3Expense = data ? data.Recap3Expense : null;
+            this.Recap4Expense = data ? data.Recap4Expense : null;
             this.TotalDesa = data ? data.TotalDesa : null;
-            this.AccountCompletedDesa = data ? data.AccountCompletedDesa : null;
+            this.CompletedDesa = data ? data.CompletedDesa : null;
         }
         
     }

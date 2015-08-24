@@ -48,7 +48,7 @@
                         <a href="/r/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav nav-region">
+                <ul class="nav navbar-nav nav-region" style="display: none;">
 
                     <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
                         <div class="gt hidden-xs">→</div>
@@ -60,6 +60,9 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="btn"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
+                    </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
                         <a style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img ng-src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookID}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
@@ -74,6 +77,36 @@
                     </li>
                     <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>
                 </ul>
+                <script type="text/ng-template" id="searchTemplate.html">
+                    <a style="text-transform:uppercase;">
+                        <div class="pull-left">
+                            <span style="color: #999">{{match.model.TypeName}}</span> <span ng-bind-html="match.model.Name | typeaheadHighlight:query"></span>
+                        </div>
+                        <div ng-if="match.model.Parent" class="pull-right">
+                            <small style="margin-left: 20px; font-size: 65%; line-height: 20px;">{{match.model.Parent}}</small>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </a>
+                </script>
+                <script type="text/ng-template" id="template/typeahead/typeahead-match.html">
+                    <a href tabindex="-1" ng-bind-html="match.label | typeaheadHighlight:query"></a>
+                </script>
+                <script type="text/ng-template" id="template/typeahead/typeahead-popup.html">
+                    <ul class="dropdown-menu" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">
+                        <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{::match.id}}">
+                            <div typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>
+                        </li>
+                    </ul>
+                </script>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="input-group" style="width: 400px;">
+                        <input type="text" ng-model="selectedSearch" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
+                               typeahead="region for region in getRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"><span class="fa fa-search"></span>&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
             </nav>
         </div>
     </header>
@@ -82,7 +115,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <p>
-                Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
+                    Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
                 </p>
             </div>
         </div>

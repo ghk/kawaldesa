@@ -83,6 +83,17 @@ module App.Controllers {
                     ctrl.onLocationChange();
                 ctrl.isPathReplacing = false;
             });
+            var regions = [
+                { Name: "Lorem", Type: "Desa", Parent: {Name: "Joko", Type:"Kabupaten"} },
+                { Name: "Ipsum", Type: "Kabupaten" },
+                { Name: "Dolor", Type: "Desa" },
+                { Name: "Sit", Type: "Propinsi" },
+                { Name: "Amet", Type: "Propinsi" },
+                { Name: "Lomet", Type: "Propinsi" },
+            ];
+            $scope.getRegions = function (keyword) {
+                return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword });
+            }
         }
 
 
@@ -190,7 +201,6 @@ module App.Controllers {
                     ctrl.activeUpload = doc;
                     if (doc) {
                         ctrl.newUpload.DocumentName = doc.DocumentName;
-                        ctrl.newUpload.Source = doc.Source;
                         ctrl.newUpload.Notes = doc.Notes;
                     }
                 });
