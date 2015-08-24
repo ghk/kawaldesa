@@ -1,4 +1,4 @@
-﻿using ActionMailerNext.Implementations.Mandrill;
+﻿using ActionMailerNext.MandrillMailSender;
 using ActionMailerNext.Mvc5;
 using App.Models;
 using System;
@@ -14,7 +14,7 @@ namespace App.Mailers
         public UserMailer()
         {
             //Choosing the Email method (SMTP, Mandrill, etc..)
-            SetMailMethod(MailMethod.Mandrill);
+            //SetMailMethod(MailMethod.Mandrill);
             MailSender = new MandrillMailSender();
         }
 

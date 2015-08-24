@@ -53,20 +53,20 @@ namespace App
                 .Include("~/Scaffold/Content/bootstrap-theme.min.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa")
-                .Include("~/Scaffold/Content/fontawesome/font-awesome.css")
+                .Include("~/Scaffold/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa-all")
                 .Include("~/Scaffold/Content/bootstrap.min.css")
-                .Include("~/Scaffold/Content/fontawesome/font-awesome.css")
+                .Include("~/Scaffold/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
             // Script Bundles
 
             bundles.Add(new ScriptBundle("~/js/libs/jquery", "http://code.jquery.com/jquery-2.1.1.min.js")
-                .Include("~/Scaffold/Scripts/jquery-2.1.1.js"));
+                .Include("~/Scaffold/Scripts/jquery-2.1.4.js"));
 
             bundles.Add(new ScriptBundle("~/js/libs/bootstrap", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
                 .Include("~/Scaffold/Scripts/bootstrap.js"));
@@ -84,7 +84,7 @@ namespace App
                 );
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-all")
-                .Include("~/Scaffold/Scripts/jquery-2.1.1.js")
+                .Include("~/Scaffold/Scripts/jquery-2.1.4.js")
                 .Include("~/Scaffold/Scripts/bootstrap.js")
                 .Include("~/Scaffold/Scripts/angular.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
