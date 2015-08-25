@@ -336,10 +336,10 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetCurrentSheet(fileName: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+        static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): JQueryPromise<string> {
 			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/GetCurrentSheet?fileName='+encodeURI(fileName)+'',
+			url: '/api/DocumentUpload/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }

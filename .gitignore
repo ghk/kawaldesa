@@ -3,6 +3,7 @@ connectionStrings.config
 appSettings.config
 /Content/uploads/
 /Content/files/
+/Content/sheets/
 /App_Data/
 /Docs/_build/
 .vs/

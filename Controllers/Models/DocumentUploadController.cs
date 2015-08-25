@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -118,21 +119,24 @@ namespace App.Controllers.Models
 
         //file name: e.g: DD 2015p 0 Nasional.xlsx
         [HttpGet]
-        public HttpResponseMessage GetCurrentSheet(String fileName)
+        public String GetCurrentSheetUrl(DocumentUploadType type, string regionId, string apbnKey)
         {
-            fileName = fileName.Split('.')[0];
-            var splits = fileName.Split(null);
-            if (splits.Length < 3)
-                throw new ApplicationException("file name can't be splitted to 3 parts");
-            var types = new String[] { "Dd", "Add", "Bhpr" };
-            string type = types.FirstOrDefault(ty => ty.ToLower().Equals(splits[0].ToLower()));
-            if(type == null)
-                throw new ApplicationException("type is not valid: "+splits[0]);
-            var regionType = splits[2] == "0" ? "National" : "Regional";
-            type = regionType + type;
-            DocumentUploadType t = (DocumentUploadType)Enum.Parse(typeof(DocumentUploadType), type, true);
-            var context = new AdapterContext(dbContext, t, splits[2], splits[1]);
-            return adapters[t].GetTemplate(context);
+            var context = new AdapterContext(dbContext, type, regionId, apbnKey);
+            var bytes = adapters[type].GetBytes(context);
+            var region = dbContext.Set<Region>().Find(regionId);
+
+            var typeStr = type.ToString();
+            typeStr = typeStr.Replace("National", "");
+            typeStr = typeStr.Replace("Regional", "");
+            typeStr = typeStr.ToUpper();
+
+            var root = HttpContext.Current.Server.MapPath("~/Content/sheets");
+            Directory.CreateDirectory(root);
+            var safeFileName = typeStr + " " + apbnKey + " " + regionId + " " + region.Name + ".xlsx";
+            File.WriteAllBytes(Path.Combine(root, safeFileName), bytes);
+
+            string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            return fullyQualifiedUrl + "/Content/sheets/" + safeFileName;
         }
 
         [HttpPost]
@@ -245,6 +249,7 @@ namespace App.Controllers.Models
         public interface IDocumentUploadAdapter
         {
             HttpResponseMessage GetTemplate(AdapterContext context);
+            byte[] GetBytes(AdapterContext context);
             void Upload(Multipart<DocumentUpload> multipart, AdapterContext context);
         }
 
@@ -288,6 +293,23 @@ namespace App.Controllers.Models
                 }
                 var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
                 return new AllocationExcelWriter<TAllocation>().Write(parentRegions, regions, allocations);
+            }
+            public byte[] GetBytes(AdapterContext context)
+            {
+                List<Region> regions = null;
+                List<Region> parentRegions = null;
+                if(context.Region.Type == RegionType.NASIONAL)
+                {
+                    regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
+                    parentRegions = DbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
+                }
+                else
+                {
+                    regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && r.Parent.fkParentId == context.Region.Id).ToList();
+                    parentRegions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KECAMATAN && r.fkParentId == context.Region.Id).ToList();
+                }
+                var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
+                return new AllocationExcelWriter<TAllocation>().WriteToBytes(parentRegions, regions, allocations);
             }
 
             public void Upload(Multipart<DocumentUpload> multipart, AdapterContext context)

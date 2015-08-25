@@ -328,6 +328,24 @@ module App.Controllers {
             });
         }
 
+        /* Google Sheet */
+
+        isLoadingUrl = false;
+
+        openGoogleSheet() {
+            if (this.isLoadingUrl)
+                return;
+            var ctrl = this;
+            this.isLoadingUrl = true;
+            Controllers.DocumentUploadController.GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p").done(url => {
+                ctrl.$scope.$apply(() => {
+                    ctrl.isLoadingUrl = false;
+                    window.open("https://docs.google.com/gview?url=" + url, "_blank");
+                });
+            });
+        }
+        /* End Google Sheet*/
+
     }
 
     kawaldesa.controller("IndexCtrl", IndexCtrl);

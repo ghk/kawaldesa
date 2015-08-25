@@ -24,6 +24,9 @@ namespace App.Utils.Excel
 
             var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(output) };
             result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            result.Headers.CacheControl = new CacheControlHeaderValue
+            {
+            };
             return result;
         }
         public byte[] WriteToBytes(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
