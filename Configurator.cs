@@ -161,6 +161,11 @@ namespace App
                 new { controller = "KawalDesa", action = "Index" }
             );
 
+            routes.MapHttpRoute(
+                name: "sheets",
+                routeTemplate: "sheets/{fileName}",
+                defaults: new { controller = "DocumentUpload", action = "GetCurrentSheet" }
+            );
             var route = routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",

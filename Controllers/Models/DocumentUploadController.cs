@@ -116,6 +116,25 @@ namespace App.Controllers.Models
             return adapters[t].GetTemplate(context);
         }
 
+        //file name: e.g: DD 2015p 0 Nasional.xlsx
+        [HttpGet]
+        public HttpResponseMessage GetCurrentSheet(String fileName)
+        {
+            fileName = fileName.Split('.')[0];
+            var splits = fileName.Split(null);
+            if (splits.Length < 3)
+                throw new ApplicationException("file name can't be splitted to 3 parts");
+            var types = new String[] { "Dd", "Add", "Bhpr" };
+            string type = types.FirstOrDefault(ty => ty.ToLower().Equals(splits[0].ToLower()));
+            if(type == null)
+                throw new ApplicationException("type is not valid: "+splits[0]);
+            var regionType = splits[2] == "0" ? "National" : "Regional";
+            type = regionType + type;
+            DocumentUploadType t = (DocumentUploadType)Enum.Parse(typeof(DocumentUploadType), type, true);
+            var context = new AdapterContext(dbContext, t, splits[2], splits[1]);
+            return adapters[t].GetTemplate(context);
+        }
+
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER_ALLOCATION)]
         public void Upload(Multipart<DocumentUpload> multipart, int type, string regionId, string apbnKey)
