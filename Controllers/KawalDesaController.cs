@@ -82,7 +82,8 @@ namespace App.Controllers
             return redirectHost;
 
         }
-        public ActionResult Login(String token)
+
+        public ActionResult Login(String token, String exAuthState)
         {
             var referrer = Request.ServerVariables["HTTP_REFERER"] as String;
 
@@ -104,6 +105,8 @@ namespace App.Controllers
             var redirectUrl = redirectHost + "/FacebookRedirect";
             if (!string.IsNullOrWhiteSpace(token))
                 redirectUrl += "?token=" + token.Trim();
+            if (!string.IsNullOrWhiteSpace(exAuthState))
+                redirectUrl += "?exAuthState=" + exAuthState.Trim();
 
             if (referrer != null && (!referrer.StartsWith(redirectHost) || referrer.ToLower().EndsWith("login")))
                 referrer = null;
@@ -124,7 +127,8 @@ namespace App.Controllers
             String facebookRedirect = String.Format("https://graph.facebook.com/oauth/authorize? type=web_server&client_id={0}&redirect_uri={1}", clientID, redirectUrl);
             return new RedirectResult(facebookRedirect);
         }
-        public ActionResult FacebookRedirect(String code, String token)
+
+        public ActionResult FacebookRedirect(String code, String token, String exAuthState)
         {
             String loginRedirect = Session["LoginRedirect"] as string;
             if (loginRedirect == null)
@@ -149,6 +153,8 @@ namespace App.Controllers
                 var redirectUrl = redirectHost + "/FacebookRedirect";
                 if (!string.IsNullOrWhiteSpace(token))
                     redirectUrl += "?token=" + token;
+                if (!string.IsNullOrWhiteSpace(exAuthState))
+                    redirectUrl += "?exAuthState="+exAuthState;
 
                 string url = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}";
                 WebRequest request = WebRequest.Create(string.Format(url, clientID, redirectUrl, secretKey, code));
@@ -255,8 +261,42 @@ namespace App.Controllers
                 }
             }
 
+            if(!string.IsNullOrEmpty(exAuthState))
+                return new RedirectResult("/AuthTokenGet?state="+exAuthState);
+
             return new RedirectResult(loginRedirect);
         }
+
+        public ActionResult AuthTokenGenerate()
+        {
+            string userId = Session[USERID_KEY] as string;
+            if (userId == null)
+                return HttpNotFound("not logged in");
+            var token = new AuthToken(userId);
+            var key = ConfigurationManager.AppSettings["Auth.SecretKey"];
+            var tokenStr = JsonWebToken.Encode(token, key, JwtHashAlgorithm.HS512);
+            return Content(tokenStr);
+        }
+
+        public ActionResult AuthTokenGet(String state)
+        {
+            string userId = Session[USERID_KEY] as string;
+            if (userId == null)
+                return Redirect("/Login?exAuthState="+state);
+            var token = new AuthToken(userId);
+            var key = ConfigurationManager.AppSettings["Auth.SecretKey"];
+            var tokenStr = JsonWebToken.Encode(token, key, JwtHashAlgorithm.HS512);
+            var redirect = ConfigurationManager.AppSettings["Auth.Redirect"];
+            return Redirect(redirect+"?token="+tokenStr+"&state="+state);
+        }
+
+        public ActionResult AuthTokenValidate(string token)
+        {
+            var key = ConfigurationManager.AppSettings["Auth.SecretKey"];
+            var authToken = JsonWebToken.Decode(token, key, true);
+            return Content(authToken.UserId);
+        }
+
         private IDictionary<String, Object> GetUserDictFromSession()
         {
             var result = new Dictionary<String, Object>();

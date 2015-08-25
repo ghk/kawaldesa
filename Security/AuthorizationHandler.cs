@@ -1,10 +1,14 @@
 ﻿using App.Controllers;
 using App.Models;
 using App.Security;
+using log4net;
+using log4net.Repository.Hierarchy;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,86 +25,54 @@ namespace App.Security
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            IEnumerable<string> userNameHeaderValues = null;
-            if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_USERID, out userNameHeaderValues))
+            using (var db = new DB())
             {
-                if (!IsValidEmissRequest(request))
+                IEnumerable<string> authorizationHeaderValues = null;
+                if (request.Headers.TryGetValues("Authorization", out authorizationHeaderValues))
                 {
-                    var response = request.CreateErrorResponse(HttpStatusCode.BadRequest, "Not a Valid Request");
-                    return Task.FromResult<HttpResponseMessage>(response);
-                }
-
-                IEnumerable<String> expireHeaderValues = null;
-                if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_EXPIRES, out expireHeaderValues))
-                {
-                    if (IsExpiredRequest(expireHeaderValues.FirstOrDefault()))
+                    try
                     {
-                        var response = request.CreateErrorResponse(HttpStatusCode.BadRequest, "Your Request Has Expired");
-                        return Task.FromResult<HttpResponseMessage>(response);                        
+                        var auth = authorizationHeaderValues.First().Split(null)[1];
+                        var token = JsonWebToken.Decode(auth, ConfigurationManager.AppSettings["Auth.SecretKey"]);
+                        var userManager = new UserManager<User>(new CUserStore<User>(db));
+                        var user = userManager.FindById(token.UserId);
+                        if (user != null)
+                        {
+                            var identity = new KawalDesaIdentity(user, "exAuth");
+                            var principal = new GenericPrincipal(identity, userManager.GetRoles(user.Id).ToArray());
+                            Thread.CurrentPrincipal = principal;
+                            if (HttpContext.Current != null)
+                            {
+                                HttpContext.Current.User = principal;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogManager.GetLogger(typeof(AuthorizationHandler)).Error("Auth error", e);
                     }
                 }
-
-                var userName = userNameHeaderValues.First();                
-                var userManager = new UserManager<User>(new CUserStore<User>(new DB()));
-                var user = userManager.FindByName(userName);
-                if (user != null) 
+                else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session[KawalDesaController.USERID_KEY]))
                 {
-                    string signature = CryptographyHelper.Sign(request, user.SecretKey);
-                    if (signature.Equals(request.Headers.GetValues(KawalDesaHeaders.X_KD_SIGNATURE).FirstOrDefault()))
+                    var session = HttpContext.Current.Session;
+                    var userManager = new UserManager<User>(new CUserStore<User>(db));
+                    var user = userManager.FindById((string)session[KawalDesaController.USERID_KEY]);
+                    if (user != null)
                     {
-                        var identity = new KawalDesaIdentity(user, "Emiss");
+                        var identity = new KawalDesaIdentity(user, "Session");
                         var principal = new GenericPrincipal(identity, userManager.GetRoles(user.Id).ToArray());
                         Thread.CurrentPrincipal = principal;
                         if (HttpContext.Current != null)
                         {
                             HttpContext.Current.User = principal;
                         }
-                    }     
-                }
-            }             
-            else if (HttpContext.Current.Session != null && !String.IsNullOrEmpty((string)HttpContext.Current.Session[KawalDesaController.USERID_KEY]))
-            {
-                var session = HttpContext.Current.Session;                
-                var userManager = new UserManager<User>(new CUserStore<User>(new DB()));
-                var user = userManager.FindById((string)session[KawalDesaController.USERID_KEY]);
-                if (user != null)
-                {
-                    var identity = new KawalDesaIdentity(user, "Session");
-                    var principal = new GenericPrincipal(identity, userManager.GetRoles(user.Id).ToArray());
-                    Thread.CurrentPrincipal = principal;
-                    if (HttpContext.Current != null)
-                    {
-                        HttpContext.Current.User = principal;
                     }
                 }
+
+                return base.SendAsync(request, cancellationToken);
             }
-
-            return base.SendAsync(request, cancellationToken);
         }
 
-        private bool IsValidEmissRequest(HttpRequestMessage request)
-        {
-            IEnumerable<string> headerValues = null;
-            if (request.Headers.TryGetValues(KawalDesaHeaders.X_KD_EXPIRES, out headerValues) &&
-                request.Headers.TryGetValues(KawalDesaHeaders.X_KD_SIGNATURE, out headerValues) &&
-                request.Headers.TryGetValues(KawalDesaHeaders.X_KD_USERID, out headerValues))
-                return true;
-
-            return false;
-        }
-
-        private bool IsExpiredRequest(String expireString)
-        {            
-            int expire = 0;
-            if (!int.TryParse(expireString, out expire))
-                return true;
-
-            TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            if ((int)now.TotalSeconds < expire)
-                return false;
-            else
-                return true;
-        }
 
     }
 }

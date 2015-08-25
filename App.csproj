@@ -288,6 +288,7 @@
     <Compile Include="Models\Views\RegionalAddRecapitulation.cs" />
     <Compile Include="Models\Views\RegionalBhprRecapitulation.cs" />
     <Compile Include="Models\Views\RegionalDdRecapitulation.cs" />
+    <Compile Include="Security\JsonWebToken.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\Excel\AllocationExcelReader.cs" />
     <Compile Include="Utils\Excel\AllocationExcelWriter.cs" />

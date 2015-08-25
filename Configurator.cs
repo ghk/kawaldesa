@@ -145,7 +145,7 @@ namespace App
                 url: "u/{id}",
                 defaults: new { controller = "KawalDesa", action = "User"}
             );
-            var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect"};
+            var appRoutes = new string[] { "Dashboard", "Login", "Logout", "FacebookRedirect", "AuthTokenGenerate", "AuthTokenGet", "AuthTokenValidate"};
             foreach (var appRoute in appRoutes)
             {
                 routes.MapRoute(
