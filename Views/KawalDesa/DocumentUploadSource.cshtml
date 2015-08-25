@@ -34,5 +34,12 @@
 </div>
 <div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="!indexCtrl.activeUpload">
     Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-upload"></i> Unggah dokumen</a>
+    <span ng-if="indexCtrl.activeSources.length">
+        Sumber: 
+        <span ng-repeat="source in indexCtrl.activeSources">
+            <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
+            {{$last ? '' : ', '}}
+        </span>
+    </span>
 </div>
 
