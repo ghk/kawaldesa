@@ -66,6 +66,13 @@ module App.Controllers {
         newUpload: App.Models.DocumentUpload;
         newUploadState = false;
 
+        activeSources:  App.Models.SourceDocument[];
+        newSourceFile: any;
+        newSourceSubType: any;
+        newSourceFunction: any;
+        newSourceRegion: any;
+        newSourceState = false;
+
         static $inject = ["$scope", "$location"];
 
         constructor(public $scope, public $location){
@@ -83,17 +90,6 @@ module App.Controllers {
                     ctrl.onLocationChange();
                 ctrl.isPathReplacing = false;
             });
-            var regions = [
-                { Name: "Lorem", Type: "Desa", Parent: {Name: "Joko", Type:"Kabupaten"} },
-                { Name: "Ipsum", Type: "Kabupaten" },
-                { Name: "Dolor", Type: "Desa" },
-                { Name: "Sit", Type: "Propinsi" },
-                { Name: "Amet", Type: "Propinsi" },
-                { Name: "Lomet", Type: "Propinsi" },
-            ];
-            $scope.getRegions = function (keyword) {
-                return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword });
-            }
         }
 
 
@@ -163,7 +159,11 @@ module App.Controllers {
             this.$location.path(path);
         }
 
-        onSearchSelect(item, model, label) {
+        searchRegions(keyword) {
+            return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword });
+        }
+
+        onSearchSelected(item, model, label) {
             console.log(model);
             var regionId = model.Type == 4 ? model.ParentId : model.Id;
             var type = this.type;
@@ -214,6 +214,11 @@ module App.Controllers {
                     }
                 });
             });
+            Controllers.SourceDocumentController.GetAll({"fkRegionId": regionId, "type": type, "apbnKey": "2015p"}).done(sources => {
+                ctrl.$scope.$apply(() => {
+                    ctrl.activeSources = sources;
+                });
+            });
         }
 
         upload() {
@@ -229,6 +234,27 @@ module App.Controllers {
             }).finally(() => {
                 safeApply(ctrl.$scope, () => {
                     ctrl.newUploadState = false;
+                });
+            });;
+        }
+
+        uploadSource() {
+            var typeStr = this.newSourceRegion.Id == "0" ? "National" : "Regional";
+            typeStr = typeStr + this.newSourceSubType;
+            var type = Models.DocumentUploadType[typeStr];
+            var fn = parseInt(this.newSourceFunction);
+
+            var ctrl = this;
+            var multipart = new Scaffold.Multipart({ files: this.newSourceFile });
+            ctrl.newSourceState = true;
+            Controllers.SourceDocumentController.Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p").success(() => {
+                safeApply(ctrl.$scope, () => {
+                    ctrl.modal('#source-upload-modal', 'hide');
+                    ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                });
+            }).finally(() => {
+                safeApply(ctrl.$scope, () => {
+                    ctrl.newSourceState = false;
                 });
             });;
         }
@@ -262,6 +288,22 @@ module App.Controllers {
                 ctrl.$scope.$apply(() => {
                     ctrl.region = region;
                     ctrl.regionId = region.Id;
+
+                    /* configure source upload defaults */
+                    ctrl.newSourceRegion = region;
+                    if (region.Type == 1 || region.Type == 3)
+                        ctrl.newSourceRegion = region.Parent;
+                    if (region.Type == 4)
+                        ctrl.newSourceRegion = region.Parent.Parent;
+                    ctrl.newSourceFunction = ctrl.type == "transfer" ? "1" : "0";
+                    if (ctrl.type == "dd")
+                        ctrl.newSourceSubType = "Dd";
+                    if (ctrl.type == "add")
+                        ctrl.newSourceSubType = "Add";
+                    if (ctrl.type == "bhpr")
+                        ctrl.newSourceSubType = "Bhpr";
+                    /* end configure source upload defaults */
+
                     var regionTree = [];
                     var cur : Models.IRegion = region;
                     while (cur) {

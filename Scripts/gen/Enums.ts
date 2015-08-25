@@ -50,4 +50,9 @@ module App.Models {
         Others = 99,
     }
     
+    export enum SourceDocumentFunction {
+        Allocation,
+        Transfer,
+    }
+    
 }

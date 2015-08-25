@@ -14,6 +14,7 @@ namespace App.Controllers.Models
         public SourceDocumentController(DB dbContext)
             : base(dbContext)
         {
+            Include(e => e.File);
         }
 
         protected override IQueryable<SourceDocument> ApplyQuery(IQueryable<SourceDocument> query)
@@ -45,7 +46,7 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public void Upload(Multipart multipart, DocumentUploadType type, string regionId, string apbnKey)
+        public void Upload(Multipart multipart, DocumentUploadType type, SourceDocumentFunction fn, string regionId, string apbnKey)
         {
             try
             {
@@ -79,6 +80,7 @@ namespace App.Controllers.Models
                         doc.fkOrganizationId = user.fkOrganizationId.Value;
                         doc.DateCreated = DateTime.Now;
                         doc.Type = type;
+                        doc.Function = fn;
                         doc.ApbnKey = apbnKey;
                         doc.fkRegionId = regionId;
                         doc.fkFileId = blob.Id;

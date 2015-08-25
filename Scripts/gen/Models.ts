@@ -960,6 +960,7 @@ module App.Models {
         FileName: string;
         OriginalFileName: string;
         Type: App.Models.DocumentUploadType;
+        Function: App.Models.SourceDocumentFunction;
         ApbnKey: string;
         fkRegionId: string;
         Region: App.Models.IRegion;
@@ -979,6 +980,7 @@ module App.Models {
         FileName: string;
         OriginalFileName: string;
         Type: App.Models.DocumentUploadType;
+        Function: App.Models.SourceDocumentFunction;
         ApbnKey: string;
         fkRegionId: string;
         Region: App.Models.IRegion;
@@ -996,6 +998,7 @@ module App.Models {
             this.FileName = data ? data.FileName : null;
             this.OriginalFileName = data ? data.OriginalFileName : null;
             this.Type = data ? data.Type : null;
+            this.Function = data ? data.Function : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;

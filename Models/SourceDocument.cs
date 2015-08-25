@@ -11,6 +11,7 @@ namespace App.Models
         public String FileName { get; set; }
         public String OriginalFileName { get; set; }
         public DocumentUploadType Type { get; set; }
+        public SourceDocumentFunction Function { get; set; }
 
         public String ApbnKey { get; set; }
 

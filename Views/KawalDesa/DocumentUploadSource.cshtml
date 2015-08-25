@@ -4,11 +4,15 @@
         <i ng-class="activeUploadMore ? 'fa-minus' : 'fa-plus'" class="fa"></i>
         {{indexCtrl.activeUpload.DocumentName}}
     </a>
+    <span>
+        <span ng-repeat="source in indexCtrl.activeSources">
+            <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
+            {{$last ? '' : ', '}}
+        </span>
+    </span>
     <div ng-show="activeUploadMore">
         <br />
         <dl class="dl-horizontal">
-            <dt>Sumber Dokumen</dt>
-            <dd>{{indexCtrl.activeUpload.Source}}</dd>
             <dt>Keterangan</dt>
             <dd>{{indexCtrl.activeUpload.Notes}}</dd>
             <dt>Pengunggah</dt>

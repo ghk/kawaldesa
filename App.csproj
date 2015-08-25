@@ -266,6 +266,7 @@
     <Compile Include="Migrations\201507131110346_Initial.Designer.cs">
       <DependentUpon>201507131110346_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\SourceDocumentFunction.cs" />
     <Compile Include="Models\RegionSearchResult.cs" />
     <Compile Include="Models\SourceDocument.cs" />
     <Compile Include="Models\DocumentUpload.cs" />

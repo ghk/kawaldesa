@@ -336,6 +336,14 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
+        static GetCurrentSheet(fileName: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			type: 'GET',
+			url: '/api/DocumentUpload/GetCurrentSheet?fileName='+encodeURI(fileName)+'',
+				}));
+			   return res;
+	    }
+    
         static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
 			var res = multipart.upload('/api/DocumentUpload/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
 			   return res;
@@ -1147,8 +1155,8 @@ module App.Controllers.Models {
 				return res;
 		}
 	        
-        static Upload(multipart: Scaffold.Multipart, type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): any  {
-			var res = multipart.upload('/api/SourceDocument/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+        static Upload(multipart: Scaffold.Multipart, type: App.Models.DocumentUploadType, fn: App.Models.SourceDocumentFunction, regionId: string, apbnKey: string): any  {
+			var res = multipart.upload('/api/SourceDocument/Upload?type='+type+'&fn='+fn+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
 			   return res;
 	    }
 	}
