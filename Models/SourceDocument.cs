@@ -12,6 +12,7 @@ namespace App.Models
         public String OriginalFileName { get; set; }
         public DocumentUploadType Type { get; set; }
         public SourceDocumentFunction Function { get; set; }
+        public bool ThumbnailCreated { get; set; }
 
         public String ApbnKey { get; set; }
 

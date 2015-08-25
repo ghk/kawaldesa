@@ -2,8 +2,12 @@
 using Scaffold;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 
@@ -75,6 +79,7 @@ namespace App.Controllers.Models
                         fileResult.Move(blob.FilePath);
 
                         var doc = new SourceDocument();
+                        doc.ThumbnailCreated = false;
                         doc.FileName = blob.RelativeFileName;
                         doc.fkCreatedById = user.Id;
                         doc.fkOrganizationId = user.fkOrganizationId.Value;

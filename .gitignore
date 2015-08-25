@@ -4,6 +4,7 @@ appSettings.config
 /Content/uploads/
 /Content/files/
 /Content/sheets/
+/Content/thumbs/
 /App_Data/
 /Docs/_build/
 .vs/
