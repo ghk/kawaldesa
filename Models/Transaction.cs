@@ -50,9 +50,9 @@ namespace App.Models
         public string fkCreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
-        [ForeignKey("DocumentUpload")]
-        public long? fkDocumentUploadId { get; set; }
-        public virtual DocumentUpload DocumentUpload { get; set; }
+        [ForeignKey("Spreadsheet")]
+        public long? fkSpreadsheetId { get; set; }
+        public virtual Spreadsheet Spreadsheet { get; set; }
 
         [Validator]
         public IEnumerable<ModelValidationResult> Validate()

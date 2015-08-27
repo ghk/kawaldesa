@@ -217,15 +217,15 @@ namespace App.Controllers
                                 user.UserName = "inactive" + user.Id.Replace("-", "");
                                 db.Entry(user).State = EntityState.Modified;
 
-                                foreach (var documentUpload in db.Set<DocumentUpload>().Where(d => d.fkCreatedById == user.Id))
+                                foreach (var spreadsheet in db.Set<Spreadsheet>().Where(d => d.fkCreatedById == user.Id))
                                 {
-                                    documentUpload.fkCreatedById = invitationToken.fkUserId;
-                                    db.Entry(documentUpload).State = EntityState.Modified;
+                                    spreadsheet.fkCreatedById = invitationToken.fkUserId;
+                                    db.Entry(spreadsheet).State = EntityState.Modified;
                                 }
-                                foreach (var documentUpload in db.Set<DocumentUpload>().Where(d => d.fkApprovedById == user.Id))
+                                foreach (var spreadsheet in db.Set<Spreadsheet>().Where(d => d.fkApprovedById == user.Id))
                                 {
-                                    documentUpload.fkApprovedById = invitationToken.fkUserId;
-                                    db.Entry(documentUpload).State = EntityState.Modified;
+                                    spreadsheet.fkApprovedById = invitationToken.fkUserId;
+                                    db.Entry(spreadsheet).State = EntityState.Modified;
                                 }
                             }
                             user = invitationToken.User;

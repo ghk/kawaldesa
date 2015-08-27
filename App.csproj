@@ -293,15 +293,15 @@
     <Compile Include="Controllers\Models\RegionSearchResultController.cs" />
     <Compile Include="Controllers\Models\SourceDocumentController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
-    <Compile Include="Migrations\201507131110346_Initial.cs" />
-    <Compile Include="Migrations\201507131110346_Initial.Designer.cs">
-      <DependentUpon>201507131110346_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201508271742561_RenameToSpreadsheet.cs" />
+    <Compile Include="Migrations\201508271742561_RenameToSpreadsheet.Designer.cs">
+      <DependentUpon>201508271742561_RenameToSpreadsheet.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\SourceDocumentFunction.cs" />
     <Compile Include="Models\RegionSearchResult.cs" />
     <Compile Include="Models\SourceDocument.cs" />
     <Compile Include="Models\DocumentUpload.cs" />
-    <Compile Include="Models\IDocumentUploadEntry.cs" />
+    <Compile Include="Models\ISpreadsheetEntry.cs" />
     <Compile Include="Models\InvitationToken.cs" />
     <Compile Include="Models\IAllocation.cs" />
     <Compile Include="Models\Transfer.cs" />
@@ -457,6 +457,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Enums.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\gen\Models.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Models.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\BhprAllocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AddAlocationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\UserCtrl.ts" />
@@ -470,11 +475,6 @@
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
-    <TypeScriptCompile Include="Scripts\gen\Models.ts">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.tt</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\gen\Scaffold.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -484,8 +484,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507131110346_Initial.resx">
-      <DependentUpon>201507131110346_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508271742561_RenameToSpreadsheet.resx">
+      <DependentUpon>201508271742561_RenameToSpreadsheet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,10 +17,10 @@ using System.Web.Http;
 
 namespace App.Controllers.Models
 {
-    public class DocumentUploadController: BaseController<DocumentUpload, long>
+    public class SpreadsheetController: BaseController<Spreadsheet, long>
     {
         private IDictionary<DocumentUploadType, IDocumentUploadAdapter> adapters = new Dictionary<DocumentUploadType, IDocumentUploadAdapter>();
-        public DocumentUploadController(DB dbContext)
+        public SpreadsheetController(DB dbContext)
             : base(dbContext)
         {
             Include(d => d.Organization);
@@ -75,7 +75,7 @@ namespace App.Controllers.Models
                 },
             };
         }
-        protected override IQueryable<DocumentUpload> ApplyQuery(IQueryable<DocumentUpload> query)
+        protected override IQueryable<Spreadsheet> ApplyQuery(IQueryable<Spreadsheet> query)
         {
             var orgId = GetQueryString<long?>("fkOrganizationId");
             if(orgId.HasValue) 
@@ -103,7 +103,7 @@ namespace App.Controllers.Models
         }
 
         [HttpGet]
-        public DocumentUpload GetActive(int type, string regionId, string apbnKey)
+        public Spreadsheet GetActive(int type, string regionId, string apbnKey)
         {
             return dbSet
                 .Include(e => e.CreatedBy)
@@ -153,7 +153,7 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER_ALLOCATION)]
-        public void Upload(Multipart<DocumentUpload> multipart, int type, string regionId, string apbnKey)
+        public void Upload(Multipart<Spreadsheet> multipart, int type, string regionId, string apbnKey)
         {
             KawalDesaController.CheckRegionAllowed(dbContext, regionId);
             DocumentUploadType t = (DocumentUploadType)type;
@@ -181,7 +181,7 @@ namespace App.Controllers.Models
         public static void GenDanaDesaKab(DbContext dbContext, String apbnKey)
         {
             var kabs = dbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
-            var existing = dbContext.Set<DocumentUpload>().Where(r => r.Type == DocumentUploadType.RegionalDd && r.ApbnKey == apbnKey && r.IsActivated);
+            var existing = dbContext.Set<Spreadsheet>().Where(r => r.Type == DocumentUploadType.RegionalDd && r.ApbnKey == apbnKey && r.IsActivated);
             var existingIds = new HashSet<string>(existing.Select(e => e.fkRegionId));
             kabs = kabs.Where(k => !existingIds.Contains(k.Id)).ToList();
             var apbn = dbContext.Set<Apbn>().First(a => a.Key == apbnKey);
@@ -194,7 +194,7 @@ namespace App.Controllers.Models
                 var nationalAlloc = dbContext.Set<NationalDdAllocation>().FirstOrDefault(r => r.IsActivated && r.fkRegionId == kab.Id && r.fkApbnId == apbn.Id);
                 if(nationalAlloc != null)
                 {
-                    var nationalDoc = dbContext.Set<DocumentUpload>().First(d => d.Id == nationalAlloc.fkDocumentUploadId);
+                    var nationalDoc = dbContext.Set<Spreadsheet>().First(d => d.Id == nationalAlloc.fkSpreadsheetId);
                     GenDanaDesaKab(dbContext, apbd, kab, nationalAlloc, nationalDoc);
                 }
                 i++;
@@ -202,7 +202,7 @@ namespace App.Controllers.Models
         }
 
 
-        private static void GenDanaDesaKab(DbContext dbContext, Apbd apbd, Region region, NationalDdAllocation nationalAlloc, DocumentUpload nationalDoc)
+        private static void GenDanaDesaKab(DbContext dbContext, Apbd apbd, Region region, NationalDdAllocation nationalAlloc, Spreadsheet nationalDoc)
         {
             var regions = dbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && !r.IsKelurahan && r.Parent.fkParentId == region.Id).ToList();
             var parentRegions = dbContext.Set<Region>().Where(r => r.Type == RegionType.KECAMATAN && r.fkParentId == region.Id).ToList();
@@ -232,37 +232,37 @@ namespace App.Controllers.Models
             dbContext.SaveChanges();
             File.WriteAllBytes(blob.FilePath, fileBytes);
 
-            DocumentUpload upload = new DocumentUpload();
-            upload.fkCreatedById = nationalDoc.fkCreatedById;
-            upload.fkOrganizationId = nationalDoc.fkOrganizationId;
-            upload.DateCreated = DateTime.Now;
-            upload.DateActivated = DateTime.Now;
-            upload.Type = DocumentUploadType.RegionalDd;
-            upload.ApbnKey = nationalDoc.ApbnKey;
-            upload.fkRegionId = region.Id;
-            upload.Notes = "Alokasi Dasar 90%";
-            upload.DocumentName = "Alokasi Dasar 90% APBN-P 2015";
-            upload.FileName = blob.RelativeFileName;
-            upload.fkFileId = blob.Id;
-            dbContext.Set<DocumentUpload>().Add(upload);
+            Spreadsheet spreadsheet = new Spreadsheet();
+            spreadsheet.fkCreatedById = nationalDoc.fkCreatedById;
+            spreadsheet.fkOrganizationId = nationalDoc.fkOrganizationId;
+            spreadsheet.DateCreated = DateTime.Now;
+            spreadsheet.DateActivated = DateTime.Now;
+            spreadsheet.Type = DocumentUploadType.RegionalDd;
+            spreadsheet.ApbnKey = nationalDoc.ApbnKey;
+            spreadsheet.fkRegionId = region.Id;
+            spreadsheet.Notes = "Alokasi Dasar 90%";
+            spreadsheet.DocumentName = "Alokasi Dasar 90% APBN-P 2015";
+            spreadsheet.FileName = blob.RelativeFileName;
+            spreadsheet.fkFileId = blob.Id;
+            dbContext.Set<Spreadsheet>().Add(spreadsheet);
             dbContext.SaveChanges();
 
 
             foreach(var regionAlloc in regionAllocs)
             {
-                regionAlloc.fkDocumentUploadId = upload.Id;
+                regionAlloc.fkSpreadsheetId = spreadsheet.Id;
                 dbContext.Set<RegionalDdAllocation>().Add(regionAlloc);
             }
             dbContext.SaveChanges();
 
-            new DocumentUploadActivator<RegionalDdAllocation>().Activate(dbContext, upload);
+            new DocumentUploadActivator<RegionalDdAllocation>().Activate(dbContext, spreadsheet);
         }
 
         public interface IDocumentUploadAdapter
         {
             HttpResponseMessage GetTemplate(AdapterContext context);
             byte[] GetBytes(AdapterContext context);
-            void Upload(Multipart<DocumentUpload> multipart, AdapterContext context);
+            void Upload(Multipart<Spreadsheet> multipart, AdapterContext context);
         }
 
         public class AdapterContext
@@ -324,7 +324,7 @@ namespace App.Controllers.Models
                 return new AllocationExcelWriter<TAllocation>().WriteToBytes(parentRegions, regions, allocations);
             }
 
-            public void Upload(Multipart<DocumentUpload> multipart, AdapterContext context)
+            public void Upload(Multipart<Spreadsheet> multipart, AdapterContext context)
             {
                 try
                 {
@@ -338,7 +338,7 @@ namespace App.Controllers.Models
                         regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && r.Parent.fkParentId == context.Region.Id).ToList();
                     }
                     var allocations = new AllocationExcelReader<TAllocation>().Read(regions, new FileInfo(multipart.Files[0].FilePath));
-                    var upload = multipart.Entity;
+                    var spreadsheet = multipart.Entity;
                     var user = KawalDesaController.GetCurrentUser();
 
                     var fileResult = multipart.Files[0];
@@ -347,27 +347,27 @@ namespace App.Controllers.Models
                     DbContext.SaveChanges();
                     fileResult.Move(blob.FilePath);
 
-                    upload.FileName = blob.RelativeFileName;
-                    upload.fkCreatedById = user.Id;
-                    upload.fkOrganizationId = user.fkOrganizationId.Value;
-                    upload.DateCreated = DateTime.Now;
-                    upload.DateActivated = DateTime.Now;
-                    upload.Type = context.Type;
-                    upload.ApbnKey = context.Apbn.Key;
-                    upload.fkRegionId = context.Region.Id;
-                    upload.fkFileId = blob.Id;
-                    DbContext.Set<DocumentUpload>().Add(upload);
+                    spreadsheet.FileName = blob.RelativeFileName;
+                    spreadsheet.fkCreatedById = user.Id;
+                    spreadsheet.fkOrganizationId = user.fkOrganizationId.Value;
+                    spreadsheet.DateCreated = DateTime.Now;
+                    spreadsheet.DateActivated = DateTime.Now;
+                    spreadsheet.Type = context.Type;
+                    spreadsheet.ApbnKey = context.Apbn.Key;
+                    spreadsheet.fkRegionId = context.Region.Id;
+                    spreadsheet.fkFileId = blob.Id;
+                    DbContext.Set<Spreadsheet>().Add(spreadsheet);
                     DbContext.SaveChanges();
 
                     foreach(var allocation in allocations)
                     {
-                        allocation.fkDocumentUploadId = upload.Id;
+                        allocation.fkSpreadsheetId = spreadsheet.Id;
                         Init(context, allocation);
                         DbContext.Set<TAllocation>().Add(allocation);
                     }
                     DbContext.SaveChanges();
 
-                    new DocumentUploadActivator<TAllocation>().Activate(DbContext, upload);
+                    new DocumentUploadActivator<TAllocation>().Activate(DbContext, spreadsheet);
                 }
                 finally
                 {

@@ -61,9 +61,9 @@ module App.Controllers {
 
         activeUploadType: App.Models.DocumentUploadType;
         activeUploadRegionId: string;
-        activeUpload: App.Models.DocumentUpload;
+        activeUpload: App.Models.Spreadsheet;
         newUploadFile: any;
-        newUpload: App.Models.DocumentUpload;
+        newUpload: App.Models.Spreadsheet;
         newUploadState = false;
 
         activeSources:  App.Models.SourceDocument[];
@@ -202,10 +202,10 @@ module App.Controllers {
         configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) {
             this.activeUploadType = type;
             this.activeUploadRegionId = regionId;
-            this.newUpload = new Models.DocumentUpload();
+            this.newUpload = new Models.Spreadsheet();
             var ctrl = this;
             ctrl.activeUpload = null;
-            Controllers.DocumentUploadController.GetActive(type, regionId, "2015p").done(doc => {
+            Controllers.SpreadsheetController.GetActive(type, regionId, "2015p").done(doc => {
                 ctrl.$scope.$apply(() => {
                     ctrl.activeUpload = doc;
                     if (doc) {
@@ -225,7 +225,7 @@ module App.Controllers {
             var ctrl = this;
             var multipart = new Scaffold.Multipart({ files: this.newUploadFile, forms: this.newUpload });
             ctrl.newUploadState = true;
-            Controllers.DocumentUploadController.Upload(multipart, this.activeUploadType, this.activeUploadRegionId, "2015p").success(() => {
+            Controllers.SpreadsheetController.Upload(multipart, this.activeUploadType, this.activeUploadRegionId, "2015p").success(() => {
                 safeApply(ctrl.$scope, () => {
                     ctrl.modal('#document-upload-modal', 'hide');
                     ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
@@ -337,7 +337,7 @@ module App.Controllers {
                 return;
             var ctrl = this;
             this.isLoadingUrl = true;
-            Controllers.DocumentUploadController.GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p").done(url => {
+            Controllers.SpreadsheetController.GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p").done(url => {
                 ctrl.$scope.$apply(() => {
                     ctrl.isLoadingUrl = false;
                     window.open(url, "_blank");

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace App.Models
 {
-    public interface IDocumentUploadEntry
+    public interface ISpreadsheetEntry
     {
         bool IsActivated { get; set; }
-        long fkDocumentUploadId { get; set; }
+        long fkSpreadsheetId { get; set; }
     }
 }

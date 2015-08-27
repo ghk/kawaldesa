@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.Models
 {
-    public interface IAllocation: IDocumentUploadEntry
+    public interface IAllocation: ISpreadsheetEntry
     {
         string No { get; set; }
 

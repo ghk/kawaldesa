@@ -7,14 +7,14 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class DocumentUploadActivator<TDocumentUploadEntry> where TDocumentUploadEntry: class, IDocumentUploadEntry 
+    public class DocumentUploadActivator<TSpreadsheetEntry> where TSpreadsheetEntry: class, ISpreadsheetEntry 
     {
-        public void Activate(DbContext db, DocumentUpload doc)
+        public void Activate(DbContext db, Spreadsheet doc)
         {
-            var previousDoc = db.Set<DocumentUpload>().FirstOrDefault(d => d.IsActivated && d.Type == doc.Type && d.ApbnKey == doc.ApbnKey && d.fkRegionId == doc.fkRegionId);
+            var previousDoc = db.Set<Spreadsheet>().FirstOrDefault(d => d.IsActivated && d.Type == doc.Type && d.ApbnKey == doc.ApbnKey && d.fkRegionId == doc.fkRegionId);
             if(previousDoc != null)
             {
-                var previousEntries = db.Set<TDocumentUploadEntry>().Where(d => d.fkDocumentUploadId == previousDoc.Id);
+                var previousEntries = db.Set<TSpreadsheetEntry>().Where(d => d.fkSpreadsheetId == previousDoc.Id);
                 foreach(var entry in previousEntries)
                 {
                     entry.IsActivated = false;
@@ -24,7 +24,7 @@ namespace App.Controllers.Models
                 previousDoc.DateActivated = DateTime.Now;
                 db.Entry(previousDoc).State = EntityState.Modified;
             }
-            var entries = db.Set<TDocumentUploadEntry>().Where(d => d.fkDocumentUploadId == doc.Id);
+            var entries = db.Set<TSpreadsheetEntry>().Where(d => d.fkSpreadsheetId == doc.Id);
             foreach(var entry in entries)
             {
                 entry.IsActivated = true;

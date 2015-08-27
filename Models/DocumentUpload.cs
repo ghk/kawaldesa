@@ -6,7 +6,7 @@ using System.Web;
 
 namespace App.Models
 {
-    public class DocumentUpload : BaseEntity
+    public class Spreadsheet : BaseEntity
     {
         public String FileName { get; set; }
         public String DocumentName { get; set; }

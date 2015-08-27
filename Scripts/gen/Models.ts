@@ -352,7 +352,7 @@ module App.Models {
     }
     
     
-    export interface IDocumentUpload extends IBaseEntity {
+    export interface ISpreadsheet extends IBaseEntity {
         FileName: string;
         DocumentName: string;
         Type: App.Models.DocumentUploadType;
@@ -375,7 +375,7 @@ module App.Models {
         ApprovedBy: /** App.Models.User **/ any;
     }
     
-    export class DocumentUpload extends BaseEntity {
+    export class Spreadsheet extends BaseEntity {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         FileName: string;
@@ -399,7 +399,7 @@ module App.Models {
         fkApprovedById: string;
         ApprovedBy: /** App.Models.User **/ any;
         
-        constructor(data?: IDocumentUpload) {
+        constructor(data?: ISpreadsheet) {
             super(data);
             this.FileName = data ? data.FileName : null;
             this.DocumentName = data ? data.DocumentName : null;
@@ -508,8 +508,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class NationalAddAllocation extends BaseEntity {
@@ -526,8 +526,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: INationalAddAllocation) {
             super(data);
@@ -542,8 +542,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbdId = data ? data.fkApbdId : null;
             this.Apbd = data ? data.Apbd : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -560,8 +560,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class NationalBhprAllocation extends BaseEntity {
@@ -577,8 +577,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: INationalBhprAllocation) {
             super(data);
@@ -592,8 +592,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbdId = data ? data.fkApbdId : null;
             this.Apbd = data ? data.Apbd : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -609,8 +609,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbnId: number;
         Apbn: App.Models.IApbn;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class NationalDdAllocation extends BaseEntity {
@@ -625,8 +625,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbnId: number;
         Apbn: App.Models.IApbn;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: INationalDdAllocation) {
             super(data);
@@ -639,8 +639,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbnId = data ? data.fkApbnId : null;
             this.Apbn = data ? data.Apbn : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -746,8 +746,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class RegionalAddAllocation extends BaseEntity {
@@ -776,8 +776,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IRegionalAddAllocation) {
             super(data);
@@ -804,8 +804,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbdId = data ? data.fkApbdId : null;
             this.Apbd = data ? data.Apbd : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -824,8 +824,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class RegionalBhprAllocation extends BaseEntity {
@@ -843,8 +843,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IRegionalBhprAllocation) {
             super(data);
@@ -860,8 +860,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbdId = data ? data.fkApbdId : null;
             this.Apbd = data ? data.Apbd : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -891,8 +891,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class RegionalDdAllocation extends BaseEntity {
@@ -921,8 +921,8 @@ module App.Models {
         IsActivated: boolean;
         fkApbdId: number;
         Apbd: App.Models.IApbd;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IRegionalDdAllocation) {
             super(data);
@@ -949,8 +949,8 @@ module App.Models {
             this.IsActivated = data ? data.IsActivated : null;
             this.fkApbdId = data ? data.fkApbdId : null;
             this.Apbd = data ? data.Apbd : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -959,8 +959,10 @@ module App.Models {
     export interface ISourceDocument extends IBaseEntity {
         FileName: string;
         OriginalFileName: string;
+        GoogleDriveId: string;
         Type: App.Models.DocumentUploadType;
         Function: App.Models.SourceDocumentFunction;
+        ThumbnailCreated: boolean;
         ApbnKey: string;
         fkRegionId: string;
         Region: App.Models.IRegion;
@@ -979,8 +981,10 @@ module App.Models {
         
         FileName: string;
         OriginalFileName: string;
+        GoogleDriveId: string;
         Type: App.Models.DocumentUploadType;
         Function: App.Models.SourceDocumentFunction;
+        ThumbnailCreated: boolean;
         ApbnKey: string;
         fkRegionId: string;
         Region: App.Models.IRegion;
@@ -997,8 +1001,10 @@ module App.Models {
             super(data);
             this.FileName = data ? data.FileName : null;
             this.OriginalFileName = data ? data.OriginalFileName : null;
+            this.GoogleDriveId = data ? data.GoogleDriveId : null;
             this.Type = data ? data.Type : null;
             this.Function = data ? data.Function : null;
+            this.ThumbnailCreated = data ? data.ThumbnailCreated : null;
             this.ApbnKey = data ? data.ApbnKey : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
@@ -1033,8 +1039,8 @@ module App.Models {
         Actor: App.Models.IRegion;
         fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class BaseTransaction extends BaseEntity {
@@ -1057,8 +1063,8 @@ module App.Models {
         Actor: App.Models.IRegion;
         fkCreatedById: string;
         CreatedBy: /** App.Models.User **/ any;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IBaseTransaction) {
             super(data);
@@ -1079,8 +1085,8 @@ module App.Models {
             this.Actor = data ? data.Actor : null;
             this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }
@@ -1123,8 +1129,8 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class BaseTransfer extends BaseEntity {
@@ -1138,8 +1144,8 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkDocumentUploadId: number;
-        DocumentUpload: App.Models.IDocumentUpload;
+        fkSpreadsheetId: number;
+        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IBaseTransfer) {
             super(data);
@@ -1151,8 +1157,8 @@ module App.Models {
             this.Year = data ? data.Year : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkDocumentUploadId = data ? data.fkDocumentUploadId : null;
-            this.DocumentUpload = data ? data.DocumentUpload : null;
+            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
+            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }

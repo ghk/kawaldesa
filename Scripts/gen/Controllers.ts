@@ -262,47 +262,47 @@ module App.Controllers.Models {
 	    }
 	}
     
-    export class DocumentUploadController
+    export class SpreadsheetController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : App.Models.IDocumentUpload = null;
+        public dataModel : App.Models.ISpreadsheet = null;
         
-        constructor(data?: App.Models.IDocumentUpload) {
+        constructor(data?: App.Models.ISpreadsheet) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IDocumentUpload>> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ISpreadsheet>> {
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/DocumentUpload/GetAll',
+				url: '/api/Spreadsheet/GetAll',
 				data: query,
 			})).then((models) => {
-				return models.map((model) => new App.Models.DocumentUpload(model));
+				return models.map((model) => new App.Models.Spreadsheet(model));
 			});
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IDocumentUpload> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+		static Get(id: number): JQueryPromise<App.Models.ISpreadsheet> {
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/Get/'+id,
-			})).then((model) => new App.Models.DocumentUpload(model));
+			url: '/api/Spreadsheet/Get/'+id,
+			})).then((model) => new App.Models.Spreadsheet(model));
 			return res;
 		}
 
 		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 				type: 'GET',
-				url: '/api/DocumentUpload/GetCount',
+				url: '/api/Spreadsheet/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 		
-		static Save(model: App.Models.IDocumentUpload): JQueryPromise<void> {
+		static Save(model: App.Models.ISpreadsheet): JQueryPromise<void> {
 			var isNew = model.Id == null;
-            var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+            var res = $.ajax(SpreadsheetController.ajaxSettings.build({
                  type: isNew ? 'POST' : 'PUT',
-				 url: '/api/DocumentUpload/'+(isNew ? 'Post' : 'Put'),
+				 url: '/api/Spreadsheet/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
             })).then((id) => {
 				if(isNew) {
@@ -313,46 +313,46 @@ module App.Controllers.Models {
         }
 
 		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+				var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 					type: 'GET',
-					url: '/api/DocumentUpload/Delete/'+id,
+					url: '/api/Spreadsheet/Delete/'+id,
 				}));
 				return res;
 		}
 	        
-        static GetActive(type: number, regionId: string, apbnKey: string): JQueryPromise<App.Models.IDocumentUpload> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+        static GetActive(type: number, regionId: string, apbnKey: string): JQueryPromise<App.Models.ISpreadsheet> {
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+			url: '/api/Spreadsheet/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
         static GetTemplate(type: number, regionId: string, apbnKey: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+			url: '/api/Spreadsheet/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
         static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): JQueryPromise<string> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+			url: '/api/Spreadsheet/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
         static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
-			var res = multipart.upload('/api/DocumentUpload/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+			var res = multipart.upload('/api/Spreadsheet/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
 			   return res;
 	    }
     
         static GenerateDanaDesaKabs(apbnKey: string): JQueryPromise<void> {
-			var res = $.ajax(DocumentUploadController.ajaxSettings.build({
+			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
 			type: 'GET',
-			url: '/api/DocumentUpload/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
+			url: '/api/Spreadsheet/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }

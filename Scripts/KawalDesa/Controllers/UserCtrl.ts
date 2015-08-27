@@ -22,7 +22,7 @@ module App.Controllers {
 
         selected: Models.UserViewModel = null;
 
-        uploads: Models.DocumentUpload[] = null;
+        uploads: Models.Spreadsheet[] = null;
 
         savingStates = {};
 
@@ -129,7 +129,7 @@ module App.Controllers {
             });
 
             ctrl.uploads = null;
-            Controllers.DocumentUploadController.GetAll({ "fkCreatedById": id }).done(uploads => {
+            Controllers.SpreadsheetController.GetAll({ "fkCreatedById": id }).done(uploads => {
                 ctrl.$scope.$apply(() => {
                     ctrl.uploads = uploads;
                 });

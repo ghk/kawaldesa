@@ -37,8 +37,8 @@ namespace App.Models
         public long fkApbnId { get; set; }
         public virtual Apbn Apbn { get; set; }
 
-        [ForeignKey("DocumentUpload")]
-        public long fkDocumentUploadId { get; set; }
-        public virtual DocumentUpload DocumentUpload { get; set; }
+        [ForeignKey("Spreadsheet")]
+        public long fkSpreadsheetId { get; set; }
+        public virtual Spreadsheet Spreadsheet { get; set; }
     }
 }

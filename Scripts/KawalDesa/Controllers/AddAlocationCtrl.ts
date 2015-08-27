@@ -14,7 +14,7 @@ module App.Controllers {
         static $inject = ["$scope"];
 
         indexCtrl: IndexCtrl;
-        uploadDoc = new Models.DocumentUpload();
+        uploadDoc = new Models.Spreadsheet();
         file: any;
 
         constructor(public $scope) {

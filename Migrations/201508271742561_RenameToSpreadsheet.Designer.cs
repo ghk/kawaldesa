@@ -7,13 +7,13 @@ namespace App.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class RenameToSpreadsheet : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RenameToSpreadsheet));
         
         string IMigrationMetadata.Id
         {
-            get { return "201507131110346_Initial"; }
+            get { return "201508271742561_RenameToSpreadsheet"; }
         }
         
         string IMigrationMetadata.Source

@@ -25,7 +25,7 @@ module App.Controllers {
 
         orgAdmins: Models.UserViewModel[] = null;
         orgVolunteers: Models.UserViewModel[] = null;
-        orgUploads: Models.DocumentUpload[] = null;
+        orgUploads: Models.Spreadsheet[] = null;
 
         savingStates = {};
 
@@ -68,7 +68,7 @@ module App.Controllers {
             });
 
             ctrl.orgUploads = null;
-            Controllers.DocumentUploadController.GetAll({ "fkOrganizationId": this.selected.Id }).done(uploads => {
+            Controllers.SpreadsheetController.GetAll({ "fkOrganizationId": this.selected.Id }).done(uploads => {
                 ctrl.$scope.$apply(() => {
                     ctrl.orgUploads = uploads;
                 });
