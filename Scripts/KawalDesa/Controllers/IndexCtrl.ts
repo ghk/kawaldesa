@@ -340,11 +340,19 @@ module App.Controllers {
             Controllers.DocumentUploadController.GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p").done(url => {
                 ctrl.$scope.$apply(() => {
                     ctrl.isLoadingUrl = false;
-                    window.open("https://docs.google.com/gview?url=" + url, "_blank");
+                    window.open(url, "_blank");
                 });
             });
         }
         /* End Google Sheet*/
+
+        showSearch() {
+            this.$scope.searchShown = true;
+            setTimeout(function () {
+                $(".search-input-group input").focus();
+                $(".search-input-group input").select();
+            }, 0);
+        }
 
     }
 

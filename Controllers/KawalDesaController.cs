@@ -17,6 +17,7 @@ using System.Web.Script.Serialization;
 using System.Configuration;
 using System.Security.Principal;
 using App.Mailers;
+using App.Utils;
 
 namespace App.Controllers
 {
@@ -295,6 +296,28 @@ namespace App.Controllers
             var key = ConfigurationManager.AppSettings["Auth.SecretKey"];
             var authToken = JsonWebToken.Decode(token, key, true);
             return Content(authToken.UserId);
+        }
+
+        public ActionResult TestDrive()
+        {
+            var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
+            var authKey = ConfigurationManager.AppSettings["Drive.AuthKey"];
+            var parentDir = ConfigurationManager.AppSettings["Drive.ParentDir"];
+
+            String debugResult = "";
+            debugResult += authKey + "\n";
+            debugResult += System.IO.File.Exists(authKey) + "\n";
+            if (System.IO.File.Exists(authKey))
+                debugResult += System.IO.File.ReadAllLines(authKey).Length + "\n";
+            if (debugResult != null)
+                return Content(debugResult);
+
+
+            var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
+
+
+            var fileId = driveUtils.UploadFile(@"D:\Work\kawal-desa\Content\sheets\DD 2015p 0 NASIONAL.xlsx", "DD 2015p 0 NASIONAL.xlsx");
+            return Content(fileId);
         }
 
         private IDictionary<String, Object> GetUserDictFromSession()

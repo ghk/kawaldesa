@@ -61,7 +61,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="!searchShown">
-                        <a href="#" class="btn" ng-click="searchShown=true"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
+                        <a href="#" class="btn" ng-click="indexCtrl.showSearch()"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
                         <a style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -99,7 +99,7 @@
                     </ul>
                 </script>
                 <form class="navbar-form navbar-right" role="search" ng-show="searchShown" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
-                    <div class="input-group" style="width: 375px;">
+                    <div class="input-group search-input-group" style="width: 375px;">
                         <input type="text" ng-model="selectedSearch" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
                                typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control" typeahead-on-select="indexCtrl.onSearchSelected($item, $model, $value)">
                         <div class="input-group-btn" style="width: 1%;">

@@ -81,6 +81,9 @@ namespace App.Controllers.Services
             var roles = UserManager.GetRoles(user.Id);
             UserViewModel userViewModel = new UserViewModel() 
             { 
+                Id = user.Id,
+                Name = user.Name,
+                FacebookId = user.FacebookId,
                 UserName = user.UserName, 
                 Roles = roles.ToList(),
                 Scopes = GetScopes(user.Id)
@@ -93,6 +96,9 @@ namespace App.Controllers.Services
             var roles = UserManager.GetRoles(user.Id);
             UserViewModel userViewModel = new UserViewModel() 
             { 
+                Id = user.Id,
+                Name = user.Name,
+                FacebookId = user.FacebookId,
                 UserName = user.UserName, 
                 Roles = roles.ToList(),
                 Scopes = GetScopes(user.Id)

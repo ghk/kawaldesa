@@ -1,9 +1,11 @@
 ﻿using App.Models;
+using App.Utils;
 using App.Utils.Excel;
 using OfficeOpenXml;
 using Scaffold;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -133,10 +135,20 @@ namespace App.Controllers.Models
             var root = HttpContext.Current.Server.MapPath("~/Content/sheets");
             Directory.CreateDirectory(root);
             var safeFileName = typeStr + " " + apbnKey + " " + regionId + " " + region.Name + ".xlsx";
-            File.WriteAllBytes(Path.Combine(root, safeFileName), bytes);
+            var fullPath = Path.Combine(root, safeFileName);
+            File.WriteAllBytes(fullPath, bytes);
 
-            string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            return fullyQualifiedUrl + "/Content/sheets/" + safeFileName;
+            var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
+            var authKey = ConfigurationManager.AppSettings["Drive.AuthKey"];
+            var parentDir = ConfigurationManager.AppSettings["Drive.ParentDir"];
+            var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
+
+            var fileId = driveUtils.UploadFile(fullPath, safeFileName);
+
+            return "https://drive.google.com/file/d/"+fileId+"/view";
+
+            //string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            //return fullyQualifiedUrl + "/Content/sheets/" + safeFileName;
         }
 
         [HttpPost]
