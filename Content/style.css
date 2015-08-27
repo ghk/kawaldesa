@@ -269,3 +269,14 @@ p.subtext {
     font-size: 2rem; 
     text-align: center;
 }
+
+.navbar-form {
+    border-left: 1px solid #ccc;
+    border-radius: 4px;
+    border-right: 1px solid #ccc;
+    box-shadow: -2px 0 3px 0 rgba(0, 0, 0, 0.18);
+    margin-bottom: -9px;
+    margin-top: 4px;
+    padding-bottom: 4px;
+    padding-top: 7px;
+}

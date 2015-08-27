@@ -97,11 +97,7 @@
                 </tr>
             </tfoot>
 
-            <tfoot ng-show="entities.length == 0">
-                <tr>
-                    <td colspan="17" style="padding: 10px 5px; text-align: center;">Memuat data...</td>
-                </tr>
-            </tfoot>
+            @Html.Partial("TableLoader")
 
         </table>
     </div>

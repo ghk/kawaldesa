@@ -2,14 +2,14 @@
     Layout = "_Layout.cshtml";
 }
 
-
+<div>
 @Html.Partial("TransferRecapitulation")
 @Html.Partial("AccountRecapitulation")
 @Html.Partial("DdAllocation")
 @Html.Partial("AddAllocation")
 @Html.Partial("BhprAllocation")
 @Html.Partial("Apbdes")
-
+</div>
 <div class="modal fade" id="document-upload-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" ng-show="indexCtrl.newUploadState">

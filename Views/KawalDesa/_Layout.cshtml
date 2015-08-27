@@ -1,4 +1,4 @@
-﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs">
+﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs" style="min-height: 100%;">
 <head>
     <!-- facebook hash remover -->
     <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
@@ -16,7 +16,7 @@
     @Scripts.Render("~/js/kawaldesa-all")
 
 </head>
-<body ng-controller="IndexCtrl as indexCtrl" ng-cloak class="ng-cloak">
+<body ng-controller="IndexCtrl as indexCtrl" ng-cloak class="ng-cloak" style="min-height: 100%;">
     <header role="banner" id="top" class="navbar navbar-static-top bs-docs-nav">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -112,15 +112,20 @@
         </div>
     </header>
     @RenderBody()
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <p>
-                    Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
-                </p>
+    <footer>
+        <nav class="navbar navbar-default navbar-bottom" role="navigation">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>
+                            Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </nav>
+
+    </footer>
 
 </body>
 </html>

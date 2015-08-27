@@ -370,6 +370,7 @@
     <Compile Include="Security\CryptographyHelper.cs" />
     <Compile Include="Security\KawalDesaAuthorizeAttribute.cs" />
     <Compile Include="Security\KawalDesaIdentity.cs" />
+    <Content Include="Content\loading.gif" />
     <Content Include="Content\blank.png" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\loading-bar.min.css" />
@@ -424,6 +425,7 @@
     <Content Include="Views\KawalDesa\DocumentUploadSource.cshtml" />
     <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
     <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
+    <Content Include="Views\KawalDesa\TableLoader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

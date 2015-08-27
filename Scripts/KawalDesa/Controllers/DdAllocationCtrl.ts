@@ -22,6 +22,7 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
 
             $scope.$on('regionChangeBefore', function () {
+                $scope.entities = [];
                 ctrl.onRegionChanged();
             });
         }
