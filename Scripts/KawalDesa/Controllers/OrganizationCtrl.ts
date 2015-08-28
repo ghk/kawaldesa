@@ -81,7 +81,7 @@ module App.Controllers {
                 files: this.picture
             });
             Controllers.OrganizationController.Update(multipart).success(() => {
-                ctrl.indexCtrl.modal("#organization-modal", "hide");
+                ctrl.indexCtrl.modal("organization-modal");
             }).then(() => {
                 ctrl.$scope.$apply(() => {
                     ctrl.savingStates["org"] = false;
@@ -96,7 +96,7 @@ module App.Controllers {
             org.Name = this.newOrganizationName;
             Controllers.OrganizationController.Save(org).then(() => {
                 ctrl.organizations.push(org);
-                ctrl.indexCtrl.modal("#new-organization-modal", "hide");
+                ctrl.indexCtrl.modal("new-organization-modal");
             }).finally(() => {
                 ctrl.savingStates["new-org"] = false;
             });
@@ -109,7 +109,7 @@ module App.Controllers {
                 .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail)
                 .then(user => {
                     ctrl.orgAdmins.push(user.data);
-                    ctrl.indexCtrl.modal("#new-admin-modal", "hide");
+                    ctrl.indexCtrl.modal("new-admin-modal");
                 }).finally(() => {
                     ctrl.savingStates["new-admin"] = false;
             });
@@ -122,7 +122,7 @@ module App.Controllers {
                 .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail)
                 .then(user => {
                     ctrl.orgVolunteers.push(user.data);
-                    ctrl.indexCtrl.modal("#new-volunteer-modal", "hide");
+                    ctrl.indexCtrl.modal("new-volunteer-modal");
                 }).finally(() => {
                     ctrl.savingStates["new-volunteer"] = false;
             });

@@ -62,9 +62,9 @@ module App.Controllers {
 
         currentUser: ICurrentUser;
 
-        static $inject = ["$scope", "$location"];
+        static $inject = ["$scope", "$location", "$q", "$modal"];
 
-        constructor(public $scope, public $location){
+        constructor(public $scope, public $location, public $q, public $modal){
             $scope.App = App;
             var ctrl = this;
             var scope = this.$scope;
@@ -212,9 +212,11 @@ module App.Controllers {
 
         /* UI Utils */
 
-        modal(selector, action) {
-            var modal: any = $(selector);
-            modal.modal(action);
+        modal(template) {
+            var ctrl = this;
+            var modalInstance = this.$modal.open({
+                templateUrl: template,
+            });
         }
 
 
@@ -266,8 +268,8 @@ module App.Controllers {
     showSearch() {
         this.$scope.searchShown = true;
         setTimeout(function () {
-            $(".search-input-group input").focus();
-            $(".search-input-group input").select();
+            //$(".search-input-group input").focus();
+            //$(".search-input-group input").select();
         }, 0);
     }
 
@@ -332,7 +334,7 @@ module App.Controllers {
             ctrl.newSourceState = true;
             Controllers.SourceDocumentController.Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p").success(() => {
                 safeApply(ctrl.$scope, () => {
-                    ctrl.modal('#source-upload-modal', 'hide');
+                    ctrl.modal('source-upload-modal');
                     ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
                 });
             }).finally(() => {

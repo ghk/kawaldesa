@@ -129,3 +129,19 @@
 
 </body>
 </html>
+<script type="text/ng-template" id="template/modal/backdrop.html">
+    <div class="modal-backdrop"
+         modal-animation-class="fade"
+         modal-in-class="in"
+         ng-style="{'z-index': 1040 + (index && 1 || 0) + index*10}">
+    </div>
+</script>
+
+<script type="text/ng-template" id="template/modal/window.html">
+    <div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"
+         modal-animation-class="fade"
+         modal-in-class="in"
+         ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+        <div class="modal-dialog" ng-class="size ? 'modal-' + size : ''"><div class="modal-content" modal-transclude></div></div>
+    </div>
+</script>

@@ -4,7 +4,10 @@
 module App {
 
     export var kawaldesa = angular.module('kawaldesa', [
-        'angularFileUpload', 'ui.bootstrap.typeahead', 'ui.bootstrap.position'
+        'angularFileUpload',
+        'ui.bootstrap.typeahead',
+        'ui.bootstrap.position',
+        'ui.bootstrap.modal'
     ]);
 
     kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        
