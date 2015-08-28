@@ -21,7 +21,8 @@ module App.Controllers {
             var scope = this.$scope;
             var model = new Models.User(this.$scope.model);
 
-            model.Login().done(data => {
+            /*
+            model.Login().then(data => {
                 window.location.href = Referrer;
             }).fail(response => {
                     var resp: any = response;
@@ -33,6 +34,8 @@ module App.Controllers {
             }).always(() => {
                 scope.$apply();
             });
+
+*/
         }
     }
 

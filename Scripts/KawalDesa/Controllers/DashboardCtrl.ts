@@ -36,31 +36,31 @@ module App.Controllers {
             var indexCtrl = this.indexCtrl;
 
             if (indexCtrl.isInRole("admin")) {
-                Controllers.ApbnController.GetAll().done(apbns => {
+                Controllers.ApbnController.GetAll().then(apbns => {
                     $scope.$apply(() => {
                         $scope.apbns = apbns;
                     });
                 });
             }
-            Controllers.RegionController.Get("0").done(region => {
+            Controllers.RegionController.Get("0").then(region => {
                 $scope.$apply(() => {
-                    ctrl.national = region;
+                    ctrl.national = region.data;
                 });
             });
         }
 
         loadUser() {
             var ctrl = this;
-            Models.User.GetCurrentUser().done((user) => {
+            Services.UserController.GetCurrentUser().then((user) => {
                 ctrl.$scope.$apply(() => {
                     ctrl.roles = {};
-                    for (var i = 0; i < user.Roles.length; i++) {
-                        ctrl.roles[user.Roles[i]] = true;
+                    for (var i = 0; i < user.data.Roles.length; i++) {
+                        ctrl.roles[user.data.Roles[i]] = true;
                     }
                     ctrl.regionPairs = [];
-                    for (var i = 0; i < user.Scopes.length; i++) {
+                    for (var i = 0; i < user.data.Scopes.length; i++) {
                         var regionPair = [null, null, null, null, null];
-                        var current = user.Scopes[i];
+                        var current = user.data.Scopes[i];
                         while (current) {
                             regionPair[current.Type] = current;
                             current = current.Parent;
@@ -81,10 +81,12 @@ module App.Controllers {
                 }
             }
             this.savingStates["roles"] = true;
-            Models.User.UpdateVolunteerRoles(selectedRoles).done(() => {
+            /*
+            Models.User.UpdateVolunteerRoles(selectedRoles).then(() => {
                 ctrl.loadUser();
                 this.savingStates["roles"] = false;
             });
+            */
         }
 
         uploadFile() {
@@ -113,7 +115,7 @@ module App.Controllers {
             this.savingStates["apbn"] = true;
             for (var i = 0, len = apbns.length; i < len; i++) {
                 var apbn = apbns[i];                                                              
-                Controllers.ApbnController.Save(apbn).done(() => {
+                Controllers.ApbnController.Save(apbn).then(() => {
                     ctrl.$scope.$apply(() => {
                         ctrl.savingStates["apbn"] = false;
                     });

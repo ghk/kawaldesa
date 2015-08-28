@@ -1,5 +1,5 @@
 ﻿/// WARNING: T4 generated file 
-/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 
 module App.Controllers.Models {
 	import IQuery = Scaffold.IQuery;
@@ -17,28 +17,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IAccountRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IAccountRecapitulation>> {
-			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IAccountRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IAccountRecapitulation>>(AccountRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/AccountRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.AccountRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IAccountRecapitulation> {
-			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IAccountRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IAccountRecapitulation> (AccountRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/AccountRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.AccountRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(AccountRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(AccountRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/AccountRecapitulation/GetCount',
 				data: query,
 			}));
@@ -54,28 +52,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenAccountRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenAccountRecapitulation>> {
-			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenAccountRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenAccountRecapitulation>>(FrozenAccountRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenAccountRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenAccountRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenAccountRecapitulation> {
-			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenAccountRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenAccountRecapitulation> (FrozenAccountRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenAccountRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenAccountRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenAccountRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenAccountRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenAccountRecapitulation/GetCount',
 				data: query,
 			}));
@@ -91,28 +87,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IApbdes) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IApbdes>> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IApbdes>> {
+			var res = Scaffold.$http<Array<App.Models.IApbdes>>(ApbdesController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Apbdes/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Apbdes(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IApbdes> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.IApbdes> {
+			var res = Scaffold.$http<App.Models.IApbdes> (ApbdesController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Apbdes/Get/'+id,
-			})).then((model) => new App.Models.Apbdes(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(ApbdesController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Apbdes/GetCount',
 				data: query,
 			}));
@@ -124,26 +118,26 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static Complete(apbdesId: number): JQueryPromise<void> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-			type: 'POST',
+        static Complete(apbdesId: number): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(ApbdesController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Apbdes/Complete?apbdesId='+apbdesId+'',
 				}));
 			   return res;
 	    }
     
-        static AddAccounts(apbdesId: number, rootAccountId: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): JQueryPromise<void> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-			type: 'POST',
+        static AddAccounts(apbdesId: number, rootAccountId: number, /** [FromBody] **/accounts: Array<App.Models.IAccount>): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(ApbdesController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Apbdes/AddAccounts?apbdesId='+apbdesId+'&rootAccountId='+rootAccountId+'',
 	            data: JSON.stringify(accounts),
 			}));
 			   return res;
 	    }
     
-        static GetByRegionId(regionId: string): JQueryPromise<App.Models.IApbdes> {
-			var res = $.ajax(ApbdesController.ajaxSettings.build({
-			type: 'GET',
+        static GetByRegionId(regionId: string): ng.IHttpPromise<App.Models.IApbdes> {
+			var res = Scaffold.$http<App.Models.IApbdes>(ApbdesController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Apbdes/GetByRegionId?regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
@@ -158,51 +152,45 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IApbn) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IApbn>> {
-			var res = $.ajax(ApbnController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IApbn>> {
+			var res = Scaffold.$http<Array<App.Models.IApbn>>(ApbnController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Apbn/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Apbn(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IApbn> {
-			var res = $.ajax(ApbnController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.IApbn> {
+			var res = Scaffold.$http<App.Models.IApbn> (ApbnController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Apbn/Get/'+id,
-			})).then((model) => new App.Models.Apbn(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(ApbnController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(ApbnController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Apbn/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 		
-		static Save(model: App.Models.IApbn): JQueryPromise<void> {
+		static Save(model: App.Models.IApbn): ng.IHttpPromise<number> {
 			var isNew = model.Id == null;
-            var res = $.ajax(ApbnController.ajaxSettings.build({
-                 type: isNew ? 'POST' : 'PUT',
+            var res = Scaffold.$http<number>(ApbnController.ajaxSettings.build({
+                 method: isNew ? 'POST' : 'PUT',
 				 url: '/api/Apbn/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
-            })).then((id) => {
-				if(isNew) {
-					model.Id = id;
-				}
-			});
+            }));
             return res;
         }
 
-		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(ApbnController.ajaxSettings.build({
-					type: 'GET',
+		static Delete(id: number): ng.IHttpPromise<void> {
+				var res = Scaffold.$http<void>(ApbnController.ajaxSettings.build({
+					method: 'GET',
 					url: '/api/Apbn/Delete/'+id,
 				}));
 				return res;
@@ -213,49 +201,49 @@ module App.Controllers.Models {
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        static Post(model: /** TModel **/ any): JQueryPromise</** TId **/ any> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'POST',
+        static Post(model: /** TModel **/ any): ng.IHttpPromise</** TId **/ any> {
+			var res = Scaffold.$http</** TId **/ any>(BaseController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Base/Post?model='+model+'',
 				}));
 			   return res;
 	    }
     
-        static Put(model: /** TModel **/ any): JQueryPromise<void> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'PUT',
+        static Put(model: /** TModel **/ any): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(BaseController.ajaxSettings.build({
+			method: 'PUT',
 			url: '/api/Base/Put?model='+model+'',
 				}));
 			   return res;
 	    }
     
-        static Delete(id: /** TId **/ any): JQueryPromise<void> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'DELETE',
+        static Delete(id: /** TId **/ any): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(BaseController.ajaxSettings.build({
+			method: 'DELETE',
 			url: '/api/Base/Delete?id='+id+'',
 				}));
 			   return res;
 	    }
     
-        static Get(id: /** TId **/ any): JQueryPromise</** TModel **/ any> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'GET',
+        static Get(id: /** TId **/ any): ng.IHttpPromise</** TModel **/ any> {
+			var res = Scaffold.$http</** TModel **/ any>(BaseController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Base/Get?id='+id+'',
 				}));
 			   return res;
 	    }
     
-        static GetCount(): JQueryPromise<number> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'GET',
+        static GetCount(): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(BaseController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Base/GetCount',
 				}));
 			   return res;
 	    }
     
-        static GetAll(): JQueryPromise</** System.Linq.IQueryable<TModel> **/ any> {
-			var res = $.ajax(BaseController.ajaxSettings.build({
-			type: 'GET',
+        static GetAll(): ng.IHttpPromise</** System.Linq.IQueryable<TModel> **/ any> {
+			var res = Scaffold.$http</** System.Linq.IQueryable<TModel> **/ any>(BaseController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Base/GetAll',
 				}));
 			   return res;
@@ -270,75 +258,69 @@ module App.Controllers.Models {
         constructor(data?: App.Models.ISpreadsheet) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ISpreadsheet>> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ISpreadsheet>> {
+			var res = Scaffold.$http<Array<App.Models.ISpreadsheet>>(SpreadsheetController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Spreadsheet/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Spreadsheet(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.ISpreadsheet> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.ISpreadsheet> {
+			var res = Scaffold.$http<App.Models.ISpreadsheet> (SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Spreadsheet/Get/'+id,
-			})).then((model) => new App.Models.Spreadsheet(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Spreadsheet/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 		
-		static Save(model: App.Models.ISpreadsheet): JQueryPromise<void> {
+		static Save(model: App.Models.ISpreadsheet): ng.IHttpPromise<number> {
 			var isNew = model.Id == null;
-            var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-                 type: isNew ? 'POST' : 'PUT',
+            var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
+                 method: isNew ? 'POST' : 'PUT',
 				 url: '/api/Spreadsheet/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
-            })).then((id) => {
-				if(isNew) {
-					model.Id = id;
-				}
-			});
+            }));
             return res;
         }
 
-		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-					type: 'GET',
+		static Delete(id: number): ng.IHttpPromise<void> {
+				var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
+					method: 'GET',
 					url: '/api/Spreadsheet/Delete/'+id,
 				}));
 				return res;
 		}
 	        
-        static GetActive(type: number, regionId: string, apbnKey: string): JQueryPromise<App.Models.ISpreadsheet> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-			type: 'GET',
+        static GetActive(type: number, regionId: string, apbnKey: string): ng.IHttpPromise<App.Models.ISpreadsheet> {
+			var res = Scaffold.$http<App.Models.ISpreadsheet>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Spreadsheet/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
-        static GetTemplate(type: number, regionId: string, apbnKey: string): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-			type: 'GET',
+        static GetTemplate(type: number, regionId: string, apbnKey: string): ng.IHttpPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = Scaffold.$http</** System.Net.Http.HttpResponseMessage **/ any>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Spreadsheet/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
-        static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): JQueryPromise<string> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-			type: 'GET',
+        static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): ng.IHttpPromise<string> {
+			var res = Scaffold.$http<string>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Spreadsheet/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
@@ -349,9 +331,9 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GenerateDanaDesaKabs(apbnKey: string): JQueryPromise<void> {
-			var res = $.ajax(SpreadsheetController.ajaxSettings.build({
-			type: 'GET',
+        static GenerateDanaDesaKabs(apbnKey: string): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Spreadsheet/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
@@ -366,28 +348,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IFieldReport) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IFieldReport>> {
-			var res = $.ajax(FieldReportController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IFieldReport>> {
+			var res = Scaffold.$http<Array<App.Models.IFieldReport>>(FieldReportController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FieldReport/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.FieldReport(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IFieldReport> {
-			var res = $.ajax(FieldReportController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.IFieldReport> {
+			var res = Scaffold.$http<App.Models.IFieldReport> (FieldReportController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FieldReport/Get/'+id,
-			})).then((model) => new App.Models.FieldReport(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FieldReportController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FieldReportController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FieldReport/GetCount',
 				data: query,
 			}));
@@ -399,9 +379,9 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetPicture(realizationId: number): JQueryPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
-			var res = $.ajax(FieldReportController.ajaxSettings.build({
-			type: 'GET',
+        static GetPicture(realizationId: number): ng.IHttpPromise</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any> {
+			var res = Scaffold.$http</** System.Linq.IQueryable<System.Collections.Generic.List<App.Models.Blob>> **/ any>(FieldReportController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FieldReport/GetPicture?realizationId='+realizationId+'',
 				}));
 			   return res;
@@ -421,28 +401,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.INationalAddRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalAddRecapitulation>> {
-			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.INationalAddRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.INationalAddRecapitulation>>(NationalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalAddRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.NationalAddRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.INationalAddRecapitulation> {
-			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.INationalAddRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.INationalAddRecapitulation> (NationalAddRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/NationalAddRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.NationalAddRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(NationalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(NationalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalAddRecapitulation/GetCount',
 				data: query,
 			}));
@@ -458,28 +436,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenNationalAddRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalAddRecapitulation>> {
-			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalAddRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenNationalAddRecapitulation>>(FrozenNationalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalAddRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenNationalAddRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalAddRecapitulation> {
-			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalAddRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenNationalAddRecapitulation> (FrozenNationalAddRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenNationalAddRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenNationalAddRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenNationalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenNationalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalAddRecapitulation/GetCount',
 				data: query,
 			}));
@@ -500,28 +476,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.INationalBhprRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalBhprRecapitulation>> {
-			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.INationalBhprRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.INationalBhprRecapitulation>>(NationalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalBhprRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.NationalBhprRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.INationalBhprRecapitulation> {
-			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.INationalBhprRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.INationalBhprRecapitulation> (NationalBhprRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/NationalBhprRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.NationalBhprRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(NationalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(NationalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalBhprRecapitulation/GetCount',
 				data: query,
 			}));
@@ -537,28 +511,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenNationalBhprRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>> {
-			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>>(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalBhprRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenNationalBhprRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalBhprRecapitulation> {
-			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalBhprRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenNationalBhprRecapitulation> (FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenNationalBhprRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenNationalBhprRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalBhprRecapitulation/GetCount',
 				data: query,
 			}));
@@ -579,28 +551,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.INationalDdRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.INationalDdRecapitulation>> {
-			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.INationalDdRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.INationalDdRecapitulation>>(NationalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalDdRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.NationalDdRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.INationalDdRecapitulation> {
-			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.INationalDdRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.INationalDdRecapitulation> (NationalDdRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/NationalDdRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.NationalDdRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(NationalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(NationalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/NationalDdRecapitulation/GetCount',
 				data: query,
 			}));
@@ -616,28 +586,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenNationalDdRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenNationalDdRecapitulation>> {
-			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalDdRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenNationalDdRecapitulation>>(FrozenNationalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalDdRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenNationalDdRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenNationalDdRecapitulation> {
-			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalDdRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenNationalDdRecapitulation> (FrozenNationalDdRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenNationalDdRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenNationalDdRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenNationalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenNationalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenNationalDdRecapitulation/GetCount',
 				data: query,
 			}));
@@ -653,75 +621,69 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IOrganization) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IOrganization>> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IOrganization>> {
+			var res = Scaffold.$http<Array<App.Models.IOrganization>>(OrganizationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Organization/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Organization(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IOrganization> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.IOrganization> {
+			var res = Scaffold.$http<App.Models.IOrganization> (OrganizationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Organization/Get/'+id,
-			})).then((model) => new App.Models.Organization(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(OrganizationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Organization/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 		
-		static Save(model: App.Models.IOrganization): JQueryPromise<void> {
+		static Save(model: App.Models.IOrganization): ng.IHttpPromise<number> {
 			var isNew = model.Id == null;
-            var res = $.ajax(OrganizationController.ajaxSettings.build({
-                 type: isNew ? 'POST' : 'PUT',
+            var res = Scaffold.$http<number>(OrganizationController.ajaxSettings.build({
+                 method: isNew ? 'POST' : 'PUT',
 				 url: '/api/Organization/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
-            })).then((id) => {
-				if(isNew) {
-					model.Id = id;
-				}
-			});
+            }));
             return res;
         }
 
-		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(OrganizationController.ajaxSettings.build({
-					type: 'GET',
+		static Delete(id: number): ng.IHttpPromise<void> {
+				var res = Scaffold.$http<void>(OrganizationController.ajaxSettings.build({
+					method: 'GET',
 					url: '/api/Organization/Delete/'+id,
 				}));
 				return res;
 		}
 	        
-        static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IOrganization> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-			type: 'GET',
+        static GetByURLKey(urlKey: string): ng.IHttpPromise<App.Models.IOrganization> {
+			var res = Scaffold.$http<App.Models.IOrganization>(OrganizationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Organization/GetByURLKey?urlKey='+encodeURI(urlKey)+'',
 				}));
 			   return res;
 	    }
     
-        static AddOrgAdmin(id: number, email: string): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-			type: 'POST',
+        static AddOrgAdmin(id: number, email: string): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(OrganizationController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Organization/AddOrgAdmin?id='+id+'&email='+encodeURI(email)+'',
 				}));
 			   return res;
 	    }
     
-        static AddOrgVolunteer(id: number, email: string): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(OrganizationController.ajaxSettings.build({
-			type: 'POST',
+        static AddOrgVolunteer(id: number, email: string): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(OrganizationController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Organization/AddOrgVolunteer?id='+id+'&email='+encodeURI(email)+'',
 				}));
 			   return res;
@@ -741,28 +703,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IRealization) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRealization>> {
-			var res = $.ajax(RealizationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IRealization>> {
+			var res = Scaffold.$http<Array<App.Models.IRealization>>(RealizationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Realization/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Realization(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.IRealization> {
-			var res = $.ajax(RealizationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.IRealization> {
+			var res = Scaffold.$http<App.Models.IRealization> (RealizationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Realization/Get/'+id,
-			})).then((model) => new App.Models.Realization(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RealizationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RealizationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Realization/GetCount',
 				data: query,
 			}));
@@ -783,28 +743,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IRegionalAddRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalAddRecapitulation>> {
-			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IRegionalAddRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IRegionalAddRecapitulation>>(RegionalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalAddRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.RegionalAddRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalAddRecapitulation> {
-			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IRegionalAddRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IRegionalAddRecapitulation> (RegionalAddRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/RegionalAddRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.RegionalAddRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RegionalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RegionalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalAddRecapitulation/GetCount',
 				data: query,
 			}));
@@ -820,28 +778,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenRegionalAddRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>> {
-			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>>(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalAddRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenRegionalAddRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalAddRecapitulation> {
-			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalAddRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenRegionalAddRecapitulation> (FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenRegionalAddRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenRegionalAddRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalAddRecapitulation/GetCount',
 				data: query,
 			}));
@@ -862,28 +818,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IRegionalBhprRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalBhprRecapitulation>> {
-			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IRegionalBhprRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IRegionalBhprRecapitulation>>(RegionalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalBhprRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.RegionalBhprRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalBhprRecapitulation> {
-			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IRegionalBhprRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IRegionalBhprRecapitulation> (RegionalBhprRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/RegionalBhprRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.RegionalBhprRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RegionalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RegionalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalBhprRecapitulation/GetCount',
 				data: query,
 			}));
@@ -899,28 +853,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenRegionalBhprRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>> {
-			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>>(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalBhprRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenRegionalBhprRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalBhprRecapitulation> {
-			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalBhprRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenRegionalBhprRecapitulation> (FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenRegionalBhprRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenRegionalBhprRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalBhprRecapitulation/GetCount',
 				data: query,
 			}));
@@ -941,28 +893,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IRegionalDdRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IRegionalDdRecapitulation>> {
-			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IRegionalDdRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IRegionalDdRecapitulation>>(RegionalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalDdRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.RegionalDdRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IRegionalDdRecapitulation> {
-			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IRegionalDdRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IRegionalDdRecapitulation> (RegionalDdRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/RegionalDdRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.RegionalDdRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RegionalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RegionalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionalDdRecapitulation/GetCount',
 				data: query,
 			}));
@@ -978,28 +928,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenRegionalDdRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>> {
-			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>>(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalDdRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenRegionalDdRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenRegionalDdRecapitulation> {
-			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalDdRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenRegionalDdRecapitulation> (FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenRegionalDdRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenRegionalDdRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenRegionalDdRecapitulation/GetCount',
 				data: query,
 			}));
@@ -1015,45 +963,43 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IRegion) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRegion>> {
-			var res = $.ajax(RegionController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IRegion>> {
+			var res = Scaffold.$http<Array<App.Models.IRegion>>(RegionController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Region/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Region(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.IRegion> {
-			var res = $.ajax(RegionController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.IRegion> {
+			var res = Scaffold.$http<App.Models.IRegion> (RegionController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Region/Get/'+id,
-			})).then((model) => new App.Models.Region(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RegionController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RegionController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Region/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 	        
-        static GetByURLKey(urlKey: string): JQueryPromise<App.Models.IRegion> {
-			var res = $.ajax(RegionController.ajaxSettings.build({
-			type: 'GET',
+        static GetByURLKey(urlKey: string): ng.IHttpPromise<App.Models.IRegion> {
+			var res = Scaffold.$http<App.Models.IRegion>(RegionController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Region/GetByURLKey?urlKey='+encodeURI(urlKey)+'',
 				}));
 			   return res;
 	    }
     
-        static UpdateWebsite(regionId: string, regionWebsite: string): JQueryPromise<void> {
-			var res = $.ajax(RegionController.ajaxSettings.build({
-			type: 'POST',
+        static UpdateWebsite(regionId: string, regionWebsite: string): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(RegionController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/Region/UpdateWebsite?regionId='+encodeURI(regionId)+'&regionWebsite='+encodeURI(regionWebsite)+'',
 				}));
 			   return res;
@@ -1068,28 +1014,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.IRegionSearchResult) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.IRegionSearchResult>> {
-			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.IRegionSearchResult>> {
+			var res = Scaffold.$http<Array<App.Models.IRegionSearchResult>>(RegionSearchResultController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionSearchResult/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.RegionSearchResult(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.IRegionSearchResult> {
-			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.IRegionSearchResult> {
+			var res = Scaffold.$http<App.Models.IRegionSearchResult> (RegionSearchResultController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/RegionSearchResult/Get/'+id,
-			})).then((model) => new App.Models.RegionSearchResult(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(RegionSearchResultController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(RegionSearchResultController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/RegionSearchResult/GetCount',
 				data: query,
 			}));
@@ -1105,51 +1049,45 @@ module App.Controllers.Models {
         constructor(data?: App.Models.ISourceDocument) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ISourceDocument>> {
-			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ISourceDocument>> {
+			var res = Scaffold.$http<Array<App.Models.ISourceDocument>>(SourceDocumentController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/SourceDocument/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.SourceDocument(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.ISourceDocument> {
-			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.ISourceDocument> {
+			var res = Scaffold.$http<App.Models.ISourceDocument> (SourceDocumentController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/SourceDocument/Get/'+id,
-			})).then((model) => new App.Models.SourceDocument(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(SourceDocumentController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(SourceDocumentController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/SourceDocument/GetCount',
 				data: query,
 			}));
 			return res;
 		}
 		
-		static Save(model: App.Models.ISourceDocument): JQueryPromise<void> {
+		static Save(model: App.Models.ISourceDocument): ng.IHttpPromise<number> {
 			var isNew = model.Id == null;
-            var res = $.ajax(SourceDocumentController.ajaxSettings.build({
-                 type: isNew ? 'POST' : 'PUT',
+            var res = Scaffold.$http<number>(SourceDocumentController.ajaxSettings.build({
+                 method: isNew ? 'POST' : 'PUT',
 				 url: '/api/SourceDocument/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
-            })).then((id) => {
-				if(isNew) {
-					model.Id = id;
-				}
-			});
+            }));
             return res;
         }
 
-		static Delete(id: number): JQueryPromise<void> {
-				var res = $.ajax(SourceDocumentController.ajaxSettings.build({
-					type: 'GET',
+		static Delete(id: number): ng.IHttpPromise<void> {
+				var res = Scaffold.$http<void>(SourceDocumentController.ajaxSettings.build({
+					method: 'GET',
 					url: '/api/SourceDocument/Delete/'+id,
 				}));
 				return res;
@@ -1169,28 +1107,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.ITransaction) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.ITransaction>> {
-			var res = $.ajax(TransactionController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ITransaction>> {
+			var res = Scaffold.$http<Array<App.Models.ITransaction>>(TransactionController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Transaction/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Transaction(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: number): JQueryPromise<App.Models.ITransaction> {
-			var res = $.ajax(TransactionController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: number): ng.IHttpPromise<App.Models.ITransaction> {
+			var res = Scaffold.$http<App.Models.ITransaction> (TransactionController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Transaction/Get/'+id,
-			})).then((model) => new App.Models.Transaction(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(TransactionController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(TransactionController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/Transaction/GetCount',
 				data: query,
 			}));
@@ -1202,9 +1138,9 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetTransferTransactions(regionId: string): JQueryPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
-			var res = $.ajax(TransactionController.ajaxSettings.build({
-			type: 'GET',
+        static GetTransferTransactions(regionId: string): ng.IHttpPromise<Array</** App.Controllers.Models.TransferTransactionRow **/ any>> {
+			var res = Scaffold.$http<Array</** App.Controllers.Models.TransferTransactionRow **/ any>>(TransactionController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Transaction/GetTransferTransactions?regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
@@ -1215,9 +1151,9 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
-        static GetRealizationTransactions(accountId: number): JQueryPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
-			var res = $.ajax(TransactionController.ajaxSettings.build({
-			type: 'GET',
+        static GetRealizationTransactions(accountId: number): ng.IHttpPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
+			var res = Scaffold.$http<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>>(TransactionController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/Transaction/GetRealizationTransactions?accountId='+accountId+'',
 				}));
 			   return res;
@@ -1237,28 +1173,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.ITransferRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.ITransferRecapitulation>> {
-			var res = $.ajax(TransferRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.ITransferRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.ITransferRecapitulation>>(TransferRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/TransferRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.TransferRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.ITransferRecapitulation> {
-			var res = $.ajax(TransferRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.ITransferRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.ITransferRecapitulation> (TransferRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/TransferRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.TransferRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(TransferRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(TransferRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/TransferRecapitulation/GetCount',
 				data: query,
 			}));
@@ -1274,28 +1208,26 @@ module App.Controllers.Models {
         constructor(data?: App.Models.Views.IFrozenTransferRecapitulation) {
             this.dataModel = data;
         }
-		static GetAll(query?: IQuery): JQueryPromise<Array<App.Models.Views.IFrozenTransferRecapitulation>> {
-			var res = $.ajax(FrozenTransferRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenTransferRecapitulation>> {
+			var res = Scaffold.$http<Array<App.Models.Views.IFrozenTransferRecapitulation>>(FrozenTransferRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenTransferRecapitulation/GetAll',
-				data: query,
-			})).then((models) => {
-				return models.map((model) => new App.Models.Views.FrozenTransferRecapitulation(model));
-			});
+				params: query,
+			}));
 			return res;
 		}
 
-		static Get(id: string): JQueryPromise<App.Models.Views.IFrozenTransferRecapitulation> {
-			var res = $.ajax(FrozenTransferRecapitulationController.ajaxSettings.build({
-			type: 'GET',
+		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenTransferRecapitulation> {
+			var res = Scaffold.$http<App.Models.Views.IFrozenTransferRecapitulation> (FrozenTransferRecapitulationController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/FrozenTransferRecapitulation/Get/'+id,
-			})).then((model) => new App.Models.Views.FrozenTransferRecapitulation(model));
+			}));
 			return res;
 		}
 
-		static Count(query?: IQuery): JQueryPromise<number> {
-			var res = $.ajax(FrozenTransferRecapitulationController.ajaxSettings.build({
-				type: 'GET',
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(FrozenTransferRecapitulationController.ajaxSettings.build({
+				method: 'GET',
 				url: '/api/FrozenTransferRecapitulation/GetCount',
 				data: query,
 			}));
@@ -1311,100 +1243,100 @@ module App.Controllers.Services {
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
-        static Login(/** [FromBody] **/model: /** App.Models.LoginViewModel **/ any): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'POST',
+        static Login(/** [FromBody] **/model: /** App.Models.LoginViewModel **/ any): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(UserController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/User/Login',
 	            data: JSON.stringify(model),
 			}));
 			   return res;
 	    }
     
-        static GetCurrentUser(): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static GetCurrentUser(): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/GetCurrentUser',
 				}));
 			   return res;
 	    }
     
-        static Convert(user: /** App.Models.User **/ any): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static Convert(user: /** App.Models.User **/ any): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/Convert?user='+user+'',
 				}));
 			   return res;
 	    }
     
-        static Logout(): JQueryPromise<void> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static Logout(): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/Logout',
 				}));
 			   return res;
 	    }
     
-        static Register(/** [FromBody] **/model: /** App.Models.RegisterViewModel **/ any): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'POST',
+        static Register(/** [FromBody] **/model: /** App.Models.RegisterViewModel **/ any): ng.IHttpPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = Scaffold.$http</** System.Net.Http.HttpResponseMessage **/ any>(UserController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/User/Register',
 	            data: JSON.stringify(model),
 			}));
 			   return res;
 	    }
     
-        static Update(model: /** App.Models.RegisterViewModel **/ any): JQueryPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'PUT',
+        static Update(model: /** App.Models.RegisterViewModel **/ any): ng.IHttpPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = Scaffold.$http</** System.Net.Http.HttpResponseMessage **/ any>(UserController.ajaxSettings.build({
+			method: 'PUT',
 			url: '/api/User/Update?model='+model+'',
 				}));
 			   return res;
 	    }
     
-        static GetCount(): JQueryPromise<number> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static GetCount(): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/GetCount',
 				}));
 			   return res;
 	    }
     
-        static GetAll(): JQueryPromise<Array<App.Models.IUserViewModel>> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static GetAll(): ng.IHttpPromise<Array<App.Models.IUserViewModel>> {
+			var res = Scaffold.$http<Array<App.Models.IUserViewModel>>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/GetAll',
 				}));
 			   return res;
 	    }
     
-        static Get(id: string): JQueryPromise<App.Models.IUserViewModel> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static Get(id: string): ng.IHttpPromise<App.Models.IUserViewModel> {
+			var res = Scaffold.$http<App.Models.IUserViewModel>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/Get?id='+encodeURI(id)+'',
 				}));
 			   return res;
 	    }
     
-        static GetAllByOrg(orgId: number): JQueryPromise<Array<App.Models.IUserViewModel>> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'GET',
+        static GetAllByOrg(orgId: number): ng.IHttpPromise<Array<App.Models.IUserViewModel>> {
+			var res = Scaffold.$http<Array<App.Models.IUserViewModel>>(UserController.ajaxSettings.build({
+			method: 'GET',
 			url: '/api/User/GetAllByOrg?orgId='+orgId+'',
 				}));
 			   return res;
 	    }
     
-        static SetScopes(id: string, /** [FromBody] **/regions: Array<App.Models.IRegion>): JQueryPromise<void> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'POST',
+        static SetScopes(id: string, /** [FromBody] **/regions: Array<App.Models.IRegion>): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(UserController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/User/SetScopes?id='+encodeURI(id)+'',
 	            data: JSON.stringify(regions),
 			}));
 			   return res;
 	    }
     
-        static UpdateVolunteerRoles(id: string, /** [FromBody] **/roleNames: Array<string>): JQueryPromise<void> {
-			var res = $.ajax(UserController.ajaxSettings.build({
-			type: 'POST',
+        static UpdateVolunteerRoles(id: string, /** [FromBody] **/roleNames: Array<string>): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(UserController.ajaxSettings.build({
+			method: 'POST',
 			url: '/api/User/UpdateVolunteerRoles?id='+encodeURI(id)+'',
 	            data: JSON.stringify(roleNames),
 			}));

@@ -59,11 +59,9 @@ module App.Controllers {
                     type = Controllers.RegionalDdRecapitulationController;
                 }
             }
-            type.GetAll(query).done((recapitulations) => {
-                scope.$apply(() => {
-                    scope.entities = recapitulations.filter(r => r.RegionId != parentId);
-                    scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
-                });
+            type.GetAll(query).then((recapitulations) => {
+                scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
+                scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
             });
         }
 

@@ -36,15 +36,13 @@ module App.Controllers {
             var orgId = parseInt(this.indexCtrl.$location.path().replace("/orgs/", ""));
 
             this.savingStates["page"] = true;
-            Controllers.OrganizationController.GetAll().done(orgs => {
-                $scope.$apply(() => {
-                    this.savingStates["page"] = false;
-                    ctrl.organizations = orgs;
-                    if (orgId > 0) {
-                        ctrl.selected = this.organizations.filter(o => o.Id == orgId)[0];
-                        ctrl.loadOrganization();
-                    }
-                });
+            Controllers.OrganizationController.GetAll().then(orgs => {
+                this.savingStates["page"] = false;
+                ctrl.organizations = orgs.data;
+                if (orgId > 0) {
+                    ctrl.selected = this.organizations.filter(o => o.Id == orgId)[0];
+                    ctrl.loadOrganization();
+                }
             });
         }
 
@@ -60,18 +58,14 @@ module App.Controllers {
             var ctrl = this;
 
             ctrl.orgAdmins = ctrl.orgVolunteers = null;
-            Services.UserController.GetAllByOrg(this.selected.Id).done(users => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.orgAdmins = users.filter(u => u.Roles.filter(r => r == 'org_admin').length > 0);
-                    ctrl.orgVolunteers = users.filter(u => u.Roles.filter(r => r == 'org_admin').length == 0);
-                });
+            Services.UserController.GetAllByOrg(this.selected.Id).then(users => {
+                ctrl.orgAdmins = users.data.filter(u => u.Roles.filter(r => r == 'org_admin').length > 0);
+                ctrl.orgVolunteers = users.data.filter(u => u.Roles.filter(r => r == 'org_admin').length == 0);
             });
 
             ctrl.orgUploads = null;
-            Controllers.SpreadsheetController.GetAll({ "fkOrganizationId": this.selected.Id }).done(uploads => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.orgUploads = uploads;
-                });
+            Controllers.SpreadsheetController.GetAll({ "fkOrganizationId": this.selected.Id }).then(uploads => {
+                ctrl.orgUploads = uploads.data;
             });
         }
 
@@ -100,13 +94,11 @@ module App.Controllers {
             this.savingStates["new-org"] = true;
             var org = new Models.Organization();
             org.Name = this.newOrganizationName;
-            Controllers.OrganizationController.Save(org).done(() => {
+            Controllers.OrganizationController.Save(org).then(() => {
                 ctrl.organizations.push(org);
                 ctrl.indexCtrl.modal("#new-organization-modal", "hide");
-            }).always(() => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.savingStates["new-org"] = false;
-                });
+            }).finally(() => {
+                ctrl.savingStates["new-org"] = false;
             });
         }
 
@@ -114,15 +106,12 @@ module App.Controllers {
             var ctrl = this;
             this.savingStates["new-admin"] = true;
             Controllers.OrganizationController
-                .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail).done(user => {
-                    ctrl.$scope.$apply(() => {
-                        ctrl.orgAdmins.push(user);
-                        ctrl.indexCtrl.modal("#new-admin-modal", "hide");
-                    });
-                }).always(() => {
-                    ctrl.$scope.$apply(() => {
-                        ctrl.savingStates["new-admin"] = false;
-                    });
+                .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail)
+                .then(user => {
+                    ctrl.orgAdmins.push(user.data);
+                    ctrl.indexCtrl.modal("#new-admin-modal", "hide");
+                }).finally(() => {
+                    ctrl.savingStates["new-admin"] = false;
             });
         }
 
@@ -130,15 +119,12 @@ module App.Controllers {
             var ctrl = this;
             this.savingStates["new-volunteer"] = true;
             Controllers.OrganizationController
-                .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail).done(user => {
-                    ctrl.$scope.$apply(() => {
-                        ctrl.orgVolunteers.push(user);
-                        ctrl.indexCtrl.modal("#new-volunteer-modal", "hide");
-                    });
-                }).always(() => {
-                    ctrl.$scope.$apply(() => {
-                        ctrl.savingStates["new-volunteer"] = false;
-                    });
+                .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail)
+                .then(user => {
+                    ctrl.orgVolunteers.push(user.data);
+                    ctrl.indexCtrl.modal("#new-volunteer-modal", "hide");
+                }).finally(() => {
+                    ctrl.savingStates["new-volunteer"] = false;
             });
         }
 

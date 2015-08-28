@@ -32,10 +32,8 @@ module App.Controllers {
 
             var id = this.indexCtrl.$location.path().replace("/u/", "");
             this.loadUser(id);
-            Controllers.RegionController.Get("0").done(region => {
-                $scope.$apply(() => {
-                    ctrl.national = region;
-                });
+            Controllers.RegionController.Get("0").then(region => {
+                ctrl.national = region.data;
             });
         }
 
@@ -62,12 +60,10 @@ module App.Controllers {
                 return this.regionChildren[id];
 
             this.regionChildren[id] = [];
-            Controllers.RegionController.GetAll({ "ParentId": id }).done(regions => {
-                ctrl.$scope.$apply(() => {
-                    for (var i = 0; i < regions.length; i++) {
-                        ctrl.regionChildren[id].push(regions[i]);
-                    }
-                });
+            Controllers.RegionController.GetAll({ "ParentId": id }).then(regions => {
+                for (var i = 0; i < regions.data.length; i++) {
+                    ctrl.regionChildren[id].push(regions.data[i]);
+                }
             });
             return this.regionChildren[id];
         }
@@ -97,42 +93,36 @@ module App.Controllers {
             }
 
             this.savingStates["scopes"] = true;
-            Services.UserController.SetScopes(this.selected.Id, selectedRegions).done(() => {
+            Services.UserController.SetScopes(this.selected.Id, selectedRegions).then(() => {
                 ctrl.loadUser(this.selected.Id);
-                ctrl.$scope.$apply(() => {
-                    ctrl.savingStates["scopes"] = false;
-                });
+                ctrl.savingStates["scopes"] = false;
             });
         }
 
         loadUser(id: string) {
             var ctrl = this;
-            Services.UserController.Get(id).done((user) => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.selected = user;
-                    ctrl.roles = {};
-                    for (var i = 0; i < user.Roles.length; i++) {
-                        ctrl.roles[user.Roles[i]] = true;
+            Services.UserController.Get(id).then((user) => {
+                ctrl.selected = user.data;
+                ctrl.roles = {};
+                for (var i = 0; i < user.data.Roles.length; i++) {
+                    ctrl.roles[user.data.Roles[i]] = true;
+                }
+                ctrl.regionPairs = [];
+                for (var i = 0; i < user.data.Scopes.length; i++) {
+                    var regionPair = [null, null, null, null, null];
+                    var current = user.data.Scopes[i];
+                    while (current) {
+                        regionPair[current.Type] = current;
+                        current = current.Parent;
                     }
-                    ctrl.regionPairs = [];
-                    for (var i = 0; i < user.Scopes.length; i++) {
-                        var regionPair = [null, null, null, null, null];
-                        var current = user.Scopes[i];
-                        while (current) {
-                            regionPair[current.Type] = current;
-                            current = current.Parent;
-                        }
-                        ctrl.regionPairs.push(regionPair);
-                    }
-                });
+                    ctrl.regionPairs.push(regionPair);
+                }
                 console.log(ctrl.regionPairs);
             });
 
             ctrl.uploads = null;
-            Controllers.SpreadsheetController.GetAll({ "fkCreatedById": id }).done(uploads => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.uploads = uploads;
-                });
+            Controllers.SpreadsheetController.GetAll({ "fkCreatedById": id }).then(uploads => {
+                ctrl.uploads = uploads.data;
             });
         }
 
@@ -145,10 +135,8 @@ module App.Controllers {
                 }
             }
             this.savingStates["roles"] = true;
-            Services.UserController.UpdateVolunteerRoles(this.selected.Id, selectedRoles).done(() => {
-                ctrl.$scope.$apply(() => {
-                    this.savingStates["roles"] = false;
-                });
+            Services.UserController.UpdateVolunteerRoles(this.selected.Id, selectedRoles).then(() => {
+                this.savingStates["roles"] = false;
             });
         }
     }

@@ -112,21 +112,17 @@ module App.Controllers {
                 type = Controllers.TransferRecapitulationController;
             }
             scope.entities = [];
-            type.GetAll(query).done((recapitulations) => {
-                scope.$apply(() => {
-                    scope.entities = recapitulations.filter(r => r.RegionId != parentId);
-                    scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
-                });
+            type.GetAll(query).then((recapitulations) => {
+                scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
+                scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
             });
         }
 
         loadTransactions(entityId) {
             var ctrl = this;
             if (this.expandedStates[entityId]) {
-                Controllers.TransactionController.GetTransferTransactions(entityId).done(details => {
-                    ctrl.$scope.$apply(() => {
-                        ctrl.transactions[entityId] = details;
-                    });
+                Controllers.TransactionController.GetTransferTransactions(entityId).then(details => {
+                    ctrl.transactions[entityId] = details.data;
                 });
             }
         }

@@ -1,20 +1,22 @@
-﻿/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
+/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 module Scaffold {
     export class AjaxSettings {
         async = true;
         cache = false;
         timeout = -1;
 
-        public build(settings: JQueryAjaxSettings): JQueryAjaxSettings {
+        public build(settings: ng.IRequestConfig): ng.IRequestConfig {
             return {
                 async: this.async,
                 cache: this.cache,
                 timeout: this.timeout,
                 dataType: 'json',
                 contentType: 'application/json',
-                type: settings.type,
+                method: settings.method,
                 url: settings.url,
-                data: settings.data
+                data: settings.data,
+                params: settings.params,
             }
         }
 
@@ -47,4 +49,6 @@ module Scaffold {
         SortField?: string;
         SortOrder?: string;
     }
+
+    export var $http: ng.IHttpService;
 }

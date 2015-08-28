@@ -76,10 +76,10 @@ module App.Controllers {
             var ctrl = this;
             this.formErrors[rootAccountId] = {};
             Controllers.ApbdesController.AddAccounts(this.apbdes.Id, rootAccountId, this.newAccounts[rootAccountId])
-                .done(() => {
+                .then(() => {
                     ctrl.getApbdes(ctrl.indexCtrl.region.Id);
                 })
-                .fail((error: any) => {
+                .catch((error: any) => {
                     ctrl.$scope.$apply(() => {
                         var modelState = error.responseJSON.ModelState;
                         function getError(idx) {
@@ -234,7 +234,7 @@ module App.Controllers {
             var ctrl = this;
             
             Controllers.RegionController.UpdateWebsite(this.indexCtrl.region.Id, this.indexCtrl.region.Website)
-                    .done(() => {
+                    .then(() => {
                         ctrl.$scope.$apply(() => {
                             this.onWebsiteShowLink();
                         });
@@ -244,7 +244,7 @@ module App.Controllers {
         onComplete() {
             var ctrl = this;
             Controllers.ApbdesController.Complete(this.apbdes.Id)
-                .done(() => {
+                .then(() => {
                     ctrl.$scope.$apply(() => {
                         this.isCompleteStatus = "sudah";
                         this.buttonCompleteShow = false;
@@ -263,7 +263,7 @@ module App.Controllers {
         loadRealization(accountId) {
             var ctrl = this;
             if (this.expandedStates[accountId]) {
-                Controllers.TransactionController.GetRealizationTransactions(accountId).done(details => {
+                Controllers.TransactionController.GetRealizationTransactions(accountId).then(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountId] = details;
                     });
@@ -274,7 +274,7 @@ module App.Controllers {
         loadFieldReport(realizationId) {
             var ctrl = this;
             if (this.realizationExpandedStates[realizationId]) {
-                Controllers.FieldReportController.GetPicture(realizationId).done(details => {
+                Controllers.FieldReportController.GetPicture(realizationId).then(details => {
                     console.log(details);
                     ctrl.$scope.$apply(() => {
                         ctrl.fieldReport[realizationId] = details;
@@ -286,16 +286,16 @@ module App.Controllers {
         getApbdes(regionId: string) {
             var ctrl = this;
             var scope = this.$scope;
-            Controllers.ApbdesController.GetByRegionId(regionId).done((apbdes) => {
+            Controllers.ApbdesController.GetByRegionId(regionId).then((apbdes) => {
                 ctrl.$scope.$apply(() => {
-                    ctrl.apbdes = apbdes;
-                    ctrl.rootAccounts = apbdes.Accounts.filter(a => a.fkParentAccountId == null);
+                    ctrl.apbdes = new App.Models.Apbdes(apbdes.data);
+                    ctrl.rootAccounts = ctrl.apbdes.Accounts.filter(a => a.fkParentAccountId == null);
                     ctrl.rootAccounts.sort((a, b) => a.Type - b.Type);
                     for (var i = 0; i < ctrl.rootAccounts.length; i++) {
                         var totalRootObj = 0;
                         var totalRootRealizationObj = 0;
                         var root = ctrl.rootAccounts[i];
-                        root.ChildAccounts = apbdes.Accounts
+                        root.ChildAccounts = ctrl.apbdes.Accounts
                             .filter(a => a.Type == root.Type && a.fkParentAccountId != null);
                         root.ChildAccounts.sort((a, b) => a.Code.localeCompare(b.Code));
 
@@ -330,7 +330,7 @@ module App.Controllers {
                         ctrl.newAccounts[root.Id] = [];
                     }
 
-                    if (apbdes.IsCompleted) {
+                    if (ctrl.apbdes.IsCompleted) {
                         this.isCompleteStatus = "sudah";
                         this.buttonCompleteShow = false;
                     }

@@ -7,7 +7,8 @@ module App {
         'angularFileUpload', 'ui.bootstrap.typeahead', 'ui.bootstrap.position'
     ]);
 
-    kawaldesa.run(['$location', '$rootElement', function ($location, $rootElement) {        
+    kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        
+        Scaffold.$http = $http;
         $rootElement.off('click');
     }]);
 

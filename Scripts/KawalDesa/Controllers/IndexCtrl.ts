@@ -179,8 +179,8 @@ module App.Controllers {
             else if (parentKey)
                 promise = Controllers.RegionController.GetByURLKey(parentKey);
 
-            promise.done((region: Models.Region) => {
-                ctrl.$scope.$apply(() => {
+            promise.then((regionData: ng.IHttpPromiseCallbackArg<Models.Region>) => {
+                    var region = regionData.data;
                     ctrl.region = region;
                     ctrl.regionId = region.Id;
 
@@ -207,7 +207,6 @@ module App.Controllers {
                         ctrl.$location.path("/" + region.UrlKey);
                         ctrl.$location.replace();
                     }
-                });
             });
         }
 
@@ -253,56 +252,53 @@ module App.Controllers {
                 return;
             var ctrl = this;
             this.isLoadingUrl = true;
-            Controllers.SpreadsheetController.GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p").done(url => {
-                ctrl.$scope.$apply(() => {
+            Controllers.SpreadsheetController
+                .GetCurrentSheetUrl(this.activeUploadType, this.activeUploadRegionId, "2015p")
+                .then(url => {
                     ctrl.isLoadingUrl = false;
-                    window.open(url, "_blank");
+                    window.open(url.data, "_blank");
                 });
-            });
-        }
+    }
 
 
-        /* Search */
+    /* Search */
 
-        showSearch() {
-            this.$scope.searchShown = true;
-            setTimeout(function () {
-                $(".search-input-group input").focus();
-                $(".search-input-group input").select();
-            }, 0);
-        }
+    showSearch() {
+        this.$scope.searchShown = true;
+        setTimeout(function () {
+            $(".search-input-group input").focus();
+            $(".search-input-group input").select();
+        }, 0);
+    }
 
-        searchRegions(keyword) {
-            return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword });
-        }
+    searchRegions(keyword) {
+        return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword })
+            .then((regions) => regions.data);
+    }
 
 
-        /* Upload */
+    /* Upload */
 
-        activeUploadType: App.Models.DocumentUploadType;
-        activeUploadRegionId: string;
-        activeUpload: App.Models.Spreadsheet;
+    activeUploadType: App.Models.DocumentUploadType;
+    activeUploadRegionId: string;
+    activeUpload: App.Models.Spreadsheet;
 
-        activeSources:  App.Models.SourceDocument[];
-        newSourceFile: any;
-        newSourceSubType: any;
-        newSourceFunction: any;
-        newSourceRegion: any;
-        newSourceState = false;
+    activeSources:  App.Models.SourceDocument[];
+    newSourceFile: any;
+    newSourceSubType: any;
+    newSourceFunction: any;
+    newSourceRegion: any;
+    newSourceState = false;
 
         configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) {
             this.activeUploadType = type;
             this.activeUploadRegionId = regionId;
             var ctrl = this;
             ctrl.activeUpload = null;
-            Controllers.SpreadsheetController.GetActive(type, regionId, "2015p").done(doc => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.activeUpload = doc;
-                });
-            });
-            Controllers.SourceDocumentController.GetAll({"fkRegionId": regionId, "type": type, "apbnKey": "2015p"}).done(sources => {
-                ctrl.$scope.$apply(() => {
-                    ctrl.activeSources = sources;
+            Controllers.SpreadsheetController.GetActive(type, regionId, "2015p").then(doc => {
+                ctrl.activeUpload = doc.data;
+                Controllers.SourceDocumentController.GetAll({ "fkRegionId": regionId, "type": type, "apbnKey": "2015p" }).then(sources => {
+                    ctrl.activeSources = sources.data;
                 });
             });
         }
