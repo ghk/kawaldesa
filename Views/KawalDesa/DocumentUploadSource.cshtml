@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-2" ng-repeat="source in indexCtrl.activeSources">
                 <a href="#">
-                    <img class="img-thumbnail" src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
+                    <img class="img-thumbnail" ng-src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
                     <span>{{source.File.Name}}</span>
                 </a>
             </div>

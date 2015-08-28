@@ -9,15 +9,14 @@ module App.Controllers {
     import Models = App.Models;
     import Controllers = App.Controllers.Models;
 
-    class AddAllocationCtrl {
-
-        static $inject = ["$scope"];
+    export class AllocationCtrl {
 
         indexCtrl: IndexCtrl;
         uploadDoc = new Models.Spreadsheet();
         file: any;
 
-        constructor(public $scope) {
+        constructor(public $scope, public routePrefix,
+            public documentTypes, public recapitulationTypes) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
@@ -28,15 +27,15 @@ module App.Controllers {
         }
 
         onRegionChanged() {
-            if (this.indexCtrl.type == "add") {
+            if (this.indexCtrl.type == this.routePrefix) {
                 if (this.indexCtrl.guessedRegionType <= 1) {
-                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.NationalDd, "0");
+                    this.indexCtrl.configureDocumentUpload(this.documentTypes[0], "0");
                 } else if (this.indexCtrl.guessedRegionType >= 2) {
                     var kabId = this.indexCtrl.regionId;
                     var ids = this.indexCtrl.regionId.split(".");
                     if (ids.length > 2)
                         kabId = ids[0] + "." + ids[1];
-                    this.indexCtrl.configureDocumentUpload(Models.DocumentUploadType.RegionalDd, kabId);
+                    this.indexCtrl.configureDocumentUpload(this.documentTypes[1], kabId);
                 }
                 this.getRecapitulations(this.indexCtrl.regionId);
             }
@@ -49,26 +48,23 @@ module App.Controllers {
                 "SortOrder": "ASC",
                 "fkParentId": parentId
             }
-            var type : any = Controllers.FrozenNationalAddRecapitulationController;
+            var type: any = this.recapitulationTypes[0];
             if (this.indexCtrl.currentUser) {
-                type = Controllers.NationalAddRecapitulationController;
+                type = this.recapitulationTypes[1];
             }
             if (this.indexCtrl.guessedRegionType >= 2) {
-                type = Controllers.FrozenRegionalAddRecapitulationController;
+                type = this.recapitulationTypes[2];
                 if (this.indexCtrl.currentUser) {
-                    type = Controllers.RegionalAddRecapitulationController;
+                    type = this.recapitulationTypes[3];
                 }
             }
-            type.GetAll(query).done((recapitulations) => {
-                scope.$apply(() => {
-                    scope.entities = recapitulations.filter(r => r.RegionId != parentId);
-                    scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
-                });
+            type.GetAll(query).then((recapitulations) => {
+                scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
+                scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
             });
         }
 
 
     }
 
-    kawaldesa.controller("AddAllocationCtrl", AddAllocationCtrl);
 }

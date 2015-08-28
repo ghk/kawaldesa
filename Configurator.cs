@@ -97,6 +97,24 @@ namespace App
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
+
+            bundles.Add(new ScriptBundle("~/js/kawaldesa-lib")
+                .Include("~/Scaffold/Scripts/angular.js")
+                .Include("~/Scripts/angular-file-upload.min.js")
+                );
+
+            bundles.Add(new ScriptBundle("~/js/kawaldesa-own")
+                .Include("~/Scripts/ui.bootstrap.position.js")
+                .Include("~/Scripts/ui.bootstrap.typeahead.js")
+                .Include("~/Scripts/ui.bootstrap.modal.js")
+                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Enums.js")
+                .Include("~/Scripts/gen/Models.js")
+                .Include("~/Scripts/gen/Controllers.js")
+                .Include("~/Scripts/KawalDesa/Models/*.js")
+                .Include("~/Scripts/KawalDesa/KawalDesa.js")
+                .Include("~/Scripts/KawalDesa/Controllers/*.js")
+                );
         }
         private static void ConfigureRoutes(RouteCollection routes)
         {
