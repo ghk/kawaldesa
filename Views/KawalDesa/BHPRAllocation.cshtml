@@ -19,7 +19,7 @@
 
     <div class="table-responsive">
         <table class="table table-condensed table-responsive table-bordered">
-            <thead>
+            <thead ng-show="entities.length > 0">
                 <tr ng-if="indexCtrl.region.Type < 2">
                     <th style="vertical-align: middle;">{{indexCtrl.childName}}</th>
                     <th class="money" style="width: 10%; vertical-align: middle; text-align: center;">Pajak Daerah</th>
