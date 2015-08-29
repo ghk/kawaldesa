@@ -1,4 +1,4 @@
-﻿<div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px; min-height: 30px;">
+﻿<div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px; min-height: 34px;">
     <div ng-show="!indexCtrl.activeUploadLoading">
         <div ng-show="indexCtrl.activeUpload">
             <a class="btn btn-primary btn-xs" href="#" ng-click="activeUploadMore = !activeUploadMore">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div ng-show="!indexCtrl.activeUpload">
-            Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.openGoogleSheet()" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-pencil"></i> Buka di Google Sheet</a>
+            Data belum terisi. <a href="#" class="btn btn-default btn-xs" ng-click="indexCtrl.openGoogleSheet()" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-pencil"></i> Buka di Google Sheet</a>
             <span ng-if="indexCtrl.activeSources.length">
                 Sumber:
                 <span ng-repeat="source in indexCtrl.activeSources">
