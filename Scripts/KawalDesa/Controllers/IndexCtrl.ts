@@ -279,45 +279,48 @@ module App.Controllers {
                     ctrl.isLoadingUrl = false;
                     window.open(url.data, "_blank");
                 });
-    }
+        }
 
 
-    /* Search */
+        /* Search */
 
-    showSearch() {
-        this.$scope.searchShown = true;
-        setTimeout(function () {
-            $(".search-input-group input").focus();
-            $(".search-input-group input").select();
-        }, 0);
-    }
+        showSearch() {
+            this.$scope.searchShown = true;
+            setTimeout(function () {
+                $(".search-input-group input").focus();
+                $(".search-input-group input").select();
+            }, 0);
+        }
 
-    searchRegions(keyword) {
-        return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword })
-            .then((regions) => regions.data);
-    }
+        searchRegions(keyword) {
+            return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword })
+                .then((regions) => regions.data);
+        }
 
 
-    /* Upload */
+        /* Upload */
 
-    activeUploadType: App.Models.DocumentUploadType;
-    activeUploadRegionId: string;
-    activeUpload: App.Models.Spreadsheet;
+        activeUploadType: App.Models.DocumentUploadType;
+        activeUploadRegionId: string;
+        activeUpload: App.Models.Spreadsheet;
+        activeUploadLoading= true;
 
-    activeSources:  App.Models.SourceDocument[];
-    newSourceFile: any;
-    newSourceSubType: any;
-    newSourceFunction: any;
-    newSourceRegion: any;
-    newSourceState = false;
+        activeSources:  App.Models.SourceDocument[];
+        newSourceFile: any;
+        newSourceSubType: any;
+        newSourceFunction: any;
+        newSourceRegion: any;
+        newSourceState = false;
 
         configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) {
             this.activeUploadType = type;
             this.activeUploadRegionId = regionId;
             var ctrl = this;
             ctrl.activeUpload = null;
+            ctrl.activeUploadLoading = true;
             Controllers.SpreadsheetController.GetActive(type, regionId, "2015p").then(doc => {
                 ctrl.activeUpload = doc.data;
+                ctrl.activeUploadLoading = false;
                 Controllers.SourceDocumentController.GetAll({ "fkRegionId": regionId, "type": type, "apbnKey": "2015p" }).then(sources => {
                     ctrl.activeSources = sources.data;
                 });
