@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System;
+using Newtonsoft.Json;
 
 namespace App.Models
 {
@@ -37,6 +38,7 @@ namespace App.Models
             }
         }
 
+        [JsonIgnore]
         public string FilePath
         {
             get

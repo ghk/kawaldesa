@@ -64,8 +64,8 @@
                     <li ng-show="!searchShown">
                         <a href="#" class="btn" ng-click="indexCtrl.showSearch()"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
-                    <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard'}" ng-if="indexCtrl.currentUser">
-                        <a style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard', 'open': navUserOpen}" ng-if="indexCtrl.currentUser">
+                        <a ng-click="navUserOpen = !navUserOpen; $event.stopPropagation();"style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img ng-src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookID}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
                             {{indexCtrl.currentUser.Name}}
                             <span class="caret"></span>

@@ -3,6 +3,7 @@ using App.Security;
 using FluentValidation.Attributes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using Scaffold;
 using System;
 using System.Collections.Generic;
@@ -41,10 +42,21 @@ namespace App.Models
         {
             this.SecretKey = CryptographyHelper.GenerateSecretKey();
         }
+
+        [JsonIgnore]
         public string SecretKey { get; set; }
+
+        [JsonIgnore]
+        public override string SecurityStamp { get; set; }
+        [JsonIgnore]
+        public override string PasswordHash { get; set; }
+        [JsonIgnore]
+        public override string PhoneNumber { get; set; }
+
         public string Name { get; set; }
         public string FacebookId { get; set; }
         public bool FacebookIsVerified { get; set; }
+
         public bool IsADuplicate { get; set; }
         public bool IsActive { get; set; }
         public string Email { get; set; }

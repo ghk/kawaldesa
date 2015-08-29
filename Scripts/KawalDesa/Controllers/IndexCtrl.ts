@@ -88,6 +88,11 @@ module App.Controllers {
                         ctrl.$scope.navOpen = false;
                     });
                 }
+                if (ctrl.$scope.navUserOpen) {
+                    $scope.$apply(() => {
+                        ctrl.$scope.navUserOpen = false;
+                    });
+                }
             });
         }
 
