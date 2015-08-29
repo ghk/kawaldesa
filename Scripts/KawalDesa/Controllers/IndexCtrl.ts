@@ -53,23 +53,24 @@ module App.Controllers {
         regionId: string;
         regionTree: Models.Region[];
 
-        childName: string;
         type = "transfer";
-        guessedRegionType: number;
-
         isPathReplacing = false;
-        currentPath = null;
+        currentPath : string = null;
+
+        childName: string;
+        guessedRegionType: number;
 
         currentUser: ICurrentUser;
 
-        static $inject = ["$scope", "$location", "$q", "$modal"];
+        static $inject = ["$scope", "$location", "$modal", "$document"];
 
-        constructor(public $scope, public $location, public $q, public $modal){
+        constructor(public $scope, public $location, public $modal, public $document){
             $scope.App = App;
             var ctrl = this;
             var scope = this.$scope;
             this.currentUser = window.CurrentUser;
 
+            /* Path replacing is where there is redirect, e.g /r/21121212 to /mandalmekar */
             if(!ctrl.isPathReplacing)
                 ctrl.onLocationChange();
             ctrl.isPathReplacing = false;
@@ -79,14 +80,25 @@ module App.Controllers {
                     ctrl.onLocationChange();
                 ctrl.isPathReplacing = false;
             });
+
+            //dropdown
+            $document.bind('click', function () {
+                if (ctrl.$scope.navOpen) {
+                    $scope.$apply(() => {
+                        ctrl.$scope.navOpen = false;
+                    });
+                }
+            });
         }
 
         onLocationChange() {
             var path = this.$location.path();
             if (path == this.currentPath)
                 return;
+
             var regionId:string = null;
             var regionKey = null;
+
             this.type = null;
             if (path == "/" || path == "") {
                 regionId = "0";
@@ -106,20 +118,17 @@ module App.Controllers {
             }
 
             this.guessedRegionType = this.guessType(regionId);
-            this.regionId = regionId;
 
             if(regionId != null || regionKey)
                 this.loadRegion(regionId, regionKey);
             if (regionId == null && !regionKey)
                 regionId = "0";
 
-            this.guessedRegionType = this.guessType(regionId);
             this.regionId = regionId;
             this.currentPath = path;
         }
 
         onSearchSelected(item, model, label) {
-            console.log(model);
             var regionId = model.Type == 4 ? model.ParentId : model.Id;
             var type = this.type;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
@@ -212,11 +221,21 @@ module App.Controllers {
 
         /* UI Utils */
 
+        modalInstance: any;
+
         modal(template) {
             var ctrl = this;
-            var modalInstance = this.$modal.open({
+            ctrl.modalInstance = this.$modal.open({
                 templateUrl: template,
+                scope: this.$scope
             });
+        }
+
+        closeModal() {
+            if (this.modalInstance) {
+                this.modalInstance.close();
+                this.modalInstance = null;
+            }
         }
 
 
@@ -268,8 +287,8 @@ module App.Controllers {
     showSearch() {
         this.$scope.searchShown = true;
         setTimeout(function () {
-            //$(".search-input-group input").focus();
-            //$(".search-input-group input").select();
+            $(".search-input-group input").focus();
+            $(".search-input-group input").select();
         }, 0);
     }
 
@@ -334,7 +353,7 @@ module App.Controllers {
             ctrl.newSourceState = true;
             Controllers.SourceDocumentController.Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p").success(() => {
                 safeApply(ctrl.$scope, () => {
-                    ctrl.modal('source-upload-modal');
+                    ctrl.closeModal();
                     ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
                 });
             }).finally(() => {

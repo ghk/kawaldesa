@@ -84,6 +84,7 @@ namespace App
                 );
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-all")
+                .Include("~/Scaffold/Scripts/jquery-2.1.4.js")
                 .Include("~/Scaffold/Scripts/angular.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
                 .Include("~/Scripts/ui.bootstrap.position.js")
@@ -101,6 +102,7 @@ namespace App
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-lib")
                 .Include("~/Scaffold/Scripts/angular.js")
+                .Include("~/Scaffold/Scripts/jquery-2.1.4.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
                 );
 

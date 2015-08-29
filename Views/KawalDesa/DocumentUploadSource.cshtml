@@ -1,63 +1,66 @@
-﻿<div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="indexCtrl.activeUpload">
-    <a class="btn btn-primary btn-xs" href="#" ng-click="activeUploadMore = !activeUploadMore">
-        &nbsp;
-        <i ng-class="activeUploadMore ? 'fa-minus' : 'fa-plus'" class="fa"></i>
-        {{indexCtrl.activeUpload.Notes}}
-    </a>
-    <span>
-        &nbsp; <b>Sumber:</b>  &nbsp;
-        <span ng-repeat="source in indexCtrl.activeSources">
-            <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
-            {{$last ? '' : ', '}}
+﻿<div>
+    <div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="indexCtrl.activeUpload">
+        <a class="btn btn-primary btn-xs" href="#" ng-click="activeUploadMore = !activeUploadMore">
+            &nbsp;
+            <i ng-class="activeUploadMore ? 'fa-minus' : 'fa-plus'" class="fa"></i>
+            {{indexCtrl.activeUpload.Notes}}
+        </a>
+        <span>
+            &nbsp; <b>Sumber:</b>  &nbsp;
+            <span ng-repeat="source in indexCtrl.activeSources">
+                <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
+                {{$last ? '' : ', '}}
+            </span>
         </span>
-    </span>
-    <div ng-show="activeUploadMore">
-        <br />
-        <div class="row">
-            <div class="col-md-4">
-                <dl class="dl-horizontal">
-                    <dt>Pengunggah</dt>
-                    <dd><a href="/u/{{indexCtrl.activeUpload.fkCreatedById}}">{{indexCtrl.activeUpload.CreatedBy.Name}}</a></dd>
-                    <dt>Tanggal Unggah</dt>
-                    <dd>{{indexCtrl.activeUpload.DateCreated | date:'dd MMM yyyy, HH:mm:ss'}}</dd>
-                    <dt>Organisasi</dt>
-                    <dd><a href="/orgs/{{indexCtrl.activeUpload.fkOrganizationId}}">{{indexCtrl.activeUpload.Organization.Name}}</a></dd>
-                </dl>
+        <div ng-show="activeUploadMore">
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                        <dt>Pengunggah</dt>
+                        <dd><a href="/u/{{indexCtrl.activeUpload.fkCreatedById}}">{{indexCtrl.activeUpload.CreatedBy.Name}}</a></dd>
+                        <dt>Tanggal Unggah</dt>
+                        <dd>{{indexCtrl.activeUpload.DateCreated | date:'dd MMM yyyy, HH:mm:ss'}}</dd>
+                        <dt>Organisasi</dt>
+                        <dd><a href="/orgs/{{indexCtrl.activeUpload.fkOrganizationId}}">{{indexCtrl.activeUpload.Organization.Name}}</a></dd>
+                    </dl>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" ng-click="indexCtrl.openGoogleSheet()" class="btn btn-primary btn-lg">
+                        <span ng-show="!indexCtrl.isLoadingUrl">
+                            <i class="fa fa-pencil"></i> Buka di Google Sheet
+                        </span>
+                        <span ng-show="indexCtrl.isLoadingUrl">
+                            Membuat dokumen...
+                        </span>
+                    </a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <a href="#" ng-click="indexCtrl.openGoogleSheet()" class="btn btn-primary btn-lg">
-                    <span ng-show="!indexCtrl.isLoadingUrl">
-                        <i class="fa fa-pencil"></i> Buka di Google Sheet
-                    </span>
-                    <span ng-show="indexCtrl.isLoadingUrl">
-                        Membuat dokumen...
-                    </span>
-                </a>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Dokumen Sumber</h4>
+                </div>
+                <div class="col-md-2" ng-repeat="source in indexCtrl.activeSources">
+                    <a href="#">
+                        <img class="img-thumbnail" ng-src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
+                        <span>{{source.File.Name}}</span>
+                    </a>
+                </div>
             </div>
+            <hr />
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Dokumen Sumber</h4>
-            </div>
-            <div class="col-md-2" ng-repeat="source in indexCtrl.activeSources">
-                <a href="#">
-                    <img class="img-thumbnail" ng-src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
-                    <span>{{source.File.Name}}</span>
-                </a>
-            </div>
-        </div>
-        <hr />
     </div>
-</div>
-<div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="!indexCtrl.activeUpload">
-    Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.modal('#document-upload-modal', 'show')" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-upload"></i> Unggah dokumen</a>
-    <span ng-if="indexCtrl.activeSources.length">
-        Sumber:
-        <span ng-repeat="source in indexCtrl.activeSources">
-            <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
-            {{$last ? '' : ', '}}
+    <div class="alert alert-info" style="font-size: small; padding: 5px 20px; margin-bottom: 0px;" ng-show="!indexCtrl.activeUpload">
+        Data belum terisi. <a href="#" class="btn btn-default" ng-click="indexCtrl.openGoogleSheet()" ng-if="indexCtrl.isInRoleAndScope('volunteer_allocation', indexCtrl.activeUploadRegionId)"> <i class="fa fa-pencil"></i> Buka di Google Sheet</a>
+        <span ng-if="indexCtrl.activeSources.length">
+            Sumber:
+            <span ng-repeat="source in indexCtrl.activeSources">
+                <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
+                {{$last ? '' : ', '}}
+            </span>
         </span>
-    </span>
-</div>
+    </div>
 
+
+</div>
