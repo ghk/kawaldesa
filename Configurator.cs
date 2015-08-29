@@ -89,6 +89,7 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.position.js")
                 .Include("~/Scripts/ui.bootstrap.typeahead.js")
                 .Include("~/Scripts/ui.bootstrap.modal.js")
+                .Include("~/Scripts/angular-sticky-table-header.js")
                 .Include("~/Scripts/gen/Scaffold.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")

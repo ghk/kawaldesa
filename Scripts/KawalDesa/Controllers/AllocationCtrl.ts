@@ -67,4 +67,60 @@ module App.Controllers {
 
     }
 
+    class AddAllocationCtrl extends AllocationCtrl {
+
+        static $inject = ["$scope"];
+
+        constructor(public $scope) {
+            super($scope, "add"
+                , [Models.DocumentUploadType.NationalAdd, Models.DocumentUploadType.RegionalAdd]
+                , [
+                    Controllers.FrozenNationalAddRecapitulationController,
+                    Controllers.NationalAddRecapitulationController,
+                    Controllers.FrozenRegionalAddRecapitulationController,
+                    Controllers.RegionalAddRecapitulationController,
+                ]);
+        }
+
+    }
+
+
+    class DdAllocationCtrl extends AllocationCtrl {
+
+        static $inject = ["$scope"];
+
+        constructor(public $scope) {
+            super($scope, "dd"
+                , [Models.DocumentUploadType.NationalDd, Models.DocumentUploadType.RegionalDd]
+                , [
+                    Controllers.FrozenNationalDdRecapitulationController,
+                    Controllers.NationalDdRecapitulationController,
+                    Controllers.FrozenRegionalDdRecapitulationController,
+                    Controllers.RegionalDdRecapitulationController,
+                ]);
+        }
+
+    }
+
+
+    class BhprAllocationCtrl extends AllocationCtrl {
+
+        static $inject = ["$scope"];
+
+        constructor(public $scope) {
+            super($scope, "bhpr"
+                , [Models.DocumentUploadType.NationalBhpr, Models.DocumentUploadType.RegionalBhpr]
+                , [
+                    Controllers.FrozenNationalBhprRecapitulationController,
+                    Controllers.NationalBhprRecapitulationController,
+                    Controllers.FrozenRegionalBhprRecapitulationController,
+                    Controllers.RegionalBhprRecapitulationController,
+                ]);
+        }
+
+    }
+
+    kawaldesa.controller("AddAllocationCtrl", AddAllocationCtrl);
+    kawaldesa.controller("DdAllocationCtrl", DdAllocationCtrl);
+    kawaldesa.controller("BhprAllocationCtrl", BhprAllocationCtrl);
 }
