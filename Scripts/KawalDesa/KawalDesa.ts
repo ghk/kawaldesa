@@ -7,8 +7,7 @@ module App {
         'angularFileUpload',
         'ui.bootstrap.typeahead',
         'ui.bootstrap.position',
-        'ui.bootstrap.modal',
-        'turn/stickyTableHeader'
+        'ui.bootstrap.modal'
     ]);
 
     kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        
