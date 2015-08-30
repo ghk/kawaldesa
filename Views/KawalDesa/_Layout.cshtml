@@ -71,9 +71,13 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/u/{{indexCtrl.currentUser.ID}}">Profil</a></li>
-                            <li ng-show="{{indexCtrl.currentUser.fkOrganizationId}}"><a href="/orgs/{{indexCtrl.currentUser.fkOrganizationId}}">Organisasi</a></li>
-                            <li><a href="/logout">Logout</a></li>
+                            <li ng-class="{'active': indexCtrl.type == 'users'}">
+                                <a ng-click="navUserOpen = false;" href="/u/{{indexCtrl.currentUser.ID}}"><i style="width: 20px;" class="fa fa-user"></i> Profil</a>
+                            </li>
+                            <li ng-click="navUserOpen = false;" ng-class="{'active': indexCtrl.type == 'orgs'}" ng-show="{{indexCtrl.currentUser.fkOrganizationId}}">
+                                <a href="/orgs/{{indexCtrl.currentUser.fkOrganizationId}}"><i style="width: 20px;" class="fa fa-users"></i> Organisasi</a>
+                            </li>
+                            <li><a ng-click="navUserOpen = false;" href="/logout"><i style="width: 20px;" class="fa fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </li>
                     <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>

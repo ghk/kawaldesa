@@ -14,7 +14,7 @@
             <div class="col-md-10">
 
                 <div class="content-header">
-                    Jenis Pelapor
+                    <i class="fa fa-lock"></i> Jenis Pelapor
                 </div>
 
                 <div class="table-responsive">
@@ -38,7 +38,7 @@
                             <tr>
                                 <td style="text-align: left;">
                                     <input type="checkbox" ng-model="userCtrl.roles.volunteer_transfer" />
-                                    Pelapor Penyaluran 
+                                    Pelapor Penyaluran
                                 </td>
                                 <td style="text-align: left;">
                                     Melaporkan penyaluran Dana Desa, ADD &amp; Bagi Hasil &amp; Pajak
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="content-header">
-                    Lingkup Laporan
+                    <i class="fa fa-globe"></i> Lingkup Laporan
                 </div>
 
                 <div class="table-responsive">
@@ -104,11 +104,11 @@
                             <tr ng-if="userCtrl.national && userCtrl.isEditable()" class="">
                                 <td colspan="4">
                                     <button class="btn btn-xs"
-                                        ng-click="userCtrl.regionPairs.push([userCtrl.national, null, null, null, null])">
+                                            ng-click="userCtrl.regionPairs.push([userCtrl.national, null, null, null, null])">
                                         Tambah Lingkupan
                                     </button>
                                 </td>
-                            </trng-if="userCtrl.national>
+                                </trng-if="userCtrl.national>
                         </tbody>
                         <tfoot>
                             <tr class="" ng-if="userCtrl.isEditable()">
@@ -126,7 +126,27 @@
                 </div>
 
                 <div class="content-header">
-                    Laporan Terakhir
+                    <i class="fa fa-file-o"></i> Pengunggahan Dokumen Sumber
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Wilayah</th>
+                                <th>Nama Dokumen</th>
+                                <th>Unduh</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="content-header">
+                    <i class="fa fa-file-excel-o"></i> Pengunggahan Spreadsheet
                 </div>
 
                 <div class="table-responsive">
