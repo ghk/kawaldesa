@@ -290,6 +290,7 @@
     <Compile Include="Controllers\Models\RegionalDdRecapitulationController.cs" />
     <Compile Include="Controllers\Models\OrganizationController.cs" />
     <Compile Include="Controllers\Models\NationalDdRecapitulationController.cs" />
+    <Compile Include="Controllers\Models\TransferController.cs" />
     <Compile Include="Controllers\Models\RegionSearchResultController.cs" />
     <Compile Include="Controllers\Models\SourceDocumentController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="Utils\Excel\ExcelFileNameAttribute.cs" />
     <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
     <Compile Include="Utils\Excel\ExcelHeaders.cs" />
+    <Compile Include="Utils\JsonAnonymouser.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\Models\ApbdesController.cs" />

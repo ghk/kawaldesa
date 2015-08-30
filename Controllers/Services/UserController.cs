@@ -57,13 +57,7 @@ namespace App.Controllers.Services
                     var session = HttpContext.Current.Session;
                     session["userid"] = user.Id;
                     
-                    var roles = UserManager.GetRoles(user.Id);
-                    UserViewModel userViewModel = new UserViewModel() 
-                    { 
-                        UserName = user.UserName, 
-                        Roles = roles.ToList()
-                    };
-                    return userViewModel;
+                    return Convert(user);
                 }
                 else
                 {
@@ -78,17 +72,7 @@ namespace App.Controllers.Services
         public UserViewModel GetCurrentUser()
         {
             var user = KawalDesaController.GetCurrentUser();
-            var roles = UserManager.GetRoles(user.Id);
-            UserViewModel userViewModel = new UserViewModel() 
-            { 
-                Id = user.Id,
-                Name = user.Name,
-                FacebookId = user.FacebookId,
-                UserName = user.UserName, 
-                Roles = roles.ToList(),
-                Scopes = GetScopes(user.Id)
-            };
-            return userViewModel;
+            return Convert(user);
         }
 
         public UserViewModel Convert(User user)
@@ -100,9 +84,14 @@ namespace App.Controllers.Services
                 Name = user.Name,
                 FacebookId = user.FacebookId,
                 UserName = user.UserName, 
+                IsAnonymous = user.IsAnonymous,
                 Roles = roles.ToList(),
                 Scopes = GetScopes(user.Id)
+                
             };
+            if(user.fkOrganizationId.HasValue)
+                userViewModel.Organization = dbContext.Organizations.Find(user.fkOrganizationId.Value);
+
             return userViewModel;
         }
 
@@ -196,15 +185,7 @@ namespace App.Controllers.Services
         public IEnumerable<UserViewModel> GetAll()
         {
             IQueryable<User> exp = dbContext.Set<User>().Include("Roles");           
-            List<User> users = exp.ToList();
-            List<UserViewModel> views = new List<UserViewModel>();
-            foreach (var user in users)
-            {
-                UserViewModel view = AutoMapper.Mapper.Map<User, UserViewModel>(user);
-                view.Roles = UserManager.GetRoles(user.Id).ToList();
-                views.Add(view);
-            }            
-            return views;
+            return exp.Select(u => Convert(u));
         }
 
         [HttpGet]        
@@ -215,12 +196,7 @@ namespace App.Controllers.Services
             if(user == null)
                 return null;            
 
-            var view = AutoMapper.Mapper.Map<User, UserViewModel>(user);
-            view.Roles = UserManager.GetRoles(user.Id).ToList();
-            view.Scopes = GetScopes(user.Id);
-            if (user.fkOrganizationId.HasValue)
-                view.Organization = dbContext.Set<Organization>().Find(user.fkOrganizationId.Value);
-            return view;
+            return Convert(user);
         }
 
 
@@ -228,15 +204,7 @@ namespace App.Controllers.Services
         public IEnumerable<UserViewModel> GetAllByOrg(long orgId)
         {
             IQueryable<User> exp = dbContext.Set<User>().Include("Roles").Where(u => u.fkOrganizationId.Value == orgId);           
-            List<User> users = exp.ToList();
-            List<UserViewModel> views = new List<UserViewModel>();
-            foreach (var user in users)
-            {
-                UserViewModel view = AutoMapper.Mapper.Map<User, UserViewModel>(user);
-                view.Roles = UserManager.GetRoles(user.Id).ToList();
-                views.Add(view);
-            }            
-            return views;
+            return exp.Select(u => Convert(u));
         }
 
         private List<Region> GetScopes(string id)

@@ -35,6 +35,7 @@ namespace App
             GlobalConfiguration.Configuration.Filters.Add(new ExceptionHandlingAttribute());            
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new JsonAnonymouser());
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHandler());
 
             ConfigureRoutes(RouteTable.Routes);

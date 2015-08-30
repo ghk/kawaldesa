@@ -53,6 +53,8 @@ namespace App.Models
         [JsonIgnore]
         public override string PhoneNumber { get; set; }
 
+        public bool IsAnonymous { get; set; }
+
         public string Name { get; set; }
         public string FacebookId { get; set; }
         public bool FacebookIsVerified { get; set; }
@@ -108,6 +110,7 @@ namespace App.Models
         public string FacebookId { get; set; }
         public string UserName { get; set; }
         public string Name { get; set; }
+        public bool IsAnonymous { get; set; }
         public Organization Organization { get; set; }
         public List<string> Roles { get; set; }
         public List<Region> Scopes { get; set; }
