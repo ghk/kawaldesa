@@ -77,11 +77,13 @@ namespace App.Controllers
 
         private string GetRedirectHost()
         {
-            var redirectHost = "http://kawaldesa.org";
-            if (HttpContext.IsDebuggingEnabled)
-                redirectHost = "http://localhost:11002";
-            return redirectHost;
-
+            var context = HttpContext;
+            return string.Format("{0}://{1}{2}",
+                                    context.Request.Url.Scheme,
+                                    context.Request.Url.Host,
+                                    context.Request.Url.IsDefaultPort
+                                        ? string.Empty
+                                        : ":" + context.Request.Url.Port);
         }
 
         public ActionResult Login(String token, String exAuthState)

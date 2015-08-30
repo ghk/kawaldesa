@@ -247,6 +247,7 @@ p.subtext {
     position: fixed;
     bottom: 45px; 
     right: 24px; 
+    z-index: 1000;
 }
 
 .btn-floating-container .btn {
