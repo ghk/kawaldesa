@@ -139,6 +139,14 @@ module App.Controllers {
                 this.savingStates["roles"] = false;
             });
         }
+
+        saveAnonymous() {
+            var ctrl = this;
+            this.savingStates["anonymous"] = true;
+            Services.UserController.SetAnonymous(!ctrl.selected.IsAnonymous).then(() => {
+                location.reload();
+            });
+        }
     }
 
     kawaldesa.controller("UserCtrl",  UserCtrl);

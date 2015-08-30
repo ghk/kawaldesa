@@ -75,6 +75,17 @@ namespace App.Controllers.Services
             return Convert(user);
         }
 
+        [HttpGet]
+        [Authorize]
+        public void SetAnonymous(bool isAnonymous)
+        {
+            var user = KawalDesaController.GetCurrentUser();
+            ModelController<User, string>
+                .Update(dbContext, user.Id)
+                .Set(e => e.IsAnonymous, isAnonymous)
+                .Save();
+        }
+
         public UserViewModel Convert(User user)
         {
             var roles = UserManager.GetRoles(user.Id);

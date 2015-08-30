@@ -36,7 +36,7 @@ namespace App.Models
 
         }
     }
-    public class User : IdentityUser<string, IdentityUserLogin, UserRole, IdentityUserClaim>
+    public class User : IdentityUser<string, IdentityUserLogin, UserRole, IdentityUserClaim>, IModel<String>
     {
         public User()
         {

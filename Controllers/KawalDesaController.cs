@@ -334,9 +334,9 @@ namespace App.Controllers
                 var user = db.Users.FirstOrDefault(u => u.Id == userId && u.IsActive);
                 if (user == null)
                     return null;
-                result["ID"] = user.Id;
+                result["Id"] = user.Id;
                 result["Name"] = user.Name;
-                result["FacebookID"] = user.FacebookId;
+                result["FacebookId"] = user.FacebookId;
                 result["fkOrganizationId"] = user.fkOrganizationId;
                 result["Roles"] = userManager.GetRoles(user.Id);
                 result["Scopes"] = db.UserScopes.Where(s => s.fkUserId == user.Id)

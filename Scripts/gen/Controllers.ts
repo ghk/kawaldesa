@@ -1160,6 +1160,41 @@ module App.Controllers.Models {
 	    }
 	}
     
+    export class TransferController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.ITransfer = null;
+        
+        constructor(data?: App.Models.ITransfer) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ITransfer>> {
+			var res = Scaffold.$http<Array<App.Models.ITransfer>>(TransferController.ajaxSettings.build({
+				method: 'GET',
+				url: '/api/Transfer/GetAll',
+				params: query,
+			}));
+			return res;
+		}
+
+		static Get(id: number): ng.IHttpPromise<App.Models.ITransfer> {
+			var res = Scaffold.$http<App.Models.ITransfer> (TransferController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Transfer/Get/'+id,
+			}));
+			return res;
+		}
+
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(TransferController.ajaxSettings.build({
+				method: 'GET',
+				url: '/api/Transfer/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		}
+        
     export class BaseTransferRecapitulationController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
@@ -1260,7 +1295,15 @@ module App.Controllers.Services {
 			   return res;
 	    }
     
-        static Convert(user: /** App.Models.User **/ any): ng.IHttpPromise<App.Models.IUserViewModel> {
+        static SetAnonymous(isAnonymous: boolean): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(UserController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/User/SetAnonymous?isAnonymous='+isAnonymous+'',
+				}));
+			   return res;
+	    }
+    
+        static Convert(user: App.Models.IUser): ng.IHttpPromise<App.Models.IUserViewModel> {
 			var res = Scaffold.$http<App.Models.IUserViewModel>(UserController.ajaxSettings.build({
 			method: 'GET',
 			url: '/api/User/Convert?user='+user+'',

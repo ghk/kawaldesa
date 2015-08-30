@@ -79,7 +79,6 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
-                .Include("~/Scripts/KawalDesa/Models/*.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
@@ -96,7 +95,6 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
-                .Include("~/Scripts/KawalDesa/Models/*.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
@@ -115,7 +113,6 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
-                .Include("~/Scripts/KawalDesa/Models/*.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );

@@ -477,7 +477,6 @@
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Models\User.ts" />
     <TypeScriptCompile Include="Scripts\gen\Scaffold.ts" />
   </ItemGroup>
   <ItemGroup>

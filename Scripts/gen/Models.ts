@@ -27,11 +27,64 @@ module App.Models {
     }
     
     
+    export interface IUser {
+        SecretKey: string;
+        SecurityStamp: string;
+        PasswordHash: string;
+        PhoneNumber: string;
+        IsAnonymous: boolean;
+        Name: string;
+        FacebookId: string;
+        FacebookIsVerified: boolean;
+        IsADuplicate: boolean;
+        IsActive: boolean;
+        Email: string;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+    }
+    
+    export class User {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        
+        SecretKey: string;
+        SecurityStamp: string;
+        PasswordHash: string;
+        PhoneNumber: string;
+        IsAnonymous: boolean;
+        Name: string;
+        FacebookId: string;
+        FacebookIsVerified: boolean;
+        IsADuplicate: boolean;
+        IsActive: boolean;
+        Email: string;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        
+        constructor(data?: IUser) {
+            this.SecretKey = data ? data.SecretKey : null;
+            this.SecurityStamp = data ? data.SecurityStamp : null;
+            this.PasswordHash = data ? data.PasswordHash : null;
+            this.PhoneNumber = data ? data.PhoneNumber : null;
+            this.IsAnonymous = data ? data.IsAnonymous : null;
+            this.Name = data ? data.Name : null;
+            this.FacebookId = data ? data.FacebookId : null;
+            this.FacebookIsVerified = data ? data.FacebookIsVerified : null;
+            this.IsADuplicate = data ? data.IsADuplicate : null;
+            this.IsActive = data ? data.IsActive : null;
+            this.Email = data ? data.Email : null;
+            this.fkOrganizationId = data ? data.fkOrganizationId : null;
+            this.Organization = data ? data.Organization : null;
+        }
+        
+    }
+    
+    
     export interface IUserViewModel {
         Id: string;
         FacebookId: string;
         UserName: string;
         Name: string;
+        IsAnonymous: boolean;
         Organization: App.Models.IOrganization;
         Roles: Array<string>;
         Scopes: Array<App.Models.IRegion>;
@@ -44,6 +97,7 @@ module App.Models {
         FacebookId: string;
         UserName: string;
         Name: string;
+        IsAnonymous: boolean;
         Organization: App.Models.IOrganization;
         Roles: Array<string>;
         Scopes: Array<App.Models.IRegion>;
@@ -53,6 +107,7 @@ module App.Models {
             this.FacebookId = data ? data.FacebookId : null;
             this.UserName = data ? data.UserName : null;
             this.Name = data ? data.Name : null;
+            this.IsAnonymous = data ? data.IsAnonymous : null;
             this.Organization = data ? data.Organization : null;
             this.Roles = data ? data.Roles : null;
             this.Scopes = data ? data.Scopes : null;
@@ -150,11 +205,11 @@ module App.Models {
         fkApbdesId: number;
         Apbdes: App.Models.IApbdes;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkModifiedById: string;
-        ModifiedBy: /** App.Models.User **/ any;
+        ModifiedBy: App.Models.IUser;
         fkDeactivatedById: string;
-        DeactivatedBy: /** App.Models.User **/ any;
+        DeactivatedBy: App.Models.IUser;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
         TotalRealizationPerAccount: number;
@@ -177,11 +232,11 @@ module App.Models {
         fkApbdesId: number;
         Apbdes: App.Models.IApbdes;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkModifiedById: string;
-        ModifiedBy: /** App.Models.User **/ any;
+        ModifiedBy: App.Models.IUser;
         fkDeactivatedById: string;
-        DeactivatedBy: /** App.Models.User **/ any;
+        DeactivatedBy: App.Models.IUser;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
         TotalRealizationPerAccount: number;
@@ -253,9 +308,9 @@ module App.Models {
         fkRegionId: string;
         Region: App.Models.IRegion;
         fkCompletedById: string;
-        CompletedBy: /** App.Models.User **/ any;
+        CompletedBy: App.Models.IUser;
         fkModifiedById: string;
-        ModifiedBy: /** App.Models.User **/ any;
+        ModifiedBy: App.Models.IUser;
         Accounts: Array<App.Models.IAccount>;
     }
     
@@ -273,9 +328,9 @@ module App.Models {
         fkRegionId: string;
         Region: App.Models.IRegion;
         fkCompletedById: string;
-        CompletedBy: /** App.Models.User **/ any;
+        CompletedBy: App.Models.IUser;
         fkModifiedById: string;
-        ModifiedBy: /** App.Models.User **/ any;
+        ModifiedBy: App.Models.IUser;
         Accounts: Array<App.Models.IAccount>;
         
         constructor(data?: IApbdes) {
@@ -368,11 +423,11 @@ module App.Models {
         fkFileId: number;
         File: App.Models.IBlob;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkOrganizationId: number;
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
-        ApprovedBy: /** App.Models.User **/ any;
+        ApprovedBy: App.Models.IUser;
     }
     
     export class Spreadsheet extends BaseEntity {
@@ -393,11 +448,11 @@ module App.Models {
         fkFileId: number;
         File: App.Models.IBlob;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkOrganizationId: number;
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
-        ApprovedBy: /** App.Models.User **/ any;
+        ApprovedBy: App.Models.IUser;
         
         constructor(data?: ISpreadsheet) {
             super(data);
@@ -433,7 +488,7 @@ module App.Models {
         fkRealizationId: number;
         Realization: App.Models.IRealization;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         Pictures: Array<App.Models.IBlob>;
     }
     
@@ -446,7 +501,7 @@ module App.Models {
         fkRealizationId: number;
         Realization: App.Models.IRealization;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         Pictures: Array<App.Models.IBlob>;
         
         constructor(data?: IFieldReport) {
@@ -468,9 +523,9 @@ module App.Models {
         Token: string;
         IsUsed: boolean;
         fkUserId: string;
-        User: /** App.Models.User **/ any;
+        User: App.Models.IUser;
         fkInviterId: string;
-        Inviter: /** App.Models.User **/ any;
+        Inviter: App.Models.IUser;
     }
     
     export class InvitationToken extends BaseEntity {
@@ -479,9 +534,9 @@ module App.Models {
         Token: string;
         IsUsed: boolean;
         fkUserId: string;
-        User: /** App.Models.User **/ any;
+        User: App.Models.IUser;
         fkInviterId: string;
-        Inviter: /** App.Models.User **/ any;
+        Inviter: App.Models.IUser;
         
         constructor(data?: IInvitationToken) {
             super(data);
@@ -694,7 +749,7 @@ module App.Models {
         fkTransactionId: number;
         Transaction: App.Models.ITransaction;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
     }
     
     export class Realization extends BaseEntity {
@@ -706,7 +761,7 @@ module App.Models {
         fkTransactionId: number;
         Transaction: App.Models.ITransaction;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         
         constructor(data?: IRealization) {
             super(data);
@@ -969,11 +1024,11 @@ module App.Models {
         fkFileId: number;
         File: App.Models.IBlob;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkOrganizationId: number;
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
-        ApprovedBy: /** App.Models.User **/ any;
+        ApprovedBy: App.Models.IUser;
     }
     
     export class SourceDocument extends BaseEntity {
@@ -991,11 +1046,11 @@ module App.Models {
         fkFileId: number;
         File: App.Models.IBlob;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkOrganizationId: number;
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
-        ApprovedBy: /** App.Models.User **/ any;
+        ApprovedBy: App.Models.IUser;
         
         constructor(data?: ISourceDocument) {
             super(data);
@@ -1038,7 +1093,7 @@ module App.Models {
         fkActorId: string;
         Actor: App.Models.IRegion;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkSpreadsheetId: number;
         Spreadsheet: App.Models.ISpreadsheet;
     }
@@ -1062,7 +1117,7 @@ module App.Models {
         fkActorId: string;
         Actor: App.Models.IRegion;
         fkCreatedById: string;
-        CreatedBy: /** App.Models.User **/ any;
+        CreatedBy: App.Models.IUser;
         fkSpreadsheetId: number;
         Spreadsheet: App.Models.ISpreadsheet;
         
@@ -1194,7 +1249,7 @@ module App.Models {
     
     export interface IUserScope extends IBaseEntity {
         fkUserId: string;
-        User: /** App.Models.User **/ any;
+        User: App.Models.IUser;
         fkRegionId: string;
         Region: App.Models.IRegion;
     }
@@ -1203,7 +1258,7 @@ module App.Models {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
         fkUserId: string;
-        User: /** App.Models.User **/ any;
+        User: App.Models.IUser;
         fkRegionId: string;
         Region: App.Models.IRegion;
         

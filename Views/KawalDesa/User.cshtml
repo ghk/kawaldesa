@@ -10,6 +10,22 @@
                 <a href="/orgs/{{userCtrl.selected.Organization.Id}}" ng-if="userCtrl.selected.Organization">
                     {{userCtrl.selected.Organization.Name}}
                 </a>
+                <div ng-if="userCtrl.selected.Id == indexCtrl.currentUser.Id">
+                    <button class="btn btn-default" ng-click="userCtrl.saveAnonymous()">
+                        <span ng-show="!userCtrl.savingStates['anonymous']">
+                            <span ng-show="!userCtrl.selected.IsAnonymous">
+                                <i class="fa fa-user-secret"></i>
+                                Anonimkan Saya
+                            </span>
+                            <span ng-show="userCtrl.selected.IsAnonymous">
+                                Stop Anonimkan Saya
+                            </span>
+                        </span>
+                        <span ng-show="userCtrl.savingStates['anonymous']">
+                            Menyimpan...
+                        </span>
+                    </button>
+                </div>
             </div>
             <div class="col-md-10">
 
