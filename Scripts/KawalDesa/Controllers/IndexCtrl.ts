@@ -232,11 +232,11 @@ module App.Controllers {
 
         modalInstance: any;
 
-        modal(template) {
+        modal(template, $scope?) {
             var ctrl = this;
             ctrl.modalInstance = this.$modal.open({
                 templateUrl: template,
-                scope: this.$scope
+                scope: $scope ? $scope : this.$scope
             });
         }
 

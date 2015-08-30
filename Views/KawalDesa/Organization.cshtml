@@ -30,7 +30,7 @@
                 </tbody>
                 <tfoot>
                     <tr class="" ng-if="indexCtrl.isInRole('admin')">
-                        <td colspan="5"><a class="btn btn-primary btn-xs" href="#" ng-click="indexCtrl.modal('#new-organization-modal', 'show')">Tambah Organisasi</a></td>
+                        <td colspan="5"><a class="btn btn-primary btn-xs" href="#" ng-click="indexCtrl.modal('new-organization-modal', this)">Tambah Organisasi</a></td>
                     </tr>
                 </tfoot>
             </table>
@@ -62,7 +62,10 @@
                     </tr>
                 </table>
                 <br />
-                <a class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#organization-modal', 'show')" href="#" ng-if="organizationCtrl.isEditable()">Ubah data organisasi</a>
+                <a class="btn btn-default btn-xs" ng-click="indexCtrl.modal('organization-modal', this)" href="#" ng-if="organizationCtrl.isEditable()">
+                    <i class="fa fa-pencil"></i>
+                    Ubah data organisasi
+                </a>
             </div>
             <div class="col-md-9">
                 <div class="content-header">
@@ -80,7 +83,7 @@
                                     <a href="/u/{{user.Id}}" ng-repeat="user in organizationCtrl.orgAdmins">
                                         {{user.Name ? user.Name : user.UserName}}
                                     </a>
-                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#new-admin-modal', 'show')">Tambah koordinator</a>
+                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('new-admin-modal', this)">Tambah koordinator</a>
                                 </td>
                             </tr>
                             <tr>
@@ -91,7 +94,7 @@
                                     <a href="/u/{{user.Id}}" ng-repeat="user in organizationCtrl.orgVolunteers">
                                         {{user.Name ? user.Name : user.UserName}}
                                     </a>
-                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('#new-volunteer-modal', 'show')">Tambah pelapor</a>
+                                    <a ng-if="organizationCtrl.isEditable()" class="btn btn-default btn-xs" ng-click="indexCtrl.modal('new-volunteer-modal', this)">Tambah pelapor</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -132,165 +135,157 @@
         </div>
     </div>
 
-    <div class="modal fade" id="organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">{{organizationCtrl.selected.Name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nama</label>
-                                <div class="col-sm-10">
-                                    <input ng-model="organizationCtrl.selected.Name" type="name" class="form-control" id="name" placeholder="Nama organisasi">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="picture" class="col-sm-2 control-label">Gambar</label>
-                                <div class="col-sm-10">
-                                    <input type="file" ng-file-select class="form-control"
-                                           ng-model="organizationCtrl.picture" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Description</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" ng-model="organizationCtrl.selected.Description" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Situs</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Website" placeholder="Alamat situs" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Twitter</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Twitter" placeholder="Laman twitter" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Facebook</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.Facebook" placeholder="Laman facebook" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">URL Key</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" ng-model="organizationCtrl.selected.UrlKey" placeholder="Url Key" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div ng-show="!organizationCtrl.savingStates['org']">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveOrganization()">Simpan</button>
-                    </div>
-                    <div ng-show="organizationCtrl.savingStates['org']">
-                        Menyimpan...
-                    </div>
-                </div>
+    <script type="text/ng-template" class="modal fade" id="organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="indexCtrl.closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">{{organizationCtrl.selected.Name}}</h4>
             </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="new-organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Tambah Organisasi</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form class="form-horizontal">
                         <div class="form-group">
-                            <label>Nama Organisasi</label>
-                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationName" placeholder="Nama Organisasi" />
+                            <label for="name" class="col-sm-2 control-label">Nama</label>
+                            <div class="col-sm-10">
+                                <input ng-model="organizationCtrl.selected.Name" type="name" class="form-control" id="name" placeholder="Nama organisasi">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="picture" class="col-sm-2 control-label">Gambar</label>
+                            <div class="col-sm-10">
+                                <input type="file" ng-file-select class="form-control"
+                                       ng-model="organizationCtrl.picture" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" ng-model="organizationCtrl.selected.Description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Situs</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="organizationCtrl.selected.Website" placeholder="Alamat situs" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Twitter</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="organizationCtrl.selected.Twitter" placeholder="Laman twitter" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Facebook</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="organizationCtrl.selected.Facebook" placeholder="Laman facebook" />
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-2 control-label">URL Key</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="organizationCtrl.selected.UrlKey" placeholder="Url Key" />
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <div ng-show="!organizationCtrl.savingStates['new-org']">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganization()">Simpan</button>
-                    </div>
-                    <div ng-show="organizationCtrl.savingStates['new-org']">
-                        Menyimpan...
-                    </div>
+            </div>
+            <div class="modal-footer">
+                <div ng-show="!organizationCtrl.savingStates['org']">
+                    <button type="button" class="btn btn-default" ng-click="indexCtrl.closeModal()">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveOrganization()">Simpan</button>
+                </div>
+                <div ng-show="organizationCtrl.savingStates['org']">
+                    Menyimpan...
                 </div>
             </div>
         </div>
-    </div>
+    </script>
 
-
-    <div class="modal fade" id="new-admin-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" ng-show="organizationCtrl.savingStates['new-admin']">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        Mengirim undangan...
-                    </div>
-                </div>
+    <script type="text/" class="modal fade" id="new-organization-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="indexCtrl.closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tambah Organisasi</h4>
             </div>
-            <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-admin']">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Tambah koordinator untuk {{organizationCtrl.selected.Name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationAdminEmail" placeholder="Undangan akan dikirim ke email ini" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationAdmin()">Kirim Undangan</button>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Nama Organisasi</label>
+                        <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationName" placeholder="Nama Organisasi" />
                     </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div ng-show="!organizationCtrl.savingStates['new-org']">
+                    <button type="button" class="btn btn-default" ng-click="indexCtrl.closeModal()">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganization()">Simpan</button>
+                </div>
+                <div ng-show="organizationCtrl.savingStates['new-org']">
+                    Menyimpan...
                 </div>
             </div>
         </div>
-    </div>
+    </script>
 
-    <div class="modal fade" id="new-volunteer-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" ng-show="organizationCtrl.savingStates['new-volunteer']">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        Mengirim undangan...
-                    </div>
-                </div>
-            </div>
-            <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-volunteer']">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Tambah pelapor untuk {{organizationCtrl.selected.Name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationVolunteerEmail" placeholder="Undangan akan dikirim ke email ini" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationVolunteer()">Kirim Undangan</button>
-                    </div>
+
+    <script type="text/ng-template" class="modal fade" id="new-admin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content" ng-show="organizationCtrl.savingStates['new-admin']">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    Mengirim undangan...
                 </div>
             </div>
         </div>
-    </div>
+        <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-admin']">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="indexCtrl.closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tambah koordinator untuk {{organizationCtrl.selected.Name}}</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationAdminEmail" placeholder="Undangan akan dikirim ke email ini" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class="btn btn-default" ng-click="indexCtrl.closeModal()">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationAdmin()">Kirim Undangan</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" class="modal fade" id="new-volunteer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content" ng-show="organizationCtrl.savingStates['new-volunteer']">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    Mengirim undangan...
+                </div>
+            </div>
+        </div>
+        <div class="modal-content" ng-show="!organizationCtrl.savingStates['new-volunteer']">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="indexCtrl.closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tambah pelapor untuk {{organizationCtrl.selected.Name}}</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" ng-model="organizationCtrl.newOrganizationVolunteerEmail" placeholder="Undangan akan dikirim ke email ini" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <button type="button" class="btn btn-default" ng-click="indexCtrl.closeModal()">Batal</button>
+                    <button type="button" class="btn btn-primary" ng-click="organizationCtrl.saveNewOrganizationVolunteer()">Kirim Undangan</button>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>
