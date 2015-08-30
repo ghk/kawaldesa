@@ -13,11 +13,6 @@ module App.Controllers {
 
         static $inject = ["$scope", "$upload"];
 
-        expandedStates = {};
-        formTransactions: { [key: number]: any } = {};
-        formErrors = {};
-        formSavingStates = {};
-        transactions: { [key: number]: any } = {};
         indexCtrl: IndexCtrl;
 
         constructor(public $scope, public $upload) {
@@ -31,73 +26,10 @@ module App.Controllers {
 
         onRegionChanged() {
             if (this.indexCtrl.type == "transfer") {
-                this.expandedStates = {};
-                this.formTransactions = {};
-                this.formErrors = {};
-                this.formSavingStates = {};
-                this.transactions = {};
                 this.getRecapitulations(this.indexCtrl.regionId);
             }
         }
 
-        toggleTransactions(entityId, ev) {
-            ev.preventDefault();
-            this.expandedStates[entityId] = !this.expandedStates[entityId];
-            this.loadTransactions(entityId);
-        }
-
-        isExpanded(entity) {
-            var result = this.expandedStates[entity.RegionId];
-            return result;
-        }
-
-        setFormExpanded(entity, state) {
-            if (state) {
-                this.formTransactions[entity.RegionId] = {
-                    fkSourceId: state[0],
-                    fkDestinationId: state[1],
-                    fkActorId: state[2]
-                }
-            } else {
-                delete this.formTransactions[entity.RegionId];
-                delete this.formErrors[entity.RegionId];
-                delete this.formSavingStates[entity.RegionId];
-            }
-        }
-
-        isFormExpanded(entity) {
-            return this.formTransactions[entity.RegionId];
-        }
-
-        saveForm(entity) {
-            var ctrl = this;
-
-            var formData = JSON.parse(JSON.stringify(this.formTransactions[entity.RegionId]));
-            var date = formData["Date"];
-            date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2) + "T00:00:00";
-            formData["Date"] = date;
-
-            ctrl.formSavingStates[entity.RegionId] = true;
-            Controllers.TransactionController.AddTransferTransaction(new Scaffold.Multipart({
-                forms: formData,
-                files: this.formTransactions[entity.RegionId].File
-            })).success(() => {
-                ctrl.formSavingStates[entity.RegionId] = false;
-                ctrl.setFormExpanded(entity, null);
-                ctrl.getRecapitulations(entity.ParentRegionId);
-                ctrl.loadTransactions(entity.RegionId);
-            }).error(formErr => {
-                ctrl.formSavingStates[entity.RegionId] = false;
-                ctrl.formErrors[entity.RegionId] = {};
-                ctrl.formErrors[entity.RegionId][formErr.Field] = formErr.Message;
-                var modelState = formErr.ModelState;
-                var keys = Object.keys(modelState);
-                for (var i = 0; i < keys.length; i++) {
-                    var key = keys[i];
-                    ctrl.formErrors[entity.RegionId][key] = modelState[key].join(",");
-                }
-            });
-        }
 
         getRecapitulations(parentId: string) {
             var ctrl = this;
@@ -112,20 +44,26 @@ module App.Controllers {
                 type = Controllers.TransferRecapitulationController;
             }
             scope.entities = [];
-            type.GetAll(query).then((recapitulations) => {
-                scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
-                scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
-            });
-        }
-
-        loadTransactions(entityId) {
-            var ctrl = this;
-            if (this.expandedStates[entityId]) {
-                Controllers.TransactionController.GetTransferTransactions(entityId).then(details => {
-                    ctrl.transactions[entityId] = details.data;
+            if (this.indexCtrl.guessedRegionType < 4) {
+                type.GetAll(query).then((recapitulations) => {
+                    scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
+                    scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
                 });
+            } else {
+                var entities = [];
+                for (var i = 0; i < 10; i++) {
+                    entities.push({
+                        "Date": "25-12-2015",
+                        "Dd": i % 3 == 0 ? Math.random() * 1000000 : null,
+                        "Add": i % 3 == 1 ? Math.random() * 1000000 : null,
+                        "Bhpr": i % 3 == 2 ? Math.random() * 1000000 : null,
+                    });
+                    scope.entities = entities;
+                    scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
+                }
             }
         }
+
 
         moveFillMeterBar(fullValue:number, realValue:number) {
             var getPercent = (realValue / fullValue) * 100;

@@ -134,8 +134,9 @@ module App.Controllers {
         }
 
         onSearchSelected(item, model, label) {
-            var regionId = model.Type == 4 ? model.ParentId : model.Id;
             var type = this.type;
+            var regionId = model.Type == 4 && type !== 'transfer' ? model.ParentId : model.Id;
+            console.log(regionId);
             var matched : any[] = ROUTES.filter(r => r[1] == type);
             var path = matched[0][0] + regionId;
             this.$location.path(path);
@@ -163,7 +164,10 @@ module App.Controllers {
             if (this.type != 'dashboard') {
                 $event.preventDefault();
                 var matched : any[] = ROUTES.filter(r => r[1] == type);
-                var path = matched[0][0] + this.region.Id;
+                var regionId = this.region.Id;
+                if (this.region.Type == 4 && type != "transfer")
+                    regionId = this.region.fkParentId;
+                var path = matched[0][0] + regionId;
                 this.$location.path(path);
             }
         }

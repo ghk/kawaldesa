@@ -198,7 +198,7 @@ module App.Controllers {
         }
 
         onRegionChanged() {
-            if (this.indexCtrl.region.Type == 4) {
+            if (this.indexCtrl.type == "realization") {
                 this.getApbdes(this.indexCtrl.region.Id);
                 this.formTransactionRealization = {};
                 this.formFieldReport = {};
