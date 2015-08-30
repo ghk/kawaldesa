@@ -52,14 +52,10 @@ module App.Controllers {
             } else {
                 var entities = [];
                 for (var i = 0; i < 10; i++) {
-                    entities.push({
-                        "Date": "25-12-2015",
-                        "Dd": i % 3 == 0 ? Math.random() * 1000000 : null,
-                        "Add": i % 3 == 1 ? Math.random() * 1000000 : null,
-                        "Bhpr": i % 3 == 2 ? Math.random() * 1000000 : null,
+                    Controllers.TransferController.GetAll({"fkRegionId": parentId, "Year": 2015 }).then(transfers => {
+                        scope.entities = transfers.data;
+                        scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
                     });
-                    scope.entities = entities;
-                    scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
                 }
             }
         }

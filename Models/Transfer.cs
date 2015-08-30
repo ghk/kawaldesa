@@ -10,7 +10,7 @@ using System.Web.Http.Validation;
 
 namespace App.Models
 {
-    public class BaseTransfer : BaseEntity, ISpreadsheetEntry
+    public class BaseTransfer : BaseEntity
     {
         public decimal? Dd { get; set; }
         public decimal? Add { get; set; }
@@ -27,9 +27,6 @@ namespace App.Models
         public string fkRegionId { get; set; }
         public virtual Region Region { get; set; }
         
-        [ForeignKey("Spreadsheet")]
-        public long fkSpreadsheetId { get; set; }
-        public virtual Spreadsheet Spreadsheet { get; set; }
 
 
         [Validator]

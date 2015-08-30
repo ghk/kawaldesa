@@ -13,12 +13,14 @@ namespace App.Controllers.Models
     {
         public TransferController(DB dbContext) : base(dbContext)
         {
+            dbContext.Configuration.ProxyCreationEnabled = false;
         }
 
         protected override IQueryable<Transfer> ApplyQuery(IQueryable<Transfer> query)
         {
             var fkRegionId = GetQueryString<string>("fkRegionId");
-            return query.Where(r => r.fkRegionId == fkRegionId && r.IsActivated);
+            var year = GetQueryString<int>("Year");
+            return query.Where(r => r.fkRegionId == fkRegionId && r.Year == year && r.IsActivated);
         }
 
     }

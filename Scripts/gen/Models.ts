@@ -1184,8 +1184,6 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkSpreadsheetId: number;
-        Spreadsheet: App.Models.ISpreadsheet;
     }
     
     export class BaseTransfer extends BaseEntity {
@@ -1199,8 +1197,6 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkSpreadsheetId: number;
-        Spreadsheet: App.Models.ISpreadsheet;
         
         constructor(data?: IBaseTransfer) {
             super(data);
@@ -1212,8 +1208,6 @@ module App.Models {
             this.Year = data ? data.Year : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkSpreadsheetId = data ? data.fkSpreadsheetId : null;
-            this.Spreadsheet = data ? data.Spreadsheet : null;
         }
         
     }

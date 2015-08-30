@@ -88,7 +88,7 @@
                 </tr>
                 <tr ng-if="indexCtrl.guessedRegionType == 4" ng-repeat="entity in entities">
                     <td>
-                        {{entity.Date}}
+                        {{entity.Date| date: 'dd MMMM yyyy'}}
                     </td>
                     <td class="money">
                         &nbsp;
