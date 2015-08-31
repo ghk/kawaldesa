@@ -61,11 +61,6 @@ module App.Controllers {
         }
 
 
-        moveFillMeterBar(fullValue:number, realValue:number) {
-            var getPercent = realValue * 100 / fullValue;
-            return { "width": getPercent + "%" };
-        }
-
     }
 
     kawaldesa.controller("TransferRecapitulationCtrl", TransferRecapitulationCtrl);

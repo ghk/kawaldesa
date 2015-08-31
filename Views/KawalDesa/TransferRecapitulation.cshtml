@@ -56,35 +56,33 @@
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedDd | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(total.BudgetedDd, entity.BudgetedDd)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedDd, total.BudgetedDd)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedDd * 0.4 | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.TransferredDd | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredDd, entity.BudgettedDd)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedAdd | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedAdd, total.BudgetedAdd)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedAdd * 0.4 | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.TransferredAPBN)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.TransferredAdd | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredAdd, entity.BudgetedAdd)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.BudgetedBhpr | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedBhpr, total.BudgetedBhpr)"> </div>
                     </td>
                     <td class="money">
                         <div style="float:right;">{{entity.TransferredBhpr | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredBhpr, entity.BudgettedBhpr)"> </div>
                     </td>
                 </tr>
                 <tr ng-if="indexCtrl.guessedRegionType == 4" ng-repeat="entity in entities">

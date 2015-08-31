@@ -4,13 +4,21 @@ html {
     margin: 0;
 }
 
-.fill-meter-bar {
+.bar-percent {
     height: 16px;
-    background-color: lightblue;
+    background-color: #337ab7;
     opacity: 0.3;
     right:0;
     position:absolute;
-    z-index:-1;
+    max-width: 100%;
+}
+
+.bar-percent .bar-percent-light {
+    background-color: lightblue;
+}
+
+.table > tbody > tr:hover .bar-percent {
+    background-color: red !important;
 }
 
 tr {
@@ -236,7 +244,6 @@ p.subtext {
 
 .table > tbody > tr:hover {
     background-color: rgb(222, 230, 241);
-
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

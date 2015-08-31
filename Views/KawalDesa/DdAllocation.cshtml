@@ -62,9 +62,15 @@
                         </span>
                     </td>
                     <td class="money"> {{entity.RegionalTransfer | number:0}} </td>
-                    <td class="money"> {{entity.Dd | number:0}} </td>
+                    <td class="money">
+                        <div style="float:right;">{{entity.Dd | number:0}} </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.Dd, total.Dd)"> </div>
+                    </td>
                     <td class="money"> {{entity.Dd / entity.RegionalTransfer * 10 | number:0}}</td>
-                    <td class="money"> {{entity.TotalDesa | number:0}} </td>
+                    <td class="money">
+                        <div style="float:right;">{{entity.TotalDesa | number:0}} </div>
+                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TotalDesa, total.TotalDesa)"> </div>
+                    </td>
                     <td class="money"> {{entity.Dd / entity.CompletedDesa | number:0}} </td>
                 </tr>
                 <tr ng-repeat="entity in entities" ng-if="indexCtrl.region.Type >= 2">

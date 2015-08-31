@@ -247,6 +247,11 @@ module App.Controllers {
             }
         }
 
+        getBarPercent(value:number, fullValue:number) {
+            var percent = value * 100 / fullValue;
+            return { "width": percent + "%" };
+        }
+
 
         /* Security Utils */
 
