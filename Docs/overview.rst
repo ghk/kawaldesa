@@ -3,7 +3,7 @@ kawaldesa.org
 
 **Dana Desa**. Peningkatan besarnya dana desa berpotensi besar dalam membangun Indonesia. 
 
-**Crowd Sourcing**. Penyelesaian pekerjaan dengan menggunakan masyarakat/publik sebagai sumber dayanya.
+**Crowd Sourcing**. Penyelesaian pekerjaan dengan menggunakan masyarakat/publik sebagai sumber dayanya...
 
 **kawaldesa.org** . Upaya pengawalan dana desa oleh masyarakat agar alokasi, penyaluran dan realisasinya efektif dan efisien, sehingga dampaknya bisa dirasakan kembali ke masyarakat
 
