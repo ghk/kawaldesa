@@ -243,6 +243,9 @@
                 <h4 class="modal-title">Tambah koordinator untuk {{organizationCtrl.selected.Name}}</h4>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger" ng-if="organizationCtrl.errors['new-admin']">
+                    {{organizationCtrl.errors['new-admin']}}
+                </div>
                 <form role="form">
                     <div class="form-group">
                         <label>Email</label>

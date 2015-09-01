@@ -196,7 +196,7 @@ namespace App.Controllers.Services
         public IEnumerable<UserViewModel> GetAll()
         {
             IQueryable<User> exp = dbContext.Set<User>().Include("Roles");           
-            return exp.Select(u => Convert(u));
+            return exp.ToList().Select(u => Convert(u));
         }
 
         [HttpGet]        
@@ -215,7 +215,7 @@ namespace App.Controllers.Services
         public IEnumerable<UserViewModel> GetAllByOrg(long orgId)
         {
             IQueryable<User> exp = dbContext.Set<User>().Include("Roles").Where(u => u.fkOrganizationId.Value == orgId);           
-            return exp.Select(u => Convert(u));
+            return exp.ToList().Select(u => Convert(u));
         }
 
         private List<Region> GetScopes(string id)

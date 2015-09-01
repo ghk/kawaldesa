@@ -26,8 +26,6 @@ namespace App.Models
         [ForeignKey("Region")]
         public string fkRegionId { get; set; }
         public virtual Region Region { get; set; }
-        
-
 
         [Validator]
         public IEnumerable<ModelValidationResult> Validate()
@@ -38,6 +36,7 @@ namespace App.Models
 
     public class Transfer : BaseTransfer
     {
+        public List<SourceDocument> SourceDocuments { get; set; }
     }
 
     public class FrozenTransfer : BaseTransfer

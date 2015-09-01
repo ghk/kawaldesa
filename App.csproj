@@ -54,9 +54,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\ActionMailerNext.3.2.0.0\lib\net45\ActionMailerNext.dll</HintPath>
     </Reference>
-    <Reference Include="ActionMailerNext.MandrillMailSender">
-      <HintPath>packages\ActionMailerNext.MandrillMailSender.3.2.0.0\lib\net45\ActionMailerNext.MandrillMailSender.dll</HintPath>
-    </Reference>
     <Reference Include="ActionMailerNext.Mvc5, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\ActionMailerNext.Mvc5.3.2.0.0\lib\net45\ActionMailerNext.Mvc5.dll</HintPath>
@@ -321,6 +318,7 @@
     <Compile Include="Models\Views\RegionalBhprRecapitulation.cs" />
     <Compile Include="Models\Views\RegionalDdRecapitulation.cs" />
     <Compile Include="Security\JsonWebToken.cs" />
+    <Compile Include="Utils\AsyncHelpers.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\DriveUtils.cs" />
     <Compile Include="Utils\Excel\AllocationExcelReader.cs" />
@@ -329,6 +327,9 @@
     <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
     <Compile Include="Utils\Excel\ExcelHeaders.cs" />
     <Compile Include="Utils\JsonAnonymouser.cs" />
+    <Compile Include="Utils\Mail\MandrillMailResponse.cs" />
+    <Compile Include="Utils\Mail\MandrillMailSender.cs" />
+    <Compile Include="Utils\Mail\MandrillStatus.cs" />
     <Compile Include="Utils\NinjectResolver.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="Controllers\Models\ApbdesController.cs" />
@@ -384,7 +385,9 @@
     </Content>
     <Content Include="refresh-mv.psql" />
     <Content Include="refresh-mv.bat" />
-    <Content Include="appSettings.config" />
+    <Content Include="appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\angular-file-upload.min.js" />
     <Compile Include="Security\KawalDesaHeaders.cs" />
     <Content Include="Scripts\bloodhound.js" />

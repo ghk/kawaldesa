@@ -28,6 +28,7 @@ module App.Controllers {
         orgUploads: Models.Spreadsheet[] = null;
 
         savingStates = {};
+        errors = {};
 
         constructor(public $scope) {
             var ctrl = this;
@@ -81,7 +82,7 @@ module App.Controllers {
                 files: this.picture
             });
             Controllers.OrganizationController.Update(multipart).success(() => {
-                ctrl.indexCtrl.modal("organization-modal");
+                ctrl.indexCtrl.closeModal();
             }).then(() => {
                 ctrl.$scope.$apply(() => {
                     ctrl.savingStates["org"] = false;
@@ -96,7 +97,7 @@ module App.Controllers {
             org.Name = this.newOrganizationName;
             Controllers.OrganizationController.Save(org).then(() => {
                 ctrl.organizations.push(org);
-                ctrl.indexCtrl.modal("new-organization-modal");
+                ctrl.indexCtrl.closeModal();
             }).finally(() => {
                 ctrl.savingStates["new-org"] = false;
             });
@@ -105,11 +106,15 @@ module App.Controllers {
         saveNewOrganizationAdmin() {
             var ctrl = this;
             this.savingStates["new-admin"] = true;
+            this.errors["new-admin"] = null;
             Controllers.OrganizationController
                 .AddOrgAdmin(this.selected.Id, this.newOrganizationAdminEmail)
                 .then(user => {
                     ctrl.orgAdmins.push(user.data);
-                    ctrl.indexCtrl.modal("new-admin-modal");
+                    ctrl.indexCtrl.closeModal();
+                }).catch(err => {
+                    var msg = err.data.ExceptionMessage;
+                    ctrl.errors["new-admin"] = msg;
                 }).finally(() => {
                     ctrl.savingStates["new-admin"] = false;
             });
@@ -118,11 +123,15 @@ module App.Controllers {
         saveNewOrganizationVolunteer() {
             var ctrl = this;
             this.savingStates["new-volunteer"] = true;
+            this.errors["new-volunteer"] = null;
             Controllers.OrganizationController
                 .AddOrgVolunteer(this.selected.Id, this.newOrganizationVolunteerEmail)
                 .then(user => {
                     ctrl.orgVolunteers.push(user.data);
-                    ctrl.indexCtrl.modal("new-volunteer-modal");
+                    ctrl.indexCtrl.closeModal();
+                }).catch(err => {
+                    var msg = err.data.ExceptionMessage;
+                    ctrl.errors["new-volunteer"] = msg;
                 }).finally(() => {
                     ctrl.savingStates["new-volunteer"] = false;
             });

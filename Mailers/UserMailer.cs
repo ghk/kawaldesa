@@ -1,9 +1,11 @@
-﻿using ActionMailerNext.MandrillMailSender;
+﻿using ActionMailerNext.Implementations.SMTP;
 using ActionMailerNext.Mvc5;
 using App.Models;
+using App.Utils.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 
@@ -13,15 +15,13 @@ namespace App.Mailers
     {
         public UserMailer()
         {
-            //Choosing the Email method (SMTP, Mandrill, etc..)
-            //SetMailMethod(MailMethod.Mandrill);
             MailSender = new MandrillMailSender();
         }
 
         public EmailResult Invitation(InvitationToken token)
         {
             // Setting up needed properties
-            MailAttributes.From = new MailAddress("ghk@gozalikumara.com", "Gozali Kumara");
+            MailAttributes.From = new MailAddress("kawaldesa@caturan.com", "Kawal Desa");
             MailAttributes.To.Add(new MailAddress(token.User.Email));
             MailAttributes.Subject = "Undangan bergabung dengan kawaldesa";
             MailAttributes.Priority = MailPriority.High;
