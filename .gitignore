@@ -8,6 +8,7 @@ appSettings.config
 /App_Data/
 /Docs/_build/
 .vs/
+/Android/
 
 # Created by http://www.gitignore.io
 # Scaffold Content
