@@ -22,7 +22,19 @@ namespace App.Controllers.Models
             if (keyword == null)
                 keyword = string.Empty;
             keyword = keyword.ToLower();
-            return query.Where(r => r.Name.ToLower().Contains(keyword)).Take(10);
+            var sourceFunction = GetQueryString<SourceDocumentFunction?>("function");
+            query = query.Where(r => r.Name.ToLower().Contains(keyword));
+            if(sourceFunction.HasValue)
+            {
+                if (sourceFunction.Value == SourceDocumentFunction.Allocation)
+                {
+                    query = query.Where(r => r.Type == RegionType.NASIONAL || r.Type == RegionType.KABUPATEN);
+                } else {
+                    query = query.Where(r => r.Type == RegionType.DESA);
+                }
+            }
+            query = query.Take(10);
+            return query;
         }
 
     }

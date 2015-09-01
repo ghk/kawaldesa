@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="function" class="col-sm-3 control-label">Fungsi Dokumen</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="function" ng-model="indexCtrl.newSourceFunction">
+                            <select class="form-control" name="function" ng-model="indexCtrl.newSourceFunction" convert-to-number>
                                 <option value="0">Alokasi</option>
                                 <option value="1">Penyaluran</option>
                             </select>
@@ -49,8 +49,9 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-3 control-label">Wilayah</label>
                         <div class="col-sm-9">
-                            <input type="text" ng-model="indexCtrl.newSourceRegion" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
-                                   typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control" />
+                            <input type="text" ng-model="indexCtrl.newSourceRegion"
+                                   placeholder="{{indexCtrl.newSourceFunction == 0 ? 'cari kabupaten/kota atau nasional' : 'cari desa'}}"
+                                   typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue, true)" typeahead-template-url="searchTemplate.html" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,6 +59,20 @@
                         <div class="col-sm-9">
                             <input type="file" ng-file-select class="form-control"
                                    ng-model="indexCtrl.newSourceFile" multiple="" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1">
+                        <label for="amount" class="col-sm-3 control-label">Jumlah</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control"
+                                   ng-model="indexCtrl.newSourceAmount" multiple="" />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1">
+                        <label for="date" class="col-sm-3 control-label">Tanggal</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"
+                                   ng-model="indexCtrl.newSourceDate" multiple="" />
                         </div>
                     </div>
                 </form>

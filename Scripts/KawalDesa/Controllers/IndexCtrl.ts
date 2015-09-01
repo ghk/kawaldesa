@@ -306,8 +306,11 @@ module App.Controllers {
             }, 0);
         }
 
-        searchRegions(keyword) {
-            return Controllers.RegionSearchResultController.GetAll({ "keyword": keyword })
+        searchRegions(keyword, scopeToFunction?) {
+            var query = { "keyword": keyword };
+            if (scopeToFunction)
+                query["function"]= this.newSourceFunction;
+            return Controllers.RegionSearchResultController.GetAll(query)
                 .then((regions) => regions.data);
         }
 
@@ -321,8 +324,8 @@ module App.Controllers {
 
         activeSources:  App.Models.SourceDocument[];
         newSourceFile: any;
-        newSourceSubType: any;
-        newSourceFunction: any;
+        newSourceSubType: string;
+        newSourceFunction: App.Models.SourceDocumentFunction;
         newSourceRegion: any;
         newSourceState = false;
 
@@ -346,11 +349,18 @@ module App.Controllers {
             var region = ctrl.region;
 
             ctrl.newSourceRegion = region;
-            if (region.Type == 1 || region.Type == 3)
-                ctrl.newSourceRegion = region.Parent;
-            if (region.Type == 4)
-                ctrl.newSourceRegion = region.Parent.Parent;
-            ctrl.newSourceFunction = ctrl.type == "transfer" ? "1" : "0";
+            if (ctrl.newSourceFunction == Models.SourceDocumentFunction.Allocation) {
+                if (region.Type == 1 || region.Type == 3)
+                    ctrl.newSourceRegion = region.Parent;
+                if (region.Type == 4)
+                    ctrl.newSourceRegion = region.Parent.Parent;
+            } else {
+                if (region.Type != 4)
+                    ctrl.newSourceRegion = null;
+            }
+            ctrl.newSourceFunction = ctrl.type == "transfer"
+                ? Models.SourceDocumentFunction.Transfer
+                : Models.SourceDocumentFunction.Allocation;
             if (ctrl.type == "dd")
                 ctrl.newSourceSubType = "Dd";
             if (ctrl.type == "add")
@@ -363,19 +373,21 @@ module App.Controllers {
             var typeStr = this.newSourceRegion.Id == "0" ? "National" : "Regional";
             typeStr = typeStr + this.newSourceSubType;
             var type = Models.DocumentUploadType[typeStr];
-            var fn = parseInt(this.newSourceFunction);
+            var fn = this.newSourceFunction;
 
             var ctrl = this;
             var multipart = new Scaffold.Multipart({ files: this.newSourceFile });
             ctrl.newSourceState = true;
-            Controllers.SourceDocumentController.Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p").success(() => {
-                safeApply(ctrl.$scope, () => {
-                    ctrl.closeModal();
-                    ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
-                });
-            }).finally(() => {
-                safeApply(ctrl.$scope, () => {
-                    ctrl.newSourceState = false;
+            Controllers.SourceDocumentController
+                .Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p")
+                .success(() => {
+                    safeApply(ctrl.$scope, () => {
+                        ctrl.closeModal();
+                        ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                    });
+                }).finally(() => {
+                    safeApply(ctrl.$scope, () => {
+                        ctrl.newSourceState = false;
                 });
             });;
         }
