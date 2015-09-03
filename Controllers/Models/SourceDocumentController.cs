@@ -50,7 +50,7 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles=Role.VOLUNTEER)]
-        public void Upload(Multipart multipart, DocumentUploadType type, SourceDocumentFunction fn, string regionId, string apbnKey)
+        public void Upload(Multipart<Transfer> multipart, DocumentUploadType type, SourceDocumentFunction fn, string regionId, string apbnKey)
         {
             try
             {
@@ -66,11 +66,22 @@ namespace App.Controllers.Models
                 var apbn = dbContext.Set<Apbn>().First(a => a.Key == apbnKey);
                 var user = KawalDesaController.GetCurrentUser();
 
-                if (region.Type != RegionType.NASIONAL && region.Type != RegionType.KABUPATEN)
-                    throw new ApplicationException("only allowed to upload on nasional or kabupaten");
+                //if (region.Type != RegionType.NASIONAL && region.Type != RegionType.KABUPATEN)
+                //    throw new ApplicationException("only allowed to upload on nasional or kabupaten");
 
                 using (var tx = dbContext.Database.BeginTransaction())
                 {
+                    Transfer transfer = multipart.Entity;
+                    if(transfer != null)
+                    {
+                        transfer.IsActivated = true;
+                        transfer.fkRegionId = regionId;
+                        transfer.Year = Convert.ToInt32(apbnKey.Substring(0, 4));
+                        dbContext.Set<Transfer>().Add(transfer);
+                        dbContext.SaveChanges();
+                    }
+
+
                     foreach (var fileResult in multipart.Files)
                     {
                         var blob = new Blob(fileResult);
@@ -89,8 +100,15 @@ namespace App.Controllers.Models
                         doc.ApbnKey = apbnKey;
                         doc.fkRegionId = regionId;
                         doc.fkFileId = blob.Id;
+
+                        if(transfer != null)
+                        {
+                            doc.fkTransferId = transfer.Id;
+                        }
+
                         dbContext.Set<SourceDocument>().Add(doc);
                         dbContext.SaveChanges();
+
                     }
 
                     tx.Commit();

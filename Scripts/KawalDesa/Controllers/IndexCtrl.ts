@@ -325,6 +325,8 @@ module App.Controllers {
         activeSources:  App.Models.SourceDocument[];
         newSourceFile: any;
         newSourceSubType: string;
+        newSourceDate: string;
+        newSourceAmount: number;
         newSourceFunction: App.Models.SourceDocumentFunction;
         newSourceRegion: any;
         newSourceState = false;
@@ -377,6 +379,22 @@ module App.Controllers {
 
             var ctrl = this;
             var multipart = new Scaffold.Multipart({ files: this.newSourceFile });
+
+            if (fn == Models.SourceDocumentFunction.Transfer) {
+                var form = new Models.Transfer();
+                var date = ctrl.newSourceDate;
+                date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2) + "T00:00:00";
+                form.Date= date;
+                if (this.newSourceSubType == "Dd")
+                    form.Dd = this.newSourceAmount;
+                else if (this.newSourceSubType == "Add")
+                    form.Dd = this.newSourceAmount;
+                else if (this.newSourceSubType == "Bhpr")
+                    form.Bhpr = this.newSourceAmount;
+                multipart["forms"] = form;
+            }
+
+
             ctrl.newSourceState = true;
             Controllers.SourceDocumentController
                 .Upload(multipart, type, fn, this.newSourceRegion.Id, "2015p")

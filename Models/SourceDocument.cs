@@ -36,5 +36,9 @@ namespace App.Models
         [ForeignKey("ApprovedBy")]
         public string fkApprovedById { get; set; }
         public virtual User ApprovedBy { get; set; }
+
+        [ForeignKey("Transfer")]
+        public long? fkTransferId { get; set; }
+        public virtual Transfer Transfer { get; set; }
     }
 }

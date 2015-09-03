@@ -1029,6 +1029,8 @@ module App.Models {
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
         ApprovedBy: App.Models.IUser;
+        fkTransferId: number;
+        Transfer: App.Models.ITransfer;
     }
     
     export class SourceDocument extends BaseEntity {
@@ -1051,6 +1053,8 @@ module App.Models {
         Organization: App.Models.IOrganization;
         fkApprovedById: string;
         ApprovedBy: App.Models.IUser;
+        fkTransferId: number;
+        Transfer: App.Models.ITransfer;
         
         constructor(data?: ISourceDocument) {
             super(data);
@@ -1071,6 +1075,8 @@ module App.Models {
             this.Organization = data ? data.Organization : null;
             this.fkApprovedById = data ? data.fkApprovedById : null;
             this.ApprovedBy = data ? data.ApprovedBy : null;
+            this.fkTransferId = data ? data.fkTransferId : null;
+            this.Transfer = data ? data.Transfer : null;
         }
         
     }
@@ -1214,14 +1220,17 @@ module App.Models {
     
     
     export interface ITransfer extends IBaseTransfer {
+        SourceDocuments: Array<App.Models.ISourceDocument>;
     }
     
     export class Transfer extends BaseTransfer {
         public static ajaxSettings = new Scaffold.AjaxSettings();
         
+        SourceDocuments: Array<App.Models.ISourceDocument>;
         
         constructor(data?: ITransfer) {
             super(data);
+            this.SourceDocuments = data ? data.SourceDocuments : null;
         }
         
     }
