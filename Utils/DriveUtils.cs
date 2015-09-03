@@ -51,13 +51,14 @@ namespace App.Utils
             System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
 
             FilesResource.InsertMediaUpload request = driveService.Files.Insert(body, stream, mime);
+            request.Convert = true; 
             request.Upload();
             return request.ResponseBody.Id;
         }
         public string CreateParentDirectory()
         {
             File body = new File();
-            body.Title = "kawaldesa-root";
+            body.Title = "kawaldesa-root-3";
             body.Description = "Kawaldesa root file";
             body.MimeType = "application/vnd.google-apps.folder";
 
