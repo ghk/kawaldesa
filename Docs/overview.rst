@@ -1,58 +1,35 @@
 kawaldesa.org
 ===================================
 
-**Dana Desa**. Peningkatan besarnya dana desa berpotensi besar dalam membangun Indonesia. 
+kawaldesa.org adalah tempat di mana kita bisa mengawal dana desa dengan transparansi alokasi, penyaluran dan realisasinya.
 
-**Crowd Sourcing**. Penyelesaian pekerjaan dengan menggunakan masyarakat/publik sebagai sumber dayanya...
-
-**kawaldesa.org** . Upaya pengawalan dana desa oleh masyarakat agar alokasi, penyaluran dan realisasinya efektif dan efisien, sehingga dampaknya bisa dirasakan kembali ke masyarakat
-
-
-Crowdsourcing pengawalan dana desa
------------------------------------
-
-Pengawalan dana desa di kawaldesa.org meliputi:
-
-* Proses alokasi & penganggaran dana desa
-* Proses penyaluran dana desa dari Pusat atau Kabupaten/Kota ke Desa.
-* Realisasi APBDes oleh pemerintah desa.
+================  ===========================================================
+**Alokasi**       | Kita mengawal **pemerintah pusat & daerah** untuk 
+                  | mengalokasikan dana desa sesuai dengan Undang-Undang.
+----------------  -----------------------------------------------------------
+**Penyaluran**    | Kita mengawal **pemerintah pusat & daerah** untuk 
+                  | menyalurkan dana desa yang dialokasikan agar tepat waktu.
+----------------  -----------------------------------------------------------
+**Realisasi**     | Kita mengawal **desa-desa** dalam 
+                  | merealisasikan dana desa mereka.
+================  ===========================================================
 
 .. image:: images/pengawalan.png
    :scale: 50 %
    :alt: alternate text
    :align: right
 
-Pengawalan Alokasi Dana Desa
------------------------------------
-Pembuatan anggaran dana desa dilakukan oleh pemerintah pusat & daerah,
-kawaldesa.org menyimpan dan menampilkan anggaran dana desa yang dibuat pemerintah pusat & daerah tersebut
-
-Pengawalan Penyaluran Dana Desa
+Crowdsourcing pengawalan dana desa
 -----------------------------------
 
-.. image:: images/penyaluran.png
-   :scale: 50 %
-   :alt: alternate text
-   :align: right
+Data di kawaldesa.org didapatkan dari organisasi-organisasi pelapor. Daftar organisasi tersebut bisa dilihat di http://kawaldesa.org/orgs
 
-Pengawalan Realisasi APBDes
------------------------------------
-
-Transparansi anggaran pendapatan & belanja setiap desa, dan realisasinya
-
-.. image:: images/realisasi.png
-   :scale: 50 %
-   :alt: alternate text
-   :align: right
-
-Pelaporan masyarakat terhadap realisasi anggaran belanja desa
-
-.. image:: images/realisasi2.png
-   :scale: 50 %
-   :alt: alternate text
-   :align: right
+Bagi kamu yang di luar organisasi tersebut namun ingin menyumbang data / merelakan waktu untuk melengkapi data dana desa, kamu bisa bergabung ke facebook page ini: https://www.facebook.com/kawaldesaorg
 
 
 Organisasi Pelapor
 -----------------------------------
+
+Pembuatan anggaran dana desa dilakukan oleh pemerintah pusat & daerah,
+kawaldesa.org menyimpan dan menampilkan anggaran dana desa yang dibuat pemerintah pusat & daerah tersebut
 
