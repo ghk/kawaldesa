@@ -1,5 +1,5 @@
 ﻿using Scaffold.Validation;
-using App.Utils.Excel;
+using App.Utils.Spreadsheets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,66 +12,66 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("Dana Desa APBN Desa Se Kab")]
+    [SpreadsheetFileName("Dana Desa APBN Desa Se Kab")]
     public class RegionalDdAllocation : BaseEntity, IAllocation
     {
-        [ExcelHeader(15,"No")]
+        [SpreadsheetHeader(15,"No")]
         public string No { get; set; }
 
-        [ExcelHeader(35, "Desa")]
+        [SpreadsheetHeader(35, "Desa")]
         public string RegionName { get; set; }
 
-        [ExcelHeader(25, "Alokasi Dasar")]
+        [SpreadsheetHeader(25, "Alokasi Dasar")]
         public decimal? BaseAllocation { get; set; }
 
 
-        [ExcelHeader("Jumlah", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Jumlah", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
         public int? Population { get; set; }
 
-        [ExcelHeader("Rasio", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Rasio", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
         public decimal? PopulationRatio { get; set; }
 
-        [ExcelHeader("Bobot", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Bobot", "Jumlah Penduduk", "Alokasi Berdasarkan Formula")]
         public decimal? PopulationWeight { get; set; }
 
 
-        [ExcelHeader("Jumlah", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Jumlah", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
         public int? PoorPopulation { get; set; }
 
-        [ExcelHeader("Rasio", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Rasio", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
         public decimal? PoorPopulationRatio { get; set; }
 
-        [ExcelHeader("Bobot", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Bobot", "Jumlah Penduduk Miskin", "Alokasi Berdasarkan Formula")]
         public decimal? PoorPopulationWeight { get; set; }
 
 
-        [ExcelHeader("Luas", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Luas", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
         public decimal? Area { get; set; }
 
-        [ExcelHeader("Rasio", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Rasio", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
         public decimal? AreaRatio { get; set; }
 
-        [ExcelHeader("Bobot", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Bobot", "Luas Wilayah", "Alokasi Berdasarkan Formula")]
         public decimal? AreaWeight { get; set; }
 
 
-        [ExcelHeader("IKG", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("IKG", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
         public decimal? Ikg { get; set; }
 
-        [ExcelHeader("Rasio", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Rasio", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
         public decimal? IkgRatio { get; set; }
 
-        [ExcelHeader("Bobot", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader("Bobot", "Index Ketahanan Geografis", "Alokasi Berdasarkan Formula")]
         public decimal? IkgWeight { get; set; }
 
 
-        [ExcelHeader(15, "Total Bobot", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader(15, "Total Bobot", "Alokasi Berdasarkan Formula")]
         public decimal? TotalWeight { get; set; }
 
-        [ExcelHeader(25, "Alokasi Formula", "Alokasi Berdasarkan Formula")]
+        [SpreadsheetHeader(25, "Alokasi Formula", "Alokasi Berdasarkan Formula")]
         public decimal? FormulaBasedAllocation { get; set; }
 
-        [ExcelHeader(25, "Dana Desa")]
+        [SpreadsheetHeader(25, "Dana Desa")]
         public decimal? Dd { get; set; }
 
         [ForeignKey("Region")]

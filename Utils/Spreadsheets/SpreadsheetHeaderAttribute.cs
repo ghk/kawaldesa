@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Web.Http;
 
-namespace App.Utils.Excel
+namespace App.Utils.Spreadsheets
 {
-    public class ExcelHeaderAttribute: Attribute 
+    public class SpreadsheetHeaderAttribute: Attribute 
     {
         public int? Width { get; set; }
         public string[] Values { get; set; }
 
-        public ExcelHeaderAttribute(int width, params string[] values)
+        public SpreadsheetHeaderAttribute(int width, params string[] values)
         {
             this.Width = width;
            this.Values = values;
         }
-        public ExcelHeaderAttribute(params string[] values)
+        public SpreadsheetHeaderAttribute(params string[] values)
         {
            this.Values = values;
         }

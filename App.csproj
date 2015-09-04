@@ -321,11 +321,11 @@
     <Compile Include="Utils\AsyncHelpers.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\DriveUtils.cs" />
-    <Compile Include="Utils\Excel\AllocationExcelReader.cs" />
-    <Compile Include="Utils\Excel\AllocationExcelWriter.cs" />
-    <Compile Include="Utils\Excel\ExcelFileNameAttribute.cs" />
-    <Compile Include="Utils\Excel\ExcelHeaderAttribute.cs" />
-    <Compile Include="Utils\Excel\ExcelHeaders.cs" />
+    <Compile Include="Utils\Spreadsheets\AllocationSpreadsheetReader.cs" />
+    <Compile Include="Utils\Spreadsheets\AllocationSpreadsheetWriter.cs" />
+    <Compile Include="Utils\Spreadsheets\SpreadsheetFileNameAttribute.cs" />
+    <Compile Include="Utils\Spreadsheets\SpreadsheetHeaderAttribute.cs" />
+    <Compile Include="Utils\Spreadsheets\SpreadsheetHeaders.cs" />
     <Compile Include="Utils\JsonAnonymouser.cs" />
     <Compile Include="Utils\Mail\MandrillMailResponse.cs" />
     <Compile Include="Utils\Mail\MandrillMailSender.cs" />

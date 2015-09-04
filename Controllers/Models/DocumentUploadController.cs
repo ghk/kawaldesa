@@ -1,6 +1,6 @@
 ﻿using App.Models;
 using App.Utils;
-using App.Utils.Excel;
+using App.Utils.Spreadsheets;
 using OfficeOpenXml;
 using Scaffold;
 using System;
@@ -224,7 +224,7 @@ namespace App.Controllers.Models
                 regionAlloc.Dd = amountPerDes;
                 regionAllocs.Add(regionAlloc);
             }
-            var fileBytes = new AllocationExcelWriter<RegionalDdAllocation>().WriteToBytes(parentRegions, regions, regionAllocs);
+            var fileBytes = new AllocationSpreadsheetWriter<RegionalDdAllocation>().WriteToBytes(parentRegions, regions, regionAllocs);
 
             var blob = new Blob();
             blob.Name = "Alokasi.xlsx";
@@ -304,7 +304,7 @@ namespace App.Controllers.Models
                     parentRegions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KECAMATAN && r.fkParentId == context.Region.Id).ToList();
                 }
                 var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
-                return new AllocationExcelWriter<TAllocation>().Write(parentRegions, regions, allocations);
+                return new AllocationSpreadsheetWriter<TAllocation>().Write(parentRegions, regions, allocations);
             }
             public byte[] GetBytes(AdapterContext context)
             {
@@ -321,7 +321,7 @@ namespace App.Controllers.Models
                     parentRegions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KECAMATAN && r.fkParentId == context.Region.Id).ToList();
                 }
                 var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
-                return new AllocationExcelWriter<TAllocation>().WriteToBytes(parentRegions, regions, allocations);
+                return new AllocationSpreadsheetWriter<TAllocation>().WriteToBytes(parentRegions, regions, allocations);
             }
 
             public void Upload(Multipart<Spreadsheet> multipart, AdapterContext context)
@@ -337,7 +337,7 @@ namespace App.Controllers.Models
                     {
                         regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && r.Parent.fkParentId == context.Region.Id).ToList();
                     }
-                    var allocations = new AllocationExcelReader<TAllocation>().Read(regions, new FileInfo(multipart.Files[0].FilePath));
+                    var allocations = new AllocationSpreadsheetReader<TAllocation>().Read(regions, new FileInfo(multipart.Files[0].FilePath));
                     var spreadsheet = multipart.Entity;
                     var user = KawalDesaController.GetCurrentUser();
 

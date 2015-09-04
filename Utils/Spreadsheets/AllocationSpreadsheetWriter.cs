@@ -10,16 +10,16 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 
-namespace App.Utils.Excel
+namespace App.Utils.Spreadsheets
 {
-    public class AllocationExcelWriter<TAllocation>
+    public class AllocationSpreadsheetWriter<TAllocation>
         where TAllocation: IAllocation
     {
         public HttpResponseMessage Write(List<Region> parentRegions, List<Region> regions, List<TAllocation> allocations)
         {
             byte[] output = WriteToBytes(parentRegions, regions, allocations);
 
-            var fileAttr = (ExcelFileNameAttribute) Attribute.GetCustomAttribute(typeof(TAllocation), typeof(ExcelFileNameAttribute));
+            var fileAttr = (SpreadsheetFileNameAttribute) Attribute.GetCustomAttribute(typeof(TAllocation), typeof(SpreadsheetFileNameAttribute));
             String fileName = fileAttr == null ? typeof(TAllocation).Name : fileAttr.Value; 
 
             var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(output) };
@@ -39,7 +39,7 @@ namespace App.Utils.Excel
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Sheet 1");
-                var headers = new ExcelHeaders(typeof(TAllocation));
+                var headers = new SpreadsheetHeaders(typeof(TAllocation));
                 int row = startRow;
 
                 row = WriteHeader(worksheet, row, startCol, headers);
@@ -64,7 +64,7 @@ namespace App.Utils.Excel
                 int col = startCol;
                 foreach(var leaf in headers.Root.Leafs)
                 {
-                    var attr = (ExcelHeaderAttribute) Attribute.GetCustomAttribute(leaf.Property, typeof(ExcelHeaderAttribute));
+                    var attr = (SpreadsheetHeaderAttribute) Attribute.GetCustomAttribute(leaf.Property, typeof(SpreadsheetHeaderAttribute));
                     if(attr.Width.HasValue)
                         worksheet.Column(col).Width = attr.Width.Value;
                     col += 1;
@@ -92,7 +92,7 @@ namespace App.Utils.Excel
 
             return output;
         }
-        private void WriteGroupRow(ExcelWorksheet worksheet, String no, int row, int startCol, ExcelHeaders headers, Region region)
+        private void WriteGroupRow(ExcelWorksheet worksheet, String no, int row, int startCol, SpreadsheetHeaders headers, Region region)
         {
             worksheet.Cells[GetAddress(row, startCol)].Value = no;
             worksheet.Cells[GetAddress(row, startCol + 1)].Value = region.Name;
@@ -103,7 +103,7 @@ namespace App.Utils.Excel
                 worksheet.Cells[GetAddress(row, startCol + 1)+":"+GetAddress(row, startCol + headers.Root.ColSpan - 1)].Merge = true;
         }
 
-        private void WriteDataRow(ExcelWorksheet worksheet, bool isAlternatingColor, String no, int row, int startCol, ExcelHeaders headers,
+        private void WriteDataRow(ExcelWorksheet worksheet, bool isAlternatingColor, String no, int row, int startCol, SpreadsheetHeaders headers,
             Region region, TAllocation allocation)
         {
             worksheet.Cells[GetAddress(row, startCol)].Value = no;
@@ -128,10 +128,10 @@ namespace App.Utils.Excel
                 worksheet.Cells[rowAddr].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(220, 230, 241));
             }
         }
-        private int WriteHeader(ExcelWorksheet worksheet, int row, int startCol, ExcelHeaders headers)
+        private int WriteHeader(ExcelWorksheet worksheet, int row, int startCol, SpreadsheetHeaders headers)
         {
-            List<ExcelHeaders.TreeNode> currentNodes = new List<ExcelHeaders.TreeNode>();
-            List<ExcelHeaders.TreeNode> allNodes = new List<ExcelHeaders.TreeNode>();
+            List<SpreadsheetHeaders.TreeNode> currentNodes = new List<SpreadsheetHeaders.TreeNode>();
+            List<SpreadsheetHeaders.TreeNode> allNodes = new List<SpreadsheetHeaders.TreeNode>();
             currentNodes.Add(headers.Root);
             while(currentNodes.Count > 0)
             {

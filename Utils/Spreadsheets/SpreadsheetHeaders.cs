@@ -5,17 +5,17 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace App.Utils.Excel
+namespace App.Utils.Spreadsheets
 {
-    public class ExcelHeaders
+    public class SpreadsheetHeaders
     {
         public TreeNode Root { get; set; }
-        public ExcelHeaders(Type type)
+        public SpreadsheetHeaders(Type type)
         {
             var  headers = new List<Tuple<PropertyInfo, List<String>>>(); 
             foreach(var prop in type.GetProperties())
             {
-                var attr = (ExcelHeaderAttribute) Attribute.GetCustomAttribute(prop, typeof(ExcelHeaderAttribute));
+                var attr = (SpreadsheetHeaderAttribute) Attribute.GetCustomAttribute(prop, typeof(SpreadsheetHeaderAttribute));
                 if(attr != null)
                 {
                     headers.Add(Tuple.Create(prop, attr.Values.ToList()));

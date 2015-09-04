@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Web.Http;
 
-namespace App.Utils.Excel
+namespace App.Utils.Spreadsheets
 {
-    public class ExcelFileNameAttribute: Attribute
+    public class SpreadsheetFileNameAttribute: Attribute
     {
         public string Value { get; set; }
 
-        public ExcelFileNameAttribute(string value)
+        public SpreadsheetFileNameAttribute(string value)
         {
            this.Value = value;
         }

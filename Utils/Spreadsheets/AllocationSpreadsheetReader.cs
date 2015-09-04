@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace App.Utils.Excel
+namespace App.Utils.Spreadsheets
 {
-    public class AllocationExcelReader<TAllocation>
+    public class AllocationSpreadsheetReader<TAllocation>
         where TAllocation : IAllocation, new()
     {
         public IList<TAllocation> Read(List<Region> regions, FileInfo file)
@@ -40,7 +40,7 @@ namespace App.Utils.Excel
                 if (colStart == -1)
                     throw new ExcelReadException("Tidak ada data pada worksheet 'Sheet 1'");
 
-                var headers = new ExcelHeaders(typeof(TAllocation));
+                var headers = new SpreadsheetHeaders(typeof(TAllocation));
                 int row = rowStart + headers.Root.RowSpan;
 
                 for (int j = row; j < worksheet.Dimension.End.Row; j++)

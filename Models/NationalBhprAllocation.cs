@@ -1,5 +1,5 @@
 ﻿using Scaffold.Validation;
-using App.Utils.Excel;
+using App.Utils.Spreadsheets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,22 +12,22 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("Bagi Hasil Pajak Kab Se Indonesia")]
+    [SpreadsheetFileName("Bagi Hasil Pajak Kab Se Indonesia")]
     public class NationalBhprAllocation : BaseEntity, IAllocation
     {
-        [ExcelHeader("No")]
+        [SpreadsheetHeader("No")]
         public string No { get; set; }
 
-        [ExcelHeader(35, "Provinsi/Kabupaten")]
+        [SpreadsheetHeader(35, "Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader(25, "Pajak Daerah")]
+        [SpreadsheetHeader(25, "Pajak Daerah")]
         public decimal? RegionalTax { get; set; }
 
-        [ExcelHeader(25, "Retribusi Daerah")]
+        [SpreadsheetHeader(25, "Retribusi Daerah")]
         public decimal? RegionalRetribution { get; set; }
 
-        [ExcelHeader(25, "Bagi Hasil Pajak & Retribusi")]
+        [SpreadsheetHeader(25, "Bagi Hasil Pajak & Retribusi")]
         public decimal? Bhpr { get; set; }
 
         [ForeignKey("Region")]

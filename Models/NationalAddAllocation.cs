@@ -1,5 +1,5 @@
 ﻿using Scaffold.Validation;
-using App.Utils.Excel;
+using App.Utils.Spreadsheets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,26 +12,26 @@ using System.Web.Http.Validation;
 namespace App.Models
 {
 
-    [ExcelFileName("ADD Kab Se Indonesia")]
+    [SpreadsheetFileName("ADD Kab Se Indonesia")]
     public class NationalAddAllocation : BaseEntity, IAllocation
     {
-        [ExcelHeader("No")]
+        [SpreadsheetHeader("No")]
         public string No { get; set; }
 
-        [ExcelHeader(35, "Provinsi/Kabupaten")]
+        [SpreadsheetHeader(35, "Provinsi/Kabupaten")]
         public string RegionName { get; set; }
 
-        [ExcelHeader(25, "Dana Bagi Hasil")]
+        [SpreadsheetHeader(25, "Dana Bagi Hasil")]
         public decimal? Dbh { get; set; }
 
-        [ExcelHeader(25, "Dana Alokasi Umum")]
+        [SpreadsheetHeader(25, "Dana Alokasi Umum")]
         public decimal? Dau { get; set; }
 
 
-        [ExcelHeader(25, "Dana Alokasi Khusus")]
+        [SpreadsheetHeader(25, "Dana Alokasi Khusus")]
         public decimal? Dak { get; set; }
 
-        [ExcelHeader(25, "ADD")]
+        [SpreadsheetHeader(25, "ADD")]
         public decimal? Add { get; set; }
 
         [ForeignKey("Region")]
