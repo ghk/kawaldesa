@@ -278,8 +278,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Models\DocumentUploadActivator.cs" />
-    <Compile Include="Controllers\Models\DocumentUploadController.cs" />
+    <Compile Include="Controllers\Models\SpreadsheetActivator.cs" />
+    <Compile Include="Controllers\Models\SpreadsheetController.cs" />
     <Compile Include="Controllers\Models\NationalBhprRecapitulationController.cs" />
     <Compile Include="Controllers\Models\NationalAddRecapitulationController.cs" />
     <Compile Include="Controllers\Models\RegionalBhprRecapitulationController.cs" />
@@ -302,6 +302,7 @@
     <Compile Include="Models\ISpreadsheetEntry.cs" />
     <Compile Include="Models\InvitationToken.cs" />
     <Compile Include="Models\IAllocation.cs" />
+    <Compile Include="Models\SpreadsheetWorkDir.cs" />
     <Compile Include="Models\SpreadsheetWorkItem.cs" />
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\Views\NationalAddRecapitulation.cs" />

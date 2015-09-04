@@ -123,32 +123,69 @@ namespace App.Controllers.Models
         [HttpGet]
         public String GetCurrentSheetUrl(DocumentUploadType type, string regionId, string apbnKey)
         {
+            User user = KawalDesaController.GetCurrentUser();
+
             var context = new AdapterContext(dbContext, type, regionId, apbnKey);
             var bytes = adapters[type].GetBytes(context);
             var region = dbContext.Set<Region>().Find(regionId);
 
-            var typeStr = type.ToString();
-            typeStr = typeStr.Replace("National", "");
-            typeStr = typeStr.Replace("Regional", "");
-            typeStr = typeStr.ToUpper();
+            var workItem = dbContext.Set<SpreadsheetWorkItem>()
+                .FirstOrDefault(w => w.fkUserId == user.Id
+                    && w.fkRegionId == region.Id
+                    && w.ApbnKey == context.Apbn.Key);
 
-            var root = HttpContext.Current.Server.MapPath("~/Content/sheets");
-            Directory.CreateDirectory(root);
-            var safeFileName = typeStr + " " + apbnKey + " " + regionId + " " + region.Name + ".xlsx";
-            var fullPath = Path.Combine(root, safeFileName);
-            File.WriteAllBytes(fullPath, bytes);
+            if (workItem == null)
+            {
+                using (var tx = dbContext.Database.BeginTransaction())
+                {
+                    var typeStr = type.ToString();
+                    typeStr = typeStr.Replace("National", "");
+                    typeStr = typeStr.Replace("Regional", "");
+                    typeStr = typeStr.ToUpper();
 
-            var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
-            var authKey = ConfigurationManager.AppSettings["Drive.AuthKey"];
-            var parentDir = ConfigurationManager.AppSettings["Drive.ParentDir"];
-            var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
+                    var root = HttpContext.Current.Server.MapPath("~/Content/sheets");
+                    Directory.CreateDirectory(root);
+                    var safeFileName = typeStr + " " + apbnKey + " " + regionId + " " + region.Name + ".xlsx";
+                    var fullPath = Path.Combine(root, safeFileName);
+                    File.WriteAllBytes(fullPath, bytes);
 
-            var fileId = driveUtils.UploadFile(fullPath, safeFileName);
+                    var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
+                    var authKey = ConfigurationManager.AppSettings["Drive.AuthKey"];
+                    var parentDir = ConfigurationManager.AppSettings["Drive.ParentDir"];
+                    var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
 
-            return "https://drive.google.com/file/d/"+fileId+"/view";
+                    var workDir = dbContext.Set<SpreadsheetWorkDir>().FirstOrDefault(
+                        d => d.fkUserId == user.Id);
+
+                    if (workDir == null)
+                    {
+                        var dirName = string.Format("KawalDesa Sheets - ({0})", user.Name);
+                        workDir = new SpreadsheetWorkDir()
+                        {
+                            GoogleSheetId = driveUtils.CreateParentDirectory(user.Email, dirName),
+                            fkUserId = user.Id
+                        };
+                        dbContext.Set<SpreadsheetWorkDir>().Add(workDir);
+                        dbContext.SaveChanges();
+                    }
+
+                    workItem = new SpreadsheetWorkItem()
+                    {
+                        GoogleSheetId = driveUtils.UploadFile(workDir.GoogleSheetId, fullPath, safeFileName),
+                        fkUserId = user.Id,
+                        fkRegionId = region.Id,
+                        ApbnKey = apbnKey,
+                    };
+                    dbContext.Set<SpreadsheetWorkItem>().Add(workItem);
+                    dbContext.SaveChanges();
+
+                    tx.Commit();
+                }
+            }
 
             //string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             //return fullyQualifiedUrl + "/Content/sheets/" + safeFileName;
+            return "https://drive.google.com/file/d/"+workItem.GoogleSheetId+"/view";
         }
 
         [HttpPost]
@@ -255,7 +292,7 @@ namespace App.Controllers.Models
             }
             dbContext.SaveChanges();
 
-            new DocumentUploadActivator<RegionalDdAllocation>().Activate(dbContext, spreadsheet);
+            new SpreadsheetActivator<RegionalDdAllocation>().Activate(dbContext, spreadsheet);
         }
 
         public interface IDocumentUploadAdapter
@@ -367,7 +404,7 @@ namespace App.Controllers.Models
                     }
                     DbContext.SaveChanges();
 
-                    new DocumentUploadActivator<TAllocation>().Activate(DbContext, spreadsheet);
+                    new SpreadsheetActivator<TAllocation>().Activate(DbContext, spreadsheet);
                 }
                 finally
                 {

@@ -38,6 +38,16 @@ namespace App.Utils
             this.parentDirectoryId = parentDirectoryId;
         }
 
+        public bool IsFileExists(string parentId, string directoryName)
+        {
+            return false;
+        }
+
+        public string UploadFile(string parentDir, string filePath, string fileName)
+        {
+            return UploadFile(filePath, fileName);
+        }
+
         public string UploadFile(string filePath, string fileName)
         {
             var mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -54,6 +64,10 @@ namespace App.Utils
             request.Convert = true; 
             request.Upload();
             return request.ResponseBody.Id;
+        }
+        public string CreateParentDirectory(string writerEmail, string directoryName)
+        {
+            return CreateParentDirectory();
         }
         public string CreateParentDirectory()
         {

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class DocumentUploadActivator<TSpreadsheetEntry> where TSpreadsheetEntry: class, ISpreadsheetEntry 
+    public class SpreadsheetActivator<TSpreadsheetEntry> where TSpreadsheetEntry: class, ISpreadsheetEntry 
     {
         public void Activate(DbContext db, Spreadsheet doc)
         {
