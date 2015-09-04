@@ -298,10 +298,11 @@
     <Compile Include="Models\SourceDocumentFunction.cs" />
     <Compile Include="Models\RegionSearchResult.cs" />
     <Compile Include="Models\SourceDocument.cs" />
-    <Compile Include="Models\DocumentUpload.cs" />
+    <Compile Include="Models\Spreadsheet.cs" />
     <Compile Include="Models\ISpreadsheetEntry.cs" />
     <Compile Include="Models\InvitationToken.cs" />
     <Compile Include="Models\IAllocation.cs" />
+    <Compile Include="Models\SpreadsheetWorkItem.cs" />
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\Views\NationalAddRecapitulation.cs" />
     <Compile Include="Models\Views\NationalBhprRecapitulation.cs" />
