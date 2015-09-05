@@ -29,7 +29,7 @@
 
     <div class="table-responsive">
         <table class="table table-condensed table-responsive table-bordered">
-            <thead ng-show="entities.length > 0">
+            <thead ng-show="!isEntitiesLoading">
                 <tr>
                     <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
                     <th colspan="3" style="text-align: center; width: 25%;">Dana Desa APBN (Pusat → Desa) <sup><a href="#help-dd">?</a></sup></th>
@@ -119,7 +119,7 @@
                 </tr>
             </tbody>
 
-            <tfoot ng-show="entities.length > 0">
+            <tfoot ng-show="!isEntitiesLoading">
                 <tr class="success">
                     <td><a href="">Total</a></td>
                     <td class="money"> {{total.BudgetedDd | number:0}} </td>

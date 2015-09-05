@@ -22,6 +22,7 @@ module App.Controllers {
 
             $scope.$on('regionChangeBefore', function () {
                 $scope.entities = [];
+                $scope.isEntitiesLoading = true;
                 ctrl.onRegionChanged();
             });
         }
@@ -58,9 +59,12 @@ module App.Controllers {
                     type = this.recapitulationTypes[3];
                 }
             }
+            scope.entities = [];
             type.GetAll(query).then((recapitulations) => {
                 scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
                 scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
+            }).finally(() => {
+                scope.isEntitiesLoading = false;
             });
         }
 

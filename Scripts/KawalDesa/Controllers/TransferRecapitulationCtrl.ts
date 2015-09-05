@@ -20,6 +20,7 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
             $scope.$on('regionChangeBefore', function () {
                 $scope.entities = [];
+                $scope.isEntitiesLoading = true;
                 ctrl.onRegionChanged();
             });
         }
@@ -48,6 +49,8 @@ module App.Controllers {
                 type.GetAll(query).then((recapitulations) => {
                     scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
                     scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
+                }).finally(() => {
+                    scope.isEntitiesLoading = false;
                 });
             } else {
                 var entities = [];
@@ -55,6 +58,8 @@ module App.Controllers {
                     Controllers.TransferController.GetAll({"fkRegionId": parentId, "Year": 2015 }).then(transfers => {
                         scope.entities = transfers.data;
                         scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
+                    }).finally(() => {
+                        scope.isEntitiesLoading = false;
                     });
                 }
             }

@@ -35,7 +35,12 @@ module App.Controllers {
         "Desa"
     ];
 
-    var ROUTES = [
+    /* a route is a [prefix, type, useRegionId]
+     *  prefix: the url prefix, 
+     *  type: the indexCtrl type if this route matches, 
+     *  useRegionId: whether the rout param use region id
+     */
+    var ROUTES : any[][] = [
         ["/dd/", "dd", true],
         ["/add/", "add", true],
         ["/bhpr/", "bhpr", true],
@@ -64,13 +69,13 @@ module App.Controllers {
 
         static $inject = ["$scope", "$location", "$modal", "$document"];
 
-        constructor(public $scope, public $location, public $modal, public $document){
+        constructor(public $scope, public $location: ng.ILocationService, public $modal, public $document){
             $scope.App = App;
             var ctrl = this;
             var scope = this.$scope;
             this.currentUser = window.CurrentUser;
 
-            /* Path replacing is where there is redirect, e.g /r/21121212 to /mandalmekar */
+            /* Path replacing occurs when there is a redirection, e.g /r/21121212 to /mandalmekar */
             if(!ctrl.isPathReplacing)
                 ctrl.onLocationChange();
             ctrl.isPathReplacing = false;
@@ -81,22 +86,21 @@ module App.Controllers {
                 ctrl.isPathReplacing = false;
             });
 
-            //dropdown
+            //dropdowns
             $document.bind('click', function () {
-                if (ctrl.$scope.navOpen) {
-                    $scope.$apply(() => {
-                        ctrl.$scope.navOpen = false;
-                    });
-                }
-                if (ctrl.$scope.navUserOpen) {
-                    $scope.$apply(() => {
-                        ctrl.$scope.navUserOpen = false;
-                    });
+                var dropdownStatusVars = ["navOpen", "navUserOpen"];
+                for (var i = 0; i < dropdownStatusVars.length; i++) {
+                    var ddVar = dropdownStatusVars[i];
+                    if (ctrl.$scope[ddVar]) {
+                        $scope.$apply(() => {
+                            ctrl.$scope[ddVar] = false;
+                        });
+                    }
                 }
             });
         }
 
-        onLocationChange() {
+        onLocationChange(): void {
             var path = this.$location.path();
             if (path == this.currentPath)
                 return;
@@ -133,16 +137,7 @@ module App.Controllers {
             this.currentPath = path;
         }
 
-        onSearchSelected(item, model, label) {
-            var type = this.type;
-            var regionId = model.Type == 4 && type !== 'transfer' ? model.ParentId : model.Id;
-            console.log(regionId);
-            var matched : any[] = ROUTES.filter(r => r[1] == type);
-            var path = matched[0][0] + regionId;
-            this.$location.path(path);
-        }
-
-        guessType(regionId: string) {
+        guessType(regionId: string): number {
             if (regionId == "0")
                 return 0;
             if (!regionId)
@@ -150,7 +145,7 @@ module App.Controllers {
             return (regionId.match(/\./g) || []).length + 1;
         }
 
-        changeType(type, $event) {
+        changeType(type: string, $event): void {
 
             for (var i = 0, len = ROUTES.length; i < len; i++) {
                 var route = ROUTES[i];
@@ -172,7 +167,7 @@ module App.Controllers {
             }
         }
 
-        changeRegion(regionId, $event) {
+        changeRegion(regionId: string, $event): void {
             $event.preventDefault();
             var type = this.type;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
@@ -214,17 +209,18 @@ module App.Controllers {
                     if (regionTree.length < CHILD_NAMES.length)
                         ctrl.childName = CHILD_NAMES[regionTree.length];
 
+                    if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
+                        ctrl.isPathReplacing = true;
+                        ctrl.$location.path("/" + region.UrlKey);
+                        ctrl.$location.replace();
+                    }
+
                     setTimeout(() => {
                         ctrl.$scope.$apply(() => {
                             ctrl.$scope.$broadcast("regionChangeSuccess");
                         });
                     }, 0);
 
-                    if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
-                        ctrl.isPathReplacing = true;
-                        ctrl.$location.path("/" + region.UrlKey);
-                        ctrl.$location.replace();
-                    }
             });
         }
 
@@ -232,7 +228,7 @@ module App.Controllers {
 
         modalInstance: any;
 
-        modal(template, $scope?) {
+        modal(template: string, $scope?): void {
             var ctrl = this;
             ctrl.modalInstance = this.$modal.open({
                 templateUrl: template,
@@ -240,14 +236,14 @@ module App.Controllers {
             });
         }
 
-        closeModal() {
+        closeModal(): void {
             if (this.modalInstance) {
                 this.modalInstance.close();
                 this.modalInstance = null;
             }
         }
 
-        getBarPercent(value:number, fullValue:number) {
+        getBarPercent(value: number, fullValue: number): {} {
             var percent = value * 100 / fullValue;
             return { "width": percent + "%" };
         }
@@ -255,24 +251,24 @@ module App.Controllers {
 
         /* Security Utils */
 
-        isInRole(roleName) {
+        isInRole(roleName: string): boolean {
             if (!this.currentUser) {
                 return false;
             }
             return this.currentUser.Roles.some(r => roleName == r);
         }
 
-        isInScope(entityId) {
+        isInScope(entityId: string): boolean {
             var regionId = this.regionTree.map(r => r.Id);
             regionId.push(entityId);
             return regionId.some(rid => this.currentUser.Scopes.some(id => rid == id));
         }
 
-        isInRoleAndScope(roleName, entityId) {
+        isInRoleAndScope(roleName: string, entityId: string): boolean {
             return this.isInRole(roleName) && this.isInScope(entityId);
         }
 
-        hasAnyVolunteerRoles() {
+        hasAnyVolunteerRoles(): boolean {
             return this.currentUser != null
                 && this.currentUser.Roles.some(r => r.indexOf("volunteer_") != -1);
         }
@@ -282,7 +278,7 @@ module App.Controllers {
 
         isLoadingUrl = false;
 
-        openGoogleSheet() {
+        openGoogleSheet() : void {
             if (this.isLoadingUrl)
                 return;
             var ctrl = this;
@@ -298,7 +294,7 @@ module App.Controllers {
 
         /* Search */
 
-        showSearch() {
+        showSearch() : void {
             this.$scope.searchShown = true;
             setTimeout(function () {
                 $(".search-input-group input").focus();
@@ -306,12 +302,20 @@ module App.Controllers {
             }, 0);
         }
 
-        searchRegions(keyword, scopeToFunction?) {
+        searchRegions(keyword, scopeToFunction?) : any {
             var query = { "keyword": keyword };
             if (scopeToFunction)
                 query["function"]= this.newSourceFunction;
             return Controllers.RegionSearchResultController.GetAll(query)
                 .then((regions) => regions.data);
+        }
+
+        onSearchSelected(item, model) : void {
+            var type = this.type;
+            var regionId = model.Type == 4 && type !== 'transfer' ? model.ParentId : model.Id;
+            var matched : any[] = ROUTES.filter(r => r[1] == type);
+            var path = matched[0][0] + regionId;
+            this.$location.path(path);
         }
 
 
@@ -331,7 +335,7 @@ module App.Controllers {
         newSourceRegion: any;
         newSourceState = false;
 
-        configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) {
+        configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) : void {
             this.activeUploadType = type;
             this.activeUploadRegionId = regionId;
             var ctrl = this;
@@ -346,7 +350,7 @@ module App.Controllers {
             });
         }
 
-        initSourceUploadDefaults() {
+        initSourceUploadDefaults() : void {
             var ctrl = this;
             var region = ctrl.region;
 
@@ -371,7 +375,7 @@ module App.Controllers {
                 ctrl.newSourceSubType = "Bhpr";
         }
 
-        uploadSource() {
+        uploadSource() : void {
             var typeStr = this.newSourceRegion.Id == "0" ? "National" : "Regional";
             typeStr = typeStr + this.newSourceSubType;
             var type = Models.DocumentUploadType[typeStr];
