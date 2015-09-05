@@ -14,7 +14,7 @@ module App.Controllers {
         FacebookId: String;
         Name: String;
         fkOrganizationId: number;
-        Roles: String[];
+        Roles: string[];
         Scopes: string[];
     }
 
@@ -341,12 +341,16 @@ module App.Controllers {
             var ctrl = this;
             ctrl.activeUpload = null;
             ctrl.activeUploadLoading = true;
-            Controllers.SpreadsheetController.GetActive(type, regionId, "2015p").then(doc => {
-                ctrl.activeUpload = doc.data;
-                ctrl.activeUploadLoading = false;
-                Controllers.SourceDocumentController.GetAll({ "fkRegionId": regionId, "type": type, "apbnKey": "2015p" }).then(sources => {
-                    ctrl.activeSources = sources.data;
-                });
+            Controllers.SpreadsheetController
+                .GetActive(type, regionId, "2015p")
+                .then(doc => {
+                    ctrl.activeUpload = doc.data;
+                    ctrl.activeUploadLoading = false;
+                    Controllers.SourceDocumentController
+                        .GetAll({ "fkRegionId": regionId, "type": type, "apbnKey": "2015p" })
+                        .then(sources => {
+                            ctrl.activeSources = sources.data;
+                    });
             });
         }
 
@@ -387,7 +391,9 @@ module App.Controllers {
             if (fn == Models.SourceDocumentFunction.Transfer) {
                 var form = new Models.Transfer();
                 var date = ctrl.newSourceDate;
-                date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2) + "T00:00:00";
+                date = date.substr(6, 4) + "-"
+                        + date.substr(3, 2) + "-"
+                        + date.substr(0, 2) + "T00:00:00";
                 form.Date= date;
                 if (this.newSourceSubType == "Dd")
                     form.Dd = this.newSourceAmount;
