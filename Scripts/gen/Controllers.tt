@@ -8,6 +8,7 @@
 
 <#
 	ModelNamespaces = new String[]{"App.Models", "App.Models.Views"};
+	var ignoredFunctions = new string[]{"Get", "GetAll", "Count", "Save", "Delete", "Post", "Put", "GetCount", "Login", "Logout"};
     var namespaces = new []{"App.Controllers.Models", "App.Controllers.Services"};
     foreach(var _namespace in namespaces)
     {
@@ -99,7 +100,7 @@ module <#= _namespace #> {
 			foreach(var member in EnumerateTSMembers(_controller)
                 .Where(x => x.Kind == vsCMElement.vsCMElementFunction)) 
             {
-				if(member.Name == _controller.Name)
+				if(member.Name == _controller.Name || (modelClass != null && ignoredFunctions.Contains(member.Name)))
                     continue;
 
 				var fct = (CodeFunction)member;

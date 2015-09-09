@@ -250,96 +250,6 @@ module App.Controllers.Models {
 	    }
 	}
     
-    export class SpreadsheetController
-    {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        public dataModel : App.Models.ISpreadsheet = null;
-        
-        constructor(data?: App.Models.ISpreadsheet) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ISpreadsheet>> {
-			var res = Scaffold.$http<Array<App.Models.ISpreadsheet>>(SpreadsheetController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/Spreadsheet/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: number): ng.IHttpPromise<App.Models.ISpreadsheet> {
-			var res = Scaffold.$http<App.Models.ISpreadsheet> (SpreadsheetController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Spreadsheet/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/Spreadsheet/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		
-		static Save(model: App.Models.ISpreadsheet): ng.IHttpPromise<number> {
-			var isNew = model.Id == null;
-            var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
-                 method: isNew ? 'POST' : 'PUT',
-				 url: '/api/Spreadsheet/'+(isNew ? 'Post' : 'Put'),
-				 data: JSON.stringify(model)
-            }));
-            return res;
-        }
-
-		static Delete(id: number): ng.IHttpPromise<void> {
-				var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
-					method: 'GET',
-					url: '/api/Spreadsheet/Delete/'+id,
-				}));
-				return res;
-		}
-	        
-        static GetActive(type: number, regionId: string, apbnKey: string): ng.IHttpPromise<App.Models.ISpreadsheet> {
-			var res = Scaffold.$http<App.Models.ISpreadsheet>(SpreadsheetController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Spreadsheet/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
-				}));
-			   return res;
-	    }
-    
-        static GetTemplate(type: number, regionId: string, apbnKey: string): ng.IHttpPromise</** System.Net.Http.HttpResponseMessage **/ any> {
-			var res = Scaffold.$http</** System.Net.Http.HttpResponseMessage **/ any>(SpreadsheetController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Spreadsheet/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
-				}));
-			   return res;
-	    }
-    
-        static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): ng.IHttpPromise<string> {
-			var res = Scaffold.$http<string>(SpreadsheetController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Spreadsheet/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
-				}));
-			   return res;
-	    }
-    
-        static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
-			var res = multipart.upload('/api/Spreadsheet/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
-			   return res;
-	    }
-    
-        static GenerateDanaDesaKabs(apbnKey: string): ng.IHttpPromise<void> {
-			var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Spreadsheet/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
-				}));
-			   return res;
-	    }
-	}
-    
     export class FieldReportController
     {
         public static ajaxSettings = new Scaffold.AjaxSettings();
@@ -1095,6 +1005,96 @@ module App.Controllers.Models {
 	        
         static Upload(multipart: Scaffold.Multipart, type: App.Models.DocumentUploadType, fn: App.Models.SourceDocumentFunction, regionId: string, apbnKey: string): any  {
 			var res = multipart.upload('/api/SourceDocument/Upload?type='+type+'&fn='+fn+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+			   return res;
+	    }
+	}
+    
+    export class SpreadsheetController
+    {
+        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public dataModel : App.Models.ISpreadsheet = null;
+        
+        constructor(data?: App.Models.ISpreadsheet) {
+            this.dataModel = data;
+        }
+		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.ISpreadsheet>> {
+			var res = Scaffold.$http<Array<App.Models.ISpreadsheet>>(SpreadsheetController.ajaxSettings.build({
+				method: 'GET',
+				url: '/api/Spreadsheet/GetAll',
+				params: query,
+			}));
+			return res;
+		}
+
+		static Get(id: number): ng.IHttpPromise<App.Models.ISpreadsheet> {
+			var res = Scaffold.$http<App.Models.ISpreadsheet> (SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/Get/'+id,
+			}));
+			return res;
+		}
+
+		static Count(query?: IQuery): ng.IHttpPromise<number> {
+			var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
+				method: 'GET',
+				url: '/api/Spreadsheet/GetCount',
+				data: query,
+			}));
+			return res;
+		}
+		
+		static Save(model: App.Models.ISpreadsheet): ng.IHttpPromise<number> {
+			var isNew = model.Id == null;
+            var res = Scaffold.$http<number>(SpreadsheetController.ajaxSettings.build({
+                 method: isNew ? 'POST' : 'PUT',
+				 url: '/api/Spreadsheet/'+(isNew ? 'Post' : 'Put'),
+				 data: JSON.stringify(model)
+            }));
+            return res;
+        }
+
+		static Delete(id: number): ng.IHttpPromise<void> {
+				var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
+					method: 'GET',
+					url: '/api/Spreadsheet/Delete/'+id,
+				}));
+				return res;
+		}
+	        
+        static GetActive(type: number, regionId: string, apbnKey: string): ng.IHttpPromise<App.Models.ISpreadsheet> {
+			var res = Scaffold.$http<App.Models.ISpreadsheet>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/GetActive?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static GetTemplate(type: number, regionId: string, apbnKey: string): ng.IHttpPromise</** System.Net.Http.HttpResponseMessage **/ any> {
+			var res = Scaffold.$http</** System.Net.Http.HttpResponseMessage **/ any>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/GetTemplate?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static GetCurrentSheetUrl(type: App.Models.DocumentUploadType, regionId: string, apbnKey: string): ng.IHttpPromise<string> {
+			var res = Scaffold.$http<string>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/GetCurrentSheetUrl?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
+        static Upload(multipart: Scaffold.Multipart, type: number, regionId: string, apbnKey: string): any  {
+			var res = multipart.upload('/api/Spreadsheet/Upload?type='+type+'&regionId='+encodeURI(regionId)+'&apbnKey='+encodeURI(apbnKey)+'');
+			   return res;
+	    }
+    
+        static GenerateDanaDesaKabs(apbnKey: string): ng.IHttpPromise<void> {
+			var res = Scaffold.$http<void>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/GenerateDanaDesaKabs?apbnKey='+encodeURI(apbnKey)+'',
+				}));
 			   return res;
 	    }
 	}
