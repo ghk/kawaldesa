@@ -18,7 +18,7 @@ using System.IO;
 using System.Configuration;
 using System.Web.Http.Filters;
 using log4net;
-using Scaffold.Validation;
+using Microvac.Web.Validation;
 
 namespace App
 {
@@ -76,7 +76,7 @@ namespace App
                 .Include("~/Scaffold/Scripts/angular.js")
                 .Include("~/Scaffold/Scripts/i18n/angular-locale_id-id.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
@@ -93,7 +93,7 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.typeahead.js")
                 .Include("~/Scripts/ui.bootstrap.modal.js")
                 .Include("~/Scripts/angular-sticky-table-header.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
@@ -112,7 +112,7 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.position.js")
                 .Include("~/Scripts/ui.bootstrap.typeahead.js")
                 .Include("~/Scripts/ui.bootstrap.modal.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")

@@ -22,9 +22,9 @@ using System.Web.Http.Validation;
 using System.Web.Http.Metadata;
 using System.Web.Http.Metadata.Providers;
 using Moq;
-using Scaffold.Validation;
+using Microvac.Web.Validation;
 using System.Web.Http.ModelBinding;
-using Scaffold;
+using Microvac.Web;
 
 namespace App.Tests
 {

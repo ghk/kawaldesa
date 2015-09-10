@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 /// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
+/// <reference path="Microvac.Web.ts"/>
 
 <#
 	ModelNamespaces = new String[]{"App.Models", "App.Models.Views"};
@@ -14,7 +15,7 @@
     {
 #>
 module <#= _namespace #> {
-	import IQuery = Scaffold.IQuery;
+	import IQuery = Microvac.Web.IQuery;
 
 <#
 		
@@ -27,7 +28,7 @@ module <#= _namespace #> {
 			println("{");
 
 			Indent(2);
-			println("public static ajaxSettings = new Scaffold.AjaxSettings();", _controller.Name);
+			println("public static ajaxSettings = new Microvac.Web.AjaxSettings();", _controller.Name);
 			var idType  = "number";
 			if(modelClass != null)
             {
@@ -46,7 +47,7 @@ module <#= _namespace #> {
             {			
 	#>
 		static GetAll(query?: IQuery): ng.IHttpPromise<Array<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>>> {
-			var res = Scaffold.$http<Array<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>>>(<#= _controller.Name #>.ajaxSettings.build({
+			var res = Microvac.Web.$http<Array<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>>>(<#= _controller.Name #>.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/<#= GetRouteName(_controller.Name) #>/GetAll',
 				params: query,
@@ -55,7 +56,7 @@ module <#= _namespace #> {
 		}
 
 		static Get(id: <#= idType #>): ng.IHttpPromise<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>> {
-			var res = Scaffold.$http<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>> (<#= _controller.Name #>.ajaxSettings.build({
+			var res = Microvac.Web.$http<<#= modelClass.Namespace.FullName+".I" + modelClass.Name #>> (<#= _controller.Name #>.ajaxSettings.build({
 			method: 'GET',
 			url: '/api/<#= GetRouteName(_controller.Name) #>/Get/'+id,
 			}));
@@ -63,7 +64,7 @@ module <#= _namespace #> {
 		}
 
 		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Scaffold.$http<number>(<#= _controller.Name #>.ajaxSettings.build({
+			var res = Microvac.Web.$http<number>(<#= _controller.Name #>.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/<#= GetRouteName(_controller.Name) #>/GetCount',
 				data: query,
@@ -79,7 +80,7 @@ module <#= _namespace #> {
 	#>	
 		static Save(model: <#= modelClass.Namespace.FullName+".I" + modelClass.Name #>): ng.IHttpPromise<<#= idType #>> {
 			var isNew = model.Id == null;
-            var res = Scaffold.$http<<#= idType #>>(<#= _controller.Name #>.ajaxSettings.build({
+            var res = Microvac.Web.$http<<#= idType #>>(<#= _controller.Name #>.ajaxSettings.build({
                  method: isNew ? 'POST' : 'PUT',
 				 url: '/api/<#= GetRouteName(_controller.Name) #>/'+(isNew ? 'Post' : 'Put'),
 				 data: JSON.stringify(model)
@@ -88,7 +89,7 @@ module <#= _namespace #> {
         }
 
 		static Delete(id: <#= idType #>): ng.IHttpPromise<void> {
-				var res = Scaffold.$http<void>(<#= _controller.Name #>.ajaxSettings.build({
+				var res = Microvac.Web.$http<void>(<#= _controller.Name #>.ajaxSettings.build({
 					method: 'GET',
 					url: '/api/<#= GetRouteName(_controller.Name) #>/Delete/'+id,
 				}));
@@ -121,7 +122,7 @@ module <#= _namespace #> {
 
 						var pt = GetTSType(p);
 						
-						if(pt == "Scaffold.Multipart")
+						if(pt == "Microvac.Web.Multipart")
 						{
 							isMultipart = true;
 							multipartName = p.Name;
@@ -186,7 +187,7 @@ module <#= _namespace #> {
 					print("): ng.IHttpPromise<{0}> ", tresult); 
 					println("{");
 	#>
-			var res = Scaffold.$http<<#= tresult #>>(<#= _controller.Name #>.ajaxSettings.build({
+			var res = Microvac.Web.$http<<#= tresult #>>(<#= _controller.Name #>.ajaxSettings.build({
 			method: '<#= method #>',
 			url: '<#= url #>',
 	<# 

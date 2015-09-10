@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
-module Scaffold {
+
+module Microvac.Web {
     export class AjaxSettings {
         async = true;
         cache = false;

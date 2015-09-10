@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../gen/Models.ts"/>
+/// <reference path="../../gen/Controllers.ts"/>
 
 module App.Controllers {
     import Models = App.Models;
@@ -77,7 +78,7 @@ module App.Controllers {
         saveOrganization() {
             var ctrl = this;
             this.savingStates["org"] = true;
-            var multipart = new Scaffold.Multipart({
+            var multipart = new Microvac.Web.Multipart({
                 forms: this.selected,
                 files: this.picture
             });

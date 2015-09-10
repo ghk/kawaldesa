@@ -1,9 +1,10 @@
 ﻿/// WARNING: T4 generated file 
 /// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+/// <reference path="Microvac.Web.ts"/>
 
 module App.Models {
 
-	import IQuery = Scaffold.IQuery;
+	import IQuery = Microvac.Web.IQuery;
 
     export interface IBaseEntity {
         Id: number;
@@ -12,7 +13,7 @@ module App.Models {
     }
     
     export class BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: number;
         DateCreated: /** System.DateTime **/ any;
@@ -44,7 +45,7 @@ module App.Models {
     }
     
     export class User {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         SecretKey: string;
         SecurityStamp: string;
@@ -91,7 +92,7 @@ module App.Models {
     }
     
     export class UserViewModel {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         FacebookId: string;
@@ -130,7 +131,7 @@ module App.Models {
     }
     
     export class Region {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         Name: string;
@@ -169,7 +170,7 @@ module App.Models {
     }
     
     export class RegionSearchResult {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         Name: string;
@@ -216,7 +217,7 @@ module App.Models {
     }
     
     export class Account extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Code: string;
         Name: string;
@@ -278,7 +279,7 @@ module App.Models {
     }
     
     export class Apbd extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         fkApbnId: number;
         Apbn: App.Models.IApbn;
@@ -315,7 +316,7 @@ module App.Models {
     }
     
     export class Apbdes extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         IsActivated: boolean;
         IsCompleted: boolean;
@@ -362,7 +363,7 @@ module App.Models {
     }
     
     export class Apbn extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Key: string;
         Year: number;
@@ -387,7 +388,7 @@ module App.Models {
     }
     
     export class Blob extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Name: string;
         Type: string;
@@ -407,80 +408,6 @@ module App.Models {
     }
     
     
-    export interface ISpreadsheet extends IBaseEntity {
-        FileName: string;
-        DocumentName: string;
-        Type: App.Models.DocumentUploadType;
-        Notes: string;
-        ApbnKey: string;
-        IsActivated: boolean;
-        IsApproved: boolean;
-        DateApproved: /** System.DateTime **/ any;
-        DateActivated: /** System.DateTime **/ any;
-        DateDeactivated: /** System.DateTime **/ any;
-        fkRegionId: string;
-        Region: App.Models.IRegion;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        fkCreatedById: string;
-        CreatedBy: App.Models.IUser;
-        fkOrganizationId: number;
-        Organization: App.Models.IOrganization;
-        fkApprovedById: string;
-        ApprovedBy: App.Models.IUser;
-    }
-    
-    export class Spreadsheet extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
-        
-        FileName: string;
-        DocumentName: string;
-        Type: App.Models.DocumentUploadType;
-        Notes: string;
-        ApbnKey: string;
-        IsActivated: boolean;
-        IsApproved: boolean;
-        DateApproved: /** System.DateTime **/ any;
-        DateActivated: /** System.DateTime **/ any;
-        DateDeactivated: /** System.DateTime **/ any;
-        fkRegionId: string;
-        Region: App.Models.IRegion;
-        fkFileId: number;
-        File: App.Models.IBlob;
-        fkCreatedById: string;
-        CreatedBy: App.Models.IUser;
-        fkOrganizationId: number;
-        Organization: App.Models.IOrganization;
-        fkApprovedById: string;
-        ApprovedBy: App.Models.IUser;
-        
-        constructor(data?: ISpreadsheet) {
-            super(data);
-            this.FileName = data ? data.FileName : null;
-            this.DocumentName = data ? data.DocumentName : null;
-            this.Type = data ? data.Type : null;
-            this.Notes = data ? data.Notes : null;
-            this.ApbnKey = data ? data.ApbnKey : null;
-            this.IsActivated = data ? data.IsActivated : null;
-            this.IsApproved = data ? data.IsApproved : null;
-            this.DateApproved = data ? data.DateApproved : null;
-            this.DateActivated = data ? data.DateActivated : null;
-            this.DateDeactivated = data ? data.DateDeactivated : null;
-            this.fkRegionId = data ? data.fkRegionId : null;
-            this.Region = data ? data.Region : null;
-            this.fkFileId = data ? data.fkFileId : null;
-            this.File = data ? data.File : null;
-            this.fkCreatedById = data ? data.fkCreatedById : null;
-            this.CreatedBy = data ? data.CreatedBy : null;
-            this.fkOrganizationId = data ? data.fkOrganizationId : null;
-            this.Organization = data ? data.Organization : null;
-            this.fkApprovedById = data ? data.fkApprovedById : null;
-            this.ApprovedBy = data ? data.ApprovedBy : null;
-        }
-        
-    }
-    
-    
     export interface IFieldReport extends IBaseEntity {
         Notes: string;
         Date: /** System.DateTime **/ any;
@@ -493,7 +420,7 @@ module App.Models {
     }
     
     export class FieldReport extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Notes: string;
         Date: /** System.DateTime **/ any;
@@ -529,7 +456,7 @@ module App.Models {
     }
     
     export class InvitationToken extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Token: string;
         IsUsed: boolean;
@@ -568,7 +495,7 @@ module App.Models {
     }
     
     export class NationalAddAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -620,7 +547,7 @@ module App.Models {
     }
     
     export class NationalBhprAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -669,7 +596,7 @@ module App.Models {
     }
     
     export class NationalDdAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -714,7 +641,7 @@ module App.Models {
     }
     
     export class Organization extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Name: string;
         Description: string;
@@ -753,7 +680,7 @@ module App.Models {
     }
     
     export class Realization extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Description: string;
         Vendor: string;
@@ -806,7 +733,7 @@ module App.Models {
     }
     
     export class RegionalAddAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -884,7 +811,7 @@ module App.Models {
     }
     
     export class RegionalBhprAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -951,7 +878,7 @@ module App.Models {
     }
     
     export class RegionalDdAllocation extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         No: string;
         RegionName: string;
@@ -1034,7 +961,7 @@ module App.Models {
     }
     
     export class SourceDocument extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         FileName: string;
         OriginalFileName: string;
@@ -1082,6 +1009,80 @@ module App.Models {
     }
     
     
+    export interface ISpreadsheet extends IBaseEntity {
+        FileName: string;
+        DocumentName: string;
+        Type: App.Models.DocumentUploadType;
+        Notes: string;
+        ApbnKey: string;
+        IsActivated: boolean;
+        IsApproved: boolean;
+        DateApproved: /** System.DateTime **/ any;
+        DateActivated: /** System.DateTime **/ any;
+        DateDeactivated: /** System.DateTime **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: App.Models.IUser;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: App.Models.IUser;
+    }
+    
+    export class Spreadsheet extends BaseEntity {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        FileName: string;
+        DocumentName: string;
+        Type: App.Models.DocumentUploadType;
+        Notes: string;
+        ApbnKey: string;
+        IsActivated: boolean;
+        IsApproved: boolean;
+        DateApproved: /** System.DateTime **/ any;
+        DateActivated: /** System.DateTime **/ any;
+        DateDeactivated: /** System.DateTime **/ any;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        fkFileId: number;
+        File: App.Models.IBlob;
+        fkCreatedById: string;
+        CreatedBy: App.Models.IUser;
+        fkOrganizationId: number;
+        Organization: App.Models.IOrganization;
+        fkApprovedById: string;
+        ApprovedBy: App.Models.IUser;
+        
+        constructor(data?: ISpreadsheet) {
+            super(data);
+            this.FileName = data ? data.FileName : null;
+            this.DocumentName = data ? data.DocumentName : null;
+            this.Type = data ? data.Type : null;
+            this.Notes = data ? data.Notes : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.IsActivated = data ? data.IsActivated : null;
+            this.IsApproved = data ? data.IsApproved : null;
+            this.DateApproved = data ? data.DateApproved : null;
+            this.DateActivated = data ? data.DateActivated : null;
+            this.DateDeactivated = data ? data.DateDeactivated : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.fkFileId = data ? data.fkFileId : null;
+            this.File = data ? data.File : null;
+            this.fkCreatedById = data ? data.fkCreatedById : null;
+            this.CreatedBy = data ? data.CreatedBy : null;
+            this.fkOrganizationId = data ? data.fkOrganizationId : null;
+            this.Organization = data ? data.Organization : null;
+            this.fkApprovedById = data ? data.fkApprovedById : null;
+            this.ApprovedBy = data ? data.ApprovedBy : null;
+        }
+        
+    }
+    
+    
     export interface IBaseTransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
@@ -1105,7 +1106,7 @@ module App.Models {
     }
     
     export class BaseTransaction extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Amount: number;
         Date: /** System.DateTime **/ any;
@@ -1157,7 +1158,7 @@ module App.Models {
     }
     
     export class Transaction extends BaseTransaction {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: ITransaction) {
@@ -1171,7 +1172,7 @@ module App.Models {
     }
     
     export class FrozenTransaction extends BaseTransaction {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenTransaction) {
@@ -1193,7 +1194,7 @@ module App.Models {
     }
     
     export class BaseTransfer extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Dd: number;
         Add: number;
@@ -1224,7 +1225,7 @@ module App.Models {
     }
     
     export class Transfer extends BaseTransfer {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         SourceDocuments: Array<App.Models.ISourceDocument>;
         
@@ -1240,7 +1241,7 @@ module App.Models {
     }
     
     export class FrozenTransfer extends BaseTransfer {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenTransfer) {
@@ -1258,7 +1259,7 @@ module App.Models {
     }
     
     export class UserScope extends BaseEntity {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         fkUserId: string;
         User: App.Models.IUser;
@@ -1278,7 +1279,7 @@ module App.Models {
 }
 module App.Models.Views {
 
-	import IQuery = Scaffold.IQuery;
+	import IQuery = Microvac.Web.IQuery;
     
     export interface IBaseAccountRecapitulation {
         Id: string;
@@ -1300,7 +1301,7 @@ module App.Models.Views {
     }
     
     export class BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1356,7 +1357,7 @@ module App.Models.Views {
     }
     
     export class BaseNationalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1401,7 +1402,7 @@ module App.Models.Views {
     }
     
     export class BaseNationalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1443,7 +1444,7 @@ module App.Models.Views {
     }
     
     export class BaseNationalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1495,7 +1496,7 @@ module App.Models.Views {
     }
     
     export class BaseRegionalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1560,7 +1561,7 @@ module App.Models.Views {
     }
     
     export class BaseRegionalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1614,7 +1615,7 @@ module App.Models.Views {
     }
     
     export class BaseRegionalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1681,7 +1682,7 @@ module App.Models.Views {
     }
     
     export class BaseTransferRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
         RegionId: string;
@@ -1718,7 +1719,7 @@ module App.Models.Views {
     }
     
     export class AccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IAccountRecapitulation) {
@@ -1732,7 +1733,7 @@ module App.Models.Views {
     }
     
     export class FrozenAccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenAccountRecapitulation) {
@@ -1746,7 +1747,7 @@ module App.Models.Views {
     }
     
     export class NationalAddRecapitulation extends BaseNationalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: INationalAddRecapitulation) {
@@ -1760,7 +1761,7 @@ module App.Models.Views {
     }
     
     export class FrozenNationalAddRecapitulation extends BaseNationalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenNationalAddRecapitulation) {
@@ -1774,7 +1775,7 @@ module App.Models.Views {
     }
     
     export class NationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: INationalBhprRecapitulation) {
@@ -1788,7 +1789,7 @@ module App.Models.Views {
     }
     
     export class FrozenNationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenNationalBhprRecapitulation) {
@@ -1802,7 +1803,7 @@ module App.Models.Views {
     }
     
     export class NationalDdRecapitulation extends BaseNationalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: INationalDdRecapitulation) {
@@ -1816,7 +1817,7 @@ module App.Models.Views {
     }
     
     export class FrozenNationalDdRecapitulation extends BaseNationalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenNationalDdRecapitulation) {
@@ -1830,7 +1831,7 @@ module App.Models.Views {
     }
     
     export class RegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IRegionalAddRecapitulation) {
@@ -1844,7 +1845,7 @@ module App.Models.Views {
     }
     
     export class FrozenRegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenRegionalAddRecapitulation) {
@@ -1858,7 +1859,7 @@ module App.Models.Views {
     }
     
     export class RegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IRegionalBhprRecapitulation) {
@@ -1872,7 +1873,7 @@ module App.Models.Views {
     }
     
     export class FrozenRegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenRegionalBhprRecapitulation) {
@@ -1886,7 +1887,7 @@ module App.Models.Views {
     }
     
     export class RegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IRegionalDdRecapitulation) {
@@ -1900,7 +1901,7 @@ module App.Models.Views {
     }
     
     export class FrozenRegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenRegionalDdRecapitulation) {
@@ -1914,7 +1915,7 @@ module App.Models.Views {
     }
     
     export class TransferRecapitulation extends BaseTransferRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: ITransferRecapitulation) {
@@ -1928,7 +1929,7 @@ module App.Models.Views {
     }
     
     export class FrozenTransferRecapitulation extends BaseTransferRecapitulation {
-        public static ajaxSettings = new Scaffold.AjaxSettings();
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         
         constructor(data?: IFrozenTransferRecapitulation) {

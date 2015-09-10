@@ -26,6 +26,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>c1a4ff00</NuGetPackageImportStamp>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -151,6 +152,10 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microvac.Web, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microvac.Web.1.0.1.0\lib\net45\Microvac.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -291,10 +296,6 @@
     <Compile Include="Controllers\Models\RegionSearchResultController.cs" />
     <Compile Include="Controllers\Models\SourceDocumentController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
-    <Compile Include="Migrations\201508271742561_RenameToSpreadsheet.cs" />
-    <Compile Include="Migrations\201508271742561_RenameToSpreadsheet.Designer.cs">
-      <DependentUpon>201508271742561_RenameToSpreadsheet.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\SourceDocumentFunction.cs" />
     <Compile Include="Models\RegionSearchResult.cs" />
     <Compile Include="Models\SourceDocument.cs" />
@@ -472,28 +473,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\gen\Microvac.Web.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AllocationCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\UserCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\OrganizationCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\ApbdesCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\DashboardCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\IndexCtrl.ts" />
-    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\AccountRecapitulationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\LoginCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\OrganizationCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\TransferRecapitulationCtrl.ts" />
+    <TypeScriptCompile Include="Scripts\KawalDesa\Controllers\UserCtrl.ts" />
     <TypeScriptCompile Include="Scripts\KawalDesa\KawalDesa.ts" />
-    <TypeScriptCompile Include="Scripts\gen\Scaffold.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Scaffold\Scaffold.csproj">
       <Project>{c51dff62-62f4-4451-9757-fd8d97cda2a8}</Project>
       <Name>Scaffold</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508271742561_RenameToSpreadsheet.resx">
-      <DependentUpon>201508271742561_RenameToSpreadsheet.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

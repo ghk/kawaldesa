@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../gen/Models.ts"/>
+/// <reference path="../../gen/Controllers.ts"/>
 /// <reference path="IndexCtrl.ts"/>
 /// <reference path="../KawalDesa.ts"/>
 
@@ -104,7 +105,7 @@ module App.Controllers {
         saveNewRealization(accountId) {
             var ctrl = this;
             
-            Controllers.TransactionController.AddAccountTransaction(new Scaffold.Multipart({
+            Controllers.TransactionController.AddAccountTransaction(new Microvac.Web.Multipart({
                 forms: this.formTransactionRealization[accountId[0]],
                 files: this.formTransactionRealization[accountId[0]].Proof
             })).success(() => {
@@ -119,7 +120,7 @@ module App.Controllers {
             var ctrl = this;
 
             console.log(this.formFieldReport[realizationId]);
-            Controllers.FieldReportController.AddFieldReport(new Scaffold.Multipart({
+            Controllers.FieldReportController.AddFieldReport(new Microvac.Web.Multipart({
                 forms: this.formFieldReport[realizationId],
                 files: this.formFieldReport[realizationId].Report
             }))

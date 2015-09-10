@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../gen/Models.ts"/>
+/// <reference path="../../gen/Controllers.ts"/>
 
 module App.Controllers {
     import Models = App.Models;
