@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App.csproj", "{507C33AC-A1BD-47AC-9D66-6F65B004C0DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scaffold", "Scaffold\Scaffold.csproj", "{C51DFF62-62F4-4451-9757-FD8D97CDA2A8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F906C2DF-E37C-4654-982E-EBD6FE92BC52}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -30,10 +28,6 @@ Global
 		{507C33AC-A1BD-47AC-9D66-6F65B004C0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{507C33AC-A1BD-47AC-9D66-6F65B004C0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{507C33AC-A1BD-47AC-9D66-6F65B004C0DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C51DFF62-62F4-4451-9757-FD8D97CDA2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C51DFF62-62F4-4451-9757-FD8D97CDA2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C51DFF62-62F4-4451-9757-FD8D97CDA2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C51DFF62-62F4-4451-9757-FD8D97CDA2A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F4C01A1-66BC-4568-8A2B-8B9864290B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F4C01A1-66BC-4568-8A2B-8B9864290B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F4C01A1-66BC-4568-8A2B-8B9864290B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU

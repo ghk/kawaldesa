@@ -127,10 +127,6 @@
       <Project>{507c33ac-a1bd-47ac-9d66-6f65b004c0dd}</Project>
       <Name>App</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Scaffold\Scaffold.csproj">
-      <Project>{c51dff62-62f4-4451-9757-fd8d97cda2a8}</Project>
-      <Name>Scaffold</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,5 +1,5 @@
 ﻿/// WARNING: T4 generated file 
-/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
+/// <reference path="../typings/angularjs/angular.d.ts"/>
 /// <reference path="Microvac.Web.ts"/>
 
 module App.Controllers.Models {

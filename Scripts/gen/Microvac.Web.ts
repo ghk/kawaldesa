@@ -1,5 +1,4 @@
-﻿/// <reference path="../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
-/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+﻿/// <reference path="../typings/angularjs/angular.d.ts"/>
 
 module Microvac.Web {
     export class AjaxSettings {

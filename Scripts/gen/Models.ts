@@ -1,5 +1,4 @@
 ﻿/// WARNING: T4 generated file 
-/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 /// <reference path="Microvac.Web.ts"/>
 
 module App.Models {
