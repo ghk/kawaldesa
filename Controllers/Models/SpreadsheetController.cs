@@ -129,8 +129,12 @@ namespace App.Controllers.Models
             var bytes = adapters[type].GetBytes(context);
             var region = dbContext.Set<Region>().Find(regionId);
 
+            String userId = user != null ? user.Id : null;
+            String userEmail = user != null ? user.Email : null;
+            String userName = user != null ? user.Name : "Anonymous";
+
             var workItem = dbContext.Set<SpreadsheetWorkItem>()
-                .FirstOrDefault(w => w.fkUserId == user.Id
+                .FirstOrDefault(w => w.fkUserId == userId
                     && w.fkRegionId == region.Id
                     && w.ApbnKey == context.Apbn.Key);
 
@@ -155,15 +159,15 @@ namespace App.Controllers.Models
                     var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
 
                     var workDir = dbContext.Set<SpreadsheetWorkDir>().FirstOrDefault(
-                        d => d.fkUserId == user.Id);
+                        d => d.fkUserId == userId);
 
                     if (workDir == null)
                     {
-                        var dirName = string.Format("KawalDesa Sheets - ({0})", user.Name);
+                        var dirName = string.Format("KawalDesa Sheets - ({0})", userName);
                         workDir = new SpreadsheetWorkDir()
                         {
-                            GoogleSheetId = driveUtils.CreateParentDirectory(user.Email, dirName),
-                            fkUserId = user.Id
+                            GoogleSheetId = driveUtils.CreateParentDirectory(userEmail, dirName),
+                            fkUserId = userId
                         };
                         dbContext.Set<SpreadsheetWorkDir>().Add(workDir);
                         dbContext.SaveChanges();
@@ -172,7 +176,7 @@ namespace App.Controllers.Models
                     workItem = new SpreadsheetWorkItem()
                     {
                         GoogleSheetId = driveUtils.UploadFile(workDir.GoogleSheetId, fullPath, safeFileName),
-                        fkUserId = user.Id,
+                        fkUserId = userId,
                         fkRegionId = region.Id,
                         ApbnKey = apbnKey,
                     };
@@ -185,7 +189,7 @@ namespace App.Controllers.Models
 
             //string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             //return fullyQualifiedUrl + "/Content/sheets/" + safeFileName;
-            return "https://drive.google.com/file/d/"+workItem.GoogleSheetId+"/view";
+            return "https://docs.google.com/spreadsheets/d/" + workItem.GoogleSheetId;
         }
 
         [HttpPost]

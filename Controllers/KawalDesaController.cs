@@ -310,8 +310,9 @@ namespace App.Controllers
             var driveUtils = new DriveUtils(authEmail, authKey, parentDir);
 
 
-            var fileId = driveUtils.UploadFile(@"D:\Work\kawal-desa\Content\sheets\DD 2015p 0 NASIONAL.xlsx", "DD 2015p 0 NASIONAL.xlsx");
-            //var fileId = driveUtils.CreateParentDirectory();
+            //var fileId = driveUtils.UploadFile(null, @"D:\Work\kawal-desa\Content\sheets\DD 2015p 0 NASIONAL.xlsx", "DD 2015p 0 NASIONAL.xlsx");
+            //var fileId = driveUtils.CreateRootDirectory();
+            var fileId = ""+driveUtils.IsFileExists("0B5Uy21bYS6k9a1BQdUdoWFBQV3M", "DD 2015p 0 NASIONAL.xlsx A");
             return Content(fileId);
         }
 

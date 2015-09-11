@@ -40,40 +40,35 @@ namespace App.Utils
 
         public bool IsFileExists(string parentId, string directoryName)
         {
-            return false;
+            FilesResource.ListRequest request = driveService.Files.List();
+            request.Q = string.Format("'{0}' in parents and title = '{1}'", parentId, directoryName);
+            request.MaxResults = 1;
+            var result = request.Execute();
+            return result.Items.Count > 0;
         }
 
         public string UploadFile(string parentDir, string filePath, string fileName)
-        {
-            return UploadFile(filePath, fileName);
-        }
-
-        public string UploadFile(string filePath, string fileName)
         {
             var mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             File body = new File();
             body.Title = fileName;
             body.Description = "Kawaldesa file";
             body.MimeType = mime;
-            body.Parents = new List<ParentReference>() { new ParentReference() { Id = parentDirectoryId } };
+            body.Parents = new List<ParentReference>() { new ParentReference() { Id = parentDir } };
 
             byte[] byteArray = System.IO.File.ReadAllBytes(filePath);
             System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
 
             FilesResource.InsertMediaUpload request = driveService.Files.Insert(body, stream, mime);
             request.Convert = true; 
-            request.Upload();
+            var progress = request.Upload();
             return request.ResponseBody.Id;
         }
-        public string CreateParentDirectory(string writerEmail, string directoryName)
-        {
-            return CreateParentDirectory();
-        }
-        public string CreateParentDirectory()
+        public string CreateRootDirectory()
         {
             File body = new File();
-            body.Title = "kawaldesa-root-3";
-            body.Description = "Kawaldesa root file";
+            body.Title = "Kawal Desa Spreadsheet Roots Devel";
+            body.Description = "Kawal Desa Spreasheet Roots";
             body.MimeType = "application/vnd.google-apps.folder";
 
             FilesResource.InsertRequest request = driveService.Files.Insert(body);
@@ -85,7 +80,48 @@ namespace App.Utils
             newPermission.Role = "reader";
             driveService.Permissions.Insert(newPermission, result.Id).Execute();
 
-            return result.Id+"\n"+result.WebViewLink;
+            newPermission = new Permission();
+            newPermission.Value = "kawaldesaorg@gmail.com";
+            newPermission.Type = "user";
+            newPermission.Role = "writer";
+            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+
+            return result.Id;
+        }
+
+        public string CreateParentDirectory(string writerEmail, string directoryName)
+        {
+            File body = new File();
+            body.Title = directoryName;
+            body.Description = directoryName;
+            body.MimeType = "application/vnd.google-apps.folder";
+            body.Parents = new List<ParentReference>() { new ParentReference() { Id = parentDirectoryId } };
+
+            FilesResource.InsertRequest request = driveService.Files.Insert(body);
+            var result = request.Execute();
+
+            Permission newPermission = new Permission();
+            newPermission.Value = "anyone";
+            newPermission.Type = "anyone";
+            newPermission.Role = "reader";
+            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+
+            newPermission = new Permission();
+            newPermission.Value = "kawaldesaorg@gmail.com";
+            newPermission.Type = "user";
+            newPermission.Role = "writer";
+            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+
+            if(writerEmail != null)
+            {
+                newPermission = new Permission();
+                newPermission.Value = writerEmail;
+                newPermission.Type = "user";
+                newPermission.Role = "writer";
+                driveService.Permissions.Insert(newPermission, result.Id).Execute();
+            }
+
+            return result.Id;
         }
 
         private static string GetMimeType(string fileName)
