@@ -112,9 +112,10 @@
 	bool IsModel(CodeClass _class)
     {
         foreach (var p in GetSelfAndParents(_class))
-			 foreach (var i in GetParentInterfaces(p))
-				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold")
+			 foreach (var i in GetParentInterfaces(p)){
+				if (i.Name == "IModel" && i.Namespace.Name == "Web")
 					return true;
+			 }
 
 		if(HasAttribute ((CodeElement) _class, xa => xa.FullName.EndsWith("ViewModelAttribute")))
 			return true;
@@ -127,7 +128,7 @@
         CodeInterface model = null;
         foreach (var p in GetSelfAndParents(_class))
 			foreach (var i in GetParentInterfaces(p))
-				if (i.Name == "IModel" && i.Namespace.Name == "Scaffold") {
+				if (i.Name == "IModel" && i.Namespace.Name == "Web") {
 					model = i;
 					break;
 				}
@@ -145,7 +146,7 @@
     {
         CodeClass controller = null;
         foreach (var p in GetParents(_class))
-			if (p.Name == "ModelController" && p.Namespace.Name == "Scaffold"){
+			if (p.Name == "ModelController" && p.Namespace.Name == "Web"){
                 controller = p;
                 break;
             }
@@ -171,7 +172,7 @@
     {
          foreach (var p in GetParents(_class))
          {
-			if ((p.Name == "ModelController" && p.Namespace.Name == "Scaffold")) 
+			if ((p.Name == "ModelController" && p.Namespace.Name == "Web")) 
 				return true;
          }
         
@@ -184,7 +185,7 @@
 	bool IsCrudController(CodeClass _class)
     {
         foreach (var p in GetParents(_class))
-			if (p.Name == "CRUDController" && p.Namespace.Name == "Scaffold")
+			if (p.Name == "CRUDController" && p.Namespace.Name == "Web")
                 return true;
         return false;    
     }
@@ -192,7 +193,7 @@
 	bool IsReadOnlyController(CodeClass _class)
     {
         foreach (var p in GetParents(_class))
-			if (p.Name == "ReadOnlyController" && p.Namespace.Name == "Scaffold")
+			if (p.Name == "ReadOnlyController" && p.Namespace.Name == "Web")
                 return true;
         return false;    
     }
@@ -240,8 +241,8 @@
             }
 			
 			default: 
-				if(type.StartsWith("Scaffold.Multipart"))
-					return "Scaffold.Multipart";
+				if(type.StartsWith("Microvac.Web.Multipart"))
+					return "Microvac.Web.Multipart";
 
 				foreach(var n in ModelNamespaces){
 					if (EnumerateModels(n).Select(x => x.FullName).Contains(type))

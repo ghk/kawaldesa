@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 /// WARNING: T4 generated file 
-/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
+/// <reference path="Microvac.Web.ts"/>
 
 <#
     var namespaces = new []{"App.Models", "App.Models.Views"};
@@ -14,7 +14,7 @@
 #>
 module <#=_namespace #> {
 
-	import IQuery = Scaffold.IQuery;
+	import IQuery = Microvac.Web.IQuery;
 <#
 	var clses = EnumerateModels(_namespace).ToList();
     var jsoncls  = clses.OrderBy(_class => _class.Bases.Cast<CodeElement>()
@@ -72,7 +72,7 @@ module <#=_namespace #> {
         }
         println(" {");
 		Indent(2);
-		println("public static ajaxSettings = new Scaffold.AjaxSettings();", _class.Name); 
+		println("public static ajaxSettings = new Microvac.Web.AjaxSettings();", _class.Name); 
 		println();
 		foreach(var member in allMembers) 
 		{

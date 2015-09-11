@@ -18,7 +18,7 @@ using System.IO;
 using System.Configuration;
 using System.Web.Http.Filters;
 using log4net;
-using Scaffold.Validation;
+using Microvac.Web.Validation;
 
 namespace App
 {
@@ -47,36 +47,36 @@ namespace App
             // CSS Bundles
             bundles.Add(new StyleBundle("~/css/libs/bootstrap", 
                 "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
-                .Include("~/Scaffold/Content/bootstrap.min.css"));
+                .Include("~/Content/bootstrap.min.css"));
 
             bundles.Add(new StyleBundle("~/css/libs/bootstrap-theme", 
                 "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css")
-                .Include("~/Scaffold/Content/bootstrap-theme.min.css"));
+                .Include("~/Content/bootstrap-theme.min.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa")
-                .Include("~/Scaffold/Content/font-awesome.css")
+                .Include("~/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa-all")
-                .Include("~/Scaffold/Content/bootstrap.min.css")
-                .Include("~/Scaffold/Content/font-awesome.css")
+                .Include("~/Content/bootstrap.min.css")
+                .Include("~/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
                 .Include("~/Content/style.css"));
 
             // Script Bundles
 
             bundles.Add(new ScriptBundle("~/js/libs/jquery", "http://code.jquery.com/jquery-2.1.1.min.js")
-                .Include("~/Scaffold/Scripts/jquery-2.1.4.js"));
+                .Include("~/Scripts/jquery-2.1.4.js"));
 
             bundles.Add(new ScriptBundle("~/js/libs/bootstrap", "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
-                .Include("~/Scaffold/Scripts/bootstrap.js"));
+                .Include("~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa")
-                .Include("~/Scaffold/Scripts/angular.js")
-                .Include("~/Scaffold/Scripts/i18n/angular-locale_id-id.js")
+                .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/i18n/angular-locale_id-id.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
@@ -85,15 +85,15 @@ namespace App
                 );
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-all")
-                .Include("~/Scaffold/Scripts/jquery-2.1.4.js")
-                .Include("~/Scaffold/Scripts/angular.js")
-                .Include("~/Scaffold/Scripts/i18n/angular-locale_id-id.js")
+                .Include("~/Scripts/jquery-2.1.4.js")
+                .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/i18n/angular-locale_id-id.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
                 .Include("~/Scripts/ui.bootstrap.position.js")
                 .Include("~/Scripts/ui.bootstrap.typeahead.js")
                 .Include("~/Scripts/ui.bootstrap.modal.js")
                 .Include("~/Scripts/angular-sticky-table-header.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
@@ -102,9 +102,9 @@ namespace App
                 );
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-lib")
-                .Include("~/Scaffold/Scripts/angular.js")
-                .Include("~/Scaffold/Scripts/i18n/angular-locale_id-id.js")
-                .Include("~/Scaffold/Scripts/jquery-2.1.4.js")
+                .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/i18n/angular-locale_id-id.js")
+                .Include("~/Scripts/jquery-2.1.4.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
                 );
 
@@ -112,7 +112,7 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.position.js")
                 .Include("~/Scripts/ui.bootstrap.typeahead.js")
                 .Include("~/Scripts/ui.bootstrap.modal.js")
-                .Include("~/Scripts/gen/Scaffold.js")
+                .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")

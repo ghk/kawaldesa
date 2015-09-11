@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../Scaffold/Scripts/typings/angularjs/angular.d.ts"/>
 /// <reference path="../../gen/Models.ts"/>
+/// <reference path="../../gen/Controllers.ts"/>
 /// <reference path="../KawalDesa.ts"/>
 
 
@@ -386,7 +387,7 @@ module App.Controllers {
             var fn = this.newSourceFunction;
 
             var ctrl = this;
-            var multipart = new Scaffold.Multipart({ files: this.newSourceFile });
+            var multipart = new Microvac.Web.Multipart({ files: this.newSourceFile });
 
             if (fn == Models.SourceDocumentFunction.Transfer) {
                 var form = new Models.Transfer();

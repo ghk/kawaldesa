@@ -11,7 +11,7 @@ module App {
     ]);
 
     kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        
-        Scaffold.$http = $http;
+        Microvac.Web.$http = $http;
         $rootElement.off('click');
     }]);
 
@@ -23,17 +23,5 @@ module App {
         $locationProvider.hashPrefix('!');
     }]);
 
-    kawaldesa.directive('convertToNumber', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, element, attrs, ngModel) {
-                ngModel.$parsers.push(function (val) {
-                    return parseInt(val, 10);
-                });
-                ngModel.$formatters.push(function (val) {
-                    return '' + val;
-                });
-            }
-        };
-    });
+
 }

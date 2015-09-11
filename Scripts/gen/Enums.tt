@@ -4,7 +4,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 /// WARNING: T4 generated file 
-/// <reference path="../../Scaffold/Scripts/typings/jquery/jquery.d.ts"/>
 
 <#
     var namespaces = new []{"App.Models"};
