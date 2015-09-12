@@ -49,6 +49,8 @@ module App.Controllers {
             if (this.indexCtrl.guessedRegionType < 4) {
                 type.GetAll(query).then((recapitulations) => {
                     scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
+                    if (this.indexCtrl.regionId == "0")
+                        scope.entities = scope.entities.slice(0, 8);
                     scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
                 }).finally(() => {
                     scope.isEntitiesLoading = false;

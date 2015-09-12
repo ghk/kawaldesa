@@ -1,171 +1,172 @@
 ﻿<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'transfer'">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
+                <p>
+                    Mari mengawal Dana Desa dengan transparansi alokasi, penyaluran, dan realisasinya.
+                    <a href="/Docs/_build/html/overview.html">
+                        <strong>Apa itu kawal desa?</strong>
+                    </a>
+                </p>
+            </div>
 
-    <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
-        <p>
-            Mari mengawal Dana Desa dengan transparansi alokasi, penyaluran, dan realisasinya.
-            <br />
-        </p>
-        <ul class="nav nav-pills" style="text-align: center;">
-            <li>
-                <a href="/Docs/_build/html/overview.html">
-                    <span class="fa fa-question" style="font-size: 24px;"></span>
-                    <br />
-                    Apa itu kawal desa?
-                </a>
-            </li>
-            <li>
-                <a href="/Docs/_build/html/overview.html">
-                    <span class="fa fa-book" style="font-size: 24px;"></span>
-                    <br />
-                    Bagaimana cara menggunakannya?
-                </a>
-            </li>
-        </ul>
+            <div class="content-header">
+                Penyaluran Pendapatan Desa Dari Pusat & Kabupaten/Kota Tahun Anggaran 2015<sup><a href="#help-penyaluran">?</a></sup>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-condensed table-responsive table-bordered">
+                    <thead ng-show="!isEntitiesLoading">
+                        <tr>
+                            <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
+                            <th colspan="3" style="text-align: center; width: 25%;">Dana Desa APBN (Pusat → Desa) <sup><a href="#help-dd">?</a></sup></th>
+                            <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
+                            <!--
+                            <th colspan="2" style="text-align: center; width: 25%;">Bagi Hasil Pajak (Kabupaten → Desa)<sup><a href="#help-bhpr">?</a></sup></th>
+                                -->
+                        </tr>
+                        <tr>
+                            <th class="money" style="width: 8.3333%;">Anggaran <sup><a href="#help-anggaran">?</a></sup></th>
+                            <th class="money" style="width: 8.3333%;">Target April (40%)<sup> <a href="#help-target">?</a></sup></th>
+                            <th class="money" style="width: 8.3333%;">Tersalurkan</th>
+                            <th class="money" style="width: 8.3333%;">Anggaran</th>
+                            <th class="money" style="width: 8.3333%;">Target April (40%)</th>
+                            <th class="money" style="width: 8.3333%;">Tersalurkan</th>
+                            <!--
+                            <th class="money" style="width: 10%;">Anggaran</th>
+                            <th class="money" style="width: 10%;">Tersalurkan</th>
+                            -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="indexCtrl.guessedRegionType < 4" ng-repeat="entity in entities">
+                            <td>
+                                <a href="/p/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
+                                    {{entity.RegionName}}
+                                </a>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.BudgetedDd | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedDd, total.BudgetedDd)"> </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.BudgetedDd * 0.4 | number:0}} </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.TransferredDd | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredDd, entity.BudgettedDd)"> </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.BudgetedAdd | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedAdd, total.BudgetedAdd)"> </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.BudgetedAdd * 0.4 | number:0}} </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.TransferredAdd | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredAdd, entity.BudgetedAdd)"> </div>
+                            </td>
+                            <!--
+                            <td class="money">
+                                <div style="float:right;">{{entity.BudgetedBhpr | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedBhpr, total.BudgetedBhpr)"> </div>
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.TransferredBhpr | number:0}} </div>
+                                <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredBhpr, entity.BudgettedBhpr)"> </div>
+                            </td>
+                                -->
+                        </tr>
+                        <tr ng-if="indexCtrl.guessedRegionType == 4" ng-repeat="entity in entities">
+                            <td>
+                                {{entity.Date| date: 'dd MMMM yyyy'}}
+                            </td>
+                            <td class="money">
+                                &nbsp;
+                            </td>
+                            <td class="money">
+                                &nbsp;
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.Dd | number:0}} </div>
+                                <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                            </td>
+                            <td class="money">
+                                &nbsp;
+                            </td>
+                            <td class="money">
+                                &nbsp;
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.Add | number:0}} </div>
+                                <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                            </td>
+                            <!--
+                            <td class="money">
+                                &nbsp;
+                            </td>
+                            <td class="money">
+                                <div style="float:right;">{{entity.Bhpr | number:0}} </div>
+                                <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
+                            </td>
+                                -->
+                        </tr>
+                    </tbody>
+
+                    <tfoot ng-show="!isEntitiesLoading">
+                        <tr class="success">
+                            <td><a href="">Total</a></td>
+                            <td class="money"> {{total.BudgetedDd | number:0}} </td>
+                            <td class="money"> {{total.BudgetedDd * 0.4 | number:0}} </td>
+                            <td class="money"> {{total.TransferredDd | number:0}} </td>
+
+                            <td class="money"> {{total.BudgetedAdd | number:0}} </td>
+                            <td class="money"> {{total.BudgetedAdd * 0.4 | number:0}} </td>
+                            <td class="money"> {{total.TransferredAdd | number:0}} </td>
+
+                            <!--
+                            <td class="money"> {{total.BudgetedBhpr | number:0}} </td>
+                            <td class="money"> {{total.TransferredBhpr | number:0}} </td>
+                                -->
+                        </tr>
+                    </tfoot>
+
+                    @Html.Partial("TableLoader")
+
+                </table>
+            </div>
+            <div class="container-fluid well help">
+                <ul>
+                    <li id="help-penyaluran">
+                        Halaman penyaluran di kawaldesa.org menampilkan penyaluran 3 dari 7 pendapatan desa, yaitu:
+                        <ol>
+                            <li id="help-dd">Dana Desa, yang dianggarkan di APBN</li>
+                            <li id="help-add">Alokasi Dana Desa (ADD), yang dianggarkan di APBD</li>
+                            <li id="help-bhpr">Bagi hasil pajak dan retribusi daerah</li>
+                        </ol>
+                    </li>
+                    <li id="help-anggaran">
+                        Detail alokasi anggaran bisa dilihat di halaman Alokasi,
+                        <ol>
+                            <li><a href="/dd/0">Alokasi Dana Desa dari APBN</a></li>
+                            <li><a href="/add/0">Alokasi ADD dari APBD</a></li>
+                            <li><a href="/bhpr/0">Alokasi Bagi hasil retribusi &amp; pajak</a></li>
+                        </ol>
+                    </li>
+                    <li id="help-target">
+                        Menurut PP No. 22 tahun 2015, penyaluran dana desa dilakukan secara bertahap pada tahun anggaran berjalan dengan ketentuan:
+                        <ol>
+                            <li>tahap I pada bulan April sebesar 40%</li>
+                            <li>tahap II pada bulan Agustus sebesar 40%</li>
+                            <li>tahap III pada bulan Oktober sebesar 20%</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            Lalala
+        </div>
     </div>
-
-    <div class="content-header">
-        Penyaluran Pendapatan Desa Dari Pusat & Kabupaten/Kota Tahun Anggaran 2015<sup><a href="#help-penyaluran">?</a></sup>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-condensed table-responsive table-bordered">
-            <thead ng-show="!isEntitiesLoading">
-                <tr>
-                    <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                    <th colspan="3" style="text-align: center; width: 25%;">Dana Desa APBN (Pusat → Desa) <sup><a href="#help-dd">?</a></sup></th>
-                    <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
-                    <th colspan="2" style="text-align: center; width: 25%;">Bagi Hasil Pajak (Kabupaten → Desa)<sup><a href="#help-bhpr">?</a></sup></th>
-                </tr>
-                <tr>
-                    <th class="money" style="width: 8.3333%;">Anggaran <sup><a href="#help-anggaran">?</a></sup></th>
-                    <th class="money" style="width: 8.3333%;">Target April (40%)<sup> <a href="#help-target">?</a></sup></th>
-                    <th class="money" style="width: 8.3333%;">Tersalurkan</th>
-                    <th class="money" style="width: 8.3333%;">Anggaran</th>
-                    <th class="money" style="width: 8.3333%;">Target April (40%)</th>
-                    <th class="money" style="width: 8.3333%;">Tersalurkan</th>
-                    <th class="money" style="width: 10%;">Anggaran</th>
-                    <th class="money" style="width: 10%;">Tersalurkan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-if="indexCtrl.guessedRegionType < 4" ng-repeat="entity in entities">
-                    <td>
-                        <a href="/p/{{entity.RegionId}}" ng-click="indexCtrl.changeRegion(entity.RegionId, $event)">
-                            {{entity.RegionName}}
-                        </a>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.BudgetedDd | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedDd, total.BudgetedDd)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.BudgetedDd * 0.4 | number:0}} </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.TransferredDd | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredDd, entity.BudgettedDd)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.BudgetedAdd | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedAdd, total.BudgetedAdd)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.BudgetedAdd * 0.4 | number:0}} </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.TransferredAdd | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredAdd, entity.BudgetedAdd)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.BudgetedBhpr | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.BudgetedBhpr, total.BudgetedBhpr)"> </div>
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.TransferredBhpr | number:0}} </div>
-                        <div class="bar-percent" ng-style="indexCtrl.getBarPercent(entity.TransferredBhpr, entity.BudgettedBhpr)"> </div>
-                    </td>
-                </tr>
-                <tr ng-if="indexCtrl.guessedRegionType == 4" ng-repeat="entity in entities">
-                    <td>
-                        {{entity.Date| date: 'dd MMMM yyyy'}}
-                    </td>
-                    <td class="money">
-                        &nbsp;
-                    </td>
-                    <td class="money">
-                        &nbsp;
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.Dd | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
-                    </td>
-                    <td class="money">
-                        &nbsp;
-                    </td>
-                    <td class="money">
-                        &nbsp;
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.Add | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
-                    </td>
-                    <td class="money">
-                        &nbsp;
-                    </td>
-                    <td class="money">
-                        <div style="float:right;">{{entity.Bhpr | number:0}} </div>
-                        <div class="fill-meter-bar" ng-style="recapitulationCtrl.moveFillMeterBar(entity.BudgetedAPBN, entity.AcknowledgedAPBN)"> </div>
-                    </td>
-                </tr>
-            </tbody>
-
-            <tfoot ng-show="!isEntitiesLoading">
-                <tr class="success">
-                    <td><a href="">Total</a></td>
-                    <td class="money"> {{total.BudgetedDd | number:0}} </td>
-                    <td class="money"> {{total.BudgetedDd * 0.4 | number:0}} </td>
-                    <td class="money"> {{total.TransferredDd | number:0}} </td>
-
-                    <td class="money"> {{total.BudgetedAdd | number:0}} </td>
-                    <td class="money"> {{total.BudgetedAdd * 0.4 | number:0}} </td>
-                    <td class="money"> {{total.TransferredAdd | number:0}} </td>
-
-                    <td class="money"> {{total.BudgetedBhpr | number:0}} </td>
-                    <td class="money"> {{total.TransferredBhpr | number:0}} </td>
-                </tr>
-            </tfoot>
-
-            @Html.Partial("TableLoader")
-
-        </table>
-    </div>
-    <div class="container-fluid well help">
-        <ul>
-            <li id="help-penyaluran">
-                Halaman penyaluran di kawaldesa.org menampilkan penyaluran 3 dari 7 pendapatan desa, yaitu:
-                <ol>
-                    <li id="help-dd">Dana Desa, yang dianggarkan di APBN</li>
-                    <li id="help-add">Alokasi Dana Desa (ADD), yang dianggarkan di APBD</li>
-                    <li id="help-bhpr">Bagi hasil pajak dan retribusi daerah</li>
-                </ol>
-            </li>
-            <li id="help-anggaran">
-                Detail alokasi anggaran bisa dilihat di halaman Alokasi,
-                <ol>
-                    <li><a href="/dd/0">Alokasi Dana Desa dari APBN</a></li>
-                    <li><a href="/add/0">Alokasi ADD dari APBD</a></li>
-                    <li><a href="/bhpr/0">Alokasi Bagi hasil retribusi &amp; pajak</a></li>
-                </ol>
-            </li>
-            <li id="help-target">
-                Menurut PP No. 22 tahun 2015, penyaluran dana desa dilakukan secara bertahap pada tahun anggaran berjalan dengan ketentuan:
-                <ol>
-                    <li>tahap I pada bulan April sebesar 40%</li>
-                    <li>tahap II pada bulan Agustus sebesar 40%</li>
-                    <li>tahap III pada bulan Oktober sebesar 20%</li>
-                </ol>
-            </li>
-        </ul>
-    </div>
-
 </div>

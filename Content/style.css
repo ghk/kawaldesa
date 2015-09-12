@@ -28,6 +28,7 @@ tr {
 body {
     font-family: "Lato",sans-serif !important;
     line-height: 20px;
+    margin-top: 70px;
 }
 
     body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .h3, body .h4, body .h5, body .h6 {
