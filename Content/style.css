@@ -39,6 +39,7 @@ body {
     }
 
 header {
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: -2px 0px 3px 0px rgba(0,0,0,0.5);
     border-bottom: 1px solid #337ab7;
 }
@@ -72,29 +73,26 @@ header {
         margin-left: 30px;
     }
 
+    header.navbar .navbar-brand {
+        margin-right: 10px;
+        padding: 15px 10px;
+    }
+
 
 table.table > thead > tr > th:first-child,
 table.table > tbody > tr > td:first-child,
 table.table > tfoot > tr > td:first-child {
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 table.table > tfoot > tr > td:last-child,
 table.table > thead > tr > th:last-child,
 table.table > tbody > tr > td:last-child {
-    padding-right: 20px;
-}
-
-table.table > tbody > tr > td.account-tab {
-    padding-left: 40px;
+    padding-right: 10px;
 }
 
 table.table > tfoot > tr > td {
     font-weight: 700;
-}
-
-.account-head {
-
 }
 
 .content-header, tr.content-header {
@@ -102,23 +100,8 @@ table.table > tfoot > tr > td {
     border-bottom: 1px solid #337ab7;
     color: #337ab7;
     text-transform: uppercase;
-    padding: 0 0 0 20px;
+    padding: 0 0 0 10px;
     font-size: 14px;
-}
-
-td.sidebar {
-    border-top: 1px solid #337ab7;
-    border-right: 1px solid #337ab7;
-}
-
-.sidebar {
-    color: -webkit-text;
-    font: 12px sans-serif;
-    padding: 10px 10px 10px 10px;
-}
-
-.table.table-bordered th {
-    border-bottom: 0;
 }
 
 th.money, td.money {
@@ -143,15 +126,14 @@ div.insert {
         text-decoration: underline;
     }
 
+/* Fix th borders*/
+.table.table-bordered th {
+    border-bottom: 0;
+}
+
 table.table-bordered > thead > tr > th:first-child,
 table.table-bordered > thead > tr > th:last-child {
     border-right: 0;
-}
-
-.table > tbody > tr.detail-padding > td {
-    padding: 10px;
-    border: 0;    
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
 }
 
 .table.table-bordered thead tr:last-child th {
@@ -161,87 +143,12 @@ table.table-bordered > thead > tr > th:last-child {
 .table.table-bordered thead tr:first-child th:first-child {
     border-bottom: 1px solid #ddd;
 }
-
-.table > tbody > tr.detail-padding > td:first-child {
-    border-bottom: 0;
-}
-
-.table > tbody > tr.detail-sum > td {
-    padding: 0;
-    border: 0;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #888;
-}
-
-    .table > tbody > tr.detail-sum > td:first-child {
-        border-bottom: 0;
-    }
-
-.table > tbody > tr.detail > td {
-    border: 0;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-}
-
-    .table > tbody > tr.detail > td:first-child {
-        border-bottom: 0;
-    }
-
-    .table > tbody > tr.detail > td:last-child {
-        border-left: 1px solid #ddd;
-    }
-
-.table > tbody > tr > td .info {
-    display: left;
-}
-
-.table > tbody > tr.detail > td .info {
-    display: block;
-    text-align: left;
-    float: none;
-}
-
-.table > tbody > tr.detail > td {
-    border-top: 1px solid #ddd;
-}
-
-    .table > tbody > tr.detail > td:first-child {
-        border-top: 0;
-    }
-
-p.subtext {
-    max-width: 700px;
-}
+/* End Fix th borders*/
 
 .table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
     padding: 3px;
 }
 
-
-.help > ul li:target {
-    background-color: #def;
-}
-
-.help > ul {
-    display: inline-block;
-    padding-left: 20px;
-}
-
-.help > ul > li {
-        margin-bottom: 1em;
-    }
-
-.help.well {
-    background-color: #fafafa;
-}
-
-.modal-content {
-    border-radius: 0px;
-}
-
-.modal-header .close {
-    margin-top: -2px;
-}
 
 .table > tbody > tr:hover {
     background-color: rgb(222, 230, 241);

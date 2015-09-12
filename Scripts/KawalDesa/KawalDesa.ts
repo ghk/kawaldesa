@@ -9,6 +9,7 @@ module App {
         'ui.bootstrap.position',
         'ui.bootstrap.modal',
         'ui.bootstrap.datepicker',
+        'chart.js',
     ]);
 
     kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        

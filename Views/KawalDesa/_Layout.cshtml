@@ -18,7 +18,7 @@
 
 </head>
 <body ng-controller="IndexCtrl as indexCtrl" ng-cloak class="ng-cloak" style="min-height: 100%;">
-    <header role="banner" id="top" class="navbar navbar-fixed-top bs-docs-nav" style="background-color: rgba(255, 255, 255, 0.9);">
+    <header role="banner" id="top" class="navbar navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button style="color: #337ab7;" data-target="#bs-navbar" data-toggle="collapse" type="button" class="navbar-toggle collapsed">
@@ -29,7 +29,7 @@
                 </button>
                 <a class="navbar-brand" href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
             </div>
-            <nav id="bs-navbar" class="collapse navbar-collapse">
+            <nav class="collapse navbar-collapse">
                 <ul class="nav navbar-nav nav-menu">
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dd' || indexCtrl.type == 'add' || indexCtrl.type == 'bhpr', 'open' : navOpen}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" ng-click="navOpen = !navOpen; $event.stopPropagation();">
@@ -37,9 +37,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li ng-class="{'active': indexCtrl.type == 'dd'}"><a href="/dd/{{indexCtrl.region.Type == 4 ? indexCtrl.region.fkParentId : indexCtrl.regionId}}" ng-click="navOpen = false;indexCtrl.changeType('dd', $event)">Dana Desa dari APBN</a></li>
+                            <li ng-class="{'active': indexCtrl.type == 'dd'}"><a href="/dd/{{indexCtrl.region.Type == 4 ? indexCtrl.region.fkParentId : indexCtrl.regionId}}" ng-click="navOpen = false;indexCtrl.changeType('dd', $event)">DD dari APBN</a></li>
                             <li ng-class="{'active': indexCtrl.type == 'add'}"><a href="/add/{{indexCtrl.region.Type == 4 ? indexCtrl.region.fkParentId : indexCtrl.regionId}}" ng-click="navOpen = false;indexCtrl.changeType('add', $event)">ADD dari APBD</a></li>
-                            <li ng-class="{'active': indexCtrl.type == 'bhpr'}"><a href="/bhpr/{{indexCtrl.region.Type == 4 ? indexCtrl.region.fkParentId : indexCtrl.regionId}}" ng-click="navOpen = false;indexCtrl.changeType('bhpr', $event)">Bagi Hasil Pajak &amp; Retribusi</a></li>
+                            <li ng-class="{'active': indexCtrl.type == 'bhpr'}"><a href="/bhpr/{{indexCtrl.region.Type == 4 ? indexCtrl.region.fkParentId : indexCtrl.regionId}}" ng-click="navOpen = false;indexCtrl.changeType('bhpr', $event)">Bagi Hasil PDRD</a></li>
                         </ul>
                     </li>
                     <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
@@ -62,7 +62,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="!searchShown">
-                        <a href="#" class="btn" ng-click="indexCtrl.showSearch()"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
+                        <a href="#" class="btn" ng-click="indexCtrl.showSearch($event)"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard', 'open': navUserOpen}" ng-if="indexCtrl.currentUser">
                         <a ng-click="navUserOpen = !navUserOpen; $event.stopPropagation();"style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -111,7 +111,7 @@
                             <button class="btn btn-primary" type="submit"><span class="fa fa-search"></span>&nbsp;</button>
                         </div>
                     </div>
-                    <a href="#" style="margin: 0 0 0 1em;" ng-click="searchShown=false"><i class="fa fa-times"></i></a>
+                    <a href="#" style="margin: 0 0 0 1em;" ng-click="searchShown=false; $event.preventDefault();"><i class="fa fa-times"></i></a>
                 </form>
             </nav>
         </div>

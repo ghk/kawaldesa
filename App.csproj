@@ -376,6 +376,7 @@
     <Compile Include="Security\CryptographyHelper.cs" />
     <Compile Include="Security\KawalDesaAuthorizeAttribute.cs" />
     <Compile Include="Security\KawalDesaIdentity.cs" />
+    <Content Include="Content\angular-chart.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -403,6 +404,7 @@
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
     <Content Include="Scripts\angular-aria.min.js" />
+    <Content Include="Scripts\angular-chart.js" />
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
@@ -429,6 +431,8 @@
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\gen\Controllers.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Controllers.ts</LastGenOutput>

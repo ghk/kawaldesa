@@ -297,7 +297,8 @@ module App.Controllers {
 
         /* Search */
 
-        showSearch() : void {
+        showSearch($event): void {
+            $event.preventDefault();
             this.$scope.searchShown = true;
             setTimeout(function () {
                 $(".search-input-group input").focus();

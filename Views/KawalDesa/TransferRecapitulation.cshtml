@@ -1,7 +1,7 @@
 ﻿<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'transfer'">
     <div class="row">
         <div class="col-md-9">
-            <div class="alert alert-success" style="font-size: small; padding: 5px 20px;">
+            <div class="alert alert-success" style="font-size: small; padding: 5px 10px;">
                 <p>
                     Mari mengawal Dana Desa dengan transparansi alokasi, penyaluran, dan realisasinya.
                     <a href="/Docs/_build/html/overview.html">
@@ -15,11 +15,11 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-condensed table-responsive table-bordered">
+                <table class="table table-condensed table-responsive table-bordered table-striped">
                     <thead ng-show="!isEntitiesLoading">
                         <tr>
                             <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                            <th colspan="3" style="text-align: center; width: 25%;">Dana Desa APBN (Pusat → Desa) <sup><a href="#help-dd">?</a></sup></th>
+                            <th colspan="3" style="text-align: center; width: 25%;">DD (Pusat → Desa) <sup><a href="#help-dd">?</a></sup></th>
                             <th colspan="3" style="text-align: center; width: 25%;">ADD (Kabupaten → Desa)<sup><a href="#help-add">?</a></sup></th>
                             <!--
                             <th colspan="2" style="text-align: center; width: 25%;">Bagi Hasil Pajak (Kabupaten → Desa)<sup><a href="#help-bhpr">?</a></sup></th>
@@ -141,9 +141,9 @@
                     <li id="help-penyaluran">
                         Halaman penyaluran di kawaldesa.org menampilkan penyaluran 3 dari 7 pendapatan desa, yaitu:
                         <ol>
-                            <li id="help-dd">Dana Desa, yang dianggarkan di APBN</li>
+                            <li id="help-dd">Dana Desa (DD), yang dianggarkan di APBN</li>
                             <li id="help-add">Alokasi Dana Desa (ADD), yang dianggarkan di APBD</li>
-                            <li id="help-bhpr">Bagi hasil pajak dan retribusi daerah</li>
+                            <li id="help-bhpr">Bagi hasil pajak dan retribusi daerah (PDRD)</li>
                         </ol>
                     </li>
                     <li id="help-anggaran">
@@ -166,7 +166,15 @@
             </div>
         </div>
         <div class="col-md-3">
-            Lalala
+            <div style="position: fixed;">
+                <canvas id="line" class="chart chart-line" chart-data="data"
+                        chart-labels="labels" chart-legend="true" chart-series="series"
+                        chart-click="onClick"></canvas> 
+
+                <br />
+                <canvas id="polar-area" class="chart chart-polar-area"
+                        chart-data="polarData" chart-labels="polarLabels" chart-legend="true"></canvas> 
+            </div>
         </div>
     </div>
 </div>

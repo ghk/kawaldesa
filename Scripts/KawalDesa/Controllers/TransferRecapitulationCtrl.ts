@@ -24,6 +24,21 @@ module App.Controllers {
                 $scope.isEntitiesLoading = true;
                 ctrl.onRegionChanged();
             });
+
+            $scope.labels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+            $scope.series = ['Penyaluran DD', 'Penyaluran ADD'];
+            $scope.data = [
+                //[65, 59, 80, 81, 56, 55, 40, 80, 80, 80, 80, 80],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ];
+            $scope.polarLabels = ["DD", "ADD", "PDRD"];
+            $scope.polarData = [18689911092007, 13689911092007, 3689911092007];
+
+
+            $scope.onClick = function (points, evt) {
+                console.log(points, evt);
+            };
         }
 
         onRegionChanged() {

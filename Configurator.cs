@@ -56,12 +56,14 @@ namespace App
             bundles.Add(new StyleBundle("~/css/kawaldesa")
                 .Include("~/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
+                .Include("~/Content/angular-chart.css")
                 .Include("~/Content/style.css"));
 
             bundles.Add(new StyleBundle("~/css/kawaldesa-all")
                 .Include("~/Content/bootstrap.min.css")
                 .Include("~/Content/font-awesome.css")
                 .Include("~/Content/loading-bar.min.css")
+                .Include("~/Content/angular-chart.css")
                 .Include("~/Content/style.css"));
 
             // Script Bundles
@@ -94,7 +96,8 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.modal.js")
                 .Include("~/Scripts/ui.bootstrap.dateparser.js")
                 .Include("~/Scripts/ui.bootstrap.datepicker.js")
-                .Include("~/Scripts/angular-sticky-table-header.js")
+                .Include("~/Scripts/Chart.js")
+                .Include("~/Scripts/angular-chart.js")
                 .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
@@ -116,6 +119,8 @@ namespace App
                 .Include("~/Scripts/ui.bootstrap.modal.js")
                 .Include("~/Scripts/ui.bootstrap.dateparser.js")
                 .Include("~/Scripts/ui.bootstrap.datepicker.js")
+                .Include("~/Scripts/Chart.js")
+                .Include("~/Scripts/angular-chart.js")
                 .Include("~/Scripts/gen/Microvac.Web.js")
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
