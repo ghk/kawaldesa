@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
@@ -74,6 +75,10 @@ namespace App.Controllers.Models
                     Transfer transfer = multipart.Entity;
                     if(transfer != null)
                     {
+                        ModelState.Clear();
+                        Validate(transfer);
+                        if (!ModelState.IsValid)
+                            throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
                         transfer.IsActivated = true;
                         transfer.fkRegionId = regionId;
                         transfer.Year = Convert.ToInt32(apbnKey.Substring(0, 4));

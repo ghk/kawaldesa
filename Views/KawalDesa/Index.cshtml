@@ -27,16 +27,17 @@
         <div class="modal-body">
             <div class="container-fluid">
                 <form class="form-horizontal">
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': indexCtrl.newSourceErrors.Function}">
                         <label for="function" class="col-sm-3 control-label">Fungsi Dokumen</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="function" ng-model="indexCtrl.newSourceFunction" convert-to-number>
+                            <select class="form-control" name="function" 
+                                    ng-model="indexCtrl.newSourceFunction" convert-to-number>
                                 <option value="0">Alokasi</option>
                                 <option value="1">Penyaluran</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': indexCtrl.newSourceErrors.Type}">
                         <label for="function" class="col-sm-3 control-label">Jenis Dana</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="type" ng-model="indexCtrl.newSourceSubType">
@@ -44,34 +45,56 @@
                                 <option value="Add">ADD dari APBD</option>
                                 <option value="Bhpr">Bagi Hasil Pajak &amp; Retribusi</option>
                             </select>
+                            <div class="text-danger" ng-if="indexCtrl.newSourceErrors.Type">
+                                {{indexCtrl.newSourceErrors.Type}}
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': indexCtrl.newSourceErrors.fkRegionId}">
                         <label for="name" class="col-sm-3 control-label">Wilayah</label>
                         <div class="col-sm-9">
                             <input type="text" ng-model="indexCtrl.newSourceRegion"
                                    placeholder="{{indexCtrl.newSourceFunction == 0 ? 'cari kabupaten/kota atau nasional' : 'cari desa'}}"
                                    typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue, true)" typeahead-template-url="searchTemplate.html" class="form-control" />
+                            <div class="text-danger" ng-if="indexCtrl.newSourceErrors.fkRegionId">
+                                {{indexCtrl.newSourceErrors.fkRegionId}}
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': indexCtrl.newSourceErrors.File}">
                         <label for="picture" class="col-sm-3 control-label">File</label>
                         <div class="col-sm-9">
                             <input type="file" ng-file-select class="form-control"
                                    ng-model="indexCtrl.newSourceFile" multiple="" />
+                            <div class="text-danger" ng-if="indexCtrl.newSourceErrors.File">
+                                {{indexCtrl.newSourceErrors.File}}
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1">
+                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1" 
+                         ng-class="{'has-error': indexCtrl.newSourceErrors.Amount}">
                         <label for="amount" class="col-sm-3 control-label">Jumlah</label>
                         <div class="col-sm-9">
                             <input type="number" class="form-control"
                                    ng-model="indexCtrl.newSourceAmount" multiple="" />
+                            <div class="text-danger" ng-if="indexCtrl.newSourceErrors.Amount">
+                                {{indexCtrl.newSourceErrors.Amount}}
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1">
+                    <div class="form-group" ng-show="indexCtrl.newSourceFunction == 1"
+                         ng-class="{'has-error': indexCtrl.newSourceErrors.Date}">
                         <label for="date" class="col-sm-3 control-label">Tanggal Penyaluran</label>
                         <div class="col-sm-9">
-                            <datepicker ng-model="indexCtrl.newSourceDate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>`
+                            <div class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="indexCtrl.newSourceDate" is-open="status.opened" min-date="minDate" max-date="maxDate" close-text="Close" />
+                                <span class="input-group-addon">
+                                    <button type="button" ng-click="status.opened = true"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                            <div class="text-danger" ng-if="indexCtrl.newSourceErrors.Date">
+                                {{indexCtrl.newSourceErrors.Date}}
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -141,7 +164,7 @@
         </tbody>
     </table>
 </script>
-<script type="text/ng-template" id="template/datepicker/month.html">
+<script type="text/ng-template" id="template/datepicker/popup.html">
     <ul class="dropdown-menu" ng-if="isOpen" style="display: block" ng-style="{top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
         <li ng-transclude></li>
         <li ng-if="showButtonBar" style="padding:10px 9px 2px">

@@ -336,6 +336,7 @@ module App.Controllers {
         newSourceAmount: number;
         newSourceFunction: App.Models.SourceDocumentFunction;
         newSourceRegion: any;
+        newSourceErrors= {};
         newSourceState = false;
 
         configureDocumentUpload(type: App.Models.DocumentUploadType, regionId: string) : void {
@@ -383,6 +384,33 @@ module App.Controllers {
         }
 
         uploadSource() : void {
+
+            var errors = this.newSourceErrors = {};
+            if (this.newSourceRegion == null) {
+                if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation)
+                    errors["fkRegionId"] = "Pilih wilayah alokasi dana, pilih 'Nasional' untuk alokasi nasional.";
+                else
+                    errors["fkRegionId"] = "Pilih desa di mana dana ini tersalurkan.";
+            }
+
+            if (this.newSourceSubType == null) {
+                errors["Type"] = "Pilih jenis dana yang ingin anda unggah";
+            }
+
+            if (this.newSourceFunction == Models.SourceDocumentFunction.Transfer && !this.newSourceAmount) {
+                errors["Amount"] = "Isi jumlah penyaluran dana desa";
+            }
+            if (this.newSourceFunction == Models.SourceDocumentFunction.Transfer && !this.newSourceDate) {
+                errors["Date"] = "Pilih tanggal penyaluran dana desa";
+            }
+            if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation && !this.newSourceFile || this.newSourceFile.length == 0) {
+                errors["File"] = "Pilih dokumen yang ingin anda unggah";
+            }
+
+            if (!jQuery.isEmptyObject(errors)) {
+                return;
+            }
+
             var typeStr = this.newSourceRegion.Id == "0" ? "National" : "Regional";
             typeStr = typeStr + this.newSourceSubType;
             var type = Models.DocumentUploadType[typeStr];
