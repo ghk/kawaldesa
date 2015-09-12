@@ -7,7 +7,8 @@ module App {
         'angularFileUpload',
         'ui.bootstrap.typeahead',
         'ui.bootstrap.position',
-        'ui.bootstrap.modal'
+        'ui.bootstrap.modal',
+        'ui.bootstrap.datepicker',
     ]);
 
     kawaldesa.run(['$location', '$rootElement', '$http', function ($location, $rootElement, $http) {        
@@ -23,5 +24,18 @@ module App {
         $locationProvider.hashPrefix('!');
     }]);
 
+    kawaldesa.directive('convertToNumber', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModel: any) {
+                ngModel.$parsers.push(function (val) {
+                    return parseInt(val, 10);
+                });
+                ngModel.$formatters.push(function (val) {
+                    return '' + val;
+                });
+            }
+        };
+    });
 
 }

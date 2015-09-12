@@ -1195,6 +1195,8 @@
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\ui.bootstrap.dateparser.js" />
+    <Content Include="Scripts\ui.bootstrap.datepicker.js" />
     <Content Include="Scripts\ui.bootstrap.modal.js" />
     <Content Include="Scripts\ui.bootstrap.position.js" />
     <Content Include="Scripts\ui.bootstrap.typeahead.js" />

@@ -169,7 +169,9 @@ module App.Controllers {
         }
 
         changeRegion(regionId: string, $event): void {
-            $event.preventDefault();
+            if ($event) {
+                $event.preventDefault();
+            }
             var type = this.type;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
             var path = matched[0][0] + regionId;
@@ -330,7 +332,7 @@ module App.Controllers {
         activeSources:  App.Models.SourceDocument[];
         newSourceFile: any;
         newSourceSubType: string;
-        newSourceDate: string;
+        newSourceDate: Date;
         newSourceAmount: number;
         newSourceFunction: App.Models.SourceDocumentFunction;
         newSourceRegion: any;
@@ -392,14 +394,19 @@ module App.Controllers {
             if (fn == Models.SourceDocumentFunction.Transfer) {
                 var form = new Models.Transfer();
                 var date = ctrl.newSourceDate;
-                date = date.substr(6, 4) + "-"
-                        + date.substr(3, 2) + "-"
-                        + date.substr(0, 2) + "T00:00:00";
-                form.Date= date;
+                function pad(i) {
+                    var result = i + "";
+                    if (result.length == 1)
+                        result = "0" + result;
+                    return result;
+                }
+                form.Date = date.getFullYear() + "-"
+                + pad(date.getMonth() + 1) + "-"
+                + pad(date.getDate()) + "T00:00:00";
                 if (this.newSourceSubType == "Dd")
                     form.Dd = this.newSourceAmount;
                 else if (this.newSourceSubType == "Add")
-                    form.Dd = this.newSourceAmount;
+                    form.Add = this.newSourceAmount;
                 else if (this.newSourceSubType == "Bhpr")
                     form.Bhpr = this.newSourceAmount;
                 multipart["forms"] = form;
@@ -412,7 +419,11 @@ module App.Controllers {
                 .success(() => {
                     safeApply(ctrl.$scope, () => {
                         ctrl.closeModal();
-                        ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                        if (fn == Models.SourceDocumentFunction.Allocation) {
+                            ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
+                        } else {
+                            ctrl.changeRegion(ctrl.newSourceRegion.Id, null);
+                        }
                     });
                 }).finally(() => {
                     safeApply(ctrl.$scope, () => {
