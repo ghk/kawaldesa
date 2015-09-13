@@ -237,9 +237,9 @@ namespace Dumper
             var htmlPath = Path.Combine(root, "index.html");
             File.WriteAllText(htmlPath, dom.Render());
             Gunzip(htmlPath);
-            Download(appHost, Path.Combine(root, "js/kawaldesa-lib.js")); 
-            Download(appHost, Path.Combine(root, "js/kawaldesa-own.js")); 
-            Download(appHost, Path.Combine(root, "css/kawaldesa-all.js")); 
+            Download(appHost+"/js/kawaldesa-lib", Path.Combine(root, "js/kawaldesa-lib.js")); 
+            Download(appHost+"/js/kawaldesa-own", Path.Combine(root, "js/kawaldesa-own.js")); 
+            Download(appHost+"/css/kawaldesa-all", Path.Combine(root, "css/kawaldesa-all.css")); 
         }
 
         private static void DumpP(string apbnKey, string dumpedRegionId)
@@ -296,13 +296,13 @@ namespace Dumper
             if(id == "0")
             {
                 foreach (var regionId in regionIds)
-                    if (countDot(regionId) < 2)
+                    if (countDot(regionId) < 1)
                         yield return regionId;
 
             }
             else
             {
-                var maxDot = countDot(id)+2;
+                var maxDot = countDot(id)+1;
                 foreach (var regionId in regionIds)
                     if (regionId.StartsWith(id+".") && countDot(regionId) <= maxDot)
                         yield return regionId;
