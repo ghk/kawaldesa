@@ -108,17 +108,17 @@ namespace App.Controllers.Services
             switch (subtype)
             {
                 case "dd":
-                    type = region.Type <= RegionType.KABUPATEN
+                    type = region.Type < RegionType.KABUPATEN
                         ? DocumentUploadType.NationalDd
                         : DocumentUploadType.RegionalDd;
                     break;
                 case "add":
-                    type = region.Type <= RegionType.KABUPATEN
+                    type = region.Type < RegionType.KABUPATEN
                         ? DocumentUploadType.NationalAdd
                         : DocumentUploadType.RegionalAdd;
                     break;
                 case "bhpr":
-                    type = region.Type <= RegionType.KABUPATEN
+                    type = region.Type < RegionType.KABUPATEN
                         ? DocumentUploadType.NationalBhpr
                         : DocumentUploadType.RegionalBhpr;
                     break;
