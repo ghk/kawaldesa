@@ -41,7 +41,7 @@ namespace App.Models
         public virtual IDbSet<RegionalDdAllocation> RegionalDdAllocations { get; set; }
         public virtual IDbSet<RegionalAddAllocation> RegionalAddAllocations { get; set; }
         public virtual IDbSet<RegionalBhprAllocation> RegionalBhprAllocations { get; set; }
-        public virtual IDbSet<Transfer> Transfer  { get; set; }
+        public virtual IDbSet<Transfer> Transfers  { get; set; }
         public virtual IDbSet<FrozenTransfer> FrozenTransfers  { get; set; }
         public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }
@@ -50,6 +50,7 @@ namespace App.Models
         public virtual IDbSet<FrozenTransaction> FrozenTransactions  { get; set; }
         public virtual IDbSet<TransferRecapitulation> TransferRecapitulations { get; set; }
         public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
+        public virtual IDbSet<TransferProgress> TransferProgresses { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
         public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
         public virtual IDbSet<NationalAddRecapitulation> NationalAddRecapitulations { get; set; }

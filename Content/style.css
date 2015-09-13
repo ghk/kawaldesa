@@ -196,3 +196,10 @@ table.table-bordered > thead > tr > th:last-child {
     padding-bottom: 4px;
     padding-top: 7px;
 }
+
+.alert {
+    border-radius: 0px;
+}
+.well {
+    border-radius: 0px;
+}

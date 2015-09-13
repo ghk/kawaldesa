@@ -190,6 +190,37 @@ module App.Models {
     }
     
     
+    export interface ITransferProgress {
+        Id: string;
+        fkRegionId: string;
+        ApbnKey: string;
+        Type: number;
+        Month: number;
+        Percent: number;
+    }
+    
+    export class TransferProgress {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        Id: string;
+        fkRegionId: string;
+        ApbnKey: string;
+        Type: number;
+        Month: number;
+        Percent: number;
+        
+        constructor(data?: ITransferProgress) {
+            this.Id = data ? data.Id : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.Type = data ? data.Type : null;
+            this.Month = data ? data.Month : null;
+            this.Percent = data ? data.Percent : null;
+        }
+        
+    }
+    
+    
     export interface IAccount extends IBaseEntity {
         Code: string;
         Name: string;
@@ -1082,6 +1113,64 @@ module App.Models {
     }
     
     
+    export interface ISpreadsheetWorkDir extends IBaseEntity {
+        GoogleSheetId: string;
+        fkUserId: string;
+        User: App.Models.IUser;
+    }
+    
+    export class SpreadsheetWorkDir extends BaseEntity {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        GoogleSheetId: string;
+        fkUserId: string;
+        User: App.Models.IUser;
+        
+        constructor(data?: ISpreadsheetWorkDir) {
+            super(data);
+            this.GoogleSheetId = data ? data.GoogleSheetId : null;
+            this.fkUserId = data ? data.fkUserId : null;
+            this.User = data ? data.User : null;
+        }
+        
+    }
+    
+    
+    export interface ISpreadsheetWorkItem extends IBaseEntity {
+        GoogleSheetId: string;
+        fkUserId: string;
+        User: App.Models.IUser;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        Type: App.Models.DocumentUploadType;
+        ApbnKey: string;
+    }
+    
+    export class SpreadsheetWorkItem extends BaseEntity {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        GoogleSheetId: string;
+        fkUserId: string;
+        User: App.Models.IUser;
+        fkRegionId: string;
+        Region: App.Models.IRegion;
+        Type: App.Models.DocumentUploadType;
+        ApbnKey: string;
+        
+        constructor(data?: ISpreadsheetWorkItem) {
+            super(data);
+            this.GoogleSheetId = data ? data.GoogleSheetId : null;
+            this.fkUserId = data ? data.fkUserId : null;
+            this.User = data ? data.User : null;
+            this.fkRegionId = data ? data.fkRegionId : null;
+            this.Region = data ? data.Region : null;
+            this.Type = data ? data.Type : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+        }
+        
+    }
+    
+    
     export interface IBaseTransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
@@ -1933,6 +2022,75 @@ module App.Models.Views {
         
         constructor(data?: IFrozenTransferRecapitulation) {
             super(data);
+        }
+        
+    }
+    
+}
+module App.Models.Bundles {
+
+	import IQuery = Microvac.Web.IQuery;
+    
+    export interface IAllocationBundle {
+        Region: App.Models.IRegion;
+        CurrentSpreadsheet: App.Models.ISpreadsheet;
+        SourceDocuments: Array<App.Models.ISourceDocument>;
+        NationalDdRecapitulations: Array<App.Models.Views.INationalDdRecapitulation>;
+        RegionalDdRecapitulations: Array<App.Models.Views.IRegionalDdRecapitulation>;
+        NationalAddRecapitulations: Array<App.Models.Views.INationalAddRecapitulation>;
+        RegionalAddRecapitulations: Array<App.Models.Views.IRegionalAddRecapitulation>;
+        NationalBhprRecapitulations: Array<App.Models.Views.INationalBhprRecapitulation>;
+        RegionalBhprRecapitulations: Array<App.Models.Views.IRegionalBhprRecapitulation>;
+    }
+    
+    export class AllocationBundle {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        Region: App.Models.IRegion;
+        CurrentSpreadsheet: App.Models.ISpreadsheet;
+        SourceDocuments: Array<App.Models.ISourceDocument>;
+        NationalDdRecapitulations: Array<App.Models.Views.INationalDdRecapitulation>;
+        RegionalDdRecapitulations: Array<App.Models.Views.IRegionalDdRecapitulation>;
+        NationalAddRecapitulations: Array<App.Models.Views.INationalAddRecapitulation>;
+        RegionalAddRecapitulations: Array<App.Models.Views.IRegionalAddRecapitulation>;
+        NationalBhprRecapitulations: Array<App.Models.Views.INationalBhprRecapitulation>;
+        RegionalBhprRecapitulations: Array<App.Models.Views.IRegionalBhprRecapitulation>;
+        
+        constructor(data?: IAllocationBundle) {
+            this.Region = data ? data.Region : null;
+            this.CurrentSpreadsheet = data ? data.CurrentSpreadsheet : null;
+            this.SourceDocuments = data ? data.SourceDocuments : null;
+            this.NationalDdRecapitulations = data ? data.NationalDdRecapitulations : null;
+            this.RegionalDdRecapitulations = data ? data.RegionalDdRecapitulations : null;
+            this.NationalAddRecapitulations = data ? data.NationalAddRecapitulations : null;
+            this.RegionalAddRecapitulations = data ? data.RegionalAddRecapitulations : null;
+            this.NationalBhprRecapitulations = data ? data.NationalBhprRecapitulations : null;
+            this.RegionalBhprRecapitulations = data ? data.RegionalBhprRecapitulations : null;
+        }
+        
+    }
+    
+    
+    export interface ITransferBundle {
+        Region: App.Models.IRegion;
+        TransferRecapitulations: Array<App.Models.Views.ITransferRecapitulation>;
+        Transfers: Array<App.Models.ITransfer>;
+        TransferProgress: Array<App.Models.ITransferProgress>;
+    }
+    
+    export class TransferBundle {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        Region: App.Models.IRegion;
+        TransferRecapitulations: Array<App.Models.Views.ITransferRecapitulation>;
+        Transfers: Array<App.Models.ITransfer>;
+        TransferProgress: Array<App.Models.ITransferProgress>;
+        
+        constructor(data?: ITransferBundle) {
+            this.Region = data ? data.Region : null;
+            this.TransferRecapitulations = data ? data.TransferRecapitulations : null;
+            this.Transfers = data ? data.Transfers : null;
+            this.TransferProgress = data ? data.TransferProgress : null;
         }
         
     }

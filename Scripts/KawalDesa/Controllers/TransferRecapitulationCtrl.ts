@@ -19,22 +19,37 @@ module App.Controllers {
         constructor(public $scope, public $upload) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
+
             $scope.$on('regionChangeBefore', function () {
-                $scope.entities = [];
-                $scope.isEntitiesLoading = true;
-                ctrl.onRegionChanged();
+                if (ctrl.indexCtrl.type == "transfer") {
+                    ctrl.getBundle(ctrl.indexCtrl.regionId);
+                }
             });
 
+            this.initDummyChart();
+        }
+
+        initDummyChart() {
+            var $scope = this.$scope;
             $scope.labels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
             $scope.series = ['Penyaluran DD', 'Penyaluran ADD'];
+            $scope.chartOptions = {
+                scaleOverride: true,
+                scaleSteps: 5,
+                scaleStepWidth: 20,
+                scaleStartValue: 0,
+                scaleLabel: "<%=value%>%",
+            };
             $scope.data = [
-                //[65, 59, 80, 81, 56, 55, 40, 80, 80, 80, 80, 80],
+                [65, 59, 80, 81, 56, 55, 40, 80, 80, 80, 80, 80],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ];
             $scope.polarLabels = ["DD", "ADD", "PDRD"];
-            $scope.polarData = [18689911092007, 13689911092007, 3689911092007];
-
+            $scope.polarData = [18689, 13689, 3689];
+            $scope.polarChartOptions = {
+                scaleLabel: "Rp. <%=value%> Milyar",
+            };
 
             $scope.onClick = function (points, evt) {
                 console.log(points, evt);
@@ -42,45 +57,31 @@ module App.Controllers {
         }
 
         onRegionChanged() {
-            if (this.indexCtrl.type == "transfer") {
-                this.getRecapitulations(this.indexCtrl.regionId);
-            }
         }
 
 
-        getRecapitulations(parentId: string) {
+        getBundle(parentId: string) {
             var ctrl = this;
             var scope = this.$scope;
-            var query = {
-                "SortOrder": "ASC",
-                "ParentId": parentId,
-                "ApbnKey": "2015p"
-            }
-            var type = Controllers.FrozenTransferRecapitulationController;
-            if (this.indexCtrl.currentUser) {
-                type = Controllers.TransferRecapitulationController;
-            }
+
             scope.entities = [];
-            if (this.indexCtrl.guessedRegionType < 4) {
-                type.GetAll(query).then((recapitulations) => {
-                    scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
-                    if (this.indexCtrl.regionId == "0")
-                        scope.entities = scope.entities.slice(0, 8);
-                    scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
+            scope.isEntitiesLoading = true;
+
+            App.Controllers.Services.BundleController.GetTransferBundle("2015p", parentId)
+                .then(bundle => {
+                    ctrl.indexCtrl.loadRegion(bundle.data.Region);
+                    if (ctrl.indexCtrl.guessedRegionType < 4) {
+                        scope.entities = bundle.data.TransferRecapitulations.filter(r => r.RegionId != parentId);
+                        if (ctrl.indexCtrl.regionId == "0")
+                            scope.entities = scope.entities.slice(0, 8);
+                        scope.total = bundle.data.TransferRecapitulations.filter(r => r.RegionId == parentId)[0];
+                    } else {
+                        scope.entities = bundle.data.Transfers;
+                        scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
+                    }
                 }).finally(() => {
                     scope.isEntitiesLoading = false;
                 });
-            } else {
-                var entities = [];
-                for (var i = 0; i < 10; i++) {
-                    Controllers.TransferController.GetAll({"fkRegionId": parentId, "Year": 2015 }).then(transfers => {
-                        scope.entities = transfers.data;
-                        scope.total = { "Dd": 2000000, "Add": 212100101, "Bhpr": 238349349 };
-                    }).finally(() => {
-                        scope.isEntitiesLoading = false;
-                    });
-                }
-            }
         }
 
 

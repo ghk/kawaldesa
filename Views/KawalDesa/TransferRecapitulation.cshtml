@@ -1,7 +1,7 @@
 ﻿<div ng-controller="TransferRecapitulationCtrl as recapitulationCtrl" ng-if="indexCtrl.type == 'transfer'">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9" style="border-right: 1px solid #ddd;">
                 <div class="alert alert-success" style="font-size: small; padding: 5px 10px;">
                     <p>
                         Mari mengawal Dana Desa dengan transparansi alokasi, penyaluran, dan realisasinya.
@@ -168,13 +168,21 @@
             </div>
             <div class="col-md-3">
                 <div style="position: fixed; width: 23%;">
+                    <div class="content-header">
+                        Penyaluran {{indexCtrl.region.Name}}
+                    </div>
+                    <br />
                     <canvas id="line" class="chart chart-line" chart-data="data"
                             chart-labels="labels" chart-legend="true" chart-series="series"
-                            chart-click="onClick"></canvas> 
+                            chart-options="chartOptions" chart-click="onClick"></canvas> 
 
                     <br />
+                    <div class="content-header">
+                        Anggaran Transfer Dana Desa
+                    </div>
                     <br />
                     <canvas id="polar-area" class="chart chart-polar-area"
+                            chart-options="polarChartOptions"
                             chart-data="polarData" chart-labels="polarLabels" chart-legend="true"></canvas> 
                 </div>
             </div>

@@ -129,8 +129,14 @@ module App.Controllers {
 
             this.guessedRegionType = this.guessType(regionId);
 
-            if(regionId != null || regionKey)
-                this.loadRegion(regionId, regionKey);
+            var ctrl = this;
+            if (regionId != null || regionKey) {
+                setTimeout(() => {
+                    ctrl.$scope.$apply(() => {
+                        this.$scope.$broadcast("regionChangeBefore");
+                    });
+                }, 0);
+            }
             if (regionId == null && !regionKey)
                 regionId = "0";
 
@@ -178,53 +184,36 @@ module App.Controllers {
             this.$location.path(path);
         }
 
-        loadRegion(parentId?: string, parentKey?: string) {
-            setTimeout(() => {
-                ctrl.$scope.$apply(() => {
-                this.$scope.$broadcast("regionChangeBefore");
-                });
-            }, 0);
+        oloadRegion(parentId?: string, parentKey?: string) {
+        }
+
+        loadRegion(region: Models.Region) {
             var ctrl = this;
 
             this.regionTree = [];
             this.childName = CHILD_NAMES[0];
 
-            var promise = null;
-            if (parentId != null)
-                promise = Controllers.RegionController.Get(parentId);
-            else if (parentKey)
-                promise = Controllers.RegionController.GetByURLKey(parentKey);
+            ctrl.region = region;
+            ctrl.regionId = region.Id;
 
-            promise.then((regionData: ng.IHttpPromiseCallbackArg<Models.Region>) => {
-                    var region = regionData.data;
-                    ctrl.region = region;
-                    ctrl.regionId = region.Id;
+            ctrl.initSourceUploadDefaults();
 
-                    ctrl.initSourceUploadDefaults();
+            var regionTree = [];
+            var cur : Models.IRegion = region;
+            while (cur) {
+                regionTree.push(cur);
+                cur = cur.Parent;
+            }
+            ctrl.regionTree = regionTree.reverse();
+            if (regionTree.length < CHILD_NAMES.length)
+                ctrl.childName = CHILD_NAMES[regionTree.length];
 
-                    var regionTree = [];
-                    var cur : Models.IRegion = region;
-                    while (cur) {
-                        regionTree.push(cur);
-                        cur = cur.Parent;
-                    }
-                    ctrl.regionTree = regionTree.reverse();
-                    if (regionTree.length < CHILD_NAMES.length)
-                        ctrl.childName = CHILD_NAMES[regionTree.length];
+            if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
+                ctrl.isPathReplacing = true;
+                ctrl.$location.path("/" + region.UrlKey);
+                ctrl.$location.replace();
+            }
 
-                    if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
-                        ctrl.isPathReplacing = true;
-                        ctrl.$location.path("/" + region.UrlKey);
-                        ctrl.$location.replace();
-                    }
-
-                    setTimeout(() => {
-                        ctrl.$scope.$apply(() => {
-                            ctrl.$scope.$broadcast("regionChangeSuccess");
-                        });
-                    }, 0);
-
-            });
         }
 
         /* UI Utils */
@@ -328,7 +317,6 @@ module App.Controllers {
         activeUploadType: App.Models.DocumentUploadType;
         activeUploadRegionId: string;
         activeUpload: App.Models.Spreadsheet;
-        activeUploadLoading= true;
 
         activeSources:  App.Models.SourceDocument[];
         newSourceFile: any;
@@ -345,12 +333,10 @@ module App.Controllers {
             this.activeUploadRegionId = regionId;
             var ctrl = this;
             ctrl.activeUpload = null;
-            ctrl.activeUploadLoading = true;
             Controllers.SpreadsheetController
                 .GetActive(type, regionId, "2015p")
                 .then(doc => {
                     ctrl.activeUpload = doc.data;
-                    ctrl.activeUploadLoading = false;
                     Controllers.SourceDocumentController
                         .GetAll({ "fkRegionId": regionId, "type": type, "apbnKey": "2015p" })
                         .then(sources => {

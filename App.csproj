@@ -295,7 +295,10 @@
     <Compile Include="Controllers\Models\TransferController.cs" />
     <Compile Include="Controllers\Models\RegionSearchResultController.cs" />
     <Compile Include="Controllers\Models\SourceDocumentController.cs" />
+    <Compile Include="Controllers\Services\BundleController.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
+    <Compile Include="Models\Bundles\AllocationBundle.cs" />
+    <Compile Include="Models\Bundles\TransferBundle.cs" />
     <Compile Include="Models\SourceDocumentFunction.cs" />
     <Compile Include="Models\RegionSearchResult.cs" />
     <Compile Include="Models\SourceDocument.cs" />
@@ -306,6 +309,7 @@
     <Compile Include="Models\SpreadsheetWorkDir.cs" />
     <Compile Include="Models\SpreadsheetWorkItem.cs" />
     <Compile Include="Models\Transfer.cs" />
+    <Compile Include="Models\TransferProgress.cs" />
     <Compile Include="Models\Views\NationalAddRecapitulation.cs" />
     <Compile Include="Models\Views\NationalBhprRecapitulation.cs" />
     <Compile Include="Models\NationalBhprAllocation.cs" />
@@ -1196,6 +1200,7 @@
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\KawalDesa\Controllers.bundlepatch.js" />
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />

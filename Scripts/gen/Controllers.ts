@@ -1275,6 +1275,27 @@ module App.Controllers.Models {
 module App.Controllers.Services {
 	import IQuery = Microvac.Web.IQuery;
 
+    export class BundleController
+    {
+        public static ajaxSettings = new Microvac.Web.AjaxSettings();
+        
+        static GetTransferBundle(apbnKey: string, regionId: string): ng.IHttpPromise<App.Models.Bundles.ITransferBundle> {
+			var res = Microvac.Web.$http<App.Models.Bundles.ITransferBundle>(BundleController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Bundle/GetTransferBundle?apbnKey='+encodeURI(apbnKey)+'&regionId='+encodeURI(regionId)+'',
+				}));
+			   return res;
+	    }
+    
+        static GetAllocationBundle(subtype: string, apbnKey: string, regionId: string): ng.IHttpPromise<App.Models.Bundles.IAllocationBundle> {
+			var res = Microvac.Web.$http<App.Models.Bundles.IAllocationBundle>(BundleController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Bundle/GetAllocationBundle?subtype='+encodeURI(subtype)+'&apbnKey='+encodeURI(apbnKey)+'&regionId='+encodeURI(regionId)+'',
+				}));
+			   return res;
+	    }
+	}
+    
     export class UserController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();

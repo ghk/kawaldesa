@@ -22,50 +22,52 @@ module App.Controllers {
             this.indexCtrl = this.$scope.indexCtrl;
 
             $scope.$on('regionChangeBefore', function () {
-                $scope.entities = [];
-                $scope.isEntitiesLoading = true;
                 ctrl.onRegionChanged();
+                if (ctrl.indexCtrl.type == ctrl.routePrefix) {
+                    ctrl.getBundle(ctrl.indexCtrl.regionId);
+                }
             });
         }
 
         onRegionChanged() {
-            if (this.indexCtrl.type == this.routePrefix) {
-                if (this.indexCtrl.guessedRegionType <= 1) {
-                    this.indexCtrl.configureDocumentUpload(this.documentTypes[0], "0");
-                } else if (this.indexCtrl.guessedRegionType >= 2) {
-                    var kabId = this.indexCtrl.regionId;
-                    var ids = this.indexCtrl.regionId.split(".");
-                    if (ids.length > 2)
-                        kabId = ids[0] + "." + ids[1];
-                    this.indexCtrl.configureDocumentUpload(this.documentTypes[1], kabId);
-                }
-                this.getRecapitulations(this.indexCtrl.regionId);
-            }
         }
 
-        getRecapitulations(parentId: string) {
+        getBundle(parentId: string) {
             var ctrl = this;
             var scope = this.$scope;
-            var query = {
-                "SortOrder": "ASC",
-                "fkParentId": parentId
-            }
-            var type: any = this.recapitulationTypes[0];
-            if (this.indexCtrl.currentUser) {
-                type = this.recapitulationTypes[1];
-            }
-            if (this.indexCtrl.guessedRegionType >= 2) {
-                type = this.recapitulationTypes[2];
-                if (this.indexCtrl.currentUser) {
-                    type = this.recapitulationTypes[3];
-                }
-            }
+            var type = this.routePrefix;
+
             scope.entities = [];
-            type.GetAll(query).then((recapitulations) => {
-                scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
-                scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
-            }).finally(() => {
-                scope.isEntitiesLoading = false;
+            scope.isEntitiesLoading = true;
+
+            App.Controllers.Services.BundleController.GetAllocationBundle(type, "2015p", parentId)
+                .then(bundle => {
+                    ctrl.indexCtrl.loadRegion(bundle.data.Region);
+                    var recapitulations = null;
+                    var regionType = bundle.data.Region.Type;
+                    if (type == "dd") {
+                        recapitulations = regionType < 2
+                            ? bundle.data.NationalDdRecapitulations
+                            : bundle.data.RegionalDdRecapitulations;
+                    }
+                    else if (type == "add") {
+                        recapitulations = regionType < 2
+                            ? bundle.data.NationalAddRecapitulations
+                            : bundle.data.RegionalAddRecapitulations;
+                    }
+                    else if (type == "bhpr") {
+                        recapitulations = regionType < 2
+                            ? bundle.data.NationalBhprRecapitulations
+                            : bundle.data.RegionalBhprRecapitulations;
+                    }
+
+                    scope.entities = recapitulations.filter(r => r.RegionId != parentId);
+                    scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
+                    ctrl.indexCtrl.activeUpload = bundle.data.CurrentSpreadsheet;
+                    ctrl.indexCtrl.activeUploadRegionId = bundle.data.Region.Id;
+                    ctrl.indexCtrl.activeSources = bundle.data.SourceDocuments;
+                }).finally(() => {
+                    scope.isEntitiesLoading = false;
             });
         }
 

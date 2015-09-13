@@ -82,6 +82,7 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
+                .Include("~/Scripts/KawalDesa/Controllers.bundlepatch.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
@@ -102,6 +103,7 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
+                .Include("~/Scripts/KawalDesa/Controllers.bundlepatch.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
@@ -125,6 +127,7 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
+                .Include("~/Scripts/KawalDesa/Controllers.bundlepatch.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );
@@ -203,12 +206,24 @@ namespace App
                 routeTemplate: "sheets/{fileName}",
                 defaults: new { controller = "DocumentUpload", action = "GetCurrentSheet" }
             );
+
             var route = routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
             route.RouteHandler = new RequiresSessionHttpControllerRouteHandler();
+
+            route = routes.MapHttpRoute(
+                name: "Transfer Bundle Api",
+                routeTemplate: "bundles/p/{apbnKey}/{regionId}.json",
+                defaults: new { controller = "Bundle", action = "GetTransferBundle"}
+            );
+            route = routes.MapHttpRoute(
+                name: "Allocation Bundle Api",
+                routeTemplate: "bundles/{subType}/{apbnKey}/{regionId}.json",
+                defaults: new { controller = "Bundle", action = "GetAllocationBundle"}
+            );
         }
 
         private static void ConfigureMappings()
