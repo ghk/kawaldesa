@@ -120,18 +120,16 @@
     </header>
     @RenderBody()
     <footer>
-        <nav class="navbar navbar-default navbar-bottom" role="navigation">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p>
-                            Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
-                        </p>
-                    </div>
+        <div class="container-fluid">
+            <div class="row">
+              <div ng-class="{'col-md-9': indexCtrl.type =='transfer', 'col-md-12': indexCtrl.type != 'transfer'}" 
+                   style="border-right: 1px solid #ccc; padding-top: 20px;">
+                    <p>
+                        Source code kawaldesa.org ada di <a href="http://www.github.com/ghk/kawaldesa">github</a>
+                    </p>
                 </div>
             </div>
-        </nav>
-
+        </div>
     </footer>
 
 </body>
