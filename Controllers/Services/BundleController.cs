@@ -17,6 +17,7 @@ namespace App.Controllers.Services
         private DB db;
         public BundleController(DB db)
         {
+            db.Configuration.ProxyCreationEnabled = false;
             this.db = db;
         }
 

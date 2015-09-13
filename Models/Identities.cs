@@ -85,6 +85,9 @@ namespace App.Models
             Id = name;
             Name = name;
         }
+
+        [JsonIgnore]
+        public override ICollection<UserRole> Users { get; }
     }
 
     public class UserRole : IdentityUserRole<string>
