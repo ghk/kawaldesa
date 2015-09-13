@@ -1,4 +1,5 @@
-﻿using NetMQ;
+﻿using CsQuery;
+using NetMQ;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -201,7 +202,44 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            Download(appHost, Path.Combine(root, "index.html"));
+            CQ dom = webClient.DownloadString(appHost);
+            foreach(var script in dom["script"])
+            {
+                if (script.HasAttribute("src"))
+                {
+                    var src = script["src"];
+                    if (src.Contains("/js/kawaldesa-lib"))
+                        script["src"] = "/js/kawaldesa-lib.js";
+                    if (src.Contains("/js/kawaldesa-own"))
+                        script["src"] = "/js/kawaldesa-own.js";
+                }
+            }
+            foreach(var script in dom["link"])
+            {
+                if (script.HasAttribute("src"))
+                {
+                    var src = script["src"];
+                    if (src.Contains("/js/kawaldesa-lib"))
+                        script["src"] = "/js/kawaldesa-lib.js";
+                    if (src.Contains("/js/kawaldesa-own"))
+                        script["src"] = "/js/kawaldesa-own.js";
+                }
+            }
+            foreach(var link in dom["link"])
+            {
+                if (link.HasAttribute("href"))
+                {
+                    var href = link["href"];
+                    if (href.Contains("/css/kawaldesa-all"))
+                        link["href"] = "/css/kawaldesa-all.css";
+                }
+            }
+            var htmlPath = Path.Combine(root, "index.html");
+            File.WriteAllText(htmlPath, dom.Render());
+            Gunzip(htmlPath);
+            Download(appHost, Path.Combine(root, "js/kawaldesa-lib.js")); 
+            Download(appHost, Path.Combine(root, "js/kawaldesa-own.js")); 
+            Download(appHost, Path.Combine(root, "css/kawaldesa-all.js")); 
         }
 
         private static void DumpP(string apbnKey, string dumpedRegionId)
