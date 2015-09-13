@@ -1,6 +1,7 @@
 ﻿using NetMQ;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -14,13 +15,22 @@ namespace Dumper
 {
     class Program
     {
-        private static string host = "http://localhost:11002";
+        private static string appHost = "http://localhost:11002";
+        private static string bindAddress;
+        private static string connectAddress;
         private static string root = "dumps";
+
         private static string[] apbnKeys = new string[] { "2015p" };
         private static string[] regionIds;
         private static WebClient webClient = new WebClient();
         static void Main(string[] args)
         {
+            var settings = ConfigurationManager.AppSettings;
+            appHost = settings["AppHost"];
+            bindAddress = settings["BindAddress"];
+            connectAddress = settings["ConnectAddress"];
+            root = settings["Root"];
+
             if(args.Length >= 1)
             {
                 switch (args[0])
@@ -45,7 +55,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            Download(host, Path.Combine(root, "index.html"));
+            Download(appHost, Path.Combine(root, "index.html"));
 
             foreach(var apbnKey in apbnKeys)
             {
@@ -57,7 +67,7 @@ namespace Dumper
                     {
                         Console.WriteLine("Downloading bundle {0} - {1} - {2}", apbnKey, regionId, bundle);
                         var dir = Path.Combine(root, "bundles", bundle, apbnKey);
-                        string url = host+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
+                        string url = appHost+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
                         Directory.CreateDirectory(dir);
                         Download(url, Path.Combine(dir, regionId + ".json"));
                     }
@@ -77,7 +87,7 @@ namespace Dumper
             {
                 using (var receiver = ctx.CreatePullSocket())
                 {
-                    receiver.Bind("tcp://localhost:5557");
+                    receiver.Bind(bindAddress);
 
                     while (true)
                     {
@@ -149,7 +159,7 @@ namespace Dumper
             {
                 using (var sender = ctx.CreatePushSocket())
                 {
-                    sender.Connect("tcp://localhost:5557");
+                    sender.Connect(connectAddress);
                     sender.Send(cmd);
                 }
             }
@@ -160,7 +170,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            Download(host, Path.Combine(root, "index.html"));
+            Download(appHost, Path.Combine(root, "index.html"));
         }
 
         private static void DumpP(string apbnKey, string dumpedRegionId)
@@ -173,7 +183,7 @@ namespace Dumper
 
                 Console.WriteLine("Downloading bundle {0} - {1} - {2}", apbnKey, regionId, bundle);
                 var dir = Path.Combine(root, "bundles", bundle, apbnKey);
-                string url = host+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
+                string url = appHost+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
                 Directory.CreateDirectory(dir);
                 Download(url, Path.Combine(dir, regionId + ".json"));
             }
@@ -187,7 +197,7 @@ namespace Dumper
             {
                 Console.WriteLine("Downloading bundle {0} - {1} - {2}", apbnKey, regionId, bundle);
                 var dir = Path.Combine(root, "bundles", bundle, apbnKey);
-                string url = host + "/bundles/" + bundle + "/" + apbnKey + "/" + regionId + ".json";
+                string url = appHost + "/bundles/" + bundle + "/" + apbnKey + "/" + regionId + ".json";
                 Directory.CreateDirectory(dir);
                 Download(url, Path.Combine(dir, regionId + ".json"));
             }
