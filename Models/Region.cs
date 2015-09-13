@@ -19,6 +19,8 @@ namespace App.Models
         public RegionType Type { get; set; }
         
         public bool IsKelurahan { get; set; }
+
+        public bool IsInScope { get; set; }
         
         public string Website { get; set; }
 

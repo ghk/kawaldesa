@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using App.Models.Bundles;
+using App.Models.Views;
 using Microvac.Web;
 using System;
 using System.Collections.Generic;
@@ -28,13 +29,51 @@ namespace App.Controllers.Services
                 .FirstOrDefault(r => r.Id == regionId);
         }
 
+        public TransferBundle GetInScopeTransferBundle(string apbnKey)
+        {
+            var region = GetRegion("0");
+
+            var result = new TransferBundle
+            {
+                Region = region,
+            };
+
+            var scopedRegionIds = db.Regions.Where(r => r.IsInScope).Select(r => r.Id).ToList();
+
+            result.TransferRecapitulations = db.TransferRecapitulations
+                .Where(r => r.ApbnKey == apbnKey && (scopedRegionIds.Contains(r.RegionId)))
+                .ToList();
+            var total = new TransferRecapitulation
+            {
+                ApbnKey = apbnKey,
+                RegionId = "0",
+                RegionName = region.Name
+            };
+            foreach(var recap in result.TransferRecapitulations)
+            {
+                total.BudgetedDd += recap.BudgetedDd;
+                total.BudgetedAdd += recap.BudgetedAdd;
+                total.BudgetedBhpr += recap.BudgetedBhpr;
+            }
+            result.TransferRecapitulations.Add(total);
+
+            result.TransferProgress = db.TransferProgresses
+                .Where(r => r.ApbnKey == apbnKey && (scopedRegionIds.Contains(r.fkRegionId)))
+                .ToList();
+            result.TransferRecapitulations.Add(total);
+
+            return result;
+        }
+
         public TransferBundle GetTransferBundle(String apbnKey, String regionId)
         {
+            if (KawalDesaController.GetCurrentUser() == null &&regionId == "0")
+                return GetInScopeTransferBundle(apbnKey);
             var region = GetRegion(regionId);
 
             var result = new TransferBundle
             {
-                Region = GetRegion(regionId),
+                Region = region
             };
 
             if(region.Type < RegionType.DESA)
@@ -98,7 +137,7 @@ namespace App.Controllers.Services
 
             var result = new AllocationBundle
             {
-                Region = GetRegion(regionId),
+                Region = region,
                 CurrentSpreadsheet = spreadsheet,
                 SourceDocuments = sourceDocuments
             };

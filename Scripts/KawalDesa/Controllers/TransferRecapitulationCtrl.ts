@@ -72,8 +72,6 @@ module App.Controllers {
                     ctrl.indexCtrl.loadRegion(bundle.data.Region);
                     if (ctrl.indexCtrl.guessedRegionType < 4) {
                         scope.entities = bundle.data.TransferRecapitulations.filter(r => r.RegionId != parentId);
-                        if (ctrl.indexCtrl.regionId == "0")
-                            scope.entities = scope.entities.slice(0, 8);
                         scope.total = bundle.data.TransferRecapitulations.filter(r => r.RegionId == parentId)[0];
                     } else {
                         scope.entities = bundle.data.Transfers;

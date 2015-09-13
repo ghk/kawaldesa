@@ -208,6 +208,10 @@ module App.Controllers {
             if (regionTree.length < CHILD_NAMES.length)
                 ctrl.childName = CHILD_NAMES[regionTree.length];
 
+            //scoped child name fix
+            if (ctrl.currentUser == null && region.Id == "0")
+                ctrl.childName = CHILD_NAMES[2];
+
             if (region.UrlKey && ctrl.$location.path() != "/" + region.UrlKey) {
                 ctrl.isPathReplacing = true;
                 ctrl.$location.path("/" + region.UrlKey);
