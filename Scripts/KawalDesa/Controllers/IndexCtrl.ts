@@ -21,6 +21,7 @@ module App.Controllers {
 
     interface MyWindow extends Window {
         CurrentUser: ICurrentUser;
+        Data?: any;
     }
 
     declare var window: MyWindow;
@@ -67,6 +68,7 @@ module App.Controllers {
         guessedRegionType: number;
 
         currentUser: ICurrentUser;
+        data: any;
 
         static $inject = ["$scope", "$location", "$modal", "$document"];
 
@@ -75,6 +77,7 @@ module App.Controllers {
             var ctrl = this;
             var scope = this.$scope;
             this.currentUser = window.CurrentUser;
+            this.data = window.Data;
 
             /* Path replacing occurs when there is a redirection, e.g /r/21121212 to /mandalmekar */
             if(!ctrl.isPathReplacing)

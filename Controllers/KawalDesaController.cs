@@ -35,6 +35,14 @@ namespace App.Controllers
         {
             var user = GetUserDictFromSession();
             ViewData["User"] = new JavaScriptSerializer().Serialize(user);
+            using (var db = new DB())
+            {
+                ViewData["Data"] = new JavaScriptSerializer().Serialize(new Dictionary<string, object>
+                {
+                    { "InScopeKabCount", db.Regions.Count(r => r.IsInScope) },
+                    { "TransferCount", db.Transfers.Count(t => t.IsActivated) },
+                });
+            }
             return View();
         }
 

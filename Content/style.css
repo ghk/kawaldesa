@@ -203,3 +203,24 @@ table.table-bordered > thead > tr > th:last-child {
 .well {
     border-radius: 0px;
 }
+
+.front-numbers {
+}
+.front-numbers li {
+    margin-top: -10px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+.front-numbers li .number{
+    padding: 5px;
+    font-size: 30px;
+    line-height: 32px;
+    display: inline-block;
+}
+.front-numbers li .text{
+    display: inline-block;
+    width: 50px;
+    font-size: 12px;
+    text-transform: uppercase;
+    line-height: 16px;
+}
