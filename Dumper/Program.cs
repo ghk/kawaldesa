@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -44,7 +45,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            webClient.DownloadFile(host, Path.Combine(root, "index.html"));
+            Download(host, Path.Combine(root, "index.html"));
 
             foreach(var apbnKey in apbnKeys)
             {
@@ -58,7 +59,7 @@ namespace Dumper
                         var dir = Path.Combine(root, "bundles", bundle, apbnKey);
                         string url = host+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
                         Directory.CreateDirectory(dir);
-                        webClient.DownloadFile(url, Path.Combine(dir, regionId + ".json"));
+                        Download(url, Path.Combine(dir, regionId + ".json"));
                     }
                 }
             }
@@ -159,7 +160,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            webClient.DownloadFile(host, Path.Combine(root, "index.html"));
+            Download(host, Path.Combine(root, "index.html"));
         }
 
         private static void DumpP(string apbnKey, string dumpedRegionId)
@@ -174,7 +175,7 @@ namespace Dumper
                 var dir = Path.Combine(root, "bundles", bundle, apbnKey);
                 string url = host+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
                 Directory.CreateDirectory(dir);
-                webClient.DownloadFile(url, Path.Combine(dir, regionId + ".json"));
+                Download(url, Path.Combine(dir, regionId + ".json"));
             }
         }
 
@@ -188,7 +189,7 @@ namespace Dumper
                 var dir = Path.Combine(root, "bundles", bundle, apbnKey);
                 string url = host + "/bundles/" + bundle + "/" + apbnKey + "/" + regionId + ".json";
                 Directory.CreateDirectory(dir);
-                webClient.DownloadFile(url, Path.Combine(dir, regionId + ".json"));
+                Download(url, Path.Combine(dir, regionId + ".json"));
             }
         }
 
@@ -227,6 +228,26 @@ namespace Dumper
                     if (regionId.StartsWith(id+".") && countDot(regionId) <= maxDot)
                         yield return regionId;
 
+            }
+        }
+
+        private static void Download(string url, string file)
+        {
+            webClient.DownloadFile(url, file);
+            Gunzip(file);
+        }
+
+        private static void Gunzip(string file)
+        {
+            using (var source = new FileStream(file, FileMode.Open, FileAccess.Read))
+            {
+                using (FileStream target = new FileStream(file+".gz", FileMode.Create, FileAccess.Write))
+                {
+                    using (GZipStream gzs = new GZipStream(target, CompressionLevel.Optimal))
+                    {
+                        source.CopyTo(gzs);
+                    }
+                }
             }
         }
     }
