@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.WebApi;
+using NetMQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace App.Utils
             // OPTIONAL: Register the Autofac filter provider.
             builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
             builder.RegisterType<DB>().InstancePerRequest();
+            builder.RegisterType<DumpMessager>();
+            builder.RegisterInstance(NetMQContext.Create()).SingleInstance();
 
             // Set the dependency resolver to be Autofac.
             return builder.Build();

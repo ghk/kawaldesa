@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Utils;
 using Microvac.Web;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace App.Controllers.Models
 {
     public class SourceDocumentController: BaseController<SourceDocument, long>
     {
-        public SourceDocumentController(DB dbContext)
+        private DumpMessager dumpMessager;
+        public SourceDocumentController(DB dbContext, DumpMessager dumpMessager)
             : base(dbContext)
         {
+            this.dumpMessager = dumpMessager;
             Include(e => e.File);
         }
 
@@ -84,6 +87,29 @@ namespace App.Controllers.Models
                         transfer.Year = Convert.ToInt32(apbnKey.Substring(0, 4));
                         dbContext.Set<Transfer>().Add(transfer);
                         dbContext.SaveChanges();
+                        dumpMessager.Message("p " + apbnKey + " " + regionId);
+                    } 
+                    if(fn == SourceDocumentFunction.Allocation) {
+                        string stype = null;
+                        switch (type)
+                        {
+                            case DocumentUploadType.NationalDd:
+                            case DocumentUploadType.RegionalDd:
+                                stype = "dd";
+                                break;
+                            case DocumentUploadType.NationalAdd:
+                            case DocumentUploadType.RegionalAdd:
+                                stype = "add";
+                                break;
+                            case DocumentUploadType.NationalBhpr:
+                            case DocumentUploadType.RegionalBhpr:
+                                stype = "bhpr";
+                                break;
+
+                        }
+                        if (stype == null)
+                            throw new ApplicationException("invalid doc type: " + type);
+                        dumpMessager.Message(stype+" " + apbnKey + " " + regionId);
                     }
 
 

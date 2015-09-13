@@ -63,6 +63,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AsyncIO, Version=0.1.17.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
+      <HintPath>packages\AsyncIO.0.1.17.0\lib\net40\AsyncIO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac">
       <HintPath>packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
@@ -163,6 +167,10 @@
     </Reference>
     <Reference Include="Mono.Security.Protocol.Tls">
       <HintPath>packages\Npgsql.EF6.2.0.12-pre4\lib\net45\Mono.Security.Protocol.Tls.dll</HintPath>
+    </Reference>
+    <Reference Include="NetMQ, Version=3.3.2.1, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
+      <HintPath>packages\NetMQ.3.3.2.1\lib\net40\NetMQ.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -328,6 +336,7 @@
     <Compile Include="Utils\AsyncHelpers.cs" />
     <Compile Include="Utils\AutofacResolver.cs" />
     <Compile Include="Utils\DriveUtils.cs" />
+    <Compile Include="Utils\DumpMessager.cs" />
     <Compile Include="Utils\Spreadsheets\AllocationSpreadsheetReader.cs" />
     <Compile Include="Utils\Spreadsheets\AllocationSpreadsheetWriter.cs" />
     <Compile Include="Utils\Spreadsheets\SpreadsheetFileNameAttribute.cs" />
