@@ -44,12 +44,16 @@ namespace Dumper
                         }
                         Client(args[1]);
                         break;
+                    case "regions":
+                        DumpRegions();
+                        break;
                 }
             }
         }
 
         private static void InitialDump()
         {
+            InitRegions();
             var sw = Stopwatch.StartNew();
             regionIds = File.ReadAllLines("regions.txt");
             Directory.CreateDirectory(root);
@@ -76,6 +80,33 @@ namespace Dumper
             sw.Stop();
             Console.WriteLine("elapsed " + sw.Elapsed.TotalSeconds);
             Console.ReadLine();
+        }
+
+        private static void DumpRegions()
+        {
+            InitRegions();
+            var sw = Stopwatch.StartNew();
+            regionIds = File.ReadAllLines("regions.txt");
+            Directory.CreateDirectory(root);
+
+            foreach(var apbnKey in apbnKeys)
+            {
+                foreach(var r in regionIds)
+                {
+                    var regionId = r;
+                    var bundles = new string[] {"p", "dd", "add", "bhpr"};
+                    foreach (var bundle in bundles)
+                    {
+                        Console.WriteLine("Downloading bundle {0} - {1} - {2}", apbnKey, regionId, bundle);
+                        var dir = Path.Combine(root, "bundles", bundle, apbnKey);
+                        string url = appHost+"/bundles/"+bundle+"/"+apbnKey+"/"+regionId+".json";
+                        Directory.CreateDirectory(dir);
+                        Download(url, Path.Combine(dir, regionId + ".json"));
+                    }
+                }
+            }
+            sw.Stop();
+            Console.WriteLine("elapsed " + sw.Elapsed.TotalSeconds);
         }
 
         private static void Serve()
