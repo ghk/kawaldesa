@@ -1,4 +1,5 @@
-﻿<html lang="en" ng-app="kawaldesa" data-framework="angularjs" style="min-height: 100%;">
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="kawaldesa" data-framework="angularjs" style="min-height: 100%;">
 <head>
     <!-- facebook hash remover -->
     <script type="text/javascript">if (window.location.hash == '#_=_') window.location.hash = '';</script>
@@ -72,7 +73,7 @@
                         <a href="#" class="btn" ng-click="indexCtrl.showSearch($event)"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard', 'open': navUserOpen}" ng-if="indexCtrl.currentUser">
-                        <a ng-click="navUserOpen = !navUserOpen; $event.stopPropagation();"style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a ng-click="navUserOpen = !navUserOpen; $event.stopPropagation();" style="padding-right: 20px;" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img ng-src='http://graph.facebook.com/v2.2/{{indexCtrl.currentUser.FacebookId}}/picture' style="width: 20px; height: 20px; margin-right: 5px;" />
                             {{indexCtrl.currentUser.Name}}
                             <span class="caret"></span>
@@ -137,21 +138,23 @@
         </div>
     </footer>
 
-</body>
-</html>
-<script type="text/ng-template" id="template/modal/backdrop.html">
-    <div class="modal-backdrop"
-         modal-animation-class="fade"
-         modal-in-class="in"
-         ng-style="{'z-index': 1040 + (index && 1 || 0) + index*10}">
-    </div>
-</script>
+    <script type="text/ng-template" id="template/modal/backdrop.html">
+        <div class="modal-backdrop"
+             modal-animation-class="fade"
+             modal-in-class="in"
+             ng-style="{'z-index': 1040 + (index && 1 || 0) + index*10}">
+        </div>
+    </script>
 
-<script type="text/ng-template" id="template/modal/window.html">
-    <div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"
-         modal-animation-class="fade"
-         modal-in-class="in"
-         ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
-        <div class="modal-dialog" ng-class="size ? 'modal-' + size : ''"><div class="modal-content" modal-transclude></div></div>
-    </div>
-</script>
+    <script type="text/ng-template" id="template/modal/window.html">
+        <div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"
+             modal-animation-class="fade"
+             modal-in-class="in"
+             ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+            <div class="modal-dialog" ng-class="size ? 'modal-' + size : ''"><div class="modal-content" modal-transclude></div></div>
+        </div>
+    </script>
+
+</body>
+
+</html>

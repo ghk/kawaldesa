@@ -48,7 +48,7 @@ module App.Controllers {
             $scope.polarLabels = ["DD", "ADD", "PDRD"];
             $scope.polarData = [0, 0, 0];
             $scope.polarChartOptions = {
-                scaleLabel: "Rp. <%=value%> Milyar",
+                scaleLabel: "<%=value%> M",
             };
 
             $scope.onClick = function (points, evt) {
