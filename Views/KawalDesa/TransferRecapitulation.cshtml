@@ -124,9 +124,14 @@
                                 </td>
                                     -->
                             </tr>
+                            <tr ng-show="!isEntitiesLoading && entities.length == 0 && indexCtrl.guessedRegionType == 4">
+                                <td colspan="100" style="padding: 10px; text-align: center;">
+                                    Belum ada penyaluran yang dilaporkan di desa ini.
+                                </td>
+                            </tr>
                         </tbody>
 
-                        <tfoot ng-show="!isEntitiesLoading">
+                        <tfoot ng-show="!isEntitiesLoading && entities.length > 0">
                             <tr class="success">
                                 <td><a href="">Total</a></td>
                                 <td class="money"> {{total.BudgetedDd | number:0}} </td>

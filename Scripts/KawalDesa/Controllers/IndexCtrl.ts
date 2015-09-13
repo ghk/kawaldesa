@@ -34,7 +34,8 @@ module App.Controllers {
         "Provinsi",
         "Kabupaten / Kota",
         "Kecamatan",
-        "Desa"
+        "Desa",
+        "Tanggal",
     ];
 
     /* a route is a [prefix, type, useRegionId]
