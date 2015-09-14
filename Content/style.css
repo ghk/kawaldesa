@@ -236,3 +236,18 @@ footer ul.nav > li {
 footer ul.nav > li a {
     display: inline;
 }
+
+#top.width-fix #width-fixed-container{
+    position: relative;
+    z-index: 0;
+}
+
+#top.width-fix #main-menu {
+    background: #fff;
+    z-index: 2500;
+}
+
+#top.width-fix #width-fixed-container ul{
+    position: absolute;
+    right: 120px;
+}

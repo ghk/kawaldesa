@@ -36,7 +36,7 @@
                 <a class="navbar-brand" href="/" style=" padding-left 20px; margin-right: 10px; background-color: #337ab7; color: #fff;">KD</a>
             </div>
             <nav class="collapse navbar-collapse">
-                <ul class="nav navbar-nav nav-menu">
+                <ul id="main-menu" class="nav navbar-nav nav-menu">
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dd' || indexCtrl.type == 'add' || indexCtrl.type == 'bhpr', 'open' : navOpen}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" ng-click="navOpen = !navOpen; $event.stopPropagation();">
                             Alokasi
@@ -57,19 +57,20 @@
                     </li>
                     -->
                 </ul>
-                <ul class="nav navbar-nav nav-region" ng-show="!searchShown">
-
-                    <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
-                        <div class="gt hidden-xs">→</div>
-                    </li>
-                    <li ng-repeat-end ng-class="{'active':$last}">
-                        <a href="#" ng-click="indexCtrl.changeRegion(region.Id, $event)">
-                            {{region.Name}}
-                        </a>
-                    </li>
-                </ul>
+                <div id="width-fixed-container">
+                    <ul class="nav navbar-nav nav-region">
+                        <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">
+                            <div class="gt hidden-xs">→</div>
+                        </li>
+                        <li ng-repeat-end ng-class="{'active':$last}">
+                            <a href="#" ng-click="indexCtrl.changeRegion(region.Id, $event)">
+                                {{region.Name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-show="!searchShown">
+                    <li>
                         <a href="#" class="btn" ng-click="indexCtrl.showSearch($event)"> <i class="fa fa-search" style="line-height: 20px;"></i></a>
                     </li>
                     <li class="dropdown" ng-class="{'active' : indexCtrl.type == 'dashboard', 'open': navUserOpen}" ng-if="indexCtrl.currentUser">
@@ -90,6 +91,16 @@
                     </li>
                     <li><a style="padding-right: 20px;" href="/login" ng-if="!indexCtrl.currentUser">Login</a></li>
                 </ul>
+                <form class="navbar-form navbar-right" role="search" ng-show="searchShown" style="position: absolute; right: 100px; border-left: 1px solid #ccc; border-right: 1px solid #ccc; background-color: #fff;">
+                    <div class="input-group search-input-group" style="width: 375px;">
+                        <input type="text" ng-model="selectedSearch" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
+                               typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control" typeahead-on-select="indexCtrl.onSearchSelected($item, $model, $value)">
+                        <div class="input-group-btn" style="width: 1%;">
+                            <button class="btn btn-primary" type="submit"><span class="fa fa-search"></span>&nbsp;</button>
+                        </div>
+                    </div>
+                    <a href="#" style="margin: 0 0 0 1em;" ng-click="searchShown=false; $event.preventDefault();"><i class="fa fa-times"></i></a>
+                </form>
                 <script type="text/ng-template" id="searchTemplate.html">
                     <a style="text-transform:uppercase;">
                         <div class="pull-left">
@@ -111,16 +122,6 @@
                         </li>
                     </ul>
                 </script>
-                <form class="navbar-form navbar-right" role="search" ng-show="searchShown" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
-                    <div class="input-group search-input-group" style="width: 375px;">
-                        <input type="text" ng-model="selectedSearch" placeholder="Cari desa, kecamatan, kabupaten, atau propinsi"
-                               typeahead="region as region.Name for region in indexCtrl.searchRegions($viewValue)" typeahead-template-url="searchTemplate.html" class="form-control" typeahead-on-select="indexCtrl.onSearchSelected($item, $model, $value)">
-                        <div class="input-group-btn" style="width: 1%;">
-                            <button class="btn btn-primary" type="submit"><span class="fa fa-search"></span>&nbsp;</button>
-                        </div>
-                    </div>
-                    <a href="#" style="margin: 0 0 0 1em;" ng-click="searchShown=false; $event.preventDefault();"><i class="fa fa-times"></i></a>
-                </form>
             </nav>
         </div>
     </header>
