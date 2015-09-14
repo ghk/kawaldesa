@@ -4,14 +4,11 @@ kawaldesa.org
 kawaldesa.org adalah tempat di mana kita bisa mengawal dana desa dengan transparansi alokasi, penyaluran dan realisasinya.
 
 ================  ===========================================================
-**Alokasi**       | Kita mengawal **pemerintah pusat & daerah** untuk 
-                  | mengalokasikan dana desa sesuai dengan Undang-Undang.
+**Alokasi**       | Kita mengawal **pemerintah pusat & daerah** untuk mengalokasikan dana desa sesuai dengan Undang-Undang.
 ----------------  -----------------------------------------------------------
-**Penyaluran**    | Kita mengawal **pemerintah pusat & daerah** untuk 
-                  | menyalurkan dana desa yang dialokasikan agar tepat waktu.
+**Penyaluran**    | Kita mengawal **pemerintah pusat & daerah** untuk menyalurkan dana desa yang dialokasikan agar tepat waktu.
 ----------------  -----------------------------------------------------------
-**Realisasi**     | Kita mengawal **desa-desa** dalam 
-                  | merealisasikan dana desa mereka.
+**Realisasi**     | Kita mengawal **desa-desa** dalam merealisasikan dana desa mereka.
 ================  ===========================================================
 
 .. image:: images/pengawalan.png
