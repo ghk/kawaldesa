@@ -39,4 +39,11 @@ module App {
         };
     });
 
+    $(function () {
+        $(".navbar-header").delegate(".navbar-toggle", "click", function (e) {
+            e.preventDefault();
+            $(".navbar-collapse").toggleClass("collapse");
+        });
+    });
+
 }
