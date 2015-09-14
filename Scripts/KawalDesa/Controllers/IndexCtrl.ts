@@ -398,7 +398,7 @@ module App.Controllers {
             if (this.newSourceFunction == Models.SourceDocumentFunction.Transfer && !this.newSourceDate) {
                 errors["Date"] = "Pilih tanggal penyaluran dana desa";
             }
-            if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation && !this.newSourceFile || this.newSourceFile.length == 0) {
+            if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation && (!this.newSourceFile || this.newSourceFile.length == 0)) {
                 errors["File"] = "Pilih dokumen yang ingin anda unggah";
             }
 

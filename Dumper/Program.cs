@@ -202,7 +202,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            CQ dom = webClient.DownloadString(appHost);
+            CQ dom = webClient.DownloadString(appHost+"?anonForce=true");
             foreach(var script in dom["script"])
             {
                 if (script.HasAttribute("src"))
