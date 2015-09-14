@@ -6,7 +6,8 @@ appSettings.config
 /Content/sheets/
 /Content/thumbs/
 /App_Data/
-/Docs/_build/
+/Docs/src/_build/
+/Docs/html/
 .vs/
 /Android/
 
