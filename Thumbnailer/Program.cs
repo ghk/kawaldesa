@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using NetMQ;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,6 +38,7 @@ namespace Thumbnailer
             var connStr = ConfigurationManager.AppSettings["ConnectionString"];
             using(NpgsqlConnection conn = new NpgsqlConnection(connStr))
             using(NpgsqlConnection updateConn = new NpgsqlConnection(connStr))
+            using(NetMQContext mqContext = NetMQContext.Create())
             {
                 conn.Open();
                 updateConn.Open();
@@ -54,11 +56,34 @@ namespace Thumbnailer
                             {
                                 update.ExecuteNonQuery();
                             }
+                            SendDumperMessage(mqContext,(string)dr[1], (long)dr[2]);
                         }
                     }
                 }
             }
         }
+
+        private static void SendDumperMessage(NetMQContext mqContext, string fileName, long id)
+        {
+            try
+            {
+                var dumperAddress = ConfigurationManager.AppSettings["DumperAddress"];
+                if (!string.IsNullOrEmpty(dumperAddress))
+                {
+                    using (var sender = mqContext.CreatePushSocket())
+                    {
+                        sender.Connect(dumperAddress);
+                        sender.Send("source "+fileName+" "+id);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
         private static void CreateThumbnail(string fileName, long id)
         {
             var contentRoot = ConfigurationManager.AppSettings["ContentRoot"];
