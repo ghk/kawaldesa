@@ -272,6 +272,8 @@ namespace Dumper
         {
             Directory.CreateDirectory(root);
 
+            Download(appHost+"/Content/files/"+fileName, Path.Combine(root, "Content", "files", fileName)); 
+            Download(appHost+"/Content/thumbs/"+id+".png", Path.Combine(root, "Content", "thumbs", id+".png")); 
         }
 
         private static void DumpAlloc(string bundle, string apbnKey, string dumpedRegionId)
