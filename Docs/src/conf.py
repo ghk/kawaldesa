@@ -123,6 +123,7 @@ if not on_rtd:
 	
 def setup(app):
 	app.add_stylesheet('custom.css')	
+	app.add_stylesheet('http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic')	
 	app.add_javascript('wedc.js')
 
 #html_theme = 'default'
@@ -160,6 +161,12 @@ html_context = {
     'css_files': [
         '_static/kawaldesa.css',  # overrides for wide tables in RTD theme
         ],
+    'github_user' : 'ghk',
+    'display_github' : True,
+    'github_repo' : 'kawaldesa',
+    'github_version' : 'master',
+    'conf_py_path' : '/Docs/src/',
+    'source_suffix' : '.rst',
     }
 
 # Add any extra paths that contain custom files (such as robots.txt or
