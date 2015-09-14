@@ -18,6 +18,7 @@ using System.Configuration;
 using System.Security.Principal;
 using App.Mailers;
 using App.Utils;
+using System.Web;
 
 namespace App.Controllers
 {
@@ -29,11 +30,33 @@ namespace App.Controllers
         private readonly string FacebookClientIDConfig = "Facebook.ClientID";
         private readonly string FacebookSecretKeyConfig = "Facebook.SecretKey";
         private readonly string FacebookUseInDebugConfig = "Facebook.UseInDebug";
+        private readonly string AuthenticatedCookie = "kd-auth";
 
         [AllowAnonymous]
         public ActionResult Index()
         {
+            var anonymousHost = ConfigurationManager.AppSettings["AnonymousHost"];
             var user = GetUserDictFromSession();
+
+            var hasAuthCookie =Request.Cookies.AllKeys.Contains(AuthenticatedCookie);
+            if(user == null && hasAuthCookie)
+            {
+                RemoveAuthenticatedCookie();
+                hasAuthCookie = false;
+            }
+
+            if(anonymousHost != null && !hasAuthCookie)
+            {
+                if(user != null)
+                {
+                    AddAuthenticatedCookie();
+                }
+                else if(!Request.QueryString.AllKeys.Contains("anonForce"))
+                {
+                    return Redirect(RedirectAnonymous(anonymousHost));
+                }
+            }
+
             ViewData["User"] = new JavaScriptSerializer().Serialize(user);
             using (var db = new DB())
             {
@@ -44,6 +67,27 @@ namespace App.Controllers
                 });
             }
             return View();
+        }
+
+        private void AddAuthenticatedCookie()
+        {
+            HttpCookie cookie = new HttpCookie(AuthenticatedCookie);
+            cookie.Value = "true";
+            cookie.Domain = ConfigurationManager.AppSettings["AuthenticatedCookie.Domain"];
+            cookie.Path = "/";
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+        }
+
+        private void RemoveAuthenticatedCookie()
+        {
+            HttpCookie cookie = new HttpCookie(AuthenticatedCookie);
+            if (ControllerContext.HttpContext.Response.Cookies.AllKeys.Contains(AuthenticatedCookie))
+                cookie = ControllerContext.HttpContext.Response.Cookies[AuthenticatedCookie];
+            cookie.Value = "false";
+            cookie.Domain = ConfigurationManager.AppSettings["AuthenticatedCookie.Domain"];
+            cookie.Path = "/";
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
         }
 
         [KawalDesaAuthorize]
@@ -81,6 +125,14 @@ namespace App.Controllers
             var user = GetUserDictFromSession();
             ViewData["User"] = new JavaScriptSerializer().Serialize(user);
             return View();
+        }
+
+        private String RedirectAnonymous(string anonymousHost)
+        {
+            var context = HttpContext;
+            return string.Format("{0}{1}",
+                                    anonymousHost,
+                                    context.Request.Url.PathAndQuery);
         }
 
         private string GetRedirectHost()
@@ -269,6 +321,7 @@ namespace App.Controllers
                     }
 
                     Session[USERID_KEY] = user.Id;
+                    AddAuthenticatedCookie();
                 }
             }
 
