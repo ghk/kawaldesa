@@ -1,9 +1,4 @@
 
-html {
-    font-family: "Lato",sans-serif !important;
-    margin: 0;
-}
-
 .bar-percent {
     height: 16px;
     background-color: #337ab7;
@@ -25,10 +20,17 @@ tr {
     font-size: 12px;
 }
 
+html {
+    font-family: "Lato",sans-serif !important;
+    margin: 0;
+    min-height: 100%;
+}
+
 body {
     font-family: "Lato",sans-serif !important;
     line-height: 20px;
     margin-top: 70px;
+    min-height: 100%;
 }
 
     body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .h3, body .h4, body .h5, body .h6 {
@@ -45,7 +47,8 @@ header {
 }
 
     header .nav.nav-menu {
-        margin-left: -15px;
+        margin-left: 0px;
+        margin-right: 30px;
     }
 
     header .nav.navbar-nav > li > a {
@@ -76,9 +79,68 @@ header {
     header.navbar .navbar-brand {
         margin-right: 10px;
         padding: 15px 10px;
+        background-color: #337ab7; 
+        color: #fff;
     }
 
+    header.navbar .navbar-header button {
+        color:  #337ab7;
+    }
 
+    header.navbar .navbar-header button .icon-bar{
+        background-color:  #337ab7;
+    }
+
+    header.navbar .navbar-brand {
+        margin-right: 10px;
+        padding: 15px 10px;
+        background-color: #337ab7; 
+        color: #fff;
+    }
+
+    header.navbar nav.navbar-collapse {
+        padding-right: 110px;
+    } 
+
+    header.navbar nav .nav-region {
+        margin-left: -10px; 
+        font-size: 11px;
+    }  
+
+    header.navbar nav .navbar-right{
+        position: absolute; 
+        right: 20px; 
+        top: 0;
+    }  
+
+    header.navbar nav .navbar-right i.fa-search{
+        line-height: 20px;
+    }  
+
+    header.navbar nav .navbar-right .nav-profile{
+    }  
+
+    header.navbar nav .navbar-right .nav-profile img {
+        width: 20px; 
+        height: 20px; 
+        margin-right: 5px; 
+    }  
+
+    header.navbar nav .navbar-right .nav-profile ul i.fa {
+        width: 20px;
+    }  
+
+    header.navbar .navbar-right .search-input-group {
+        width: 375px;
+    }  
+
+    header.navbar  form.navbar-right {
+        position: absolute; 
+        right: 100px; 
+        border-left: 1px solid #ccc; 
+        border-right: 1px solid #ccc; 
+        background-color: #fff;
+    }  
 table.table > thead > tr > th:first-child,
 table.table > tbody > tr > td:first-child,
 table.table > tfoot > tr > td:first-child {
