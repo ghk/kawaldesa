@@ -224,3 +224,15 @@ table.table-bordered > thead > tr > th:last-child {
     text-transform: uppercase;
     line-height: 13px;
 }
+
+footer ul {
+    padding-left: 0;
+}
+
+footer ul.nav > li {
+    display: inline;
+}
+
+footer ul.nav > li a {
+    display: inline;
+}
