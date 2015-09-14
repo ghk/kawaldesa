@@ -228,11 +228,14 @@ module App.Controllers {
 
         modalInstance: any;
 
-        modal(template: string, $scope?): void {
+        modal(template: string, $scope?, backdrop?): void {
+            if (!backdrop)
+                backdrop = true;
             var ctrl = this;
             ctrl.modalInstance = this.$modal.open({
                 templateUrl: template,
-                scope: $scope ? $scope : this.$scope
+                scope: $scope ? $scope : this.$scope,
+                backdrop: backdrop
             });
         }
 

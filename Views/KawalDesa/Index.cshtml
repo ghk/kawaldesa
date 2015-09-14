@@ -12,7 +12,10 @@
 <script type="text/ng-template" class="modal fade" id="source-upload-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-content" ng-show="indexCtrl.newSourceState">
         <div class="modal-body">
-            <div class="container-fluid">
+            <div class="container-fluid" style="text-align: center;">
+                <img style="margin: 0 auto;" src="/Content/loading.gif" />
+                <br />
+                <br />
                 Mengunggah...
             </div>
         </div>
@@ -111,7 +114,7 @@
 
 
 <div class="btn-floating-container" ng-if="indexCtrl.hasAnyVolunteerRoles()">
-    <a href="#" class="btn btn-primary" ng-click="indexCtrl.modal('source-upload-modal')">
+    <a href="#" class="btn btn-primary" ng-click="indexCtrl.modal('source-upload-modal', null, 'static')">
         <i class="fa fa-upload"></i>
     </a>
 </div>
