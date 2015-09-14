@@ -63,3 +63,20 @@ kawaldesa.org untuk Google Sheet
 Anda dapat menerbitkan dokumen dan melihat informasi dokumen dari google sheet.
 
 .. image:: images/ss/google-sheet-sidebar.png
+
+Menambah Pelapor Organisasi
+-----------------------------------
+
+Buka halaman organisasi dengan mengklik nama Anda di kanan atas.
+
+.. image:: images/ss/profile-menu.png
+
+Klik tombol "Tambah Pelapor" pada daftar pelapor di halaman tersebut.
+
+.. image:: images/ss/alloc-menu.png
+
+Tulis email pelapor yang ingin Anda tambah, klik tombol "Kirim Undangan" dan
+undangan akan dikirim ke email pelapor tersebut.
+
+.. image:: images/ss/add-volunteer-form.png
+
