@@ -8,7 +8,7 @@
 /// <reference path="Microvac.Web.ts"/>
 
 <#
-	ModelNamespaces = new String[]{"App.Models", "App.Models.Views", "App.Models.Bundles"};
+	ModelNamespaces = new String[]{"App.Models", "App.Models.Views"};
 	var ignoredFunctions = new string[]{"Get", "GetAll", "Count", "Save", "Delete", "Post", "Put", "GetCount", "Login", "Logout"};
     var namespaces = new []{"App.Controllers.Models", "App.Controllers.Services"};
     foreach(var _namespace in namespaces)

@@ -1279,6 +1279,14 @@ module App.Controllers.Services {
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
+        static GetInScopeTransferBundle(apbnKey: string): ng.IHttpPromise<App.Models.Bundles.ITransferBundle> {
+			var res = Microvac.Web.$http<App.Models.Bundles.ITransferBundle>(BundleController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Bundle/GetInScopeTransferBundle?apbnKey='+encodeURI(apbnKey)+'',
+				}));
+			   return res;
+	    }
+    
         static GetTransferBundle(apbnKey: string, regionId: string): ng.IHttpPromise<App.Models.Bundles.ITransferBundle> {
 			var res = Microvac.Web.$http<App.Models.Bundles.ITransferBundle>(BundleController.ajaxSettings.build({
 			method: 'GET',

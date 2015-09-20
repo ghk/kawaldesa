@@ -7,7 +7,7 @@
 /// <reference path="Microvac.Web.ts"/>
 
 <#
-    var namespaces = new []{"App.Models", "App.Models.Views", "App.Models.Bundles"};
+    var namespaces = new []{"App.Models", "App.Models.Views"};
 	ModelNamespaces = namespaces;
     foreach(var _namespace in namespaces)
     {

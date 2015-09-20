@@ -121,6 +121,7 @@ module App.Models {
         Name: string;
         Type: App.Models.RegionType;
         IsKelurahan: boolean;
+        IsInScope: boolean;
         Website: string;
         UrlKey: string;
         fkParentId: string;
@@ -136,6 +137,7 @@ module App.Models {
         Name: string;
         Type: App.Models.RegionType;
         IsKelurahan: boolean;
+        IsInScope: boolean;
         Website: string;
         UrlKey: string;
         fkParentId: string;
@@ -148,6 +150,7 @@ module App.Models {
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
             this.IsKelurahan = data ? data.IsKelurahan : null;
+            this.IsInScope = data ? data.IsInScope : null;
             this.Website = data ? data.Website : null;
             this.UrlKey = data ? data.UrlKey : null;
             this.fkParentId = data ? data.fkParentId : null;
