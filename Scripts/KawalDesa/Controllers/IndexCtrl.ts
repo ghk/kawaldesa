@@ -318,8 +318,12 @@ module App.Controllers {
             var type = this.type;
             var regionId = model.Type == 4 && type !== 'transfer' ? model.ParentId : model.Id;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
-            var path = matched[0][0] + regionId;
-            this.$location.path(path);
+            var path = "/p/" + regionId;
+            if (!matched[2])
+                window.open(path, "_self"); //just open the url
+            else
+                path = matched[0][0] + regionId;
+                this.$location.path(path);
         }
 
 
