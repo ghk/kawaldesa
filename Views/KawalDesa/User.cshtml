@@ -112,7 +112,7 @@
                                             style="width: 100%;"
                                             ng-if="regionPair[$index - 1]"
                                             ng-change="userCtrl.truncateRegionPair(regionPair, $index)"
-                                            ng-options="r.Name for r in userCtrl.getRegionChildren(regionPair[$index - 1].ID) track by r.ID">
+                                            ng-options="r.Name for r in userCtrl.getRegionChildren(regionPair[$index - 1].Id) track by r.Id">
                                         <option value="">Semua</option>
                                     </select>
                                 </td>
@@ -124,7 +124,7 @@
                                         Tambah Lingkupan
                                     </button>
                                 </td>
-                                </trng-if="userCtrl.national>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr class="" ng-if="userCtrl.isEditable()">
