@@ -61,7 +61,7 @@ namespace App.Models
 
         public bool IsADuplicate { get; set; }
         public bool IsActive { get; set; }
-        public string Email { get; set; }
+        public override string Email { get; set; }
 
         [ForeignKey("Organization")]
         public long? fkOrganizationId { get; set; }

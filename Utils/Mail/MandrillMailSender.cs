@@ -18,8 +18,6 @@ namespace App.Utils.Mail
 
     public class MandrillMailSender : IMailSender, IDisposable
     {
-        private bool disposed = false;
-
         private IMailInterceptor _interceptor;
         private MandrillApi _client;
 
