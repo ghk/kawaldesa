@@ -66,6 +66,10 @@ module App.Controllers {
                     ctrl.indexCtrl.activeUpload = bundle.data.CurrentSpreadsheet;
                     ctrl.indexCtrl.activeUploadRegionId = bundle.data.Region.Id;
                     ctrl.indexCtrl.activeSources = bundle.data.SourceDocuments;
+                    ctrl.indexCtrl.activeUploadType = regionType < 2
+                        ? ctrl.documentTypes[0]
+                        : ctrl.documentTypes[1];
+
                 }).finally(() => {
                     scope.isEntitiesLoading = false;
             });

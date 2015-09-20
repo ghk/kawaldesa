@@ -87,7 +87,7 @@ namespace App.Models
         }
 
         [JsonIgnore]
-        public override ICollection<UserRole> Users { get; }
+        public new ICollection<UserRole> Users { get; set; }
     }
 
     public class UserRole : IdentityUserRole<string>
