@@ -1,0 +1,30 @@
+/* override table width restrictions */
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: normal;
+}
+
+.wy-table-responsive {
+    margin-bottom: 24px;
+    max-width: 100%;
+    overflow: visible;
+}
+
+/* Branding */
+
+.wy-side-nav-search input[type="text"] {
+    border-radius: 0px;
+}
+
+.wy-nav-side {
+    background: #fff none repeat scroll 0 0;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+}
+
+.wy-menu-vertical a {
+    color: #333;
+}
+
+body {
+    font-family: "Lato",sans-serif !important;
+}

@@ -228,11 +228,14 @@ module App.Controllers {
 
         modalInstance: any;
 
-        modal(template: string, $scope?): void {
+        modal(template: string, $scope?, backdrop?): void {
+            if (!backdrop)
+                backdrop = true;
             var ctrl = this;
             ctrl.modalInstance = this.$modal.open({
                 templateUrl: template,
-                scope: $scope ? $scope : this.$scope
+                scope: $scope ? $scope : this.$scope,
+                backdrop: backdrop
             });
         }
 
@@ -315,8 +318,12 @@ module App.Controllers {
             var type = this.type;
             var regionId = model.Type == 4 && type !== 'transfer' ? model.ParentId : model.Id;
             var matched : any[] = ROUTES.filter(r => r[1] == type);
-            var path = matched[0][0] + regionId;
-            this.$location.path(path);
+            var path = "/p/" + regionId;
+            if (!matched[2])
+                window.open(path, "_self"); //just open the url
+            else
+                path = matched[0][0] + regionId;
+                this.$location.path(path);
         }
 
 
@@ -398,7 +405,7 @@ module App.Controllers {
             if (this.newSourceFunction == Models.SourceDocumentFunction.Transfer && !this.newSourceDate) {
                 errors["Date"] = "Pilih tanggal penyaluran dana desa";
             }
-            if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation && !this.newSourceFile || this.newSourceFile.length == 0) {
+            if (this.newSourceFunction == Models.SourceDocumentFunction.Allocation && (!this.newSourceFile || this.newSourceFile.length == 0)) {
                 errors["File"] = "Pilih dokumen yang ingin anda unggah";
             }
 

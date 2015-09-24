@@ -1,0 +1,6 @@
+language: csharp
+solution: KawalDesa.sln
+
+install:
+  - nuget sources Add -name microvac -source https://www.myget.org/F/microvac/api/v2
+  - nuget restore KawalDesa.sln

@@ -171,6 +171,16 @@ namespace Dumper
                                 Console.WriteLine("invalid cmd, require 2 args");
                             }
                             return;
+                        case "source":
+                            if(splits.Length >= 3)
+                            {
+                                DumpSource(splits[1], splits[2]);
+                            }
+                            else
+                            {
+                                Console.WriteLine("invalid cmd, require 2 args");
+                            }
+                            return;
                     }
                 }
 
@@ -202,7 +212,7 @@ namespace Dumper
             Directory.CreateDirectory(root);
 
             Console.WriteLine("Downloading index");
-            CQ dom = webClient.DownloadString(appHost);
+            CQ dom = webClient.DownloadString(appHost+"?anonForce=true");
             foreach(var script in dom["script"])
             {
                 if (script.HasAttribute("src"))
@@ -258,6 +268,13 @@ namespace Dumper
             }
         }
 
+        private static void DumpSource(string fileName, string id)
+        {
+            Directory.CreateDirectory(root);
+
+            Download(appHost+"/Content/files/"+fileName, Path.Combine(root, "Content", "files", fileName)); 
+            Download(appHost+"/Content/thumbs/"+id+".png", Path.Combine(root, "Content", "thumbs", id+".png")); 
+        }
 
         private static void DumpAlloc(string bundle, string apbnKey, string dumpedRegionId)
         {

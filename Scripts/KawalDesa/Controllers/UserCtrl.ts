@@ -35,6 +35,7 @@ module App.Controllers {
             this.loadUser(id);
             Controllers.RegionController.Get("0").then(region => {
                 ctrl.national = region.data;
+                ctrl.getRegionChildren("0");
             });
         }
 
@@ -52,8 +53,8 @@ module App.Controllers {
             return false
         }
 
-        getRegionChildren(id: number) {
-            if (id != 0 && !id)
+        getRegionChildren(id: string) {
+            if (id != "0" && !id)
                 return;
 
             var ctrl = this;

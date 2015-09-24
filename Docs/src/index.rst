@@ -11,6 +11,7 @@ kawaldesa.org
 .. toctree::
 
     overview
+    help
 
 
 

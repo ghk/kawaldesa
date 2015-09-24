@@ -19,7 +19,7 @@ Currently built with C# WebAPI, Typescript and angularjs:
 
 ## Requirements:
 
-- Visual Studio 2013 (Download the community edition, it's free for this kind of project)
+- Visual Studio 2015 (Download the community edition, it's free for this kind of project)
 - PostgreSQL > 9.3 (Requires materialized views)
 - WebEssentials for Visual Studio (not mandatory, but it leads to nicer typescript development)
 - Microvac's ASP Scaffold's at http://www.github.com/microvac/asp-scaffold

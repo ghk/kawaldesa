@@ -123,6 +123,7 @@ if not on_rtd:
 	
 def setup(app):
 	app.add_stylesheet('custom.css')	
+	app.add_stylesheet('http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic')	
 	app.add_javascript('wedc.js')
 
 #html_theme = 'default'
@@ -154,7 +155,19 @@ def setup(app):
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['../common/_static']
+html_static_path = ['_static']
+
+html_context = {
+    'css_files': [
+        '_static/kawaldesa.css',  # overrides for wide tables in RTD theme
+        ],
+    'github_user' : 'ghk',
+    'display_github' : True,
+    'github_repo' : 'kawaldesa',
+    'github_version' : 'master',
+    'conf_py_path' : '/Docs/src/',
+    'source_suffix' : '.rst',
+    }
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
