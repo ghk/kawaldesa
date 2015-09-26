@@ -1,6 +1,7 @@
 ﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ output extension=".ts" #>
 <#@include file="T4Utils.t4" #>
+<#@include file="vars.t4" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 /// WARNING: T4 generated file 
@@ -8,10 +9,7 @@
 /// <reference path="Microvac.Web.ts"/>
 
 <#
-	ModelNamespaces = new String[]{"App.Models", "App.Models.Views"};
-	var ignoredFunctions = new string[]{"Get", "GetAll", "Count", "Save", "Delete", "Post", "Put", "GetCount", "Login", "Logout"};
-    var namespaces = new []{"App.Controllers.Models", "App.Controllers.Services"};
-    foreach(var _namespace in namespaces)
+    foreach(var _namespace in ControllerNamespaces)
     {
 #>
 module <#= _namespace #> {
@@ -101,7 +99,8 @@ module <#= _namespace #> {
 			foreach(var member in EnumerateTSMembers(_controller)
                 .Where(x => x.Kind == vsCMElement.vsCMElementFunction)) 
             {
-				if(member.Name == _controller.Name || (modelClass != null && ignoredFunctions.Contains(member.Name)))
+				if(member.Name == _controller.Name || (modelClass != null 
+					&& ControllerIgnoredFunctions.Contains(member.Name)))
                     continue;
 
 				var fct = (CodeFunction)member;

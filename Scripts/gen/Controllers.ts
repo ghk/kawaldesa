@@ -1279,24 +1279,24 @@ module App.Controllers.Services {
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
-        static GetInScopeTransferBundle(apbnKey: string): ng.IHttpPromise<App.Models.Bundles.ITransferBundle> {
-			var res = Microvac.Web.$http<App.Models.Bundles.ITransferBundle>(BundleController.ajaxSettings.build({
+        static GetInScopeTransferBundle(apbnKey: string): ng.IHttpPromise</** App.Models.Bundles.TransferBundle **/ any> {
+			var res = Microvac.Web.$http</** App.Models.Bundles.TransferBundle **/ any>(BundleController.ajaxSettings.build({
 			method: 'GET',
 			url: '/api/Bundle/GetInScopeTransferBundle?apbnKey='+encodeURI(apbnKey)+'',
 				}));
 			   return res;
 	    }
     
-        static GetTransferBundle(apbnKey: string, regionId: string): ng.IHttpPromise<App.Models.Bundles.ITransferBundle> {
-			var res = Microvac.Web.$http<App.Models.Bundles.ITransferBundle>(BundleController.ajaxSettings.build({
+        static GetTransferBundle(apbnKey: string, regionId: string): ng.IHttpPromise</** App.Models.Bundles.TransferBundle **/ any> {
+			var res = Microvac.Web.$http</** App.Models.Bundles.TransferBundle **/ any>(BundleController.ajaxSettings.build({
 			method: 'GET',
 			url: '/api/Bundle/GetTransferBundle?apbnKey='+encodeURI(apbnKey)+'&regionId='+encodeURI(regionId)+'',
 				}));
 			   return res;
 	    }
     
-        static GetAllocationBundle(subtype: string, apbnKey: string, regionId: string): ng.IHttpPromise<App.Models.Bundles.IAllocationBundle> {
-			var res = Microvac.Web.$http<App.Models.Bundles.IAllocationBundle>(BundleController.ajaxSettings.build({
+        static GetAllocationBundle(subtype: string, apbnKey: string, regionId: string): ng.IHttpPromise</** App.Models.Bundles.AllocationBundle **/ any> {
+			var res = Microvac.Web.$http</** App.Models.Bundles.AllocationBundle **/ any>(BundleController.ajaxSettings.build({
 			method: 'GET',
 			url: '/api/Bundle/GetAllocationBundle?subtype='+encodeURI(subtype)+'&apbnKey='+encodeURI(apbnKey)+'&regionId='+encodeURI(regionId)+'',
 				}));

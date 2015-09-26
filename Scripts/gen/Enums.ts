@@ -55,3 +55,6 @@ module App.Models {
     }
     
 }
+module App.Models.Views {
+
+}

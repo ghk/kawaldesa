@@ -1,13 +1,13 @@
 ﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ output extension=".ts" #>
 <#@include file="T4Utils.t4" #>
+<#@include file="vars.t4" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 /// WARNING: T4 generated file 
 
 <#
-    var namespaces = new []{"App.Models"};
-    foreach(var _namespace in namespaces)
+    foreach(var _namespace in ModelNamespaces)
     {
 #>
 module <#=_namespace #> {
