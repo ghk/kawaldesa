@@ -1,0 +1,5 @@
+job1:
+  script: 
+    - "bash -c 'nuget restore'"
+    - "bash -c 'msbuild Microvac.Web.sln'"
+    - "bash -c 'nuget pack Microvac.Web.AngularTT/Microvac.Web.AngularTT.nuspec'"
