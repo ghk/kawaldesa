@@ -120,7 +120,7 @@ namespace App.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult User(string id)
+        public new ActionResult User(string id)
         {
             var user = GetUserDictFromSession();
             ViewData["User"] = new JavaScriptSerializer().Serialize(user);

@@ -8,11 +8,8 @@ module Microvac.Web {
 
         public build(settings: ng.IRequestConfig): ng.IRequestConfig {
             return {
-                async: this.async,
                 cache: this.cache,
                 timeout: this.timeout,
-                dataType: 'json',
-                contentType: 'application/json',
                 method: settings.method,
                 url: settings.url,
                 data: settings.data,
@@ -48,6 +45,7 @@ module Microvac.Web {
         PageBegin?: number;
         SortField?: string;
         SortOrder?: string;
+        [key: string]: any;
     }
 
     export var $http: ng.IHttpService;

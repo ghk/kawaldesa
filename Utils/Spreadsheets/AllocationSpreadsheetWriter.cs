@@ -116,7 +116,7 @@ namespace App.Utils.Spreadsheets
                     var value = allocation == null ? null : leaf.Property.GetValue(allocation);
                     var addr = GetAddress(row, startCol + colOffset);
                     worksheet.Cells[addr].Value = value;
-                    if (leaf.Property.PropertyType == typeof(decimal) || leaf.Property.PropertyType == typeof(double) || leaf.Property.PropertyType == typeof(int)) ;
+                    if (leaf.Property.PropertyType == typeof(decimal) || leaf.Property.PropertyType == typeof(double) || leaf.Property.PropertyType == typeof(int)) 
                         worksheet.Cells[addr].Style.Numberformat.Format = "#,##0";
                     colOffset++;
                 }

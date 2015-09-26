@@ -123,7 +123,7 @@ module App.Controllers {
             });
 
             ctrl.uploads = null;
-            Controllers.SpreadsheetController.GetAll({ "fkCreatedById": id }).then(uploads => {
+            Controllers.SpreadsheetController.GetAll({ fkCreatedById: id }).then(uploads => {
                 ctrl.uploads = uploads.data;
             });
         }
