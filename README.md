@@ -1,6 +1,7 @@
 # Kawal Desa
 Source code untuk http://kawaldesa.org, aplikasi transparansi penyaluran dan realisasi dana desa. 
-[![Build Status](https://gitlab.microvac.co.id/ci/projects/3/status.png?ref=master)](https://gitlab.microvac.co.id/ci/projects/3?ref=master)
+
+[![Build Status](http://gitlab.microvac.co.id/ci/projects/3/status.png?ref=master)](http://gitlab.microvac.co.id/ci/projects/3?ref=master)
 
 Kontribusi diterima dengan terbuka. Saran/bug/diskusi bisa di https://github.com/ghk/kawaldesa/issues 
 
