@@ -1,22 +1,12 @@
 namespace App.Migrations
 {
-    using App.Controllers.Models;
-    using App.Models;
+    using Models;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Web.Helpers;
-    using System.Web.Script.Serialization;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<App.Models.DB>
+    internal sealed class Configuration : DbMigrationsConfiguration<DB>
     {
         public Configuration()
         {
@@ -24,7 +14,7 @@ namespace App.Migrations
             AutomaticMigrationDataLossAllowed = true;
             SetSqlGenerator("Npgsql", new Npgsql.NpgsqlMigrationSqlGenerator());
         }
-        protected override void Seed(App.Models.DB context)
+        protected override void Seed(DB context)
         {
             var UserManager = new UserManager<User>(new CUserStore<User>(context));
             var RoleManager = new RoleManager<Role>(new CRoleStore<Role>(context));

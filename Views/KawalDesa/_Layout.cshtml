@@ -60,11 +60,11 @@
                     <li ng-class="{'active' : indexCtrl.type == 'transfer'}">
                         <a href="/p/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('transfer', $event)">Penyaluran</a>
                     </li>
-                    <!--
+                    
                     <li ng-class="{'active' : indexCtrl.type == 'realization'}">
                         <a href="/r/{{indexCtrl.regionId}}" ng-click="indexCtrl.changeType('realization', $event)">Realisasi</a>
                     </li>
-                    -->
+                    
                 </ul>
                 <ul class="nav navbar-nav nav-region">
                     <li ng-if="!$first" ng-repeat-start="region in indexCtrl.regionTree">

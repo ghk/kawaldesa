@@ -51,7 +51,7 @@ namespace App.Controllers.Models
                 if (transaction.fkActorId == transaction.fkDestinationId)
                 {
                     var targetSource = transaction.fkSourceId == "0" ? "apbn" : "add";
-                    accountId = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.Apbdes.fkRegionId == transaction.fkDestinationId).Id;
+                    //accountId = dbContext.Set<Account>().First(a => a.TargetSource == targetSource && a.Apbdes.fkRegionId == transaction.fkDestinationId).Id;
                 }
 
                 string roleRequired = null;
@@ -161,10 +161,12 @@ namespace App.Controllers.Models
                     Date = DateTime.ParseExact(multipart.GetForm("Date"), "dd-MM-yyyy", CultureInfo.InvariantCulture)
                 };
 
+                /*
                 Realization realization = new Realization
                 {
                     Description = multipart.GetForm("Description")
-                };               
+                };
+                */               
              
                 var account = dbContext.Set<Account>()
                     .Include(a => a.Apbdes)
@@ -175,8 +177,8 @@ namespace App.Controllers.Models
                 transaction.fkActorId = account.Apbdes.fkRegionId;
                 dbContext.Set<Transaction>().Add(transaction);
 
-                realization.fkTransactionId = transaction.Id;
-                dbContext.Set<Realization>().Add(realization);
+                //realization.fkTransactionId = transaction.Id;
+                //dbContext.Set<Realization>().Add(realization);
 
                 if (multipart.Files.Count > 0)
                 {
@@ -203,7 +205,7 @@ namespace App.Controllers.Models
                 multipart.DeleteUnmoved();
             }
         }
-
+        /*
         public IEnumerable<RealizationTransactionRow> GetRealizationTransactions(long accountId)
         {
             var realizationSet = dbContext.Set<Realization>();
@@ -214,6 +216,7 @@ namespace App.Controllers.Models
                     Transaction = t
                 });
         }
+        */
     }
 
     public class TransferTransactionRow

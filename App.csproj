@@ -186,6 +186,10 @@
       <HintPath>packages\Microvac.Web.1.0.1.0\lib\net45\Microvac.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NetMQ, Version=3.3.2.1, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
       <HintPath>packages\NetMQ.3.3.2.1\lib\net40\NetMQ.dll</HintPath>
       <Private>True</Private>
@@ -1262,7 +1266,9 @@
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\KawalDesa\Dashboard.cshtml" />
-    <Content Include="connectionStrings.config" />
+    <Content Include="connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />

@@ -14,6 +14,7 @@ namespace App.Controllers.Models
         public RegionController(DB dbContext) : base(dbContext)
         {
             dbContext.Configuration.ProxyCreationEnabled = false;
+           
             SingleInclude(r => r.Parent.Parent, r => r.Parent.Parent.Parent, r => r.Parent.Parent.Parent.Parent);
         }
         protected override IQueryable<Region> ApplyQuery(IQueryable<Region> query)

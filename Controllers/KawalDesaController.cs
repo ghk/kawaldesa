@@ -44,7 +44,7 @@ namespace App.Controllers
                 RemoveAuthenticatedCookie();
                 hasAuthCookie = false;
             }
-
+           
             if(anonymousHost != null && !hasAuthCookie)
             {
                 if(user != null)

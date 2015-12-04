@@ -25,28 +25,31 @@ namespace App.Controllers.Models
 
         [HttpPost]
         [Authorize(Roles = Role.VOLUNTEER_ACCOUNT)]
+        
         public void UpdateSources(Multipart multipart)
         {
             try
             {
                 var apbdesId = long.Parse(multipart.Forms["Id"]);
                 var sourceURL = multipart.Forms["SourceURL"];
-
+                
+                /*
                 var apbdes = dbSet.SelectOne(apbdesId, 
                     s => new { s.IsCompleted, fkRegionId = s.fkRegionId });
                 if (apbdes.IsCompleted)
                     throw new ApplicationException("apbdes is completed");
                 KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
-
+                */
                 var fileResult = multipart.Files[0];
                 var blob = new Blob(fileResult);
                 dbContext.Set<Blob>().Add(blob);
 
+                /*
                 Update(apbdesId)
                     .Set(e => e.SourceUrl, sourceURL)
                     .Set(e => e.fkSourceFileId, blob.Id)
                     .Save();
-
+                 */   
                 fileResult.Move(blob.FilePath);
             }
             finally
@@ -60,11 +63,11 @@ namespace App.Controllers.Models
         public void Complete(long apbdesId)
         {
             var apbdes = dbSet.Find(apbdesId);
-            if (apbdes.IsCompleted)
-                throw new ApplicationException("apbdes is completed");
+            //if (apbdes.IsCompleted)
+                //throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
-            apbdes.IsCompleted = true;
+            //apbdes.IsCompleted = true;
             dbContext.Entry(apbdes).State = EntityState.Modified;
             dbContext.SaveChanges();
         }
@@ -75,8 +78,8 @@ namespace App.Controllers.Models
             /* Fetches */
 
             var apbdes = Get(apbdesId);
-            if (apbdes.IsCompleted)
-                throw new ApplicationException("apbdes is completed");
+            //if (apbdes.IsCompleted)
+                //throw new ApplicationException("apbdes is completed");
             KawalDesaController.CheckRegionAllowed(dbContext, apbdes.fkRegionId);
 
             var rootAccount = dbContext.Set<Account>().Find(rootAccountId);
@@ -147,7 +150,7 @@ namespace App.Controllers.Models
                 var childAccounts = allAccounts.Where(a => a.ParentCode == account.Code).ToList();
                 if (childAccounts.Count > 0)
                 {
-                    account.Target = null;
+                    account.Amount = null;
                     dbContext.Entry(account).State = EntityState.Modified;
                     dbContext.SaveChanges();
                 }

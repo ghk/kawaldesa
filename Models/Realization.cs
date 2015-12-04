@@ -8,18 +8,13 @@ namespace App.Models
 {
     public class Realization : BaseEntity
     {
-        public String Description { get; set; }
+        [ForeignKey("Account")]
+        public long fkAccountId { get; set; }
+        public virtual Account Account { get; set; }
 
-        public String Vendor { get; set; }
+        public decimal? Amount { get; set; }
+        public DateTime Date { get; set; }
 
-        public Sector? Sector { get; set; }
 
-        [ForeignKey("Transaction")]
-        public long fkTransactionId { get; set; }
-        public virtual Transaction Transaction { get; set; }
-
-        [ForeignKey("CreatedBy")]
-        public string fkCreatedById { get; set; }
-        public virtual User CreatedBy { get; set; }
     }
 }

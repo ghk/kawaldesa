@@ -29,10 +29,12 @@ namespace App.Controllers.Models
             try
             {
                 var realizationId = long.Parse(uploader.Forms["RealizationId"]);
+                /*
                 var realization = dbContext.Set<Realization>()
                     .Include(r => r.Transaction)
                     .First(r => r.Id == realizationId);
-                KawalDesaController.CheckRegionAllowed(dbContext, realization.Transaction.fkActorId);
+                    */
+                //KawalDesaController.CheckRegionAllowed(dbContext, realization.Transaction.fkActorId);
                 FieldReport fr = new FieldReport
                 {
                     fkRealizationId = realizationId,

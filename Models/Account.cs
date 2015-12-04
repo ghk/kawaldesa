@@ -20,41 +20,33 @@ namespace App.Models
 
         [Required(ErrorMessage = "Kode harus diisi")]
         [RegularExpression(@"[a-zA-Z0-9\.]+", ErrorMessage = "Kode harus berupa digit atau titik")]
-        [Index("IX_Code_Type_fkApbdesId", 1, IsUnique = true)]
+        //[Index("IX_Code_Type_fkApbdesId", 1, IsUnique = true)]
         public String Code { get; set; }
 
         [Required(ErrorMessage = "Nama harus diisi")]
         public String Name { get; set; }
 
-        [Index("IX_Code_Type_fkApbdesId", 2, IsUnique = true)]
+        //[Index("IX_Code_Type_fkApbdesId", 2, IsUnique = true)]
         [Index]
         public AccountType Type { get; set; }
 
-        public ExpenseType? ExpenseType { get; set; }
+        public decimal? Amount { get; set; }
 
+        public string Notes { get; set; }
+
+        //[Index("IX_TargetSource_fkApbdesId", 2, IsUnique = true)]
+        //[Index("IX_Code_Type_fkpbdesId", 3, IsUnique = true)]
         [Index]
-        public ExpenseGroup? ExpenseGroup { get; set; }
+        [ForeignKey("Apbdes")]
+        public long fkApbdesId { get; set; }
+        public virtual Apbdes Apbdes { get; set; }
 
-        public decimal? Target { get; set; }
-
-        [Index]
-        public bool IsActivated { get; set; }
-
-        public DateTime? DateDeactivated { get; set; }
-
-        [Index("IX_TargetSource_fkApbdesId", 1, IsUnique = true)]
-        public String TargetSource { get; set; }
 
         [ForeignKey("ParentAccount")]
         public long? fkParentAccountId { get; set; }
         public virtual Account ParentAccount { get; set; }
 
-        [Index("IX_TargetSource_fkApbdesId", 2, IsUnique = true)]
-        [Index("IX_Code_Type_fkpbdesId", 3, IsUnique = true)]
-        [Index]
-        [ForeignKey("Apbdes")]
-        public long fkApbdesId { get; set; }
-        public virtual Apbdes Apbdes { get; set; }
+
 
         [ForeignKey("CreatedBy")]
         public string fkCreatedById { get; set; }
@@ -63,10 +55,6 @@ namespace App.Models
         [ForeignKey("ModifiedBy")]
         public string fkModifiedById { get; set; }
         public virtual User ModifiedBy { get; set; }
-
-        [ForeignKey("DeactivatedBy")]
-        public string fkDeactivatedById { get; set; }
-        public virtual User DeactivatedBy { get; set; }
 
         public virtual List<Account> ChildAccounts { get; set; }
 
