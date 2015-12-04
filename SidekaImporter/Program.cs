@@ -119,7 +119,7 @@ namespace SidekaImporter
             CloseConnection();
         }
 
-        //test git
+        //test git yang kedua
         private void ImportAccount()
         {
             var query = "SELECT * FROM tbl_anggaran WHERE id_parent > 0";
