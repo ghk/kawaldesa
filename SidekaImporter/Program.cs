@@ -62,7 +62,7 @@ namespace SidekaImporter
             var command = new MySqlCommand(query, connection);
             var dataReader = command.ExecuteReader();
 
-            var apbdesInsertQuery = "INSERT INTO apbdes(name, years, date_created, date_modified) SELECT @name, @years, @dateCreated, @dateModified WHERE NOT EXISTS (SELECT name, years FROM apbdes WHERE name = @name AND years = @years);";
+            var apbdesInsertQuery = "INSERT INTO apbdes(name, year, date_created, date_modified) SELECT @name, @year, @dateCreated, @dateModified WHERE NOT EXISTS (SELECT name, year FROM apbdes WHERE name = @name AND year = @year);";
 
             while (dataReader.Read())
             {
@@ -74,7 +74,7 @@ namespace SidekaImporter
                 Console.WriteLine("Nama: " + name + " Year: " + year);
 
                 kawalDesaCommand.Parameters.AddWithValue("@name", name);
-                kawalDesaCommand.Parameters.AddWithValue("@years", year);
+                kawalDesaCommand.Parameters.AddWithValue("@year", year);
                 kawalDesaCommand.Parameters.AddWithValue("@dateCreated", new DateTime());
                 kawalDesaCommand.Parameters.AddWithValue("@dateModified", new DateTime());
                 kawalDesaCommand.ExecuteNonQuery();

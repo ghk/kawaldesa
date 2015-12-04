@@ -13,9 +13,9 @@ namespace App.Models
 
         public string Name { get; set; }
 
-        public int Years { get; set; }
+        public int Year { get; set; }
 
-        public bool IsChange { get; set; }
+        public bool IsRevision { get; set; }
 
         //[Index("IX_fkApbnID_fkRegionID", 2, IsUnique=true)]
         [Index]
