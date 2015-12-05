@@ -20,7 +20,9 @@ namespace App.Mailers
 
         public EmailResult Invitation(InvitationToken token)
         {
-            String currentDomain = "";
+            String currentDomain = Request.Url.Host.ToLower();
+            if (Request.Url.Port != 80)
+                currentDomain = currentDomain + ":" + Request.Url.Port;
             // Setting up needed properties
             MailAttributes.From = new MailAddress("kawaldesa@caturan.com", "Kawal Desa");
             MailAttributes.To.Add(new MailAddress(token.User.Email));
