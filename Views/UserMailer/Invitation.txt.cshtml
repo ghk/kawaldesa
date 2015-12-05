@@ -1,15 +1,15 @@
 @using ActionMailerNext
-@model App.Models.InvitationToken
+@model App.Mailers.Invitation
 
 Salam,
 
-@Model.Inviter.Name mengundang Anda untuk bergabung mengawal dana desa di kawaldesa.org.
+@Model.Token.Inviter.Name mengundang Anda untuk bergabung mengawal dana desa di kawaldesa.org.
 
-Anda akan bergabung dengan organisasi: @Model.User.Organization.Name
+Anda akan bergabung dengan organisasi: @Model.Token.User.Organization.Name
 
 Klik link ini untuk bergabung:
     
-http://kawaldesa.org/Login?token=@Model.Token
+http://@Model.CurrentDomain/Login?token=@Model.Token.Token
 
 
 Mari bersama mengawal dana desa,
