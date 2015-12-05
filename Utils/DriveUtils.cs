@@ -43,7 +43,7 @@ namespace App.Utils
             FilesResource.ListRequest request = driveService.Files.List();
             request.Q = string.Format("'{0}' in parents and title = '{1}'", parentId, directoryName);
             request.MaxResults = 1;
-            var result = request.Execute();
+            var result = AsyncHelpers.RunSync(request.ExecuteAsync);
             return result.Items.Count > 0;
         }
 
@@ -61,7 +61,7 @@ namespace App.Utils
 
             FilesResource.InsertMediaUpload request = driveService.Files.Insert(body, stream, mime);
             request.Convert = true; 
-            var progress = request.Upload();
+            var progress = AsyncHelpers.RunSync(request.UploadAsync);
             return request.ResponseBody.Id;
         }
         public string CreateRootDirectory()
@@ -72,19 +72,19 @@ namespace App.Utils
             body.MimeType = "application/vnd.google-apps.folder";
 
             FilesResource.InsertRequest request = driveService.Files.Insert(body);
-            var result = request.Execute();
+            var result = AsyncHelpers.RunSync(request.ExecuteAsync);
 
             Permission newPermission = new Permission();
             newPermission.Value = "anyone";
             newPermission.Type = "anyone";
             newPermission.Role = "reader";
-            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+            AsyncHelpers.RunSync(driveService.Permissions.Insert(newPermission, result.Id).ExecuteAsync);
 
             newPermission = new Permission();
             newPermission.Value = "kawaldesaorg@gmail.com";
             newPermission.Type = "user";
             newPermission.Role = "writer";
-            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+            AsyncHelpers.RunSync(driveService.Permissions.Insert(newPermission, result.Id).ExecuteAsync);
 
             return result.Id;
         }
@@ -98,19 +98,19 @@ namespace App.Utils
             body.Parents = new List<ParentReference>() { new ParentReference() { Id = parentDirectoryId } };
 
             FilesResource.InsertRequest request = driveService.Files.Insert(body);
-            var result = request.Execute();
+            var result = AsyncHelpers.RunSync(request.ExecuteAsync);
 
             Permission newPermission = new Permission();
             newPermission.Value = "anyone";
             newPermission.Type = "anyone";
             newPermission.Role = "reader";
-            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+            AsyncHelpers.RunSync(driveService.Permissions.Insert(newPermission, result.Id).ExecuteAsync);
 
             newPermission = new Permission();
             newPermission.Value = "kawaldesaorg@gmail.com";
             newPermission.Type = "user";
             newPermission.Role = "writer";
-            driveService.Permissions.Insert(newPermission, result.Id).Execute();
+            AsyncHelpers.RunSync(driveService.Permissions.Insert(newPermission, result.Id).ExecuteAsync);
 
             if(writerEmail != null)
             {
@@ -118,7 +118,7 @@ namespace App.Utils
                 newPermission.Value = writerEmail;
                 newPermission.Type = "user";
                 newPermission.Role = "writer";
-                driveService.Permissions.Insert(newPermission, result.Id).Execute();
+                AsyncHelpers.RunSync(driveService.Permissions.Insert(newPermission, result.Id).ExecuteAsync);
             }
 
             return result.Id;
