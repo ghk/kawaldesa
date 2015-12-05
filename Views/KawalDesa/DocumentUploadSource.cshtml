@@ -43,7 +43,7 @@
                         <h4>Dokumen Sumber</h4>
                     </div>
                     <div class="col-md-2" ng-repeat="source in indexCtrl.activeSources">
-                        <a href="#">
+                        <a href="/Content/files/{{source.File.RelativeFileName}}">
                             <img class="img-thumbnail" ng-src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
                             <span>{{source.File.Name}}</span>
                         </a>
