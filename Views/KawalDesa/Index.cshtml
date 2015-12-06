@@ -1,6 +1,9 @@
 ﻿@{
+
     Layout = "_Layout.cshtml";
 }
+
+
 
 @Html.Partial("TransferRecapitulation")
 @Html.Partial("AccountRecapitulation")
@@ -8,6 +11,8 @@
 @Html.Partial("AddAllocation")
 @Html.Partial("BhprAllocation")
 @Html.Partial("Apbdes")
+
+
 
 <script type="text/ng-template" class="modal fade" id="source-upload-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-content" ng-show="indexCtrl.newSourceState">

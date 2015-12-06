@@ -1284,9 +1284,10 @@
     <Content Include="Views\KawalDesa\DocumentUploadSource.cshtml" />
     <Content Include="Views\KawalDesa\AddAllocation.cshtml" />
     <Content Include="Views\KawalDesa\BhprAllocation.cshtml" />
-    <Content Include="Views\KawalDesa\TableLoader.cshtml" />
+    <Content Include="Views\KawalDesa\Error.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\KawalDesa\TableLoader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
