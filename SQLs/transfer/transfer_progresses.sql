@@ -28,5 +28,12 @@ CREATE MATERIALIZED VIEW transfer_progresses AS
      LEFT JOIN region_allocations alloc ON alloc.apbn_key = apbn.key AND alloc.region_id::text = r.id::text
 WITH DATA;
 
+CREATE UNIQUE INDEX transfer_progresses_IDX_id
+  ON transfer_progresses(id); 
+
+CREATE INDEX transfer_progresses_IDX_apbn_key_region_id
+  ON transfer_region_parents(apbn_key, region_id); 
+  
 ALTER TABLE transfer_progresses
   OWNER TO postgres;
+

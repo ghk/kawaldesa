@@ -21,3 +21,6 @@ WITH DATA;
 
 ALTER TABLE transfer_region_parents
   OWNER TO postgres;
+
+CREATE UNIQUE INDEX transfer_region_parents_IDX_id
+  ON transfer_region_parents(id); 
