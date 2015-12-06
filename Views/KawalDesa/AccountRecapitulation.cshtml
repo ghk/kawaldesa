@@ -8,15 +8,15 @@
             <thead>
                 <tr>
                     <th rowspan="2" style="vertical-align: middle;">{{indexCtrl.childName}}</th>
-                    <th colspan="2" style="text-align: center; width: 20%;">Pendapatan Desa <sup><a href="#help-anggaran">?</a></sup></th>
+                    <th colspan="3" style="text-align: center; width: 20%;">Total <sup><a href="#help-anggaran">?</a></sup></th>
                     <th colspan="2" style="text-align: center; width: 20%;">Belanja Desa</th>
-                    <th colspan="4" style="text-align: center; width: 40%;">Jenis Belanja Desa</th>
+                    <th colspan="3" style="text-align: center; width: 40%;">Jenis Belanja Desa</th>
                     <th colspan="2" style="text-align: center; width: 20%;">Jumlah APBDes</th>
                 </tr>
                 <tr>
-                    <th class="money" style="width: 8.3333%;">Anggaran</th>
-                    <th class="money" style="width: 8.3333%;">Realisasi</th>
-                    <th class="money" style="width: 8.3333%;">Anggaran</th>
+                    <th class="money" style="width: 8.3333%;">APBDes</th>
+                    <th class="money" style="width: 8.3333%;">Total Desa</th>
+                    <th class="money" style="width: 8.3333%;">Total Anggaran</th>
                     <th class="money" style="width: 8.3333%;">Realisasi</th>
                     <th class="money" style="width: 8.3333%;">Penyelenggaraan Pemerintahan</th>
                     <th class="money" style="width: 8.3333%;">Pelaksanaan Pembangunan</th>
@@ -29,7 +29,7 @@
             <tbody>
                 <tr ng-repeat="entity in entities">
                     <td>
-                        <a href="#" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
+                        <a href="r" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
                             {{entity.RegionName}}
                         </a>
                     </td>
