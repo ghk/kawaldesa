@@ -364,6 +364,10 @@ module App.Controllers {
             var ctrl = this;
             var region = ctrl.region;
 
+            ctrl.newSourceFunction = ctrl.type == "transfer"
+                ? Models.SourceDocumentFunction.Transfer
+                : Models.SourceDocumentFunction.Allocation;
+
             ctrl.newSourceRegion = region;
             if (ctrl.newSourceFunction == Models.SourceDocumentFunction.Allocation) {
                 if (region.Type == 1 || region.Type == 3)
@@ -374,9 +378,7 @@ module App.Controllers {
                 if (region.Type != 4)
                     ctrl.newSourceRegion = null;
             }
-            ctrl.newSourceFunction = ctrl.type == "transfer"
-                ? Models.SourceDocumentFunction.Transfer
-                : Models.SourceDocumentFunction.Allocation;
+
             if (ctrl.type == "dd")
                 ctrl.newSourceSubType = "Dd";
             if (ctrl.type == "add")
@@ -458,7 +460,6 @@ module App.Controllers {
                 }).finally(() => {
                     safeApply(ctrl.$scope, () => {
                         ctrl.newSourceState = false;
-                        location.reload();
                 });
             });;
         }
