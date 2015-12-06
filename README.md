@@ -39,5 +39,7 @@ Currently built with C# WebAPI, Typescript and angularjs:
 ## Current Contributors
 
 - Gozali Kumara (ghk@microvac.co.id)
+- Achmad Rifai (rifai@microvac.co.id)
 - Vidyapati (vidyapati@microvac.co.id)
+- Anton Maulana (anton@microvac.co.id)
 - Muhammad Reza (m.reza@microvac.co.id)
