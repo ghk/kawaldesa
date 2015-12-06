@@ -14,7 +14,7 @@
                     <th colspan="2" style="text-align: center; width: 20%;">Jumlah APBDes</th>
                 </tr>
                 <tr>
-                    <th class="money" style="width: 8.3333%;">APBDes</th>
+                    <th class="money" style="width: 8.3333%;">APBDes Lengkap</th>
                     <th class="money" style="width: 8.3333%;">Total Desa</th>
                     <th class="money" style="width: 8.3333%;">Total Anggaran</th>
                     <th class="money" style="width: 8.3333%;">Realisasi</th>
@@ -30,7 +30,7 @@
                 <tr ng-repeat="entity in entities">
                     <td>
                         <a href="r" ng-click="indexCtrl.changeRegion(entity.RegionID, $event)">
-                            {{entity.RegionName}}
+                             {{entity.RegionName}}
                         </a>
                     </td>
                     <td class="money"> {{entity.BudgetedIncome | number:0}}</td>
