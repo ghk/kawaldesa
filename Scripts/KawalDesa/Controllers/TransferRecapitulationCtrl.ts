@@ -33,15 +33,14 @@ module App.Controllers {
             var $scope = this.$scope;
             $scope.labels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
             $scope.series = ['Penyaluran DD', 'Penyaluran ADD'];
-            $scope.chartOptions = {
+            $scope.lineOptions = {
                 scaleOverride: true,
                 scaleSteps: 5,
                 scaleStepWidth: 20,
                 scaleStartValue: 0,
                 scaleLabel: "<%=value%>%",
             };
-            $scope.data = [
-                //[65, 59, 80, 81, 56, 55, 40, 80, 80, 80, 80, 80],
+            $scope.lineData = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ];
@@ -76,7 +75,6 @@ module App.Controllers {
                         scope.polarData[0] = scope.total.BudgetedDd / 1000000000;
                         scope.polarData[1] = scope.total.BudgetedAdd / 1000000000;
                         scope.polarData[2] = scope.total.BudgetedBhpr / 1000000000;
-                        console.log(scope.polarData);
                     } else {
                         scope.entities = bundle.data.Transfers;
                         var total = {
@@ -90,6 +88,22 @@ module App.Controllers {
                         }
                         scope.total = total;
                     }
+                    var lineData = [
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    ];
+                    var progresses: App.Models.TransferProgress[] = bundle.data.TransferProgress;
+                    for (var i = 0; i < bundle.data.TransferProgress.length; i++)
+                    {
+                        var progress = progresses[i];
+                        lineData[0][progress.Month - 1] = progress.AllocatedDd != 0
+                            ? progress.TransferredDd / progress.AllocatedDd * 100
+                            : 0;
+                        lineData[1][progress.Month - 1] = progress.AllocatedAdd != 0
+                            ? progress.TransferredAdd / progress.AllocatedAdd * 100
+                            : 0;
+                    }
+                    scope.lineData = lineData;
                 }).finally(() => {
                     scope.isEntitiesLoading = false;
                 });
