@@ -454,7 +454,7 @@ module App.Controllers {
                         if (fn == Models.SourceDocumentFunction.Allocation) {
                             ctrl.configureDocumentUpload(ctrl.activeUploadType, ctrl.activeUploadRegionId);
                         } else {
-                            ctrl.changeRegion(ctrl.newSourceRegion.Id, null);
+                            location.reload();
                         }
                     });
                 }).finally(() => {
