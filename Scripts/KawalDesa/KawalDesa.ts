@@ -9,6 +9,7 @@ module App {
         'ui.bootstrap.position',
         'ui.bootstrap.modal',
         'ui.bootstrap.datepicker',
+        'ng-inputdecimalseparator',
         'chart.js',
     ]);
 

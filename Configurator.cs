@@ -113,6 +113,7 @@ namespace App
                 .Include("~/Scripts/i18n/angular-locale_id-id.js")
                 .Include("~/Scripts/jquery-2.1.4.js")
                 .Include("~/Scripts/angular-file-upload.min.js")
+                .Include("~/Scripts/angular-input-decimal-separator.js")
                 );
 
             bundles.Add(new ScriptBundle("~/js/kawaldesa-own")
@@ -127,7 +128,7 @@ namespace App
                 .Include("~/Scripts/gen/Enums.js")
                 .Include("~/Scripts/gen/Models.js")
                 .Include("~/Scripts/gen/Controllers.js")
-                .Include("~/Scripts/KawalDesa/Controllers.bundlepatch.js")
+                .Include("~/Scripts/Controllers.bundlepatch.js")
                 .Include("~/Scripts/KawalDesa/KawalDesa.js")
                 .Include("~/Scripts/KawalDesa/Controllers/*.js")
                 );

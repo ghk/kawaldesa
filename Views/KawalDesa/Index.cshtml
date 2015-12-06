@@ -83,7 +83,7 @@
                          ng-class="{'has-error': indexCtrl.newSourceErrors.Amount}">
                         <label for="amount" class="col-sm-3 control-label">Jumlah</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control"
+                            <input class="form-control" input-decimal-separator="3"
                                    ng-model="indexCtrl.newSourceAmount" multiple="" />
                             <div class="text-danger" ng-if="indexCtrl.newSourceErrors.Amount">
                                 {{indexCtrl.newSourceErrors.Amount}}

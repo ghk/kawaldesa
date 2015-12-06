@@ -1248,7 +1248,8 @@
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\KawalDesa\Controllers.bundlepatch.js" />
+    <Content Include="Scripts\angular-input-decimal-separator.js" />
+    <Content Include="Scripts\Controllers.bundlepatch.js" />
     <Content Include="Scripts\loading-bar.js" />
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
