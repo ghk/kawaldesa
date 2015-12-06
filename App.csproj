@@ -429,9 +429,6 @@
     <Content Include="Global.asax" />
     <Content Include="refresh-mv.psql" />
     <Content Include="refresh-mv.bat" />
-    <Content Include="appSettings.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -502,6 +499,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="appSettings.config" />
+    <Content Include="connectionStrings.config" />
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1268,9 +1267,6 @@
     <None Include="Properties\PublishProfiles\kawaldesa-release.pubxml" />
     <None Include="Properties\PublishProfiles\SimaOnline.pubxml" />
     <Content Include="Views\KawalDesa\Dashboard.cshtml" />
-    <Content Include="connectionStrings.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\KawalDesa\_Layout.cshtml" />
     <Content Include="Views\KawalDesa\TransferRecapitulation.cshtml" />
     <Content Include="Views\KawalDesa\AccountRecapitulation.cshtml" />
@@ -1362,9 +1358,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>8712</DevelopmentServerPort>
+          <DevelopmentServerPort>8121</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:11002</IISUrl>
+          <IISUrl>http://localhost:8121/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

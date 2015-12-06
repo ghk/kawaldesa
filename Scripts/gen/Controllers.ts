@@ -1091,6 +1091,14 @@ module App.Controllers.Models {
 			   return res;
 	    }
     
+        static Publish(googleSheetId: string, notes: string): ng.IHttpPromise<void> {
+			var res = Microvac.Web.$http<void>(SpreadsheetController.ajaxSettings.build({
+			method: 'GET',
+			url: '/api/Spreadsheet/Publish?googleSheetId='+encodeURI(googleSheetId)+'&notes='+encodeURI(notes)+'',
+				}));
+			   return res;
+	    }
+    
         static GenerateDanaDesaKabs(apbnKey: string): ng.IHttpPromise<void> {
 			var res = Microvac.Web.$http<void>(SpreadsheetController.ajaxSettings.build({
 			method: 'GET',
@@ -1149,14 +1157,6 @@ module App.Controllers.Models {
     
         static AddAccountTransaction(multipart: Microvac.Web.Multipart): any  {
 			var res = multipart.upload('/api/Transaction/AddAccountTransaction');
-			   return res;
-	    }
-    
-        static GetRealizationTransactions(accountId: number): ng.IHttpPromise<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>> {
-			var res = Microvac.Web.$http<Array</** App.Controllers.Models.RealizationTransactionRow **/ any>>(TransactionController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/Transaction/GetRealizationTransactions?accountId='+accountId+'',
-				}));
 			   return res;
 	    }
 	}
