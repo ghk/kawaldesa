@@ -126,6 +126,7 @@ namespace App.Controllers.Models
             User user = KawalDesaController.GetCurrentUser();
 
             var context = new AdapterContext(dbContext, type, regionId, apbnKey);
+            
             var bytes = adapters[type].GetBytes(context);
             var region = dbContext.Set<Region>().Find(regionId);
 
@@ -136,6 +137,7 @@ namespace App.Controllers.Models
             var workItem = dbContext.Set<SpreadsheetWorkItem>()
                 .FirstOrDefault(w => w.fkUserId == userId
                     && w.fkRegionId == region.Id
+                    && w.Type == type
                     && w.ApbnKey == context.Apbn.Key);
 
             if (workItem == null)
@@ -179,6 +181,7 @@ namespace App.Controllers.Models
                         fkUserId = userId,
                         fkRegionId = region.Id,
                         ApbnKey = apbnKey,
+                        Type = type
                     };
                     dbContext.Set<SpreadsheetWorkItem>().Add(workItem);
                     dbContext.SaveChanges();
@@ -205,6 +208,33 @@ namespace App.Controllers.Models
             using (var tx = dbContext.Database.BeginTransaction())
             {
                 adapters[t].Upload(multipart, context);
+                tx.Commit();
+            }
+        }
+
+        [HttpGet]
+        public void Publish(string googleSheetId, string notes)
+        {
+            var workItem = dbContext.Set<SpreadsheetWorkItem>()
+               .FirstOrDefault(w => w.GoogleSheetId == googleSheetId);
+
+            var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
+            var authKey = ConfigurationManager.AppSettings["Drive.AuthKey"];
+            var parentDir = ConfigurationManager.AppSettings["Drive.ParentDir"];
+
+            DriveUtils utils = new DriveUtils(authEmail, authKey, parentDir);
+
+            var fileStream = utils.GetFileStream(googleSheetId);
+
+            if (fileStream == null)
+                return;
+
+            var documentUploadType = (DocumentUploadType)workItem.Type;
+            var context = new AdapterContext(dbContext, (DocumentUploadType)workItem.Type, workItem.fkRegionId, workItem.ApbnKey);
+
+            using (var tx = dbContext.Database.BeginTransaction())
+            {
+                adapters[documentUploadType].Publish(fileStream, context, notes);
                 tx.Commit();
             }
         }
@@ -241,7 +271,6 @@ namespace App.Controllers.Models
                 i++;
             }
         }
-
 
         private static void GenDanaDesaKab(DbContext dbContext, Apbd apbd, Region region, NationalDdAllocation nationalAlloc, Spreadsheet nationalDoc)
         {
@@ -303,6 +332,9 @@ namespace App.Controllers.Models
         {
             HttpResponseMessage GetTemplate(AdapterContext context);
             byte[] GetBytes(AdapterContext context);
+
+            void Publish(Stream fileStream, AdapterContext context, string notes);
+
             void Upload(Multipart<Spreadsheet> multipart, AdapterContext context);
         }
 
@@ -347,11 +379,12 @@ namespace App.Controllers.Models
                 var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
                 return new AllocationSpreadsheetWriter<TAllocation>().Write(parentRegions, regions, allocations);
             }
+            
             public byte[] GetBytes(AdapterContext context)
             {
                 List<Region> regions = null;
                 List<Region> parentRegions = null;
-                if(context.Region.Type == RegionType.NASIONAL)
+                if(context.Region.Type == RegionType.NASIONAL || context.Region.Type == RegionType.PROPINSI)
                 {
                     regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
                     parentRegions = DbContext.Set<Region>().Where(r => r.Type == RegionType.PROPINSI).ToList();
@@ -363,6 +396,73 @@ namespace App.Controllers.Models
                 }
                 var allocations = DbContext.Set<TAllocation>().Where(r => r.IsActivated).ToList();
                 return new AllocationSpreadsheetWriter<TAllocation>().WriteToBytes(parentRegions, regions, allocations);
+            }
+
+            public void Publish(Stream fileStream, AdapterContext context, string notes)
+            {
+                try
+                {
+                    List<Region> regions = null;
+                    if (context.Region.Type == RegionType.NASIONAL)
+                    {
+                        regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.KABUPATEN).ToList();
+                    }
+                    else
+                    {
+                        regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && r.Parent.fkParentId == context.Region.Id).ToList();
+                    }
+
+                    Blob blob = new Blob();
+                    blob.Name = "Alocation_xxx.xlsx";
+
+                    DbContext.Set<Blob>().Add(blob);
+                    DbContext.SaveChanges();
+
+                    byte[] fileBytes = null;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        fileStream.CopyTo(ms);
+                        fileBytes = ms.ToArray();
+                    }
+
+                    string fileName = blob.Id + ".xlsx";
+                    string root = HttpContext.Current.Server.MapPath("~/Content/Files");
+                    var user = KawalDesaController.GetCurrentUser();
+
+                    Directory.CreateDirectory(root);
+                    String filePath = Path.Combine(root, fileName);
+                    File.WriteAllBytes(filePath, fileBytes);
+
+                    Spreadsheet spreadsheet = new Spreadsheet();
+                    spreadsheet.File = blob;
+                    spreadsheet.Notes = notes;
+                    spreadsheet.fkCreatedById = user.Id;
+                    spreadsheet.fkOrganizationId = user.fkOrganizationId.Value;
+                    spreadsheet.DateCreated = DateTime.Now;
+                    spreadsheet.DateActivated = DateTime.Now;
+                    spreadsheet.Type = context.Type;
+                    spreadsheet.ApbnKey = context.Apbn.Key;
+                    spreadsheet.fkRegionId = context.Region.Id;
+                    spreadsheet.fkFileId = blob.Id;
+                    DbContext.Set<Spreadsheet>().Add(spreadsheet);
+                    DbContext.SaveChanges();
+
+                    var allocations = new AllocationSpreadsheetReader<TAllocation>().Read(regions, fileBytes);
+
+                    foreach (var allocation in allocations)
+                    {
+                        allocation.fkSpreadsheetId = spreadsheet.Id;
+                        Init(context, allocation);
+                        DbContext.Set<TAllocation>().Add(allocation);
+                    }
+                    DbContext.SaveChanges();
+
+                    new SpreadsheetActivator<TAllocation>().Activate(DbContext, spreadsheet);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             public void Upload(Multipart<Spreadsheet> multipart, AdapterContext context)
@@ -378,6 +478,7 @@ namespace App.Controllers.Models
                     {
                         regions = DbContext.Set<Region>().Where(r => r.Type == RegionType.DESA && r.Parent.fkParentId == context.Region.Id).ToList();
                     }
+                   
                     var allocations = new AllocationSpreadsheetReader<TAllocation>().Read(regions, new FileInfo(multipart.Files[0].FilePath));
                     var spreadsheet = multipart.Entity;
                     var user = KawalDesaController.GetCurrentUser();

@@ -66,6 +66,10 @@ module App.Controllers {
                     scope.total = recapitulations.filter(r => r.RegionId == parentId)[0];
                     ctrl.indexCtrl.activeUpload = bundle.data.CurrentSpreadsheet;
                     ctrl.indexCtrl.activeUploadRegionId = bundle.data.Region.Id;
+
+                    if (regionType !== 0 && regionType !== 2) 
+                        ctrl.indexCtrl.activeUploadRegionId = bundle.data.Region.fkParentId;
+                    
                     ctrl.indexCtrl.activeSources = bundle.data.SourceDocuments;
                     ctrl.indexCtrl.activeUploadType = regionType < 2
                         ? ctrl.documentTypes[0]

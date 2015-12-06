@@ -264,11 +264,12 @@ module App.Controllers {
         loadRealization(accountId) {
             var ctrl = this;
             if (this.expandedStates[accountId]) {
+                /*
                 Controllers.TransactionController.GetRealizationTransactions(accountId).then(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountId] = details;
                     });
-                });
+                });*/
             }
         }
 
