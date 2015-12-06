@@ -127,7 +127,6 @@ namespace App.Controllers.Models
 
             var context = new AdapterContext(dbContext, type, regionId, apbnKey);
             
-            var bytes = adapters[type].GetBytes(context);
             var region = dbContext.Set<Region>().Find(regionId);
 
             String userId = user != null ? user.Id : null;
@@ -153,6 +152,7 @@ namespace App.Controllers.Models
                     Directory.CreateDirectory(root);
                     var safeFileName = typeStr + " " + apbnKey + " " + regionId + " " + region.Name + ".xlsx";
                     var fullPath = Path.Combine(root, safeFileName);
+                    var bytes = adapters[type].GetBytes(context);
                     File.WriteAllBytes(fullPath, bytes);
 
                     var authEmail = ConfigurationManager.AppSettings["Drive.AuthEmail"];
