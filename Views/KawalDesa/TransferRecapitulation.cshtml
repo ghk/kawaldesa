@@ -93,6 +93,9 @@
                             <tr ng-if="indexCtrl.guessedRegionType == 4" ng-repeat="entity in entities">
                                 <td>
                                     {{entity.Date| date: 'dd MMMM yyyy'}}
+                                    <a ng-repeat="doc in entity.SourceDocuments" href="~/Content/files/{{doc.FileName}}" style="margin: 0px 2px;">
+                                        <i class="fa fa-file"></i>
+                                    </a>
                                 </td>
                                 <td class="money">
                                     &nbsp;

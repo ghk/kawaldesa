@@ -89,6 +89,7 @@ namespace App.Controllers.Services
                     syear = apbnKey.Substring(0, 4);
                 int year = Convert.ToInt32(syear);
                 result.Transfers = db.Transfers
+                    .Include(e => e.SourceDocuments)
                     .Where(e => e.Year == year && e.IsActivated && e.fkRegionId == regionId)
                     .ToList();
             }
