@@ -26,6 +26,9 @@ module App.Controllers {
             $scope.$on('regionChangeBefore', function () {
                 $scope.entities = [];
             });
+
+            //this.getRecapitulations(this.indexCtrl.region.Id);
+            
         }
 
         onRegionChanged() {
