@@ -195,30 +195,42 @@ module App.Models {
     
     export interface ITransferProgress {
         Id: string;
-        fkRegionId: string;
-        ApbnKey: string;
-        Type: number;
         Month: number;
-        Percent: number;
+        RegionId: string;
+        ApbnKey: string;
+        TransferredDd: number;
+        TransferredAdd: number;
+        TransferredBhpr: number;
+        AllocatedDd: number;
+        AllocatedAdd: number;
+        AllocatedBhpr: number;
     }
     
     export class TransferProgress {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
-        fkRegionId: string;
-        ApbnKey: string;
-        Type: number;
         Month: number;
-        Percent: number;
+        RegionId: string;
+        ApbnKey: string;
+        TransferredDd: number;
+        TransferredAdd: number;
+        TransferredBhpr: number;
+        AllocatedDd: number;
+        AllocatedAdd: number;
+        AllocatedBhpr: number;
         
         constructor(data?: ITransferProgress) {
             this.Id = data ? data.Id : null;
-            this.fkRegionId = data ? data.fkRegionId : null;
-            this.ApbnKey = data ? data.ApbnKey : null;
-            this.Type = data ? data.Type : null;
             this.Month = data ? data.Month : null;
-            this.Percent = data ? data.Percent : null;
+            this.RegionId = data ? data.RegionId : null;
+            this.ApbnKey = data ? data.ApbnKey : null;
+            this.TransferredDd = data ? data.TransferredDd : null;
+            this.TransferredAdd = data ? data.TransferredAdd : null;
+            this.TransferredBhpr = data ? data.TransferredBhpr : null;
+            this.AllocatedDd = data ? data.AllocatedDd : null;
+            this.AllocatedAdd = data ? data.AllocatedAdd : null;
+            this.AllocatedBhpr = data ? data.AllocatedBhpr : null;
         }
         
     }
@@ -228,22 +240,16 @@ module App.Models {
         Code: string;
         Name: string;
         Type: App.Models.AccountType;
-        ExpenseType: App.Models.ExpenseType;
-        ExpenseGroup: App.Models.ExpenseGroup;
-        Target: number;
-        IsActivated: boolean;
-        DateDeactivated: /** System.DateTime **/ any;
-        TargetSource: string;
-        fkParentAccountId: number;
-        ParentAccount: App.Models.IAccount;
+        Amount: number;
+        Notes: string;
         fkApbdesId: number;
         Apbdes: App.Models.IApbdes;
+        fkParentAccountId: number;
+        ParentAccount: App.Models.IAccount;
         fkCreatedById: string;
         CreatedBy: App.Models.IUser;
         fkModifiedById: string;
         ModifiedBy: App.Models.IUser;
-        fkDeactivatedById: string;
-        DeactivatedBy: App.Models.IUser;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
         TotalRealizationPerAccount: number;
@@ -255,22 +261,16 @@ module App.Models {
         Code: string;
         Name: string;
         Type: App.Models.AccountType;
-        ExpenseType: App.Models.ExpenseType;
-        ExpenseGroup: App.Models.ExpenseGroup;
-        Target: number;
-        IsActivated: boolean;
-        DateDeactivated: /** System.DateTime **/ any;
-        TargetSource: string;
-        fkParentAccountId: number;
-        ParentAccount: App.Models.IAccount;
+        Amount: number;
+        Notes: string;
         fkApbdesId: number;
         Apbdes: App.Models.IApbdes;
+        fkParentAccountId: number;
+        ParentAccount: App.Models.IAccount;
         fkCreatedById: string;
         CreatedBy: App.Models.IUser;
         fkModifiedById: string;
         ModifiedBy: App.Models.IUser;
-        fkDeactivatedById: string;
-        DeactivatedBy: App.Models.IUser;
         ChildAccounts: Array<App.Models.IAccount>;
         ParentCode: string;
         TotalRealizationPerAccount: number;
@@ -280,22 +280,16 @@ module App.Models {
             this.Code = data ? data.Code : null;
             this.Name = data ? data.Name : null;
             this.Type = data ? data.Type : null;
-            this.ExpenseType = data ? data.ExpenseType : null;
-            this.ExpenseGroup = data ? data.ExpenseGroup : null;
-            this.Target = data ? data.Target : null;
-            this.IsActivated = data ? data.IsActivated : null;
-            this.DateDeactivated = data ? data.DateDeactivated : null;
-            this.TargetSource = data ? data.TargetSource : null;
-            this.fkParentAccountId = data ? data.fkParentAccountId : null;
-            this.ParentAccount = data ? data.ParentAccount : null;
+            this.Amount = data ? data.Amount : null;
+            this.Notes = data ? data.Notes : null;
             this.fkApbdesId = data ? data.fkApbdesId : null;
             this.Apbdes = data ? data.Apbdes : null;
+            this.fkParentAccountId = data ? data.fkParentAccountId : null;
+            this.ParentAccount = data ? data.ParentAccount : null;
             this.fkCreatedById = data ? data.fkCreatedById : null;
             this.CreatedBy = data ? data.CreatedBy : null;
             this.fkModifiedById = data ? data.fkModifiedById : null;
             this.ModifiedBy = data ? data.ModifiedBy : null;
-            this.fkDeactivatedById = data ? data.fkDeactivatedById : null;
-            this.DeactivatedBy = data ? data.DeactivatedBy : null;
             this.ChildAccounts = data ? data.ChildAccounts : null;
             this.ParentCode = data ? data.ParentCode : null;
             this.TotalRealizationPerAccount = data ? data.TotalRealizationPerAccount : null;
@@ -332,17 +326,11 @@ module App.Models {
     
     export interface IApbdes extends IBaseEntity {
         IsActivated: boolean;
-        IsCompleted: boolean;
-        DateCompleted: /** System.DateTime **/ any;
-        SourceUrl: string;
-        fkSourceFileId: number;
-        SourceFile: App.Models.IBlob;
-        fkApbnId: number;
-        Apbn: App.Models.IApbn;
+        Name: string;
+        Year: number;
+        IsRevision: boolean;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkCompletedById: string;
-        CompletedBy: App.Models.IUser;
         fkModifiedById: string;
         ModifiedBy: App.Models.IUser;
         Accounts: Array<App.Models.IAccount>;
@@ -352,17 +340,11 @@ module App.Models {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         IsActivated: boolean;
-        IsCompleted: boolean;
-        DateCompleted: /** System.DateTime **/ any;
-        SourceUrl: string;
-        fkSourceFileId: number;
-        SourceFile: App.Models.IBlob;
-        fkApbnId: number;
-        Apbn: App.Models.IApbn;
+        Name: string;
+        Year: number;
+        IsRevision: boolean;
         fkRegionId: string;
         Region: App.Models.IRegion;
-        fkCompletedById: string;
-        CompletedBy: App.Models.IUser;
         fkModifiedById: string;
         ModifiedBy: App.Models.IUser;
         Accounts: Array<App.Models.IAccount>;
@@ -370,17 +352,11 @@ module App.Models {
         constructor(data?: IApbdes) {
             super(data);
             this.IsActivated = data ? data.IsActivated : null;
-            this.IsCompleted = data ? data.IsCompleted : null;
-            this.DateCompleted = data ? data.DateCompleted : null;
-            this.SourceUrl = data ? data.SourceUrl : null;
-            this.fkSourceFileId = data ? data.fkSourceFileId : null;
-            this.SourceFile = data ? data.SourceFile : null;
-            this.fkApbnId = data ? data.fkApbnId : null;
-            this.Apbn = data ? data.Apbn : null;
+            this.Name = data ? data.Name : null;
+            this.Year = data ? data.Year : null;
+            this.IsRevision = data ? data.IsRevision : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-            this.fkCompletedById = data ? data.fkCompletedById : null;
-            this.CompletedBy = data ? data.CompletedBy : null;
             this.fkModifiedById = data ? data.fkModifiedById : null;
             this.ModifiedBy = data ? data.ModifiedBy : null;
             this.Accounts = data ? data.Accounts : null;
@@ -703,35 +679,26 @@ module App.Models {
     
     
     export interface IRealization extends IBaseEntity {
-        Description: string;
-        Vendor: string;
-        Sector: App.Models.Sector;
-        fkTransactionId: number;
-        Transaction: App.Models.ITransaction;
-        fkCreatedById: string;
-        CreatedBy: App.Models.IUser;
+        fkAccountId: number;
+        Account: App.Models.IAccount;
+        Amount: number;
+        Date: /** System.DateTime **/ any;
     }
     
     export class Realization extends BaseEntity {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
-        Description: string;
-        Vendor: string;
-        Sector: App.Models.Sector;
-        fkTransactionId: number;
-        Transaction: App.Models.ITransaction;
-        fkCreatedById: string;
-        CreatedBy: App.Models.IUser;
+        fkAccountId: number;
+        Account: App.Models.IAccount;
+        Amount: number;
+        Date: /** System.DateTime **/ any;
         
         constructor(data?: IRealization) {
             super(data);
-            this.Description = data ? data.Description : null;
-            this.Vendor = data ? data.Vendor : null;
-            this.Sector = data ? data.Sector : null;
-            this.fkTransactionId = data ? data.fkTransactionId : null;
-            this.Transaction = data ? data.Transaction : null;
-            this.fkCreatedById = data ? data.fkCreatedById : null;
-            this.CreatedBy = data ? data.CreatedBy : null;
+            this.fkAccountId = data ? data.fkAccountId : null;
+            this.Account = data ? data.Account : null;
+            this.Amount = data ? data.Amount : null;
+            this.Date = data ? data.Date : null;
         }
         
     }
