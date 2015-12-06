@@ -264,11 +264,12 @@ module App.Controllers {
         loadRealization(accountId) {
             var ctrl = this;
             if (this.expandedStates[accountId]) {
+                /*
                 Controllers.TransactionController.GetRealizationTransactions(accountId).then(details => {
                     ctrl.$scope.$apply(() => {
                         ctrl.realizations[accountId] = details;
                     });
-                });
+                });*/
             }
         }
 
@@ -305,7 +306,7 @@ module App.Controllers {
                             var totalRealizationObj = 0;
 
                             for (var k = 0; k < root.ChildAccounts[j].ChildAccounts.length; k++) {
-                                var obj = root.ChildAccounts[j].ChildAccounts[k].Target;
+                                var obj = null; //root.ChildAccounts[j].ChildAccounts[k].Target;
                                 var realizationObj = root.ChildAccounts[j].ChildAccounts[k].TotalRealizationPerAccount;
 
                                 totalObj += obj;
@@ -331,10 +332,12 @@ module App.Controllers {
                         ctrl.newAccounts[root.Id] = [];
                     }
 
+                    /*
                     if (ctrl.apbdes.IsCompleted) {
                         this.isCompleteStatus = "sudah";
                         this.buttonCompleteShow = false;
                     }
+                    */
                 });
             });
         }

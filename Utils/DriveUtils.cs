@@ -7,6 +7,7 @@ using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Web;
@@ -36,6 +37,21 @@ namespace App.Utils
             });
 
             this.parentDirectoryId = parentDirectoryId;
+        }
+
+        public System.IO.Stream GetFileStream(string googleSheetId)
+        {
+            if (string.IsNullOrEmpty(googleSheetId))
+                return null;
+
+            FilesResource.ListRequest request = driveService.Files.List();
+
+            var getFile = this.driveService.Files.Get(googleSheetId);
+            File file = AsyncHelpers.RunSync(() => getFile.ExecuteAsync());
+   
+            string downloadUrl = file.ExportLinks.FirstOrDefault(e => e.Key == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").Value;
+            var documentStream = AsyncHelpers.RunSync(() => this.driveService.HttpClient.GetStreamAsync(downloadUrl));
+            return documentStream;
         }
 
         public bool IsFileExists(string parentId, string directoryName)

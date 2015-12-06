@@ -59,7 +59,7 @@ namespace App.Controllers.Services
             result.TransferRecapitulations.Add(total);
 
             result.TransferProgress = db.TransferProgresses
-                .Where(r => r.ApbnKey == apbnKey && (scopedRegionIds.Contains(r.fkRegionId)))
+                .Where(r => r.ApbnKey == apbnKey && (scopedRegionIds.Contains(r.RegionId)))
                 .ToList();
             result.TransferRecapitulations.Add(total);
 
@@ -94,7 +94,7 @@ namespace App.Controllers.Services
             }
 
             result.TransferProgress = db.TransferProgresses
-                .Where(r => r.fkRegionId == regionId && r.ApbnKey == apbnKey)
+                .Where(r => r.RegionId == regionId && r.ApbnKey == apbnKey)
                 .ToList();
 
 
