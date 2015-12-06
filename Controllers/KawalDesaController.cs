@@ -35,6 +35,7 @@ namespace App.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            TempData["isUserFoundError"] = true;
             var anonymousHost = ConfigurationManager.AppSettings["AnonymousHost"];
             var user = GetUserDictFromSession();
 
@@ -193,6 +194,7 @@ namespace App.Controllers
 
         public ActionResult FacebookRedirect(String code, String token, String exAuthState)
         {
+            
             String loginRedirect = Session["LoginRedirect"] as string;
             if (loginRedirect == null)
                 loginRedirect = "/";
@@ -302,6 +304,10 @@ namespace App.Controllers
 
                     if (user == null)
                     {
+
+                        
+                        return View("Error");
+                        /*
                         using (var tx = db.Database.BeginTransaction())
                         {
                             var userManager = new UserManager<User>(new CUserStore<User>(db));
@@ -318,8 +324,10 @@ namespace App.Controllers
                             userManager.AddToRole(user.Id, Role.VOLUNTEER);
                             tx.Commit();
                         }
+                        */
                     }
 
+                    TempData["isUserFoundError"] = true;
                     Session[USERID_KEY] = user.Id;
                     AddAuthenticatedCookie();
                 }
