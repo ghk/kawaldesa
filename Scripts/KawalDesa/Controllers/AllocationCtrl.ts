@@ -24,6 +24,7 @@ module App.Controllers {
             $scope.$on('regionChangeBefore', function () {
                 ctrl.onRegionChanged();
                 if (ctrl.indexCtrl.type == ctrl.routePrefix) {
+                    ctrl.$scope.activeUploadMore = false;
                     ctrl.getBundle(ctrl.indexCtrl.regionId);
                 }
             });

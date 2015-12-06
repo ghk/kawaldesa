@@ -6,12 +6,15 @@
                 <i ng-class="activeUploadMore ? 'fa-minus' : 'fa-plus'" class="fa"></i>
                 {{indexCtrl.activeUpload.Notes}}
             </a>
-            <span>
+            <span ng-if="indexCtrl.activeSources.length">
                 &nbsp; <b>Sumber:</b>  &nbsp;
                 <span ng-repeat="source in indexCtrl.activeSources">
                     <a href="/Content/files/{{source.File.RelativeFileName}}">{{source.File.Name}}</a>
                     {{$last ? '' : ', '}}
                 </span>
+            </span>
+            <span ng-if="!indexCtrl.activeSources.length">
+                &nbsp; <b>Tidak ada dokumen sumber</b>
             </span>
             <div ng-show="activeUploadMore">
                 <br />
@@ -37,19 +40,19 @@
                         </a>
                     </div>
                 </div>
+                <div class="row" ng-if="indexCtrl.activeSources.length">
                 <hr />
-                <div class="row">
                     <div class="col-md-12">
                         <h4>Dokumen Sumber</h4>
                     </div>
                     <div class="col-md-2" ng-repeat="source in indexCtrl.activeSources">
-                        <a href="#">
+                        <a href="/Content/files/{{source.File.RelativeFileName}}">
                             <img class="img-thumbnail" ng-src="/Content/thumbs/{{source.fkFileId}}.png" style="width: 100%;" />
                             <span>{{source.File.Name}}</span>
                         </a>
                     </div>
-                </div>
                 <hr />
+                </div>
             </div>
         </div>
         <div ng-show="!indexCtrl.activeUpload">
