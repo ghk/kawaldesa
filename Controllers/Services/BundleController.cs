@@ -68,8 +68,8 @@ namespace App.Controllers.Services
 
         public TransferBundle GetTransferBundle(String apbnKey, String regionId)
         {
-            if (KawalDesaController.GetCurrentUser() == null &&regionId == "0")
-                return GetInScopeTransferBundle(apbnKey);
+            //if (KawalDesaController.GetCurrentUser() == null &&regionId == "0")
+            //    return GetInScopeTransferBundle(apbnKey);
             var region = GetRegion(regionId);
 
             var result = new TransferBundle
