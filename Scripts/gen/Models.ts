@@ -1141,7 +1141,7 @@ module App.Models {
     }
     
     
-    export interface IBaseTransaction extends IBaseEntity {
+    export interface ITransaction extends IBaseEntity {
         Amount: number;
         Date: /** System.DateTime **/ any;
         IsActivated: boolean;
@@ -1163,7 +1163,7 @@ module App.Models {
         Spreadsheet: App.Models.ISpreadsheet;
     }
     
-    export class BaseTransaction extends BaseEntity {
+    export class Transaction extends BaseEntity {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Amount: number;
@@ -1186,7 +1186,7 @@ module App.Models {
         fkSpreadsheetId: number;
         Spreadsheet: App.Models.ISpreadsheet;
         
-        constructor(data?: IBaseTransaction) {
+        constructor(data?: ITransaction) {
             super(data);
             this.Amount = data ? data.Amount : null;
             this.Date = data ? data.Date : null;
@@ -1212,35 +1212,7 @@ module App.Models {
     }
     
     
-    export interface ITransaction extends IBaseTransaction {
-    }
-    
-    export class Transaction extends BaseTransaction {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: ITransaction) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenTransaction extends IBaseTransaction {
-    }
-    
-    export class FrozenTransaction extends BaseTransaction {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenTransaction) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IBaseTransfer extends IBaseEntity {
+    export interface ITransfer extends IBaseEntity {
         Dd: number;
         Add: number;
         Bhpr: number;
@@ -1249,9 +1221,10 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
+        SourceDocuments: Array<App.Models.ISourceDocument>;
     }
     
-    export class BaseTransfer extends BaseEntity {
+    export class Transfer extends BaseEntity {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Dd: number;
@@ -1262,8 +1235,9 @@ module App.Models {
         Year: number;
         fkRegionId: string;
         Region: App.Models.IRegion;
+        SourceDocuments: Array<App.Models.ISourceDocument>;
         
-        constructor(data?: IBaseTransfer) {
+        constructor(data?: ITransfer) {
             super(data);
             this.Dd = data ? data.Dd : null;
             this.Add = data ? data.Add : null;
@@ -1273,37 +1247,7 @@ module App.Models {
             this.Year = data ? data.Year : null;
             this.fkRegionId = data ? data.fkRegionId : null;
             this.Region = data ? data.Region : null;
-        }
-        
-    }
-    
-    
-    export interface ITransfer extends IBaseTransfer {
-        SourceDocuments: Array<App.Models.ISourceDocument>;
-    }
-    
-    export class Transfer extends BaseTransfer {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        SourceDocuments: Array<App.Models.ISourceDocument>;
-        
-        constructor(data?: ITransfer) {
-            super(data);
             this.SourceDocuments = data ? data.SourceDocuments : null;
-        }
-        
-    }
-    
-    
-    export interface IFrozenTransfer extends IBaseTransfer {
-    }
-    
-    export class FrozenTransfer extends BaseTransfer {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenTransfer) {
-            super(data);
         }
         
     }
@@ -1339,7 +1283,7 @@ module App.Models.Views {
 
 	import IQuery = Microvac.Web.IQuery;
     
-    export interface IBaseAccountRecapitulation {
+    export interface IAccountRecapitulation {
         Id: string;
         RegionId: string;
         ApbnId: number;
@@ -1358,7 +1302,7 @@ module App.Models.Views {
         CompletedDesa: number;
     }
     
-    export class BaseAccountRecapitulation {
+    export class AccountRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1378,7 +1322,7 @@ module App.Models.Views {
         TotalDesa: number;
         CompletedDesa: number;
         
-        constructor(data?: IBaseAccountRecapitulation) {
+        constructor(data?: IAccountRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnId = data ? data.ApbnId : null;
@@ -1400,7 +1344,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseNationalAddRecapitulation {
+    export interface INationalAddRecapitulation {
         Id: string;
         RegionId: string;
         ApbnKey: string;
@@ -1414,7 +1358,7 @@ module App.Models.Views {
         CompletedDesa: number;
     }
     
-    export class BaseNationalAddRecapitulation {
+    export class NationalAddRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1429,7 +1373,7 @@ module App.Models.Views {
         TotalDesa: number;
         CompletedDesa: number;
         
-        constructor(data?: IBaseNationalAddRecapitulation) {
+        constructor(data?: INationalAddRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
@@ -1446,7 +1390,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseNationalBhprRecapitulation {
+    export interface INationalBhprRecapitulation {
         Id: string;
         RegionId: string;
         ApbnKey: string;
@@ -1459,7 +1403,7 @@ module App.Models.Views {
         CompletedDesa: number;
     }
     
-    export class BaseNationalBhprRecapitulation {
+    export class NationalBhprRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1473,7 +1417,7 @@ module App.Models.Views {
         TotalDesa: number;
         CompletedDesa: number;
         
-        constructor(data?: IBaseNationalBhprRecapitulation) {
+        constructor(data?: INationalBhprRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
@@ -1489,7 +1433,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseNationalDdRecapitulation {
+    export interface INationalDdRecapitulation {
         Id: string;
         RegionId: string;
         ApbnKey: string;
@@ -1501,7 +1445,7 @@ module App.Models.Views {
         CompletedDesa: number;
     }
     
-    export class BaseNationalDdRecapitulation {
+    export class NationalDdRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1514,7 +1458,7 @@ module App.Models.Views {
         TotalDesa: number;
         CompletedDesa: number;
         
-        constructor(data?: IBaseNationalDdRecapitulation) {
+        constructor(data?: INationalDdRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnKey = data ? data.ApbnKey : null;
@@ -1529,7 +1473,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseRegionalAddRecapitulation {
+    export interface IRegionalAddRecapitulation {
         Id: string;
         RegionId: string;
         ParentRegionId: string;
@@ -1553,7 +1497,7 @@ module App.Models.Views {
         Add: number;
     }
     
-    export class BaseRegionalAddRecapitulation {
+    export class RegionalAddRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1578,7 +1522,7 @@ module App.Models.Views {
         FormulaBasedAllocation: number;
         Add: number;
         
-        constructor(data?: IBaseRegionalAddRecapitulation) {
+        constructor(data?: IRegionalAddRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
@@ -1605,7 +1549,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseRegionalBhprRecapitulation {
+    export interface IRegionalBhprRecapitulation {
         Id: string;
         RegionId: string;
         ParentRegionId: string;
@@ -1618,7 +1562,7 @@ module App.Models.Views {
         Bhpr: number;
     }
     
-    export class BaseRegionalBhprRecapitulation {
+    export class RegionalBhprRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1632,7 +1576,7 @@ module App.Models.Views {
         FormulaBasedAllocation: number;
         Bhpr: number;
         
-        constructor(data?: IBaseRegionalBhprRecapitulation) {
+        constructor(data?: IRegionalBhprRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
@@ -1648,7 +1592,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseRegionalDdRecapitulation {
+    export interface IRegionalDdRecapitulation {
         Id: string;
         RegionId: string;
         ParentRegionId: string;
@@ -1672,7 +1616,7 @@ module App.Models.Views {
         Dd: number;
     }
     
-    export class BaseRegionalDdRecapitulation {
+    export class RegionalDdRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1697,7 +1641,7 @@ module App.Models.Views {
         FormulaBasedAllocation: number;
         Dd: number;
         
-        constructor(data?: IBaseRegionalDdRecapitulation) {
+        constructor(data?: IRegionalDdRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ParentRegionId = data ? data.ParentRegionId : null;
@@ -1724,7 +1668,7 @@ module App.Models.Views {
     }
     
     
-    export interface IBaseTransferRecapitulation {
+    export interface ITransferRecapitulation {
         Id: string;
         RegionId: string;
         ApbnId: number;
@@ -1739,7 +1683,7 @@ module App.Models.Views {
         TransferredBhpr: number;
     }
     
-    export class BaseTransferRecapitulation {
+    export class TransferRecapitulation {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
         
         Id: string;
@@ -1755,7 +1699,7 @@ module App.Models.Views {
         BudgetedBhpr: number;
         TransferredBhpr: number;
         
-        constructor(data?: IBaseTransferRecapitulation) {
+        constructor(data?: ITransferRecapitulation) {
             this.Id = data ? data.Id : null;
             this.RegionId = data ? data.RegionId : null;
             this.ApbnId = data ? data.ApbnId : null;
@@ -1768,230 +1712,6 @@ module App.Models.Views {
             this.TransferredAdd = data ? data.TransferredAdd : null;
             this.BudgetedBhpr = data ? data.BudgetedBhpr : null;
             this.TransferredBhpr = data ? data.TransferredBhpr : null;
-        }
-        
-    }
-    
-    
-    export interface IAccountRecapitulation extends IBaseAccountRecapitulation {
-    }
-    
-    export class AccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IAccountRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenAccountRecapitulation extends IBaseAccountRecapitulation {
-    }
-    
-    export class FrozenAccountRecapitulation extends BaseAccountRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenAccountRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface INationalAddRecapitulation extends IBaseNationalAddRecapitulation {
-    }
-    
-    export class NationalAddRecapitulation extends BaseNationalAddRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: INationalAddRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenNationalAddRecapitulation extends IBaseNationalAddRecapitulation {
-    }
-    
-    export class FrozenNationalAddRecapitulation extends BaseNationalAddRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenNationalAddRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface INationalBhprRecapitulation extends IBaseNationalBhprRecapitulation {
-    }
-    
-    export class NationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: INationalBhprRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenNationalBhprRecapitulation extends IBaseNationalBhprRecapitulation {
-    }
-    
-    export class FrozenNationalBhprRecapitulation extends BaseNationalBhprRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenNationalBhprRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface INationalDdRecapitulation extends IBaseNationalDdRecapitulation {
-    }
-    
-    export class NationalDdRecapitulation extends BaseNationalDdRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: INationalDdRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenNationalDdRecapitulation extends IBaseNationalDdRecapitulation {
-    }
-    
-    export class FrozenNationalDdRecapitulation extends BaseNationalDdRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenNationalDdRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IRegionalAddRecapitulation extends IBaseRegionalAddRecapitulation {
-    }
-    
-    export class RegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IRegionalAddRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenRegionalAddRecapitulation extends IBaseRegionalAddRecapitulation {
-    }
-    
-    export class FrozenRegionalAddRecapitulation extends BaseRegionalAddRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenRegionalAddRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IRegionalBhprRecapitulation extends IBaseRegionalBhprRecapitulation {
-    }
-    
-    export class RegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IRegionalBhprRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenRegionalBhprRecapitulation extends IBaseRegionalBhprRecapitulation {
-    }
-    
-    export class FrozenRegionalBhprRecapitulation extends BaseRegionalBhprRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenRegionalBhprRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IRegionalDdRecapitulation extends IBaseRegionalDdRecapitulation {
-    }
-    
-    export class RegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IRegionalDdRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenRegionalDdRecapitulation extends IBaseRegionalDdRecapitulation {
-    }
-    
-    export class FrozenRegionalDdRecapitulation extends BaseRegionalDdRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenRegionalDdRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface ITransferRecapitulation extends IBaseTransferRecapitulation {
-    }
-    
-    export class TransferRecapitulation extends BaseTransferRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: ITransferRecapitulation) {
-            super(data);
-        }
-        
-    }
-    
-    
-    export interface IFrozenTransferRecapitulation extends IBaseTransferRecapitulation {
-    }
-    
-    export class FrozenTransferRecapitulation extends BaseTransferRecapitulation {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        
-        
-        constructor(data?: IFrozenTransferRecapitulation) {
-            super(data);
         }
         
     }

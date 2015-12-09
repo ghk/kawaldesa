@@ -17,7 +17,7 @@ module App.Controllers {
         file: any;
 
         constructor(public $scope, public routePrefix,
-            public documentTypes, public recapitulationTypes) {
+            public documentTypes) {
             var ctrl = this;
             this.indexCtrl = this.$scope.indexCtrl;
 
@@ -89,13 +89,7 @@ module App.Controllers {
 
         constructor(public $scope) {
             super($scope, "add"
-                , [Models.DocumentUploadType.NationalAdd, Models.DocumentUploadType.RegionalAdd]
-                , [
-                    Controllers.FrozenNationalAddRecapitulationController,
-                    Controllers.NationalAddRecapitulationController,
-                    Controllers.FrozenRegionalAddRecapitulationController,
-                    Controllers.RegionalAddRecapitulationController,
-                ]);
+                , [Models.DocumentUploadType.NationalAdd, Models.DocumentUploadType.RegionalAdd] );
         }
 
     }
@@ -107,13 +101,7 @@ module App.Controllers {
 
         constructor(public $scope) {
             super($scope, "dd"
-                , [Models.DocumentUploadType.NationalDd, Models.DocumentUploadType.RegionalDd]
-                , [
-                    Controllers.FrozenNationalDdRecapitulationController,
-                    Controllers.NationalDdRecapitulationController,
-                    Controllers.FrozenRegionalDdRecapitulationController,
-                    Controllers.RegionalDdRecapitulationController,
-                ]);
+                , [Models.DocumentUploadType.NationalDd, Models.DocumentUploadType.RegionalDd] );
         }
 
     }
@@ -125,13 +113,7 @@ module App.Controllers {
 
         constructor(public $scope) {
             super($scope, "bhpr"
-                , [Models.DocumentUploadType.NationalBhpr, Models.DocumentUploadType.RegionalBhpr]
-                , [
-                    Controllers.FrozenNationalBhprRecapitulationController,
-                    Controllers.NationalBhprRecapitulationController,
-                    Controllers.FrozenRegionalBhprRecapitulationController,
-                    Controllers.RegionalBhprRecapitulationController,
-                ]);
+                , [Models.DocumentUploadType.NationalBhpr, Models.DocumentUploadType.RegionalBhpr] );
         }
 
     }

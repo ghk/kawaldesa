@@ -5,11 +5,6 @@
 module App.Controllers.Models {
 	import IQuery = Microvac.Web.IQuery;
 
-    export class BaseAccountRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class AccountRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -39,41 +34,6 @@ module App.Controllers.Models {
 			var res = Microvac.Web.$http<number>(AccountRecapitulationController.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/AccountRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class FrozenAccountRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenAccountRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenAccountRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenAccountRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenAccountRecapitulation>>(FrozenAccountRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenAccountRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenAccountRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenAccountRecapitulation> (FrozenAccountRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenAccountRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenAccountRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenAccountRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;
@@ -299,11 +259,6 @@ module App.Controllers.Models {
 	    }
 	}
     
-    export class BaseNationalAddRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class NationalAddRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -338,46 +293,6 @@ module App.Controllers.Models {
 			return res;
 		}
 		}
-        
-    export class FrozenNationalAddRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenNationalAddRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenNationalAddRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalAddRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenNationalAddRecapitulation>>(FrozenNationalAddRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalAddRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalAddRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenNationalAddRecapitulation> (FrozenNationalAddRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenNationalAddRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenNationalAddRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalAddRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class BaseNationalBhprRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
         
     export class NationalBhprRecapitulationController
     {
@@ -414,46 +329,6 @@ module App.Controllers.Models {
 		}
 		}
         
-    export class FrozenNationalBhprRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenNationalBhprRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenNationalBhprRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenNationalBhprRecapitulation>>(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalBhprRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalBhprRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenNationalBhprRecapitulation> (FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenNationalBhprRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenNationalBhprRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalBhprRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class BaseNationalDdRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class NationalDdRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -483,41 +358,6 @@ module App.Controllers.Models {
 			var res = Microvac.Web.$http<number>(NationalDdRecapitulationController.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/NationalDdRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class FrozenNationalDdRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenNationalDdRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenNationalDdRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenNationalDdRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenNationalDdRecapitulation>>(FrozenNationalDdRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalDdRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenNationalDdRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenNationalDdRecapitulation> (FrozenNationalDdRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenNationalDdRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenNationalDdRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenNationalDdRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;
@@ -641,11 +481,6 @@ module App.Controllers.Models {
 		}
 		}
         
-    export class BaseRegionalAddRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class RegionalAddRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -680,46 +515,6 @@ module App.Controllers.Models {
 			return res;
 		}
 		}
-        
-    export class FrozenRegionalAddRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenRegionalAddRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenRegionalAddRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenRegionalAddRecapitulation>>(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalAddRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalAddRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenRegionalAddRecapitulation> (FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenRegionalAddRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenRegionalAddRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalAddRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class BaseRegionalBhprRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
         
     export class RegionalBhprRecapitulationController
     {
@@ -756,46 +551,6 @@ module App.Controllers.Models {
 		}
 		}
         
-    export class FrozenRegionalBhprRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenRegionalBhprRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenRegionalBhprRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenRegionalBhprRecapitulation>>(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalBhprRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalBhprRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenRegionalBhprRecapitulation> (FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenRegionalBhprRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenRegionalBhprRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalBhprRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class BaseRegionalDdRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class RegionalDdRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -825,41 +580,6 @@ module App.Controllers.Models {
 			var res = Microvac.Web.$http<number>(RegionalDdRecapitulationController.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/RegionalDdRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class FrozenRegionalDdRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenRegionalDdRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenRegionalDdRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenRegionalDdRecapitulation>>(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalDdRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenRegionalDdRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenRegionalDdRecapitulation> (FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenRegionalDdRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenRegionalDdRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenRegionalDdRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;
@@ -1196,11 +916,6 @@ module App.Controllers.Models {
 		}
 		}
         
-    export class BaseTransferRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-	}
-        
     export class TransferRecapitulationController
     {
         public static ajaxSettings = new Microvac.Web.AjaxSettings();
@@ -1230,41 +945,6 @@ module App.Controllers.Models {
 			var res = Microvac.Web.$http<number>(TransferRecapitulationController.ajaxSettings.build({
 				method: 'GET',
 				url: '/api/TransferRecapitulation/GetCount',
-				data: query,
-			}));
-			return res;
-		}
-		}
-        
-    export class FrozenTransferRecapitulationController
-    {
-        public static ajaxSettings = new Microvac.Web.AjaxSettings();
-        public dataModel : App.Models.Views.IFrozenTransferRecapitulation = null;
-        
-        constructor(data?: App.Models.Views.IFrozenTransferRecapitulation) {
-            this.dataModel = data;
-        }
-		static GetAll(query?: IQuery): ng.IHttpPromise<Array<App.Models.Views.IFrozenTransferRecapitulation>> {
-			var res = Microvac.Web.$http<Array<App.Models.Views.IFrozenTransferRecapitulation>>(FrozenTransferRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenTransferRecapitulation/GetAll',
-				params: query,
-			}));
-			return res;
-		}
-
-		static Get(id: string): ng.IHttpPromise<App.Models.Views.IFrozenTransferRecapitulation> {
-			var res = Microvac.Web.$http<App.Models.Views.IFrozenTransferRecapitulation> (FrozenTransferRecapitulationController.ajaxSettings.build({
-			method: 'GET',
-			url: '/api/FrozenTransferRecapitulation/Get/'+id,
-			}));
-			return res;
-		}
-
-		static Count(query?: IQuery): ng.IHttpPromise<number> {
-			var res = Microvac.Web.$http<number>(FrozenTransferRecapitulationController.ajaxSettings.build({
-				method: 'GET',
-				url: '/api/FrozenTransferRecapitulation/GetCount',
 				data: query,
 			}));
 			return res;

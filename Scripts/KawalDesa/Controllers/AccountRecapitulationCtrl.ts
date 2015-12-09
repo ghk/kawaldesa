@@ -44,11 +44,7 @@ module App.Controllers {
                 "SortOrder": "ASC",
                 "ParentId": parentId
             }
-            var type = Controllers.FrozenAccountRecapitulationController;
-            if (this.indexCtrl.currentUser) {
-                // TODO: HUH?
-                type = Controllers.FrozenAccountRecapitulationController;
-            }
+            var type = Controllers.AccountRecapitulationController;
             type.GetAll(query).then((recapitulations) => {
                 scope.entities = recapitulations.data.filter(r => r.RegionId != parentId);
                 scope.total = recapitulations.data.filter(r => r.RegionId == parentId)[0];
