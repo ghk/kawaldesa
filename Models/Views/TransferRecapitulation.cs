@@ -8,7 +8,7 @@ using System.Web;
 
 namespace App.Models.Views
 {
-    public class BaseTransferRecapitulation : IModel<string>
+    public class TransferRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -34,12 +34,6 @@ namespace App.Models.Views
 
         public decimal TransferredBhpr { get; set; }
 
-    }
-    public class TransferRecapitulation : BaseTransferRecapitulation
-    {
-    }
-    public class FrozenTransferRecapitulation : BaseTransferRecapitulation
-    {
     }
 
 }

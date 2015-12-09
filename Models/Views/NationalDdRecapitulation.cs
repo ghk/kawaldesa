@@ -13,7 +13,7 @@ using Microvac.Web;
 namespace App.Models.Views
 {
 
-    public class BaseNationalDdRecapitulation : IModel<string>
+    public class NationalDdRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -34,11 +34,4 @@ namespace App.Models.Views
         public int CompletedDesa { get; set; }
     }
 
-    public class NationalDdRecapitulation : BaseNationalDdRecapitulation
-    {
-    }
-
-    public class FrozenNationalDdRecapitulation : BaseNationalDdRecapitulation
-    {
-    }
 }

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace App.Models.Views
 {
-    public class BaseAccountRecapitulation : IModel<string>
+    public class AccountRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -43,12 +43,6 @@ namespace App.Models.Views
 
         public decimal CompletedDesa { get; set; }
 
-    }
-    public class AccountRecapitulation : BaseAccountRecapitulation
-    {
-    }
-    public class FrozenAccountRecapitulation : BaseAccountRecapitulation
-    {
     }
 
 }

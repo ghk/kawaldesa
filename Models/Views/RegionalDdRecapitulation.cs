@@ -13,7 +13,7 @@ using Microvac.Web;
 namespace App.Models.Views
 {
 
-    public class BaseRegionalDdRecapitulation : IModel<string>
+    public class RegionalDdRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -56,12 +56,5 @@ namespace App.Models.Views
         public decimal? FormulaBasedAllocation { get; set; }
 
         public decimal? Dd { get; set; }
-    }
-    public class RegionalDdRecapitulation : BaseRegionalDdRecapitulation
-    {
-    }
-
-    public class FrozenRegionalDdRecapitulation : BaseRegionalDdRecapitulation
-    {
     }
 }

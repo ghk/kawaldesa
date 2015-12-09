@@ -8,32 +8,17 @@ using System.Web;
 
 namespace App.Controllers.Models
 {
-    public class BaseNationalBhprRecapitulationController<TRecapitulation> : ReadOnlyController<TRecapitulation, string>
-        where TRecapitulation: BaseNationalBhprRecapitulation, new()
-    {
-        public BaseNationalBhprRecapitulationController(DB dbContext)
-            : base(dbContext)
-        {
-        }
-
-        protected override IQueryable<TRecapitulation> ApplyQuery(IQueryable<TRecapitulation> query)
-        {
-            var parentId = GetQueryString<string>("fkParentId");
-            return query.Where(t => (t.ParentRegionId == parentId || t.RegionId == parentId) && t.ApbnKey == "2015p");
-        }
-    }
-    public class NationalBhprRecapitulationController : BaseNationalBhprRecapitulationController<NationalBhprRecapitulation>
+    public class NationalBhprRecapitulationController: ReadOnlyController<NationalBhprRecapitulation, string>
     {
         public NationalBhprRecapitulationController(DB dbContext)
             : base(dbContext)
         {
         }
-    }
-    public class FrozenNationalBhprRecapitulationController : BaseNationalBhprRecapitulationController<FrozenNationalBhprRecapitulation>
-    {
-        public FrozenNationalBhprRecapitulationController(DB dbContext)
-            : base(dbContext)
+
+        protected override IQueryable<NationalBhprRecapitulation> ApplyQuery(IQueryable<NationalBhprRecapitulation> query)
         {
+            var parentId = GetQueryString<string>("fkParentId");
+            return query.Where(t => (t.ParentRegionId == parentId || t.RegionId == parentId) && t.ApbnKey == "2015p");
         }
     }
 }

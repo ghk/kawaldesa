@@ -13,7 +13,7 @@ using Microvac.Web;
 namespace App.Models.Views
 {
 
-    public class BaseRegionalBhprRecapitulation : IModel<string>
+    public class RegionalBhprRecapitulation : IModel<string>
     {
         public string Id { get; set; }
 
@@ -36,11 +36,4 @@ namespace App.Models.Views
         public decimal? Bhpr { get; set; }
     }
 
-    public class RegionalBhprRecapitulation : BaseRegionalBhprRecapitulation
-    {
-    }
-
-    public class FrozenRegionalBhprRecapitulation : BaseRegionalBhprRecapitulation
-    {
-    }
 }

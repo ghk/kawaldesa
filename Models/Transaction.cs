@@ -10,7 +10,7 @@ using System.Web.Http.Validation;
 
 namespace App.Models
 {
-    public class BaseTransaction : BaseEntity
+    public class Transaction : BaseEntity
     {
         [Required(ErrorMessage="Jumlah harus diisi")]
         [Range(0, double.MaxValue, ErrorMessage = "Jumlah harus merupakan angka dan positif")]
@@ -63,11 +63,4 @@ namespace App.Models
         }
     }
 
-    public class Transaction : BaseTransaction
-    {
-    }
-
-    public class FrozenTransaction : BaseTransaction
-    {
-    }
 }

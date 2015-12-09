@@ -42,29 +42,19 @@ namespace App.Models
         public virtual IDbSet<RegionalAddAllocation> RegionalAddAllocations { get; set; }
         public virtual IDbSet<RegionalBhprAllocation> RegionalBhprAllocations { get; set; }
         public virtual IDbSet<Transfer> Transfers  { get; set; }
-        public virtual IDbSet<FrozenTransfer> FrozenTransfers  { get; set; }
         public virtual IDbSet<Apbdes> Apbdeses { get; set; }
         public virtual IDbSet<Account> Accounts { get; set; }
         public virtual IDbSet<Realization> Realizations { get; set; }
         public virtual IDbSet<Transaction> Transactions  { get; set; }
-        public virtual IDbSet<FrozenTransaction> FrozenTransactions  { get; set; }
         public virtual IDbSet<TransferRecapitulation> TransferRecapitulations { get; set; }
-        public virtual IDbSet<FrozenTransferRecapitulation> FrozenTransferRecapitulations { get; set; }
         public virtual IDbSet<TransferProgress> TransferProgresses { get; set; }
         public virtual IDbSet<AccountRecapitulation> AccountRecapitulations { get; set; }
-        public virtual IDbSet<FrozenAccountRecapitulation> FrozenAccountRecapitulations { get; set; }
         public virtual IDbSet<NationalAddRecapitulation> NationalAddRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalAddRecapitulation> FrozenNationalAddRecapitulations { get; set; }
         public virtual IDbSet<NationalBhprRecapitulation> NationalBhprRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalBhprRecapitulation> FrozenNationalBhprRecapitulations { get; set; }
         public virtual IDbSet<NationalDdRecapitulation> NationalDdRecapitulations { get; set; }
-        public virtual IDbSet<FrozenNationalDdRecapitulation> FrozenNationalDdRecapitulations { get; set; }
         public virtual IDbSet<RegionalAddRecapitulation> RegionalAddRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalAddRecapitulation> FrozenRegionalAddRecapitulations { get; set; }
         public virtual IDbSet<RegionalBhprRecapitulation> RegionalBhprRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalBhprRecapitulation> FrozenRegionalBhprRecapitulations { get; set; }
         public virtual IDbSet<RegionalDdRecapitulation> RegionalDdRecapitulations { get; set; }
-        public virtual IDbSet<FrozenRegionalDdRecapitulation> FrozenRegionalDdRecapitulations { get; set; }
         public virtual IDbSet<InvitationToken> InvitationTokens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

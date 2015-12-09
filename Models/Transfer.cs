@@ -10,7 +10,7 @@ using System.Web.Http.Validation;
 
 namespace App.Models
 {
-    public class BaseTransfer : BaseEntity
+    public class Transfer : BaseEntity
     {
         public decimal? Dd { get; set; }
         public decimal? Add { get; set; }
@@ -32,14 +32,7 @@ namespace App.Models
         {
             return new List<ModelValidationResult>();
         }
-    }
-
-    public class Transfer : BaseTransfer
-    {
         public List<SourceDocument> SourceDocuments { get; set; }
     }
 
-    public class FrozenTransfer : BaseTransfer
-    {
-    }
 }
